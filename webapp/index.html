@@ -6,7 +6,7 @@
     <title>Cafeteria Menu</title>
     <style>
       body {
-        font-family: Arial, sans-serif;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
         margin: 0;
         padding: 0;
         background-color: #f4f4f4;
@@ -21,45 +21,70 @@
 
       .days-list {
         text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
       }
 
       .days-list button {
-        margin: 5px;
-        padding: 10px;
+        margin: 10px;
+        padding: 15px;
         background-color: #3498db;
         color: #fff;
         border: none;
         cursor: pointer;
-        font-size: 16px;
+        font-size: 18px;
+        width: 150px; /* Set a fixed width for all buttons */
       }
 
       .menu-view {
         display: none;
       }
 
+      .back-button {
+        margin-top: 20px;
+        background-color: #e74c3c;
+      }
+
       .menu-category {
         margin-top: 20px;
+        border-radius: 8px;
+        overflow: hidden;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       }
 
       .menu-category h2 {
         color: #333;
+        background-color: #3498db;
+        padding: 15px;
+        margin: 0;
+        font-size: 20px;
       }
 
       .menu-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
         gap: 10px;
+        padding: 10px;
       }
 
       .meal-item {
         position: relative;
         cursor: pointer;
+        border-radius: 8px;
+        overflow: hidden;
+        transition: transform 0.2s;
+      }
+
+      .meal-item:hover {
+        transform: scale(1.1);
       }
 
       .meal-item img {
         width: 100%;
-        height: auto;
-        border-radius: 8px;
+        height: 100%;
+        object-fit: cover;
       }
 
       .meal-label {
@@ -71,13 +96,6 @@
         color: #fff;
         padding: 5px;
         text-align: center;
-        border-bottom-left-radius: 8px;
-        border-bottom-right-radius: 8px;
-      }
-
-      .back-button {
-        margin-top: 20px;
-        background-color: #e74c3c;
       }
 
       .modal {
@@ -97,8 +115,27 @@
         background: #fff;
         border-radius: 8px;
         padding: 20px;
-        max-width: 400px;
-        margin: 0 auto;
+        width: 70%;
+        max-width: 600px;
+        position: relative;
+      }
+
+      .modal-content img {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+      }
+
+      .close-button {
+        background-color: #e74c3c;
+        color: #fff;
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+        border-radius: 5px;
+        position: absolute;
+        top: 10px;
+        right: 10px;
       }
     </style>
   </head>
@@ -107,7 +144,11 @@
       <div class="days-list" id="daysList">
         <button onclick="showMenu('Monday')">Monday</button>
         <button onclick="showMenu('Tuesday')">Tuesday</button>
-        <!-- Repeat for other days -->
+        <button onclick="showMenu('Wednesday')">Wednesday</button>
+        <button onclick="showMenu('Thursday')">Thursday</button>
+        <button onclick="showMenu('Friday')">Friday</button>
+        <button onclick="showMenu('Saturday')">Saturday</button>
+        <button onclick="showMenu('Sunday')">Sunday</button>
       </div>
 
       <div class="menu-view" id="menuView">
@@ -133,8 +174,9 @@
 
       <div class="modal" id="modal">
         <div class="modal-content" id="modalContent">
-          <!-- Content of the selected meal item will be displayed here -->
-          <button onclick="closeModal()">Close</button>
+          <button class="close-button" onclick="closeModal()">X</button>
+          <img src="https://via.placeholder.com/600x400" alt="Meal Image" />
+          <h2>Selected Meal</h2>
         </div>
       </div>
     </div>
@@ -145,12 +187,18 @@
       const modal = document.getElementById("modal");
       const modalContent = document.getElementById("modalContent");
 
+      const menuData = {
+        Lunch: ["Meal1", "Meal2", "Meal3", "Meal4", "Meal5"],
+        Dinner: ["Meal6", "Meal7", "Meal8", "Meal9", "Meal10"],
+        Alternative: ["Meal11", "Meal12", "Meal13", "Meal14", "Meal15"],
+      };
+
       function showMenu(day) {
         // Fetch and display menu items for the selected day
         // For simplicity, using placeholder data
-        const lunchMenu = ["Meal1", "Meal2", "Meal3"];
-        const dinnerMenu = ["Meal4", "Meal5", "Meal6"];
-        const alternativeMenu = ["Meal7", "Meal8", "Meal9"];
+        const lunchMenu = menuData.Lunch;
+        const dinnerMenu = menuData.Dinner;
+        const alternativeMenu = menuData.Alternative;
 
         displayMenu("lunchMenu", lunchMenu);
         displayMenu("dinnerMenu", dinnerMenu);
@@ -169,7 +217,7 @@
           const mealItem = document.createElement("div");
           mealItem.className = "meal-item";
           mealItem.innerHTML = `
-        <img src="https://via.placeholder.com/120x120" alt="Meal Image">
+        <img src="https://via.placeholder.com/300x200" alt="Meal Image">
         <div class="meal-label">${item}</div>
       `;
           mealItem.addEventListener("click", () => openModal(item));
@@ -180,13 +228,17 @@
 
       function goBack() {
         // Show the days list view
-        daysList.style.display = "block";
+        daysList.style.display = "flex";
         menuView.style.display = "none";
       }
 
       function openModal(item) {
-        // Display the selected meal item in a modal
-        modalContent.innerHTML = `<h2>${item}</h2>`;
+        // Display the selected meal item in a larger modal
+        modalContent.innerHTML = `
+      <button class="close-button" onclick="closeModal()">X</button>
+      <img src="https://via.placeholder.com/600x400" alt="Meal Image">
+      <h2>${item}</h2>
+    `;
         modal.style.display = "flex";
       }
 
