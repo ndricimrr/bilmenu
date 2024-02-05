@@ -24,6 +24,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        transition: opacity 0.5s ease; /* Smooth opacity transition */
       }
 
       .days-list button {
@@ -35,15 +36,18 @@
         cursor: pointer;
         font-size: 18px;
         width: 150px; /* Set a fixed width for all buttons */
+        transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth background color and transform transition */
       }
 
       .menu-view {
         display: none;
+        transition: opacity 0.5s ease; /* Smooth opacity transition */
       }
 
       .back-button {
         margin-top: 20px;
         background-color: #e74c3c;
+        transition: background-color 0.3s ease; /* Smooth background color transition */
       }
 
       .menu-category {
@@ -52,6 +56,7 @@
         overflow: hidden;
         background-color: #fff;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.5s ease; /* Smooth transform transition */
       }
 
       .menu-category h2 {
@@ -74,7 +79,8 @@
         cursor: pointer;
         border-radius: 8px;
         overflow: hidden;
-        transition: transform 0.2s;
+        height: 200px; /* Set a fixed height for each Meal Item */
+        transition: transform 0.2s ease; /* Smooth transform transition */
       }
 
       .meal-item:hover {
@@ -83,8 +89,10 @@
 
       .meal-item img {
         width: 100%;
-        height: 100%;
+        height: 70%;
         object-fit: cover;
+        border-bottom: 2px solid #fff; /* Add a border to separate image and label */
+        transition: transform 0.2s ease; /* Smooth transform transition */
       }
 
       .meal-label {
@@ -96,6 +104,9 @@
         color: #fff;
         padding: 5px;
         text-align: center;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
 
       .modal {
@@ -109,6 +120,7 @@
         justify-content: center;
         align-items: center;
         overflow: hidden;
+        transition: opacity 0.5s ease; /* Smooth opacity transition */
       }
 
       .modal-content {
@@ -223,8 +235,16 @@
         displayMenu("alternativeMenu", alternativeMenu);
 
         // Show the menu view
-        daysList.style.display = "none";
-        menuView.style.display = "block";
+        // daysList.style.display = "none";
+        // menuView.style.display = "block";
+
+        // Show the menu view with a smooth transition
+        daysList.style.opacity = "0";
+        setTimeout(() => {
+          daysList.style.display = "none";
+          menuView.style.display = "block";
+          menuView.style.opacity = "1";
+        }, 500); // Wait for opacity transition to complete
       }
 
       function displayMenu(menuId, menuItems) {
@@ -245,24 +265,32 @@
       }
 
       function goBack() {
-        // Show the days list view
-        daysList.style.display = "flex";
-        menuView.style.display = "none";
+        // Show the days list view with a smooth transition
+        menuView.style.opacity = "0";
+        setTimeout(() => {
+          menuView.style.display = "none";
+          daysList.style.display = "flex";
+          daysList.style.opacity = "1";
+        }, 500); // Wait for opacity transition to complete
       }
 
       function openModal(item) {
         // Display the selected meal item in a larger modal
         modalContent.innerHTML = `
-      <button class="close-button" onclick="closeModal()">X</button>
-      <img src="assets/images/meals/${item}" alt="Meal Image">
-      <h2>${item}</h2>
-    `;
+          <button class="close-button" onclick="closeModal()">X</button>
+          <img src="assets/images/meals/${item}" alt="Meal Image">
+          <h2>${item}</h2>
+        `;
         modal.style.display = "flex";
+        modal.style.opacity = "1";
       }
 
       function closeModal() {
-        // Close the modal
-        modal.style.display = "none";
+        // Close the modal with a smooth transition
+        modal.style.opacity = "0";
+        setTimeout(() => {
+          modal.style.display = "none";
+        }, 500); // Wait for opacity transition to complete
       }
 
       // Close modal when clicking outside the content
