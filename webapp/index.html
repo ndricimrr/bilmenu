@@ -235,7 +235,7 @@
           const mealItem = document.createElement("div");
           mealItem.className = "meal-item";
           mealItem.innerHTML = `
-        <img src="https://via.placeholder.com/300x200" alt="Meal Image">
+        <img src="assets/images/meals/${item}" alt="Meal Image">
         <div class="meal-label">${item}</div>
       `;
           mealItem.addEventListener("click", () => openModal(item));
@@ -254,7 +254,7 @@
         // Display the selected meal item in a larger modal
         modalContent.innerHTML = `
       <button class="close-button" onclick="closeModal()">X</button>
-      <img src="https://via.placeholder.com/600x400" alt="Meal Image">
+      <img src="assets/images/meals/${item}" alt="Meal Image">
       <h2>${item}</h2>
     `;
         modal.style.display = "flex";
