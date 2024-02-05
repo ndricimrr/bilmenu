@@ -79,7 +79,7 @@
         cursor: pointer;
         border-radius: 8px;
         overflow: hidden;
-        height: 200px; /* Set a fixed height for each Meal Item */
+        height: 220px; /* Set a fixed height for each Meal Item */
         transition: transform 0.2s ease; /* Smooth transform transition */
       }
 
@@ -89,7 +89,7 @@
 
       .meal-item img {
         width: 100%;
-        height: 70%;
+        height: 80%;
         object-fit: cover;
         border-bottom: 2px solid #fff; /* Add a border to separate image and label */
         transition: transform 0.2s ease; /* Smooth transform transition */
@@ -120,6 +120,7 @@
         justify-content: center;
         align-items: center;
         overflow: hidden;
+        opacity: 0;
         transition: opacity 0.5s ease; /* Smooth opacity transition */
       }
 
@@ -281,8 +282,11 @@
           <img src="assets/images/meals/${item}" alt="Meal Image">
           <h2>${item}</h2>
         `;
+
         modal.style.display = "flex";
-        modal.style.opacity = "1";
+        setTimeout(() => {
+          modal.style.opacity = "1";
+        }, 10); // Allow time for display to take effect before applying opacity transition
       }
 
       function closeModal() {
