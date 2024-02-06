@@ -16,6 +16,7 @@
   color: white;
   margin: 0;
   font-size: 24px;
+  cursor: pointer;
 }
 
 .main-nav {
@@ -27,6 +28,10 @@
   width: 20px; /* Adjust the size as needed */
   margin-right: 20px; /* Add margin to separate logo from other nav items */
   margin-bottom: -3px;
+}
+
+h1 img {
+  width: 60px;
 }
 
 .nav-list {

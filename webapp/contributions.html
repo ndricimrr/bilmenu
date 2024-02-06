@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contributions</title>
+    <link rel="stylesheet" href="header.css" />
+    <script src="burger.js"></script>
+
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+        color: #333;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        box-sizing: border-box;
+      }
+
+      h1,
+      h2,
+      p {
+        margin-bottom: 15px;
+      }
+
+      a {
+        color: #3498db;
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="site-header">
+      <div class="nav-container">
+        <h1 class="page-title" onclick="goHome()" title="Go Home">
+          <img src="assets/images/logos/logo.jpg" alt="GitHub Logo" />
+          BilMenu |
+          <span style="font-size: medium"><i>Bil</i>kent Cafeteria</span>
+        </h1>
+        <h2></h2>
+
+        <nav class="main-nav">
+          <ul class="nav-list">
+            <li><a href="index.html">Menu</a></li>
+            <li>
+              <a
+                href="https://github.com/ndricimrr/bilmenu"
+                class="github-logo"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <!-- Replace 'github-mark.png' with your actual image file -->
+                Github Project
+                <img src="github-mark.png" alt="GitHub Logo" />
+              </a>
+            </li>
+            <li><a href="contributions.html">Contributions</a></li>
+            <li><a href="privacy-policy.html">Privacy Policy</a></li>
+          </ul>
+          <button class="mobile-menu-toggle">&#9776;</button>
+        </nav>
+      </div>
+    </header>
+    <script>
+      function goHome() {
+        window.location.href = "index.html";
+      }
+    </script>
+    <div class="container">
+      <h1>Contributions</h1>
+
+      <p>
+        Thank you for considering contributing to our open-source project! Here
+        are some ways you can help:
+      </p>
+
+      <h2>How to Contribute</h2>
+
+      <ol>
+        <li>
+          Collect more images of the meals by taking pictures at the cafeteria
+          and uploading them to the project.
+        </li>
+        <li>Help improve the quality of code by submitting pull requests.</li>
+        <li>
+          Contribute to the improvement of the UX (User Experience) of the site.
+        </li>
+        <li>
+          Assist with keeping the parsing algorithm up to date if the source
+          website changes its design.
+        </li>
+        <li>
+          Address any other issues or improvements that come to your mind.
+        </li>
+      </ol>
+
+      <h2>Getting Started</h2>
+
+      <p>If you're interested in contributing, please follow these steps:</p>
+
+      <ol>
+        <li>Fork the repository on GitHub.</li>
+        <li>
+          Create a new branch with a meaningful name for your contribution.
+        </li>
+        <li>Make your changes and commit them with clear messages.</li>
+        <li>Push your branch to your fork.</li>
+        <li>
+          Submit a pull request, describing the changes you made and the reason
+          for them.
+        </li>
+      </ol>
+
+      <h2>Issues</h2>
+
+      <p>
+        If you want to contribute but don't know where to start, check the
+        <a href="https://github.com/ndricimrr/bilmenu/issues">Issues</a>
+        section on GitHub. You can create a new issue to propose new features or
+        report bugs.
+      </p>
+
+      <p>
+        After creating an issue, it will be reviewed, and you'll be given the
+        green light to proceed with your contribution.
+      </p>
+
+      <h2>Contact</h2>
+
+      <p>
+        If you have any questions or need assistance, please feel free to
+        contact us at
+        <a href="mailto:ndricimrr@gmail.com">ndricimrr@gmail.com</a>.
+      </p>
+    </div>
+  </body>
+</html>
