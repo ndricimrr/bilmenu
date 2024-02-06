@@ -3,13 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cafeteria Menu</title>
+    <title>BilMenu - Bilkent University Cafeteria Menu</title>
+    <link rel="stylesheet" href="header.css" />
     <style>
       body {
         font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
         margin: 0;
         padding: 0;
-        background-color: #f4f4f4;
+        background-color: #e0b15a;
       }
 
       .container {
@@ -24,30 +25,46 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        transition: opacity 0.5s ease; /* Smooth opacity transition */
+        transition: opacity 0.2s ease; /* Smooth opacity transition */
       }
 
       .days-list button {
         margin: 10px;
         padding: 15px;
-        background-color: #3498db;
+        background-color: #db6034;
         color: #fff;
         border: none;
         cursor: pointer;
         font-size: 18px;
         width: 150px; /* Set a fixed width for all buttons */
-        transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth background color and transform transition */
+        transition: background-color 0.2s ease, transform 0.2s ease; /* Smooth background color and transform transition */
       }
 
       .menu-view {
         display: none;
-        transition: opacity 0.5s ease; /* Smooth opacity transition */
+        transition: opacity 0.2s ease; /* Smooth opacity transition */
       }
 
       .back-button {
-        margin-top: 20px;
-        background-color: #e74c3c;
-        transition: background-color 0.3s ease; /* Smooth background color transition */
+        text-decoration: none;
+        display: inline-block;
+        padding: 8px 16px;
+        background-color: #db9b34;
+        color: white;
+        font-weight: bold;
+        border-radius: 10%;
+        border: 1px solid rgba(255, 255, 255, 0.527);
+      }
+
+      .back-button:hover {
+        background-color: #f56f08;
+        color: rgb(255, 255, 255);
+      }
+
+      .back-button:active {
+        background-color: #c94d13;
+        transform: translateY(2px);
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
       }
 
       .menu-category {
@@ -56,12 +73,12 @@
         overflow: hidden;
         background-color: #fff;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        transition: transform 0.5s ease; /* Smooth transform transition */
+        transition: transform 0.2s ease; /* Smooth transform transition */
       }
 
       .menu-category h2 {
-        color: #333;
-        background-color: #3498db;
+        color: #ffffff;
+        background-color: #db6034;
         padding: 15px;
         margin: 0;
         font-size: 20px;
@@ -153,6 +170,39 @@
     </style>
   </head>
   <body>
+    <!-- Header -->
+    <header class="site-header">
+      <div class="nav-container">
+        <h1 class="page-title">
+          BilMenu |
+          <span style="font-size: medium"
+            ><i>Bil</i>kent University Daily Cafeteria <i>Menu</i></span
+          >
+        </h1>
+        <h2></h2>
+
+        <nav class="main-nav">
+          <ul class="nav-list">
+            <li>
+              <a
+                href="https://github.com/ndricimrr/bilmenu"
+                class="github-logo"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <!-- Replace 'github-mark.png' with your actual image file -->
+                Github Project
+                <img src="github-mark.png" alt="GitHub Logo" />
+              </a>
+            </li>
+            <li><a href="#contributions">Contributions</a></li>
+            <li><a href="#privacy-policy">Privacy Policy</a></li>
+          </ul>
+          <button class="mobile-menu-toggle">&#9776;</button>
+        </nav>
+      </div>
+    </header>
+    <!-- Page Container -->
     <div class="container">
       <div class="days-list" id="daysList">
         <button onclick="showMenu('Monday')">Monday</button>
@@ -165,9 +215,7 @@
       </div>
 
       <div class="menu-view" id="menuView">
-        <div class="back-button">
-          <button onclick="goBack()">Back</button>
-        </div>
+        <a href="#" class="back-button" onclick="goBack()"> &#8249; Back</a>
 
         <div class="menu-category">
           <h2>Lunch Menu</h2>
@@ -199,6 +247,35 @@
       const menuView = document.getElementById("menuView");
       const modal = document.getElementById("modal");
       const modalContent = document.getElementById("modalContent");
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const mobileMenuToggle = document.querySelector(".mobile-menu-toggle");
+        const navList = document.querySelector(".nav-list");
+
+        mobileMenuToggle.addEventListener("click", function () {
+          if (window.innerWidth <= 768) {
+            navList.classList.toggle("show-mobile");
+          }
+        });
+
+        // Close mobile menu when clicking outside of it
+        document.addEventListener("click", function (event) {
+          const isClickInside =
+            navList.contains(event.target) ||
+            mobileMenuToggle.contains(event.target);
+
+          if (!isClickInside && window.innerWidth <= 768) {
+            navList.classList.remove("show-mobile");
+          }
+        });
+
+        // Close mobile menu on window resize
+        window.addEventListener("resize", function () {
+          if (window.innerWidth > 768) {
+            navList.classList.remove("show-mobile");
+          }
+        });
+      });
 
       const menuData = {
         Lunch: [
