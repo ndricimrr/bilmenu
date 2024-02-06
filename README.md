@@ -22,5 +22,5 @@ Welcome to the BilMenu project! This open-source project aims to provide a simpl
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/cafeteria-menu-project.git
+   git clone https://github.com/ndricimrr/bilmenu.git
    ```
