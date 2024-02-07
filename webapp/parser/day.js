@@ -45,3 +45,5 @@ class Day {
     return this.secmeli;
   }
 }
+
+module.exports = Day;
