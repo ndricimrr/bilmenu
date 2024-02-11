@@ -384,8 +384,9 @@ const cheerio = require("cheerio");
 const url = "http://kafemud.bilkent.edu.tr/monu_eng.html";
 
 // Make a request to the URL
+
 axios
-  .get(url)
+  .get(url, { responseType: "arraybuffer", responseEncoding: "utf-8" })
   .then((response) => {
     // Parse HTML using cheerio
     const $ = cheerio.load(response.data);
@@ -396,15 +397,21 @@ axios
     $("tbody tr").each((index, element) => {
       const day = $(element).find("td:first-child").text().trim();
 
-      // Split lunch dishes into an array of strings
-      const lunchDishes = $(element)
+      // Extract lunch dishes text
+      const lunchDishes = [];
+      $(element)
         .find("td:nth-child(2)")
-        .text()
-        .trim()
-        .split("\n")
-        .map((dish) => dish.trim())
-        .filter(Boolean); // Remove empty strings
+        .find("font")
+        .each((idx, dishElement) => {
+          let dishText = $(dishElement).text().trim();
+          const additionalInfo = $(dishElement).next("i").text().trim();
+          if (additionalInfo) {
+            dishText += " / " + additionalInfo.replace(/[\n\t]+/g, " ");
+          }
+          lunchDishes.push(dishText.replace(/[\n\t]+/g, " "));
+        });
 
+      // Extract dinner dishes text
       const dinnerDishes = $(element).find("td:nth-child(3)").text().trim();
 
       data.push({ day, lunchDishes, dinnerDishes });
