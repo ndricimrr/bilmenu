@@ -395,7 +395,15 @@ axios
     const data = [];
 
     $("tbody tr").each((index, element) => {
-      const day = $(element).find("td:first-child").text().trim();
+      let day = $(element).find("td:first-child").text().trim();
+
+      // remove spaces
+      day = day.replace(/\s+/g, " ").trim();
+
+      // Pick only date and skip DoW string
+      day = /^\d+\.\d+\.\d{4}/.test(day)
+        ? day.match(/^\d+\.\d+\.\d{4}/)[0]
+        : null;
 
       // Extract lunch dishes text
       const lunchDishes = [];
@@ -408,6 +416,8 @@ axios
           if (additionalInfo) {
             dishText += " / " + additionalInfo.replace(/[\n\t]+/g, " ");
           }
+          dishText = dishText.replace(/\s+/g, " ").trim();
+
           lunchDishes.push(dishText.replace(/[\n\t]+/g, " "));
         });
 
