@@ -477,8 +477,6 @@ axios
 
           if (index <= 13) {
             let alternativeDishes = [];
-
-            let dinnerDishes = [];
             if (index % 2 !== 0) {
               $(element)
                 .find("td:nth-child(2)")
