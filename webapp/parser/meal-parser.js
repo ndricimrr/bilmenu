@@ -379,17 +379,23 @@
 
 const axios = require("axios");
 const cheerio = require("cheerio");
-
 // URL of the HTML page
 const url = "http://kafemud.bilkent.edu.tr/monu_eng.html";
 
 // Make a request to the URL
 
+const { TextDecoder } = require("util");
+
 axios
-  .get(url, { responseType: "arraybuffer", responseEncoding: "utf-8" })
+  .get(url, {
+    responseType: "arraybuffer",
+  })
   .then((response) => {
+    const decoder = new TextDecoder("ISO-8859-9"); // Assuming ISO-8859-9 (Turkish) encoding
+    const responseData = decoder.decode(response.data);
+
     // Parse HTML using cheerio
-    const $ = cheerio.load(response.data);
+    const $ = cheerio.load(responseData);
 
     // Extract information from the table
     const data = [];
@@ -427,7 +433,12 @@ axios
 
                       dishText = dishText.replace(/\s+/g, " ").trim();
                       dishText = dishText.replace(/[\n\t]+/g, " ");
-                      lunchDishes.push(dishText.replace(/[\n\t]+/g, " "));
+                      const tr_en = dishText.split("/");
+
+                      lunchDishes.push({
+                        tr: tr_en[0],
+                        en: tr_en[1],
+                      });
                     }
                   });
                 });
@@ -448,7 +459,13 @@ axios
 
                       dishText = dishText.replace(/\s+/g, " ").trim();
                       dishText = dishText.replace(/[\n\t]+/g, " ");
-                      dinnerDishes.push(dishText.replace(/[\n\t]+/g, " "));
+
+                      const tr_en = dishText.split("/");
+
+                      dinnerDishes.push({
+                        tr: tr_en[0],
+                        en: tr_en[1],
+                      });
                     }
                   });
                 });
@@ -492,7 +509,13 @@ axios
 
                     dishText = dishText.replace(/\s+/g, " ").trim();
                     dishText = dishText.replace(/[\n\t]+/g, " ");
-                    alternativeDishes.push(dishText.replace(/[\n\t]+/g, " "));
+
+                    const tr_en = dishText.split("/");
+
+                    alternativeDishes.push({
+                      tr: tr_en[0],
+                      en: tr_en[1],
+                    });
                   });
                 });
               // Extract lunch dishes text
@@ -508,7 +531,7 @@ axios
       fixMenu: data,
       alternativeMenu: alternativeData,
     };
-    console.log(result);
+    console.log(JSON.stringify(result));
   })
   .catch((error) => {
     console.error("Error fetching HTML:", error);
