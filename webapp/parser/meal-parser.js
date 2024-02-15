@@ -460,8 +460,57 @@ axios
       }
     );
 
+    let alternativeData = [];
+
+    $(".icerik > tbody > tr:nth-child(3) > td > table > tbody > tr").each(
+      (index, element) => {
+        if (index > 0) {
+          let day = $(element).find("td:first-child").text().trim();
+
+          // remove spaces
+          day = day.replace(/\s+/g, " ").trim();
+
+          // Pick only date and skip DoW string
+          day = /^\d+\.\d+\.\d{4}/.test(day)
+            ? day.match(/^\d+\.\d+\.\d{4}/)[0]
+            : null;
+
+          if (index <= 13) {
+            let alternativeDishes = [];
+
+            let dinnerDishes = [];
+            if (index % 2 !== 0) {
+              $(element)
+                .find("td:nth-child(2)")
+                .each((idx, dishElement) => {
+                  const meals = $(dishElement)
+                    .html()
+                    .split(/<br\s*\/?>/);
+
+                  let dishText;
+                  // Iterate over the parts
+                  meals.forEach((mealItemHTML, index) => {
+                    dishText = cheerio.load(mealItemHTML).root().text();
+
+                    dishText = dishText.replace(/\s+/g, " ").trim();
+                    dishText = dishText.replace(/[\n\t]+/g, " ");
+                    alternativeDishes.push(dishText.replace(/[\n\t]+/g, " "));
+                  });
+                });
+              // Extract lunch dishes text
+              alternativeData.push({ day, alternativeDishes });
+            }
+          }
+        }
+      }
+    );
+
     // Print the extracted data
-    console.log(data);
+    let result = {
+      fixMenu: data,
+      alternativeMenu: alternativeData,
+    };
+    console.log(result);
   })
   .catch((error) => {
     console.error("Error fetching HTML:", error);
