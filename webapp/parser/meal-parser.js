@@ -379,6 +379,7 @@
 
 const axios = require("axios");
 const cheerio = require("cheerio");
+
 // URL of the HTML page
 const url = "http://kafemud.bilkent.edu.tr/monu_eng.html";
 
