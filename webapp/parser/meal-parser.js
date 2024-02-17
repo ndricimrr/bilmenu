@@ -2,7 +2,7 @@
 // const cheerio = require("cheerio");
 
 // URL of the HTML page
-const url = "http://kafemud.bilkent.edu.tr/monu_eng.html";
+const url = "./test.html";
 
 // Make a request to the URL
 
