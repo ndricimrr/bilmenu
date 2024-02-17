@@ -1,0 +1,27 @@
+# name: Generate and Commit File
+
+# on:
+#   push:
+#     branches:
+#       - "*"
+
+# jobs:
+#   generate-and-commit:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v4
+
+#       - name: Run script to generate file
+#         run: |
+#           # Run the parser
+#           # ./webapp/parser/meal-parser.js
+
+#       - name: Commit changes
+#         run: |
+#           git config --local user.email "action@github.com"
+#           git config --local user.name "GitHub Action"
+#           git add .
+#           git commit -m "Generated file"
+#           git push
