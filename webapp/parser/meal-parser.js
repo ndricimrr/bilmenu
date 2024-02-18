@@ -4,8 +4,6 @@
 // URL of the HTML page
 const url = "./test.html";
 
-// Make a request to the URL
-
 // const { TextDecoder } = require("util");
 
 fetch(url)
