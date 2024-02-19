@@ -1,87 +1,80 @@
-// const axios = require("axios");
-// const cheerio = require("cheerio");
-
+const axios = require("axios");
+const cheerio = require("cheerio");
 // URL of the HTML page
 const url = "http://kafemud.bilkent.edu.tr/monu_eng.html";
 
-// Make a request to the URL
-
-// const { TextDecoder } = require("util");
-
+const { TextDecoder } = require("util");
 var mealPlanJSON = {};
 
-fetch(url)
-  .then((response) => response.arrayBuffer())
-  .then((buffer) => {
-    // Convert the ArrayBuffer to a Uint8Array
-    const uint8Array = new Uint8Array(buffer);
-    // Decode the Uint8Array using ISO-8859-9 encoding
-    const decoder = new TextDecoder("iso-8859-9");
-    const html = decoder.decode(uint8Array);
+axios
+  .get(url, {
+    responseType: "arraybuffer",
+  })
+  .then((response) => {
+    const decoder = new TextDecoder("ISO-8859-9"); // Assuming ISO-8859-9 (Turkish) encoding
+    const responseData = decoder.decode(response.data);
 
-    // Parse HTML using DOM methods or JSDOM
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(html, "text/html");
+    // Parse HTML using cheerio
+    const $ = cheerio.load(responseData);
 
     // Extract information from the table
     const lunchData = [];
     const dinnerData = [];
 
-    const rows = doc.querySelectorAll(
-      ".icerik > tbody > tr:nth-child(2) > td > table > tbody > tr"
-    );
-    rows.forEach((element, index) => {
-      if (index > 0) {
-        let date = element.querySelector("td:first-child").textContent.trim();
+    $(".icerik > tbody > tr:nth-child(2) > td > table > tbody > tr").each(
+      (index, element) => {
+        if (index > 0) {
+          let date = $(element).find("td:first-child").text().trim();
 
-        // remove spaces
-        date = date.replace(/\s+/g, " ").trim();
+          // remove spaces
+          date = date.replace(/\s+/g, " ").trim();
 
-        // Pick only date and skip DoW string
-        date = /^\d+\.\d+\.\d{4}/.test(date)
-          ? date.match(/^\d+\.\d+\.\d{4}/)[0]
-          : null;
+          // Pick only date and skip DoW string
+          date = /^\d+\.\d+\.\d{4}/.test(date)
+            ? date.match(/^\d+\.\d+\.\d{4}/)[0]
+            : null;
 
-        if (index <= 13) {
-          let lunchDishes = [];
+          if (index <= 13) {
+            let lunchDishes = [];
+            let dinnerDishes = [];
 
-          let dinnerDishes = [];
-          if (index % 2 !== 0) {
-            const dishElement = element.querySelector("td:nth-child(2)");
-            const meals = dishElement.innerHTML.split(/<br\s*\/?>/);
+            // TODO: Write why odd number needed
+            if (index % 2 !== 0) {
+              // Parse Lunch dishes
+              const dishElement = $(element).find("td:nth-child(2)");
+              const meals = $(dishElement)
+                .html()
+                .split(/<br\s*\/?>/);
 
-            let dishText;
-            // Iterate over the parts
-            meals.forEach((mealItemHTML, index) => {
-              if (index > 0) {
-                dishText = parser
-                  .parseFromString(mealItemHTML, "text/html")
-                  .documentElement.textContent.trim();
+              let dishText;
+              // Iterate over the parts
+              meals.forEach((mealItemHTML, index) => {
+                if (index > 0) {
+                  dishText = cheerio.load(mealItemHTML).root().text().trim();
 
-                dishText = dishText.replace(/\s+/g, " ").trim();
-                dishText = dishText.replace(/[\n\t]+/g, " ");
-                const tr_en = dishText.split("/");
+                  dishText = dishText.replace(/\s+/g, " ").trim();
+                  dishText = dishText.replace(/[\n\t]+/g, " ");
+                  const tr_en = dishText.split("/");
 
-                lunchDishes.push({
-                  tr: tr_en[0].trim(),
-                  en: tr_en[1].trim(),
-                });
-              }
-            });
+                  lunchDishes.push({
+                    tr: tr_en[0].trim(),
+                    en: tr_en[1].trim(),
+                  });
+                }
+              });
 
-            const nextElement = element.nextElementSibling;
+              // Parse Dinner Dishes
+              let nextElement = $(element).next().find("td:first-child");
 
-            if (nextElement) {
-              const dishesElement = nextElement.querySelector("td:first-child");
-              if (dishesElement) {
-                const meals = dishesElement.innerHTML.split(/<br\s*\/?>/);
+              if (nextElement) {
+                const meals = $(nextElement)
+                  .html()
+                  .split(/<br\s*\/?>/);
 
                 let dishText;
                 meals.forEach((mealItemHTML, index) => {
                   if (index > 0) {
-                    dishText = parser
-                      .parseFromString(mealItemHTML, "text/html")
-                      .documentElement.textContent.trim();
+                    dishText = cheerio.load(mealItemHTML).root().text().trim();
 
                     dishText = dishText.replace(/\s+/g, " ").trim();
                     dishText = dishText.replace(/[\n\t]+/g, " ");
@@ -95,74 +88,76 @@ fetch(url)
                   }
                 });
               }
+
+              // add length too for easier debugging
+              const length_lunch = lunchDishes.length;
+              const length_dinner = dinnerDishes.length;
+
+              // Extract lunch dishes text
+              lunchData.push({
+                date,
+                lunchDishes,
+                length_lunch,
+              });
+
+              dinnerData.push({
+                date,
+                dinnerDishes,
+                length_dinner,
+              });
             }
-
-            // add length too for easier debugging
-            const length_lunch = lunchDishes.length;
-            const length_dinner = dinnerDishes.length;
-
-            // Extract lunch dishes text
-            lunchData.push({
-              date,
-              lunchDishes,
-              length_lunch,
-            });
-
-            dinnerData.push({
-              date,
-              dinnerDishes,
-              length_dinner,
-            });
           }
         }
       }
-    });
+    );
 
     const alternativeData = [];
 
-    const rowsAlternative = doc.querySelectorAll(
-      ".icerik > tbody > tr:nth-child(3) > td > table > tbody > tr"
-    );
+    $(".icerik > tbody > tr:nth-child(3) > td > table > tbody > tr").each(
+      (index, element) => {
+        if (index > 0) {
+          let date = $(element).find("td:first-child").text().trim();
 
-    rowsAlternative.forEach((element, index) => {
-      if (index > 0) {
-        let date = element.querySelector("td:first-child").textContent.trim();
+          // remove spaces
+          date = date.replace(/\s+/g, " ").trim();
 
-        // remove spaces
-        date = date.replace(/\s+/g, " ").trim();
+          // Pick only date and skip DoW string
+          date = /^\d+\.\d+\.\d{4}/.test(date)
+            ? date.match(/^\d+\.\d+\.\d{4}/)[0]
+            : null;
 
-        // Pick only date and skip DoW string
-        date = /^\d+\.\d+\.\d{4}/.test(date)
-          ? date.match(/^\d+\.\d+\.\d{4}/)[0]
-          : null;
+          let alternativeDishes = [];
+          const dishElement = $(element).find("td:nth-child(2)");
+          const meals = $(dishElement)
+            .html()
+            .split(/<br\s*\/?>/);
 
-        let alternativeDishes = [];
-        const dishElement = element.querySelector("td:nth-child(2)");
-        const meals = dishElement.innerHTML.split(/<br\s*\/?>/);
+          let dishText;
+          // Iterate over the parts
+          meals.forEach((mealItemHTML, index) => {
+            dishText = dishText = cheerio
+              .load(mealItemHTML)
+              .root()
+              .text()
+              .trim();
 
-        let dishText;
-        // Iterate over the parts
-        meals.forEach((mealItemHTML, index) => {
-          dishText = parser
-            .parseFromString(mealItemHTML, "text/html")
-            .documentElement.textContent.trim();
+            dishText = dishText.replace(/\s+/g, " ").trim();
+            dishText = dishText.replace(/[\n\t]+/g, " ");
 
-          dishText = dishText.replace(/\s+/g, " ").trim();
-          dishText = dishText.replace(/[\n\t]+/g, " ");
+            const tr_en = dishText.split("/");
 
-          const tr_en = dishText.split("/");
-
-          alternativeDishes.push({
-            tr: tr_en[0].trim(),
-            en: tr_en[1].trim(),
+            alternativeDishes.push({
+              tr: tr_en[0].trim(),
+              en: tr_en[1].trim(),
+            });
           });
-        });
-        const length = alternativeDishes.length;
+          const length = alternativeDishes.length;
 
-        // Extract lunch dishes text
-        alternativeData.push({ date, alternativeDishes, length });
+          // Extract lunch dishes text
+          alternativeData.push({ date, alternativeDishes, length });
+        }
       }
-    });
+    );
 
     // Print the extracted data
     let result = {
