@@ -4,7 +4,8 @@ on:
   schedule:
     # Run every Monday at 8:00 AM Turkish time (EET)
     # - cron: "0 5 * * 1" # 5:00 UTC = 8:00 EET
-    - cron: "47 22 * * 2" # 22:47 UTC every Tuesday
+    - cron: "50 19 * * 2" # 19:50 UTC = 22:50 EET every Tuesday
+
   push:
     branches:
       - main
