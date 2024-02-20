@@ -6,7 +6,10 @@
     <title>BilMenu - Bilkent University Cafeteria Menu</title>
     <link rel="stylesheet" href="header.css" />
     <script src="burger.js"></script>
-    <script src="meal-parser.js"></script>
+    <!-- <script src="meal-parser.js"></script> -->
+    <script src="utilities.js"></script>
+
+    <script src="fetchMealPlan.js"></script>
 
     <style>
       body {
@@ -259,30 +262,6 @@
         Friday: 4,
         Saturday: 5,
         Sunday: 6,
-      };
-
-      const menuData = {
-        Lunch: [
-          "Kırmızı Mercimek Çorba.jpg",
-          "Krem Şokola.jpg",
-          "Kavun.jpg",
-          "Kalburabastı.jpg",
-          "İncirli Keşkül.jpg",
-        ],
-        Dinner: [
-          "Cacık.jpg",
-          "Ekler Pasta.jpg",
-          "Elbasan Köfte.jpg",
-          "Elbasan Tava.jpg",
-          "Elma.jpg",
-        ],
-        Alternative: [
-          "Erik.jpg",
-          "Düğün Çorba.jpg",
-          "Et Sote (Dilim Patates).jpg",
-          "Börülce Çorba.jpg",
-          "Etli Türlü.jpg",
-        ],
       };
 
       function getFixLunchMealFromJSON(day) {

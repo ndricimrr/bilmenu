@@ -1,10 +1,23 @@
 const axios = require("axios");
 const cheerio = require("cheerio");
-// URL of the HTML page
 const url = "http://kafemud.bilkent.edu.tr/monu_eng.html";
-
+const fs = require("fs");
 const { TextDecoder } = require("util");
-var mealPlanJSON = {};
+
+const { getCurrentWeekFileName } = require("./utilities_node");
+
+function writeResultToJSONFIle(content) {
+  const filename = getCurrentWeekFileName();
+
+  // Write the result object to a JSON file
+  fs.writeFile(filename, JSON.stringify(content, null, 2), (err) => {
+    if (err) {
+      console.error("Error writing to JSON file:", err);
+    } else {
+      console.log(`Data written to ${filename} successfully.`);
+    }
+  });
+}
 
 axios
   .get(url, {
@@ -165,8 +178,9 @@ axios
       fixMenuDinner: dinnerData,
       alternativeMenu: alternativeData,
     };
+
     console.log(result);
-    mealPlanJSON = result;
+    writeResultToJSONFIle(result);
   })
   .catch((error) => {
     console.error("Error fetching HTML:", error);

@@ -1,27 +1,27 @@
-# name: Generate and Commit File
+name: Generate and Commit File
 
-# on:
-#   push:
-#     branches:
-#       - "*"
+on:
+  push:
+    branches:
+      - "*"
 
-# jobs:
-#   generate-and-commit:
-#     runs-on: ubuntu-latest
+jobs:
+  generate-and-commit:
+    runs-on: ubuntu-latest
 
-#     steps:
-#       - name: Checkout repository
-#         uses: actions/checkout@v4
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-#       - name: Run script to generate file
-#         run: |
-#           # Run the parser
-#           # ./webapp/parser/meal-parser.js
+      - name: Run script to generate file
+        run: |
+          # Run the parser and write to file json
+          node webapp/meal-parser-node.js
 
-#       - name: Commit changes
-#         run: |
-#           git config --local user.email "action@github.com"
-#           git config --local user.name "GitHub Action"
-#           git add .
-#           git commit -m "Generated file"
-#           git push
+      - name: Commit changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          git commit -m "Generated file"
+          git push
