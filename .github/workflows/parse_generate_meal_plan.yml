@@ -3,8 +3,7 @@ name: Generate and Commit File
 on:
   schedule:
     # Run every Monday at 8:00 AM Turkish time (EET)
-    # - cron: "0 5 * * 1" # 5:00 UTC = 8:00 EET
-    - cron: "9 21 * * 2" # 19:50 UTC = 22:50 EET every Tuesday
+    - cron: "0 5 * * 1" # 5:00 UTC = 8:00 EET
 
   push:
     branches:
