@@ -15,6 +15,10 @@ jobs:
 
       - name: Run script to generate file
         run: |
+          npm install
+
+      - name: Run script to generate file
+        run: |
           # Run the parser and write to file json
           node webapp/meal-parser-node.js
 
