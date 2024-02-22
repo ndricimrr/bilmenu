@@ -1,6 +1,9 @@
 name: Deploy CI/CD
 
 on:
+  schedule:
+    # Run every Monday at 8:20 AM Turkish time (EET)
+    - cron: "20 5 * * 1" # 5:20 UTC = 8:20 EET
   push:
     branches:
       - main # Change this to your main branch
