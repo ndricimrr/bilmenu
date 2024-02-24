@@ -17,6 +17,5 @@ function getYear() {
 
 function getCurrentWeekFileName() {
   const weekOfYear = getWeekOfYear();
-  console.log(getWeekOfYear(), "week");
   return `mealplans/meal_plan_week_${weekOfYear}_${getYear()}.json`;
 }
