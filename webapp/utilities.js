@@ -1,11 +1,13 @@
-// Function to calculate week of the year
 function getWeekOfYear() {
-  const date = new Date();
-  const onejan = new Date(date.getFullYear(), 0, 1);
-  const millisecsInDay = 86400000;
-  return Math.ceil(
-    ((date - onejan) / millisecsInDay + onejan.getDay() + 1) / 7
-  );
+  var date = new Date();
+  // Set to nearest Thursday: current date + 4 - current day number
+  // Make Sunday's day number 7
+  date.setUTCDate(date.getUTCDate() + 4 - (date.getUTCDay() || 7));
+  // Get first day of year
+  var yearStart = new Date(Date.UTC(date.getUTCFullYear(), 0, 1));
+  // Calculate full weeks to nearest Thursday
+  var weekNo = Math.ceil(((date - yearStart) / 86400000 + 1) / 7);
+  return weekNo;
 }
 
 function getYear() {
