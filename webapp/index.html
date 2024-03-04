@@ -196,7 +196,6 @@
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <!-- Replace 'github-mark.png' with your actual image file -->
                 Github Project
                 <img src="github-mark.png" alt="GitHub Logo" />
               </a>
@@ -360,7 +359,7 @@
           const mealItem = document.createElement("div");
           mealItem.className = "meal-item";
           mealItem.innerHTML = `
-        <img src="assets/images/meals/${item}" alt="Meal Image">
+        <img src="assets/images/meals/${item}" onerror="this.onerror=null; this.src='assets/images/misc/missing-meal.jpg'" alt="Meal Image Here">
         <div class="meal-label">${item}</div>
       `;
           mealItem.addEventListener("click", () => openModal(item));
@@ -383,7 +382,7 @@
         // Display the selected meal item in a larger modal
         modalContent.innerHTML = `
           <button class="close-button" onclick="closeModal()">X</button>
-          <img src="assets/images/meals/${item}" alt="Meal Image">
+          <img src="assets/images/meals/${item}" onerror="this.onerror=null; this.src='assets/images/misc/missing-meal.jpg'" alt="Meal Image">
           <h2>${item}</h2>
         `;
 
