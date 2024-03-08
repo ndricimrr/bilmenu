@@ -20,6 +20,8 @@ Example:
 | the picture's brightness is too low                                                                         |
 | <img src="sample_correct/incorrect_sample_missing_3.jpg" alt="Sample 3 Incorrect" width="390" height="450"> |
 
+### Several options given below on how to submit. Pick whatever is feasible to you.
+
 ### [Option 1] Create a PR and commit the new missing image to it
 
 Please adhere to the PR Titles following the examples below. Make sure to include the Turkish characters also if you can. Omit the english name of the meal.
@@ -34,9 +36,9 @@ Rename the image file to the exact meal name, add it to the `/missing-images` fo
 
 <br/>
 
-### [Option 2] Attach the image to the issue here
+### [Option 2] Attach the image to the issue [here](https://github.com/ndricimrr/bilmenu/issues/27)
 
-Follow in-issue instructions to add the image there, if creating a PR is not feasible for you.
+Follow [this issue](https://github.com/ndricimrr/bilmenu/issues/27) instructions to add the image there, if creating a PR is not feasible for you.
 
 <br/>
 
