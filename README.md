@@ -25,6 +25,6 @@ Welcome to the BilMenu project! This open-source project aims to provide a simpl
    git clone https://github.com/ndricimrr/bilmenu.git
    ```
 
-### Current Status UI Web (In Progress) Go to -> https://ndricimrr.github.io/bilmenu/
+### Current Status UI Web (In Progress) Go to -> www.bilmenu.com
 
 ![User Interface](image.png)
