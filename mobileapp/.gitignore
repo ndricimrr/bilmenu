@@ -1,0 +1,56 @@
+# Built application files
+*.apk
+*.ap_
+
+# Files for the Dalvik VM
+*.dex
+
+# Java class files
+*.class
+
+# Generated files
+bin/
+gen/
+build/
+
+# Gradle files
+.gradle/
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries
+
+# Android Studio
+*.iml
+/.idea/modules.xml
+/.idea/gradle.xml
+/.idea/compiler.xml
+/.idea/caches
+/.idea/jarRepositories.xml
+.idea/
+
+# Proguard
+proguard/
+
+# Logs and crash reports
+*.log
+build/
+crashlytics-build.properties
+
+# Local configuration file (sdk path, etc)
+local.properties
+
+# Windows thumbnail db
+Thumbs.db
+
+# OSX folder attributes
+.DS_Store
+
+# Android Parcelable
+*.parcelable
+
+/captures
+
+.externalNativeBuild
+.cxx
+
+app/release
