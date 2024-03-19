@@ -42,7 +42,7 @@ Follow [this issue](https://github.com/ndricimrr/bilmenu/issues/27) instructions
 
 <br/>
 
-### [Option 3] Send the image as an email
+### [Option 3] Send the image as an email to us
 
 Send an email to <a href="mailto:ndricimrr@gmail.com">ndricimrr@gmail.com</a>.
 
