@@ -31,7 +31,7 @@ Welcome to the BilMenu project! This open-source project aims to provide a simpl
 
 ## Contributions
 
-Contributions are welcomed are encouraged.
+Contributions are welcomed and encouraged.
 
 - Contribute Images to the image dataset - [Guideline](/CONTRIBUTING_IMAGES.md)
 - Code Contribution -[Guideline](/CONTRIBUTING_GUIDELINES.md)
