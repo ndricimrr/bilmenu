@@ -22,11 +22,9 @@ Thank you for considering contributing to our project! Please follow these simpl
 2. Reference related issues.
 3. Be responsive to feedback during the review.
 
-## Style and Testing
+## Style
 
 - Follow the project's coding style.
-- Write tests for new features or changes.
-- Ensure existing tests pass.
 
 ## Documentation
 
