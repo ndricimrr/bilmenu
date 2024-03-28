@@ -28,3 +28,10 @@ Welcome to the BilMenu project! This open-source project aims to provide a simpl
 ### Current Status UI Web (In Progress) Go to -> www.bilmenu.com
 
 ![User Interface](image.png)
+
+## Contributions
+
+Contributions are welcomed are encouraged.
+
+- Contribute Images to the image dataset - [Guideline](/CONTRIBUTING_IMAGES.md)
+- Code Contribution -[Guideline](/CONTRIBUTING_GUIDELINES.md)
