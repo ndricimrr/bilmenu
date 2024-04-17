@@ -30,12 +30,16 @@ axios
     // Parse HTML using cheerio
     const $ = cheerio.load(responseData);
 
+    console.log("---------------->", responseData);
+
     // Extract information from the table
     const lunchData = [];
     const dinnerData = [];
 
     $(".icerik > tbody > tr:nth-child(2) > td > table > tbody > tr").each(
       (index, element) => {
+        console.log("---------------->");
+
         if (index > 0) {
           let date = $(element).find("td:first-child").text().trim();
 
@@ -61,6 +65,7 @@ axios
 
               let dishText;
               // Iterate over the parts
+
               meals.forEach((mealItemHTML, index) => {
                 if (index > 0) {
                   dishText = cheerio.load(mealItemHTML).root().text().trim();
@@ -73,6 +78,7 @@ axios
                     tr: tr_en[0].trim(),
                     en: tr_en[1].trim(),
                   });
+                  console.log(111, lunchDishes);
                 }
               });
 
