@@ -3,7 +3,8 @@ name: Generate and Commit File
 on:
   schedule:
     # Run every Monday at 8:00 AM Turkish time (EET)
-    - cron: "0 5 * * 1" # 5:00 UTC = 8:00 EET
+    - cron: "0 8 * * 1" # 5:00 UTC = 8:00 EET
+  workflow_dispatch:
 
 jobs:
   generate-and-commit:
