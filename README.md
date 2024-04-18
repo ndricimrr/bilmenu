@@ -13,6 +13,11 @@ Welcome to the BilMenu project! This open-source project aims to provide a simpl
 
 ## Getting Started
 
+## Information
+- Site that is parsed: http://kafemud.bilkent.edu.tr/monu_eng.html
+- Site where our parsing ends up at: https://www.bilmenu.com/mealplans/meal_plan_week_[Insert Week Number]_2024.json
+
+
 ### Prerequisites
 
 - Web browser (Chrome, Firefox, Safari, etc.)
