@@ -15,7 +15,7 @@ Welcome to the BilMenu project! This open-source project aims to provide a simpl
 
 ## Information
 - Site that is parsed: http://kafemud.bilkent.edu.tr/monu_eng.html
-- Site where our parsing ends up at: https://www.bilmenu.com/mealplans/meal_plan_week_[Insert Week Number]_2024.json
+- After parsing the result is served on our side on this json file: `https://www.bilmenu.com/mealplans/meal_plan_week_[Insert Week Number]_2024.json`
 
 
 ### Prerequisites
