@@ -137,7 +137,7 @@ axios
 
       const alternativeData = [];
 
-      // Select the second to last element with class name "MsoNormalTable"
+      // Select the last element with class name "MsoNormalTable" which corresponds to alternative menu table
       const lastMsoNormalTable = MsoNormalTableElements.eq(-1);
 
       // Query its tbody > tr
