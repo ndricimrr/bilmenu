@@ -1,5 +1,3 @@
-// NOT applicable since April 2024
-
 const axios = require("axios");
 const cheerio = require("cheerio");
 const url = "http://kafemud.bilkent.edu.tr/monu_eng.html";
@@ -29,19 +27,28 @@ axios
     const decoder = new TextDecoder("ISO-8859-9"); // Assuming ISO-8859-9 (Turkish) encoding
     const responseData = decoder.decode(response.data);
 
+    console.log(responseData);
+
     // Parse HTML using cheerio
     const $ = cheerio.load(responseData);
-
-    console.log("---------------->", responseData);
 
     // Extract information from the table
     const lunchData = [];
     const dinnerData = [];
 
-    $(".icerik > tbody > tr:nth-child(2) > td > table > tbody > tr").each(
-      (index, element) => {
-        console.log("---------------->");
+    // Select all DOM elements with class name "Jimmy"
+    const MsoNormalTableElements = $(".MsoNormalTable");
 
+    // Check if there are at least 5 elements with class name "MsoNormalTable"
+    // Simple search on Inspect Element reveals 5 on DOM thats why
+    if (MsoNormalTableElements.length === 5) {
+      // Select the second to last element with class name "MsoNormalTable"
+      const secondToLastMsoNormalTable = MsoNormalTableElements.eq(-2);
+
+      // Query its tbody > tr
+      const secondToLasTbodyTr = secondToLastMsoNormalTable.find("tbody > tr");
+
+      secondToLasTbodyTr.each((index, element) => {
         if (index > 0) {
           let date = $(element).find("td:first-child").text().trim();
 
@@ -80,7 +87,6 @@ axios
                     tr: tr_en[0].trim(),
                     en: tr_en[1].trim(),
                   });
-                  console.log(111, lunchDishes);
                 }
               });
 
@@ -129,13 +135,17 @@ axios
             }
           }
         }
-      }
-    );
+      });
 
-    const alternativeData = [];
+      const alternativeData = [];
 
-    $(".icerik > tbody > tr:nth-child(3) > td > table > tbody > tr").each(
-      (index, element) => {
+      // Select the last element with class name "MsoNormalTable" which corresponds to alternative menu table
+      const lastMsoNormalTable = MsoNormalTableElements.eq(-1);
+
+      // Query its tbody > tr
+      const lastTbodyTr = lastMsoNormalTable.find("tbody > tr");
+
+      lastTbodyTr.each((index, element) => {
         if (index > 0) {
           let date = $(element).find("td:first-child").text().trim();
 
@@ -177,18 +187,20 @@ axios
           // Extract lunch dishes text
           alternativeData.push({ date, alternativeDishes, length });
         }
-      }
-    );
+      });
 
-    // Print the extracted data
-    let result = {
-      fixMenuLunch: lunchData,
-      fixMenuDinner: dinnerData,
-      alternativeMenu: alternativeData,
-    };
+      // Print the extracted data
+      let result = {
+        fixMenuLunch: lunchData,
+        fixMenuDinner: dinnerData,
+        alternativeMenu: alternativeData,
+      };
 
-    console.log(result);
-    writeResultToJSONFIle(result);
+      console.log(result);
+      // writeResultToJSONFIle(result);
+    } else {
+      // console.error("Failed to parse: Not Enough MsoNormalTableElements");
+    }
   })
   .catch((error) => {
     console.error("Error fetching HTML:", error);

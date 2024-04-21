@@ -1,0 +1,32 @@
+name: Generate and Commit File
+
+on:
+  schedule:
+    # Run every day at 11:00 AM Turkish time (EET)
+    - cron: "0 8 * * *" # 8:00 UTC = 11:00 EET
+  workflow_dispatch:
+
+jobs:
+  generate-and-commit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install packages
+        run: |
+          npm install
+
+      - name: Run script to generate file
+        run: |
+          # Run the parser and write to file json
+          node webapp/save-snapshot-node.js
+
+      - name: Commit changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          git commit -m "Generated file"
+          git push
