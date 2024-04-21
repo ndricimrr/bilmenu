@@ -13,7 +13,8 @@ axios
     const decoder = new TextDecoder("ISO-8859-9"); // Assuming ISO-8859-9 (Turkish) encoding
     const responseData = decoder.decode(response.data);
 
-    const fileName = "kafemud_html_snapshots/" + getWeekAndDate() + ".html";
+    const fileName =
+      "kafemud_daily_html_snapshots/" + getWeekAndDate() + ".html";
 
     try {
       fs.writeFileSync(fileName, responseData);
