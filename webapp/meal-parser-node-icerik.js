@@ -182,7 +182,6 @@ axios
       alternativeMenu: alternativeData,
     };
 
-    console.log(result);
     writeResultToJSONFIle(result);
   })
   .catch((error) => {
