@@ -1,4 +1,4 @@
-name: Generate HTML Snapshot and Commit File
+name: Generate Daily HTML & JSON Snapshot and Commit File
 
 on:
   schedule:
@@ -27,6 +27,8 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
+          git status
+          git diff
           git add .
           git commit -m "Generated file"
           git push

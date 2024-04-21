@@ -11,12 +11,34 @@ function getWeekOfYear() {
   return weekNo;
 }
 
+// Example 24-02-2024
+function getCurrentDate() {
+  // Get current date
+  const today = new Date();
+  const day = today.getDate().toString().padStart(2, "0");
+  const month = (today.getMonth() + 1).toString().padStart(2, "0"); // January is 0!
+  const year = today.getFullYear();
+  return `${day}-${month}-${year}`;
+}
+
+function getWeekAndDate() {
+  return "Week-" + getWeekOfYear() + "_" + getCurrentDate();
+}
+
+function getWeekAndDateJSONFileName() {
+  return "kafemud_daily_parsing_snapshots/" + getWeekAndDate() + ".json";
+}
+
 function getYear() {
   const date = new Date();
   return date.getFullYear();
 }
 
-function getCurrentWeekFileName() {
+/**
+ * Gets the filename for the parsed resulting json to be written into
+ * @returns webapp/mealplans/meal_plan_week_${weekOfYear}_${getYear()}.json
+ */
+function getCurrentWeekJSONFileName() {
   const weekOfYear = getWeekOfYear();
   return `webapp/mealplans/meal_plan_week_${weekOfYear}_${getYear()}.json`;
 }
@@ -24,5 +46,12 @@ function getCurrentWeekFileName() {
 // Export functions based on environment
 if (typeof module !== "undefined" && typeof module.exports !== "undefined") {
   // Node.js/CommonJS environment
-  module.exports = { getWeekOfYear, getYear, getCurrentWeekFileName };
+  module.exports = {
+    getWeekOfYear,
+    getYear,
+    getCurrentWeekJSONFileName,
+    getCurrentDate,
+    getWeekAndDate,
+    getWeekAndDateJSONFileName,
+  };
 }
