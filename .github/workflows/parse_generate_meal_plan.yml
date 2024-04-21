@@ -1,4 +1,4 @@
-name: Generate and Commit File
+name: Generate Parsed JSON and Commit File
 
 on:
   schedule:
