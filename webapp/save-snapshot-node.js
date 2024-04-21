@@ -17,7 +17,10 @@ axios
       "kafemud_daily_html_snapshots/" + getWeekAndDate() + ".html";
 
     try {
-      fs.writeFileSync(fileName, responseData);
+      fs.writeFileSync(
+        "kafemud_daily_html_snapshots/" + fileName,
+        responseData
+      );
       console.log(
         "\x1b[32m\u2713\x1b[0m",
         `File \x1b[33m'${fileName}'\x1b[0m has been created successfully.`
