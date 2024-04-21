@@ -1,13 +1,15 @@
+// Only applicable for a html which contains the "MsoNormalTable" css class in it. Check inspect element of the URL below or /kafemud_html_snapshots
+
 const axios = require("axios");
 const cheerio = require("cheerio");
 const url = "http://kafemud.bilkent.edu.tr/monu_eng.html";
 const fs = require("fs");
 const { TextDecoder } = require("util");
 
-const { getCurrentWeekFileName } = require("./utilities_node");
+const { getCurrentWeekJSONFileName } = require("./utilities_node");
 
 function writeResultToJSONFIle(content) {
-  const filename = getCurrentWeekFileName();
+  const filename = getCurrentWeekJSONFileName();
 
   // Write the result object to a JSON file
   fs.writeFile(filename, JSON.stringify(content, null, 2), (err) => {
@@ -27,8 +29,6 @@ axios
     const decoder = new TextDecoder("ISO-8859-9"); // Assuming ISO-8859-9 (Turkish) encoding
     const responseData = decoder.decode(response.data);
 
-    console.log(responseData);
-
     // Parse HTML using cheerio
     const $ = cheerio.load(responseData);
 
@@ -38,6 +38,10 @@ axios
 
     // Select all DOM elements with class name "Jimmy"
     const MsoNormalTableElements = $(".MsoNormalTable");
+
+    let lunchDishes = [];
+    let dinnerDishes = [];
+    let alternativeData = [];
 
     // Check if there are at least 5 elements with class name "MsoNormalTable"
     // Simple search on Inspect Element reveals 5 on DOM thats why
@@ -61,9 +65,6 @@ axios
             : null;
 
           if (index <= 13) {
-            let lunchDishes = [];
-            let dinnerDishes = [];
-
             // TODO: Write why odd number needed
             if (index % 2 !== 0) {
               // Parse Lunch dishes
@@ -137,8 +138,6 @@ axios
         }
       });
 
-      const alternativeData = [];
-
       // Select the last element with class name "MsoNormalTable" which corresponds to alternative menu table
       const lastMsoNormalTable = MsoNormalTableElements.eq(-1);
 
@@ -188,19 +187,17 @@ axios
           alternativeData.push({ date, alternativeDishes, length });
         }
       });
-
-      // Print the extracted data
-      let result = {
-        fixMenuLunch: lunchData,
-        fixMenuDinner: dinnerData,
-        alternativeMenu: alternativeData,
-      };
-
-      console.log(result);
-      // writeResultToJSONFIle(result);
-    } else {
-      // console.error("Failed to parse: Not Enough MsoNormalTableElements");
     }
+
+    // Print the extracted data
+    let result = {
+      fixMenuLunch: lunchData,
+      fixMenuDinner: dinnerData,
+      alternativeMenu: alternativeData,
+    };
+
+    console.log(result);
+    writeResultToJSONFIle(result);
   })
   .catch((error) => {
     console.error("Error fetching HTML:", error);
