@@ -7,6 +7,9 @@
     />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BilMenu - Bilkent University Cafeteria Menu</title>
+
+    <link rel="icon" type="image/x-icon" href="logo.ico" />
+
     <link rel="stylesheet" href="header.css" />
     <script src="burger.js"></script>
     <!-- <script src="meal-parser.js"></script> -->
@@ -182,12 +185,17 @@
     <!-- Header -->
     <header class="site-header">
       <div class="nav-container">
-        <h1 class="page-title" onclick="goHome()" title="Go Home">
-          <img src="assets/images/logos/logo.jpg" alt="GitHub Logo" />
-          BilMenu |
-          <span style="font-size: medium"><i>Bil</i>kent Cafeteria</span>
-        </h1>
-        <h2></h2>
+        <div class="page-title" onclick="goHome()" title="Go Home">
+          <img
+            class="home-logo"
+            src="assets/images/logos/logo_m.png"
+            alt="GitHub Logo"
+          />
+          <div class="title-text">
+            BilMenu
+            <span style="font-size: small">Bilkent University Cafeteria</span>
+          </div>
+        </div>
 
         <nav class="main-nav">
           <ul class="nav-list">
