@@ -179,6 +179,26 @@
         top: 10px;
         right: 10px;
       }
+
+      #contribute-btn {
+        display: none;
+        background-color: #ffa500; /* Orange background */
+        color: #ffffff; /* White text */
+        border: none;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        font-size: 16px;
+        margin: 4px 2px;
+        margin-left: 10px;
+        cursor: pointer;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+      }
+
+      #contribute-btn:hover {
+        background-color: #ff7f00; /* Darker orange background on hover */
+      }
     </style>
   </head>
   <body>
@@ -189,7 +209,7 @@
           <img
             class="home-logo"
             src="assets/images/logos/logo_m.png"
-            alt="GitHub Logo"
+            alt="Logo"
           />
           <div class="title-text">
             BilMenu
@@ -346,6 +366,7 @@
           console.warn("mealPlanJSON.alternativeMenu undefined");
         }
       }
+
       function showMenu(day) {
         mealPlanJSON;
         // Fetch and display menu items for the selected day
@@ -394,12 +415,32 @@
         }, 500); // Wait for opacity transition to complete
       }
 
+      function goHome() {
+        window.location.href = "index.html";
+      }
+
+      function goToContributions() {
+        window.location.href =
+          "https://github.com/ndricimrr/bilmenu/blob/main/CONTRIBUTING_IMAGES.md";
+      }
+
+      // function called when opening the modal with a missing image
+      function onMissingError() {
+        const button = document.getElementById("contribute-btn");
+        button.style.display = "inline";
+        button.onclick = goToContributions;
+      }
+
       function openModal(item) {
         // Display the selected meal item in a larger modal
+
         modalContent.innerHTML = `
           <button class="close-button" onclick="closeModal()">X</button>
-          <img src="assets/images/meals/${item}" onerror="this.onerror=null; this.src='assets/images/misc/missing-meal.jpg'" alt="Meal Image">
-          <h2>${item.replace(/\.jpg$/, "")}</h2>
+          <img src="assets/images/meals/${item}" onerror="this.onerror=null; this.src='assets/images/misc/missing-meal.jpg'; onMissingError();" alt="Meal Image">
+          <h2>${item.replace(
+            /\.jpg$/,
+            ""
+          )}<button id='contribute-btn'>Contribute Now</button></h2>
         `;
 
         modal.style.display = "flex";

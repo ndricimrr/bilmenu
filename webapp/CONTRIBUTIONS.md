@@ -4,11 +4,18 @@ Thank you for considering contributing to our open-source project! We welcome co
 
 ## How to Contribute
 
-1. Collect more images of the meals by taking pictures at the cafeteria and uploading them to the project.
-2. Help improve the quality of code by submitting pull requests.
-3. Contribute to the improvement of the UX (User Experience) of the site.
-4. Assist with keeping the parsing algorithm up to date if the source website changes its design.
-5. Address any other issues or improvements that come to your mind.
+### Add missing images
+
+1. Collect more images of the meals by taking pictures at the cafeteria and uploading them to the project. Check steps [here](https://github.com/ndricimrr/bilmenu/blob/main/CONTRIBUTING_IMAGES.md)
+
+### Contribute to code
+
+1. Help improve the quality of code by submitting pull requests.
+2. Contribute to the improvement of the UX (User Experience) of the site.
+3. Assist with keeping the parsing algorithm up to date if the source website changes its design.
+4. Address any other issues or improvements that come to your mind.
+
+Check steps [here](https://github.com/ndricimrr/bilmenu/blob/main/CONTRIBUTING_GUIDELINES.md)
 
 ## Getting Started
 
