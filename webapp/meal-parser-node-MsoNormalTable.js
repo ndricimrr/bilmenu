@@ -39,8 +39,6 @@ axios
     // Select all DOM elements with class name "Jimmy"
     const MsoNormalTableElements = $(".MsoNormalTable");
 
-    let lunchDishes = [];
-    let dinnerDishes = [];
     let alternativeData = [];
 
     // Check if there are at least 5 elements with class name "MsoNormalTable"
@@ -52,8 +50,10 @@ axios
       // Query its tbody > tr
       const secondToLasTbodyTr = secondToLastMsoNormalTable.find("tbody > tr");
 
+      // iterating for Fix Menu : Lunch + Dinner dishes
       secondToLasTbodyTr.each((index, element) => {
         if (index > 0) {
+          console.log("INDEX", index);
           let date = $(element).find("td:first-child").text().trim();
 
           // remove spaces
@@ -65,8 +65,12 @@ axios
             : null;
 
           if (index <= 13) {
+            let lunchDishes = [];
+            let dinnerDishes = [];
+
             // TODO: Write why odd number needed
             if (index % 2 !== 0) {
+              console.log("CHosen odd index =", index);
               // Parse Lunch dishes
               const dishElement = $(element).find("td:nth-child(2)");
               const meals = $(dishElement)
@@ -91,7 +95,7 @@ axios
                 }
               });
 
-              // Parse Dinner Dishes
+              // Parse Dinner Dishes: It should be the next() element right after the odd one (=even)
               let nextElement = $(element).next().find("td:first-child");
 
               if (nextElement) {

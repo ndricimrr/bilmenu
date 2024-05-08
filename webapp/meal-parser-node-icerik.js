@@ -55,6 +55,7 @@ function parseData(responseData) {
   $(".icerik > tbody > tr:nth-child(2) > td > table > tbody > tr").each(
     (index, element) => {
       if (index > 0) {
+        console.log("INDEX", index);
         let date = $(element).find("td:first-child").text().trim();
 
         // remove spaces
@@ -201,6 +202,7 @@ async function parseAndWriteToJSON(isDailyFetch) {
     const url = "http://kafemud.bilkent.edu.tr/monu_eng.html";
     const responseData = await fetchMealData(url);
     const parsedResult = parseData(responseData);
+    console.log(parsedResult);
     writeResultToJSONFile(parsedResult, isDailyFetch);
   } catch (error) {
     throw new Error(error);
