@@ -162,23 +162,32 @@ axios
 
           let alternativeDishes = [];
           const dishElement = $(element).find("td:nth-child(2)");
+          const meals0 = $(dishElement);
+
           const meals = $(dishElement)
             .html()
             .split(/<br\s*\/?>/);
 
+          console.log("\nDATE =====>", date);
           let dishText;
+          console.log("\x1b[33m%s\x1b[0m", meals);
           // Iterate over the parts
           meals.forEach((mealItemHTML, index) => {
-            dishText = dishText = cheerio
-              .load(mealItemHTML)
-              .root()
-              .text()
-              .trim();
+            dishText = cheerio.load(mealItemHTML).root().text().trim();
+
+            // console.log("DISHTEXT=", dishText);
 
             dishText = dishText.replace(/\s+/g, " ").trim();
+
+            // console.log("DISHTEXT_1=", dishText);
+
             dishText = dishText.replace(/[\n\t]+/g, " ");
 
+            // console.log("DISHTEXT_2=", dishText);
+
             const tr_en = dishText.split("/");
+
+            // console.log("DISHTEXT_2=SPLLIT", tr_en);
 
             alternativeDishes.push({
               tr: tr_en[0].trim(),
