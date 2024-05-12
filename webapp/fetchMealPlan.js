@@ -1,6 +1,4 @@
-// import { getCurrentWeekFileName } from './utilities.js';
-// import { getCurrentWeekFileName } from "./utilities.js";
-
+// This file is used to fetch the JSON data for the current day. To be then used in the index.html
 var mealPlanJSON = {};
 
 function loadJSON(filename, callback) {
