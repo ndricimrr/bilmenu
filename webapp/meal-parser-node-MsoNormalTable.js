@@ -217,8 +217,8 @@ function parseDataMSO(responseData) {
           const tr_en = dishText.split("/");
 
           alternativeDishes.push({
-            tr: tr_en[0],
-            en: tr_en[1],
+            tr: tr_en[0].trim(),
+            en: tr_en[1].trim(),
           });
         });
 
