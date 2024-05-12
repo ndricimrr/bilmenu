@@ -98,23 +98,39 @@
         {
           "tr": "Hasanpaşa Köfte (Sebze Haşlama)",
           "en": "Stuffed meatballs served with pureed potatoes and steamed vegetables veya"
+        },
+        {
+          "tr": "Mevsim Salata",
+          "en": "Season salad"
+        },
+        {
+          "tr": "Sarı Burma",
+          "en": "Pastry soaked in syrup (a kind of baklava)"
         }
       ],
-      "length_lunch": 2
+      "length_lunch": 4
     },
     {
       "date": "11.05.2024",
       "lunchDishes": [
+        {
+          "tr": "Ispanak Çorba",
+          "en": "Spinach soup"
+        },
         {
           "tr": "Çiftlik Kebap",
           "en": "Beef stew with vegetables veya"
         },
         {
           "tr": "Kaşarlı Erişte",
-          "en": "Noodles with cheese Yenidünya"
+          "en": "Noodles with cheese"
+        },
+        {
+          "tr": "Yenidünya",
+          "en": "Loquats"
         }
       ],
-      "length_lunch": 2
+      "length_lunch": 4
     },
     {
       "date": "12.05.2024",
@@ -129,10 +145,14 @@
         },
         {
           "tr": "Pirinç Pilavı",
-          "en": "Rice Turşu"
+          "en": "Rice"
+        },
+        {
+          "tr": "Turşu",
+          "en": "Pickles"
         }
       ],
-      "length_lunch": 3
+      "length_lunch": 4
     }
   ],
   "fixMenuDinner": [
@@ -141,7 +161,11 @@
       "dinnerDishes": [
         {
           "tr": "Kereviz Çorba",
-          "en": "Celery soup İzmir Köfte"
+          "en": "Celery soup"
+        },
+        {
+          "tr": "İzmir Köfte",
+          "en": "Meatballs with potatoes in tomato sauce veya"
         },
         {
           "tr": "Fırın Makarna",
@@ -152,7 +176,7 @@
           "en": "Ayran"
         }
       ],
-      "length_dinner": 3
+      "length_dinner": 4
     },
     {
       "date": "07.05.2024",
@@ -181,7 +205,11 @@
       "dinnerDishes": [
         {
           "tr": "Mısır Çorba",
-          "en": "Corn soup Olimpiyat Köfte (Dilim Patates)"
+          "en": "Corn soup"
+        },
+        {
+          "tr": "Olimpiyat Köfte (Dilim Patates)",
+          "en": "Meatballs topped with cheese and vegetables served with fried potatoes veya"
         },
         {
           "tr": "Amasra Salata",
@@ -192,7 +220,7 @@
           "en": "Carrot and hazelnut dessert with vanilla pudding"
         }
       ],
-      "length_dinner": 3
+      "length_dinner": 4
     },
     {
       "date": "09.05.2024",
@@ -207,10 +235,14 @@
         },
         {
           "tr": "Spagetti Napoliten",
-          "en": "Spaghetti neapolitan Muz"
+          "en": "Spaghetti neapolitan"
+        },
+        {
+          "tr": "Muz",
+          "en": "Banana"
         }
       ],
-      "length_dinner": 3
+      "length_dinner": 4
     },
     {
       "date": "10.05.2024",
@@ -261,7 +293,11 @@
       "dinnerDishes": [
         {
           "tr": "Yayla Çorba",
-          "en": "Yayla soup (rice and yogurt) Sumaklı Köfte"
+          "en": "Yayla soup (rice and yogurt)"
+        },
+        {
+          "tr": "Sumaklı Köfte",
+          "en": "Meatballs with sumac veya"
         },
         {
           "tr": "Arpa Şehriye Pilavı",
@@ -272,7 +308,7 @@
           "en": "Strawberries"
         }
       ],
-      "length_dinner": 3
+      "length_dinner": 4
     }
   ],
   "alternativeMenu": [
