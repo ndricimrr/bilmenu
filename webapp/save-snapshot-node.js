@@ -3,7 +3,7 @@ const url = "http://kafemud.bilkent.edu.tr/monu_eng.html";
 const fs = require("fs");
 const { getWeekAndDate } = require("./utilities_node");
 
-const parseAndWriteToJSON = require("./meal-parser-node-icerik");
+const { parseAndWriteToJSON } = require("./parser");
 
 axios
   .get(url, {

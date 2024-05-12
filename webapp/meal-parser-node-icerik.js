@@ -1,49 +1,10 @@
 // Only applicable for a html which contains the "icerik" css class in it. Check inspect element of the URL below or /kafemud_html_snapshots
 
-const axios = require("axios");
 const cheerio = require("cheerio");
-const fs = require("fs");
-const { TextDecoder } = require("util");
 
-const {
-  getCurrentWeekJSONFileName,
-  getWeekAndDateJSONFileName,
-} = require("./utilities_node");
+const WRONG_PARSING = "IS_WRONG_PARSING";
 
-function writeResultToJSONFile(content, isDailyFetch) {
-  const filename = isDailyFetch
-    ? getWeekAndDateJSONFileName()
-    : getCurrentWeekJSONFileName();
-
-  // Write the result object to a JSON file
-  fs.writeFile(filename, JSON.stringify(content, null, 2), (err) => {
-    if (err) {
-      console.error("Error writing to JSON file:", err);
-    } else {
-      console.log(
-        "\x1b[32m\u2713\x1b[0m",
-        `Parsed and processed data written to \x1b[33m'${filename}'\x1b[0m successfully.`
-      );
-    }
-  });
-}
-
-async function fetchMealData(url) {
-  try {
-    const response = await axios.get(url, {
-      responseType: "arraybuffer",
-    });
-
-    const decoder = new TextDecoder("ISO-8859-9"); // Assuming ISO-8859-9 (Turkish) encoding
-    const responseData = decoder.decode(response.data);
-
-    return responseData;
-  } catch (error) {
-    throw new Error(`Error fetching HTML: ${error}`);
-  }
-}
-
-function parseData(responseData) {
+function parseDataIcerik(responseData) {
   // Parse HTML using cheerio
   const $ = cheerio.load(responseData);
 
@@ -51,6 +12,10 @@ function parseData(responseData) {
   const lunchData = [];
   const dinnerData = [];
   const alternativeData = [];
+
+  // set to true only if a certain meal plan
+  // does not have the fixed meal number: lunch/dinner/alternative=4/4/12
+  let incompatibleMealSize = false;
 
   $(".icerik > tbody > tr:nth-child(2) > td > table > tbody > tr").each(
     (index, element) => {
@@ -126,6 +91,17 @@ function parseData(responseData) {
             const length_lunch = lunchDishes.length;
             const length_dinner = dinnerDishes.length;
 
+            // TODO: Change when adding Vegan Option, should be 5 afterwards
+            if (length_dinner !== 4 && length_lunch != 4) {
+              console.log("length_dinner=", length_dinner);
+              console.log("length_lunch=", length_lunch);
+              console.error(
+                "Length Dinner and Lunch have less then or more than 4 Items. Must have 4"
+              );
+              // process.exit();
+              incompatibleMealSize = true;
+            }
+
             // Extract lunch dishes text
             lunchData.push({
               date,
@@ -180,6 +156,16 @@ function parseData(responseData) {
         });
         const length = alternativeDishes.length;
 
+        // TODO: Change when adding Vegan Option, if needed be
+        if (length !== 12) {
+          console.log("length_alternative=", length);
+          console.error(
+            "Length Alternative have less then or more than 12 Items. Must have 12"
+          );
+          incompatibleMealSize = true;
+          // process.exit();
+        }
+
         // Extract lunch dishes text
         alternativeData.push({ date, alternativeDishes, length });
       }
@@ -193,20 +179,21 @@ function parseData(responseData) {
     alternativeMenu: alternativeData,
   };
 
+  if (
+    lunchData.length === 0 ||
+    dinnerData.length === 0 ||
+    alternativeData.length === 0
+  ) {
+    return WRONG_PARSING;
+  }
+
+  if (incompatibleMealSize) {
+    return WRONG_PARSING;
+  }
+
   return result;
 }
 
-// Usage
-async function parseAndWriteToJSON(isDailyFetch) {
-  try {
-    const url = "http://kafemud.bilkent.edu.tr/monu_eng.html";
-    const responseData = await fetchMealData(url);
-    const parsedResult = parseData(responseData);
-    console.log(parsedResult);
-    writeResultToJSONFile(parsedResult, isDailyFetch);
-  } catch (error) {
-    throw new Error(error);
-  }
-}
-
-module.exports = parseAndWriteToJSON;
+module.exports = {
+  parseDataIcerik,
+};
