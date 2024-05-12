@@ -213,6 +213,12 @@ function parseDataMSO(responseData) {
           const $temp = cheerio.load(mealItem);
           dishText = $temp.text();
 
+          // remove white space
+          dishText = dishText.replace(/\s+/g, " ").trim();
+
+          // remove new line and tabs and replace with 1 space
+          dishText = dishText.replace(/[\n\t]+/g, " ");
+
           // Split based on slash to get turkish and english separate words in two parts
           const tr_en = dishText.split("/");
 
