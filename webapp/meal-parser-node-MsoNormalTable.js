@@ -162,38 +162,40 @@ axios
 
           let alternativeDishes = [];
           const dishElement = $(element).find("td:nth-child(2)");
-          const meals0 = $(dishElement);
 
-          const meals = $(dishElement)
+          console.log("\n\n\n\n-----------DATE =====>", date);
+
+          let filteredDishElementHTML = $(dishElement)
+            .find("*")
+            .removeAttr("style class lang")
+            .end()
             .html()
-            .split(/<br\s*\/?>/);
+            .replace(/\s+/g, " ");
 
-          console.log("\nDATE =====>", date);
+          console.log("filteredDishElement=====");
+          console.log("\x1b[33m%s\x1b[0m", filteredDishElementHTML);
+
+          let meals = filteredDishElementHTML.split(/<br\s*\/?>|<p\s*\/?>/);
+
+          meals = meals.map((str) => str.trim()).filter((str) => str !== "");
+
           let dishText;
-          console.log("\x1b[33m%s\x1b[0m", meals);
-          // Iterate over the parts
-          meals.forEach((mealItemHTML, index) => {
-            dishText = cheerio.load(mealItemHTML).root().text().trim();
 
-            // console.log("DISHTEXT=", dishText);
+          console.log("\x1b[32m%s\x1b[0m", "SPLIT RESULTS=\n\n", meals);
 
-            dishText = dishText.replace(/\s+/g, " ").trim();
+          for (let index = 0; index < meals.length; index++) {
+            const mealItem = meals[index];
 
-            // console.log("DISHTEXT_1=", dishText);
-
-            dishText = dishText.replace(/[\n\t]+/g, " ");
-
-            // console.log("DISHTEXT_2=", dishText);
+            const $temp = cheerio.load(mealItem);
+            dishText = $temp.text();
 
             const tr_en = dishText.split("/");
 
-            // console.log("DISHTEXT_2=SPLLIT", tr_en);
-
             alternativeDishes.push({
-              tr: tr_en[0].trim(),
-              en: tr_en[1].trim(),
+              tr: tr_en[0],
+              en: tr_en[1],
             });
-          });
+          }
           const length = alternativeDishes.length;
 
           // Extract lunch dishes text
