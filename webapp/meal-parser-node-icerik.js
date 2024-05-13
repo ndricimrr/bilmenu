@@ -5,6 +5,10 @@ const cheerio = require("cheerio");
 const WRONG_PARSING = "IS_WRONG_PARSING";
 
 function parseDataIcerik(responseData) {
+  console.log(
+    "\n\nParsing algorithm being used: \x1b[32m*** Icerik ***\x1b[0m"
+  );
+
   // Parse HTML using cheerio
   const $ = cheerio.load(responseData);
 

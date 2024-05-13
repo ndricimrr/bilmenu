@@ -50,7 +50,7 @@ function parseData(responseData) {
   const msoResult = parseDataMSO(responseData);
   if (msoResult !== WRONG_PARSING) {
     console.log(
-      "\n\nParsing algorithm being used: \x1b[32m*** MSONormalTable ***\x1b[0m"
+      "\n\nParsing algorithm finished successfully: \x1b[32m*** MSONormalTable ***\x1b[0m"
     );
     return msoResult;
   }
@@ -58,7 +58,7 @@ function parseData(responseData) {
   const icerikResult = parseDataIcerik(responseData);
   if (icerikResult !== WRONG_PARSING) {
     console.log(
-      "\n\nParsing algorithm being used: \x1b[32m*** Icerik ***\x1b[0m"
+      "\n\nParsing algorithm finished successfully: \x1b[32m*** Icerik ***\x1b[0m"
     );
     return icerikResult;
   }
@@ -73,6 +73,7 @@ async function parseAndWriteToJSON(isDailyFetch) {
   try {
     const responseData = await fetchMealData(URL);
     const parsedResult = parseData(responseData);
+
     console.log(parsedResult);
     writeResultToJSONFile(parsedResult, isDailyFetch);
   } catch (error) {
