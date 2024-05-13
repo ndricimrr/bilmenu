@@ -1,9 +1,14 @@
 // Only applicable for a html which contains the "MsoNormalTable" css class in it. Check inspect element of the URL below or /kafemud_html_snapshots
 const WRONG_PARSING = "IS_WRONG_PARSING";
+const axios = require("axios");
+const { TextDecoder } = require("util");
 
 const cheerio = require("cheerio");
 
 function parseDataMSO(responseData) {
+  console.log(
+    "\n\nParsing algorithm being used: \x1b[32m*** MSONormalTable ***\x1b[0m"
+  );
   // Parse HTML using cheerio
   const $ = cheerio.load(responseData);
 
@@ -40,8 +45,8 @@ function parseDataMSO(responseData) {
       // skip index = 0 as it is table header (Days / Dishes / Nutrition Facts)
       if (index > 0) {
         // date is in first column (td), meals are on second td, and nutritional facts on third td
-        let date = $(element).find("td:first-child").text().trim();
 
+        let date = $(element).find("td:first-child").text().trim();
         // remove spaces
         date = date.replace(/\s+/g, " ").trim();
 
@@ -223,8 +228,8 @@ function parseDataMSO(responseData) {
           const tr_en = dishText.split("/");
 
           alternativeDishes.push({
-            tr: tr_en[0].trim(),
-            en: tr_en[1].trim(),
+            tr: tr_en[0] && tr_en[0].trim(),
+            en: tr_en[1] && tr_en[1].trim(),
           });
         });
 
@@ -266,6 +271,28 @@ function parseDataMSO(responseData) {
   }
   return result;
 }
+
+// Uncomment for testing
+
+// async function fetchMealData(url) {
+//   try {
+//     const response = await axios.get(url, {
+//       responseType: "arraybuffer",
+//     });
+
+//     const decoder = new TextDecoder("ISO-8859-9"); // Assuming ISO-8859-9 (Turkish) encoding
+//     const responseData = decoder.decode(response.data);
+
+//     return responseData;
+//   } catch (error) {
+//     throw new Error(`Error fetching HTML: ${error}`);
+//   }
+// }
+// const URL = "http://kafemud.bilkent.edu.tr/monu_eng.html";
+
+// const responseData = fetchMealData(URL).then((responseData) => {
+//   parseDataMSO(responseData);
+// });
 
 module.exports = {
   parseDataMSO,
