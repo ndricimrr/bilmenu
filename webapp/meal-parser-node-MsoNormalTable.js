@@ -3,6 +3,8 @@ const WRONG_PARSING = "IS_WRONG_PARSING";
 const axios = require("axios");
 const { TextDecoder } = require("util");
 
+const Day = require("./day");
+
 const cheerio = require("cheerio");
 
 function parseDataMSO(responseData) {
@@ -15,6 +17,8 @@ function parseDataMSO(responseData) {
   // Extract information from the table
   const lunchData = [];
   const dinnerData = [];
+
+  const listOfDays = [];
 
   // set to true only if a certain meal plan
   // does not have the fixed meal number: lunch/dinner/alternative=4/4/12
@@ -49,6 +53,8 @@ function parseDataMSO(responseData) {
         let date = $(element).find("td:first-child").text().trim();
         // remove spaces
         date = date.replace(/\s+/g, " ").trim();
+
+        const currentDay = new Day(date);
 
         // Pick only date and skip DoW string. dd.mm.yyyy
         date = /^\d+\.\d+\.\d{4}/.test(date)
@@ -93,10 +99,10 @@ function parseDataMSO(responseData) {
               // then split again accordingly to add the vegan meal there too
               // Sebzeli Tavuk Sote / Chicken sautéed with vegetables veya / or Vegan Barbunya / Kidney beans (Vegan)
 
-              lunchDishes.push({
-                tr: tr_en[0].trim(),
-                en: tr_en[1].trim(),
-              });
+              const meal = new Meal(tr_en[0].trim(), tr_en[1].trim());
+              currentDay.addLunchMeal(meal);
+
+              lunchDishes.push(meal);
             }
           });
 
@@ -129,10 +135,8 @@ function parseDataMSO(responseData) {
                 // split to get the Turkish/English text elements separated
                 const tr_en = dishText.split("/");
 
-                dinnerDishes.push({
-                  tr: tr_en[0].trim(),
-                  en: tr_en[1].trim(),
-                });
+                const meal = new Meal(tr_en[0].trim(), tr_en[1].trim());
+                currentDay.addDinnerMeal(meal);
               }
             });
           }
