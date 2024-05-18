@@ -1,6 +1,10 @@
-// const Meal = require("./meal");
+const isNodeEnvironment =
+  typeof module !== "undefined" && typeof module.exports !== "undefined";
 
-import Meal from "./meal.js";
+// if (isNodeEnvironment) {
+//   var Meal = require("./meal");
+// }
+import "./meal.js";
 
 function getDayOfTheWeek(dateString) {
   const [day, month, year] = dateString.split(".").map(Number);
@@ -101,8 +105,9 @@ class Day {
 }
 
 // Check if exports and require are defined (Node.js environment)
-if (typeof module !== "undefined" && typeof module.exports !== "undefined") {
+if (isNodeEnvironment) {
   module.exports = Day;
 } else {
+  console.log("Setting window object Day");
   window.Day = Day;
 }

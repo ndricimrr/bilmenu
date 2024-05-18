@@ -1,3 +1,6 @@
+const isNodeEnvironment =
+  typeof module !== "undefined" && typeof module.exports !== "undefined";
+
 class Meal {
   constructor(tr, en) {
     this._tr = tr;
@@ -35,8 +38,10 @@ class Meal {
 }
 
 // Check if exports and require are defined (Node.js environment)
-if (typeof module !== "undefined" && typeof module.exports !== "undefined") {
+if (isNodeEnvironment) {
   module.exports = Meal;
 } else {
+  console.log("Setting window object - Meal");
+
   window.Meal = Meal;
 }

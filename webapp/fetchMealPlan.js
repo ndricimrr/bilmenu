@@ -2,11 +2,14 @@
 
 // const Week = require("./week");
 
-const Week = window.Week;
+// const Week = window.Week;
+// console.log(window, "tets", window.Week);
 
-console.log(Week);
+// setTimeout(() => {
+//   console.log(window, "inside", window.Week);
+// }, 100);
 
-var weeklyMealPlan = new Week();
+var weeklyMealPlan = {};
 
 function loadJSON(filename, callback) {
   fetch(filename)
@@ -27,7 +30,8 @@ function loadJSON(filename, callback) {
 
 loadJSON(getCurrentWeekFileName(), function (jsonObject) {
   if (jsonObject) {
-    mealPlanJSON = Week.fromJSON(JSON.parse(jsonObject));
+    console.log(jsonObject);
+    mealPlanJSON = window.Week.fromJSON(jsonObject).days;
     console.log("Meal Plan Loaded.", mealPlanJSON);
   } else {
     console.log("Failed to load JSON file from " + getCurrentWeekFileName());

@@ -1,9 +1,18 @@
 // const Day = require("./day");
 
-import Day from "./day.js";
+import "./day.js";
+
 class Week {
   constructor() {
     this._days = [];
+  }
+
+  get days() {
+    return this._days;
+  }
+
+  set days(days) {
+    this._days = days;
   }
 
   addDay(day) {
@@ -62,5 +71,7 @@ class Week {
 if (typeof module !== "undefined" && typeof module.exports !== "undefined") {
   module.exports = Week;
 } else {
+  console.log("Setting window object - Week");
+
   window.Week = Week;
 }
