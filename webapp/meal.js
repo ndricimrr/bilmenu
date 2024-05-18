@@ -7,19 +7,19 @@ class Meal {
     this._en = en;
   }
 
-  get turkish_name() {
+  get tr() {
     return this._tr;
   }
 
-  set turkish_name(tr) {
+  set tr(tr) {
     this._tr = tr;
   }
 
-  get english_name() {
+  get en() {
     return this._en;
   }
 
-  set english_name(en) {
+  set en(en) {
     this._en = en;
   }
 
@@ -33,7 +33,7 @@ class Meal {
 
   // Create a Meal instance from a JSON object
   static fromJSON(json) {
-    return new Meal(json.turkish_name, json.english_name);
+    return new Meal(json.tr, json.en);
   }
 }
 
@@ -41,7 +41,5 @@ class Meal {
 if (isNodeEnvironment) {
   module.exports = Meal;
 } else {
-  console.log("Setting window object - Meal");
-
   window.Meal = Meal;
 }

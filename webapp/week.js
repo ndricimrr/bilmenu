@@ -26,22 +26,20 @@ class Week {
   getDay(date) {
     return this._days.find((day) => day.date === date);
   }
+
   // Generate a string representation of the Week instance
   toString() {
     return this._days
       .map((day) => {
         const lunch =
-          day.lunch
-            .map((meal) => `${meal.turkish_name} (${meal.english_name})`)
-            .join(", ") || "No lunch items";
+          day.lunch.map((meal) => `${meal.tr} (${meal.en})`).join(", ") ||
+          "No lunch items";
         const dinner =
-          day.dinner
-            .map((meal) => `${meal.turkish_name} (${meal.english_name})`)
-            .join(", ") || "No dinner items";
+          day.dinner.map((meal) => `${meal.tr} (${meal.en})`).join(", ") ||
+          "No dinner items";
         const alternative =
-          day.alternative
-            .map((meal) => `${meal.turkish_name} (${meal.english_name})`)
-            .join(", ") || "No alternative items";
+          day.alternative.map((meal) => `${meal.tr} (${meal.en})`).join(", ") ||
+          "No alternative items";
 
         return (
           `Date: ${day.date}\n` +
@@ -71,7 +69,5 @@ class Week {
 if (typeof module !== "undefined" && typeof module.exports !== "undefined") {
   module.exports = Week;
 } else {
-  console.log("Setting window object - Week");
-
   window.Week = Week;
 }

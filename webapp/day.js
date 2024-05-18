@@ -108,6 +108,5 @@ class Day {
 if (isNodeEnvironment) {
   module.exports = Day;
 } else {
-  console.log("Setting window object Day");
   window.Day = Day;
 }
