@@ -1,9 +1,29 @@
+// const Meal = require("./meal");
+
+import Meal from "./meal.js";
+
+function getDayOfTheWeek(dateString) {
+  const [day, month, year] = dateString.split(".").map(Number);
+  const date = new Date(year, month - 1, day);
+  const adjustedDaysOfWeek = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
+  ];
+  return adjustedDaysOfWeek[(date.getDay() + 6) % 7];
+}
+
 class Day {
-  constructor(date, lunch, dinner, secmeli) {
+  constructor(date, lunch, dinner, alternative) {
     this._date = date;
+    this._dayOfWeek = getDayOfTheWeek(date);
     this._lunch = lunch || [];
     this._dinner = dinner || [];
-    this._secmeli = secmeli || [];
+    this._alternative = alternative || [];
   }
 
   get date() {
@@ -12,6 +32,14 @@ class Day {
 
   set date(date) {
     this._date = date;
+  }
+
+  get dayOfWeek() {
+    return this._dayOfWeek;
+  }
+
+  set dayOfWeek(date) {
+    this._dayOfWeek = getDayOfTheWeek(date);
   }
 
   get lunch() {
@@ -38,17 +66,43 @@ class Day {
     this._dinner.push(meal);
   }
 
-  get secmeli() {
-    return this._secmeli;
+  get alternative() {
+    return this._alternative;
   }
 
-  set secmeli(secmeli) {
-    this._secmeli = secmeli;
+  set alternative(alternative) {
+    this._alternative = alternative;
   }
 
-  addSecmeliMeal(meal) {
-    this._secmeli.push(meal);
+  addAlternativeMeal(meal) {
+    this._alternative.push(meal);
+  }
+
+  // Convert the Day instance to a JSON-friendly format
+  toJSON() {
+    return {
+      date: this._date,
+      dayOfWeek: this._dayOfWeek,
+      lunch: this._lunch.map((meal) => meal.toJSON()),
+      dinner: this._dinner.map((meal) => meal.toJSON()),
+      alternative: this._alternative.map((meal) => meal.toJSON()),
+    };
+  }
+
+  // Create a Day instance from a JSON object
+  static fromJSON(json) {
+    const lunch = json.lunch.map((mealJson) => Meal.fromJSON(mealJson));
+    const dinner = json.dinner.map((mealJson) => Meal.fromJSON(mealJson));
+    const alternative = json.alternative.map((mealJson) =>
+      Meal.fromJSON(mealJson)
+    );
+    return new Day(json.date, lunch, dinner, alternative);
   }
 }
 
-module.exports = Day;
+// Check if exports and require are defined (Node.js environment)
+if (typeof module !== "undefined" && typeof module.exports !== "undefined") {
+  module.exports = Day;
+} else {
+  window.Day = Day;
+}

@@ -4,13 +4,15 @@ const axios = require("axios");
 const { TextDecoder } = require("util");
 
 const Day = require("./day");
+const Meal = require("./meal");
 
 const cheerio = require("cheerio");
+const Week = require("./week");
 
 function parseDataMSO(responseData) {
-  console.log(
-    "\n\nParsing algorithm being used: \x1b[32m*** MSONormalTable ***\x1b[0m"
-  );
+  // console.log(
+  //   "\n\nParsing algorithm being used: \x1b[32m*** MSONormalTable ***\x1b[0m"
+  // );
   // Parse HTML using cheerio
   const $ = cheerio.load(responseData);
 
@@ -19,6 +21,9 @@ function parseDataMSO(responseData) {
   const dinnerData = [];
 
   const listOfDays = [];
+
+  // holds data for the week
+  const week = new Week();
 
   // set to true only if a certain meal plan
   // does not have the fixed meal number: lunch/dinner/alternative=4/4/12
@@ -54,8 +59,6 @@ function parseDataMSO(responseData) {
         // remove spaces
         date = date.replace(/\s+/g, " ").trim();
 
-        const currentDay = new Day(date);
-
         // Pick only date and skip DoW string. dd.mm.yyyy
         date = /^\d+\.\d+\.\d{4}/.test(date)
           ? date.match(/^\d+\.\d+\.\d{4}/)[0]
@@ -66,6 +69,11 @@ function parseDataMSO(responseData) {
 
         // ODD Index = Lunch, Even Index = Dinner
         if (index % 2 !== 0) {
+          const currentDay = new Day(date);
+          /****************************************
+          /************** LUNCH PARSING ***********
+          /****************************************/
+
           // Parse Lunch dishes
           const dishElement = $(element).find("td:nth-child(2)");
 
@@ -168,6 +176,8 @@ function parseDataMSO(responseData) {
             dinnerDishes,
             length_dinner,
           });
+
+          week.addDay(currentDay);
         }
       }
     });
@@ -195,6 +205,8 @@ function parseDataMSO(responseData) {
         date = /^\d+\.\d+\.\d{4}/.test(date)
           ? date.match(/^\d+\.\d+\.\d{4}/)[0]
           : null;
+
+        const currentDay = week.getDay(date);
 
         let alternativeDishes = [];
         const dishElement = $(element).find("td:nth-child(2)");
@@ -231,16 +243,22 @@ function parseDataMSO(responseData) {
           // Split based on slash to get turkish and english separate words in two parts
           const tr_en = dishText.split("/");
 
-          alternativeDishes.push({
-            tr: tr_en[0] && tr_en[0].trim(),
-            en: tr_en[1] && tr_en[1].trim(),
-          });
+          const meal = new Meal(
+            tr_en[0] && tr_en[0].trim(),
+            tr_en[1] && tr_en[1].trim()
+          );
+          currentDay.addAlternativeMeal(meal);
+
+          // alternativeDishes.push({
+          //   tr: tr_en[0] && tr_en[0].trim(),
+          //   en: tr_en[1] && tr_en[1].trim(),
+          // });
         });
 
         const length = alternativeDishes.length;
 
         // TODO: Change when adding Vegan Option, if needed be
-        if (length !== 12) {
+        if (length !== 12 && false) {
           console.log("length_alternative=", length);
           console.error(
             "Length Alternative have less then or more than 12 Items. Must have 12"
@@ -254,6 +272,22 @@ function parseDataMSO(responseData) {
       }
     });
   }
+
+  const weekJson = JSON.stringify(week.toJSON(), null, 2);
+  const fs = require("fs");
+
+  fs.writeFileSync("test1.json", weekJson, { encoding: "utf-8" });
+
+  console.log("reading now....");
+
+  // Read the JSON from the file with UTF-8 encoding and convert it back to a Week instance
+  const loadedWeekJson = fs.readFileSync("test1.json", { encoding: "utf-8" });
+  const loadedWeek = Week.fromJSON(JSON.parse(loadedWeekJson));
+
+  // Verify that the loaded Week instance has the same data
+  console.log(loadedWeek.toString());
+
+  return;
 
   // Print the extracted data
   let result = {
@@ -278,25 +312,25 @@ function parseDataMSO(responseData) {
 
 // Uncomment for testing
 
-// async function fetchMealData(url) {
-//   try {
-//     const response = await axios.get(url, {
-//       responseType: "arraybuffer",
-//     });
+async function fetchMealData(url) {
+  try {
+    const response = await axios.get(url, {
+      responseType: "arraybuffer",
+    });
 
-//     const decoder = new TextDecoder("ISO-8859-9"); // Assuming ISO-8859-9 (Turkish) encoding
-//     const responseData = decoder.decode(response.data);
+    const decoder = new TextDecoder("ISO-8859-9"); // Assuming ISO-8859-9 (Turkish) encoding
+    const responseData = decoder.decode(response.data);
 
-//     return responseData;
-//   } catch (error) {
-//     throw new Error(`Error fetching HTML: ${error}`);
-//   }
-// }
-// const URL = "http://kafemud.bilkent.edu.tr/monu_eng.html";
+    return responseData;
+  } catch (error) {
+    throw new Error(`Error fetching HTML: ${error}`);
+  }
+}
+const URL = "http://kafemud.bilkent.edu.tr/monu_eng.html";
 
-// const responseData = fetchMealData(URL).then((responseData) => {
-//   parseDataMSO(responseData);
-// });
+const responseData = fetchMealData(URL).then((responseData) => {
+  parseDataMSO(responseData);
+});
 
 module.exports = {
   parseDataMSO,
