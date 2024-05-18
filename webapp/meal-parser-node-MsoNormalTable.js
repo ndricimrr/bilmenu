@@ -5,9 +5,9 @@ const { TextDecoder } = require("util");
 
 const Day = require("./day");
 const Meal = require("./meal");
+const Week = require("./week");
 
 const cheerio = require("cheerio");
-const Week = require("./week");
 
 function parseDataMSO(responseData) {
   // console.log(

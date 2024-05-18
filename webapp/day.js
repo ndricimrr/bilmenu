@@ -1,10 +1,13 @@
 const isNodeEnvironment =
   typeof module !== "undefined" && typeof module.exports !== "undefined";
 
-// if (isNodeEnvironment) {
-//   var Meal = require("./meal");
-// }
-import "./meal.js";
+var Meal;
+if (isNodeEnvironment) {
+  Meal = require("./meal");
+} else {
+  Meal = window.Meal;
+}
+// import "./meal.js";
 
 function getDayOfTheWeek(dateString) {
   const [day, month, year] = dateString.split(".").map(Number);

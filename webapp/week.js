@@ -1,6 +1,15 @@
+const isNodeEnvironment =
+  typeof module !== "undefined" && typeof module.exports !== "undefined";
+
+var Day;
+if (isNodeEnvironment) {
+  Day = require("./day");
+} else {
+  Day = window.Day;
+}
 // const Day = require("./day");
 
-import "./day.js";
+// import "./day.js";
 
 class Week {
   constructor() {
