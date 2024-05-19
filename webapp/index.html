@@ -293,7 +293,9 @@
           />
           <h2 id="modalNameTr">Yemek</h2>
           <p id="modalNameEn">Food</p>
-          <button id="contribute-btn">Contribute Now</button>
+          <button id="contribute-btn" onclick="goToContributions()">
+            Contribute Now
+          </button>
         </div>
       </div>
     </div>
@@ -308,7 +310,7 @@
       const menuView = document.getElementById("menuView");
       const modal = document.getElementById("modal");
       const modalContent = document.getElementById("modalContent");
-
+      const modalContributeBtn = document.getElementById("contribute-btn");
       const modalImage = document.getElementById("modalImage");
       // Attach the error handling function to the image
       modalImage.onerror = function () {
@@ -393,9 +395,7 @@
         img.onerror = null; // Prevent infinite loop in case the fallback image also fails
         img.src = "assets/images/misc/missing-meal.jpg"; // Set fallback image
 
-        const button = document.getElementById("contribute-btn");
-        button.style.display = "inline";
-        button.onclick = goToContributions;
+        modalContributeBtn.style.display = "inline";
       }
 
       function openModal(item) {
@@ -411,6 +411,8 @@
       }
 
       function closeModal() {
+        modalContributeBtn.style.display = "none";
+
         // Close the modal with a smooth transition
         modal.style.opacity = "0";
         setTimeout(() => {
