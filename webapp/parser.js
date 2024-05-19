@@ -1,5 +1,5 @@
 const axios = require("axios");
-const URL = "http://kafemud.bilkent.edu.tr/monu_eng.html";
+const URL = require("./constants").URL;
 const fs = require("fs");
 const { TextDecoder } = require("util");
 const {

@@ -270,7 +270,7 @@ function parseDataMSO(responseData) {
 //     throw new Error(`Error fetching HTML: ${error}`);
 //   }
 // }
-// const URL = "http://kafemud.bilkent.edu.tr/monu_eng.html";
+// const URL = require("./constants").URL;
 
 // const responseData = fetchMealData(URL).then((responseData) => {
 //   parseDataMSO(responseData);
