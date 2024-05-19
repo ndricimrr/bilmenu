@@ -3,6 +3,10 @@ const WRONG_PARSING = "IS_WRONG_PARSING";
 const axios = require("axios");
 const { TextDecoder } = require("util");
 
+const Day = require("./day");
+const Meal = require("./meal");
+const Week = require("./week");
+
 const cheerio = require("cheerio");
 
 function parseDataMSO(responseData) {
@@ -12,9 +16,8 @@ function parseDataMSO(responseData) {
   // Parse HTML using cheerio
   const $ = cheerio.load(responseData);
 
-  // Extract information from the table
-  const lunchData = [];
-  const dinnerData = [];
+  // holds data for the weekly plan
+  const weeklyPlan = new Week();
 
   // set to true only if a certain meal plan
   // does not have the fixed meal number: lunch/dinner/alternative=4/4/12
@@ -55,11 +58,13 @@ function parseDataMSO(responseData) {
           ? date.match(/^\d+\.\d+\.\d{4}/)[0]
           : null;
 
-        let lunchDishes = [];
-        let dinnerDishes = [];
-
         // ODD Index = Lunch, Even Index = Dinner
         if (index % 2 !== 0) {
+          const currentDay = new Day(date);
+          /****************************************
+          /************** LUNCH PARSING ***********
+          /****************************************/
+
           // Parse Lunch dishes
           const dishElement = $(element).find("td:nth-child(2)");
 
@@ -93,10 +98,8 @@ function parseDataMSO(responseData) {
               // then split again accordingly to add the vegan meal there too
               // Sebzeli Tavuk Sote / Chicken sautéed with vegetables veya / or Vegan Barbunya / Kidney beans (Vegan)
 
-              lunchDishes.push({
-                tr: tr_en[0].trim(),
-                en: tr_en[1].trim(),
-              });
+              const meal = new Meal(tr_en[0].trim(), tr_en[1].trim());
+              currentDay.addLunchMeal(meal);
             }
           });
 
@@ -129,17 +132,15 @@ function parseDataMSO(responseData) {
                 // split to get the Turkish/English text elements separated
                 const tr_en = dishText.split("/");
 
-                dinnerDishes.push({
-                  tr: tr_en[0].trim(),
-                  en: tr_en[1].trim(),
-                });
+                const meal = new Meal(tr_en[0].trim(), tr_en[1].trim());
+                currentDay.addDinnerMeal(meal);
               }
             });
           }
 
           // add length too for easier debugging
-          const length_lunch = lunchDishes.length;
-          const length_dinner = dinnerDishes.length;
+          const length_lunch = currentDay.lunch.length;
+          const length_dinner = currentDay.dinner.length;
 
           // TODO: Change when adding Vegan Option, should be 5 afterwards
           if (length_dinner !== 4 && length_lunch != 4) {
@@ -151,19 +152,7 @@ function parseDataMSO(responseData) {
             // process.exit();
             incompatibleMealSize = true;
           }
-
-          // Extract lunch dishes text
-          lunchData.push({
-            date,
-            lunchDishes,
-            length_lunch,
-          });
-
-          dinnerData.push({
-            date,
-            dinnerDishes,
-            length_dinner,
-          });
+          weeklyPlan.addDay(currentDay);
         }
       }
     });
@@ -191,6 +180,8 @@ function parseDataMSO(responseData) {
         date = /^\d+\.\d+\.\d{4}/.test(date)
           ? date.match(/^\d+\.\d+\.\d{4}/)[0]
           : null;
+
+        const currentDay = weeklyPlan.getDay(date);
 
         let alternativeDishes = [];
         const dishElement = $(element).find("td:nth-child(2)");
@@ -227,13 +218,14 @@ function parseDataMSO(responseData) {
           // Split based on slash to get turkish and english separate words in two parts
           const tr_en = dishText.split("/");
 
-          alternativeDishes.push({
-            tr: tr_en[0] && tr_en[0].trim(),
-            en: tr_en[1] && tr_en[1].trim(),
-          });
+          const meal = new Meal(
+            tr_en[0] && tr_en[0].trim(),
+            tr_en[1] && tr_en[1].trim()
+          );
+          currentDay.addAlternativeMeal(meal);
         });
 
-        const length = alternativeDishes.length;
+        const length = currentDay.alternative.length;
 
         // TODO: Change when adding Vegan Option, if needed be
         if (length !== 12) {
@@ -251,25 +243,15 @@ function parseDataMSO(responseData) {
     });
   }
 
-  // Print the extracted data
-  let result = {
-    fixMenuLunch: lunchData,
-    fixMenuDinner: dinnerData,
-    alternativeMenu: alternativeData,
-  };
-
-  if (
-    lunchData.length === 0 ||
-    dinnerData.length === 0 ||
-    alternativeData.length === 0
-  ) {
+  if (weeklyPlan.days.length === 0) {
     return WRONG_PARSING;
   }
 
   if (incompatibleMealSize) {
     return WRONG_PARSING;
   }
-  return result;
+
+  return weeklyPlan;
 }
 
 // Uncomment for testing

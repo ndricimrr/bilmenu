@@ -15,6 +15,10 @@
     <!-- <script src="meal-parser.js"></script> -->
     <script src="utilities.js"></script>
 
+    <script type="module" src="meal.js"></script>
+    <script type="module" src="day.js"></script>
+    <script type="module" src="week.js"></script>
+
     <script src="fetchMealPlan.js"></script>
 
     <style>
@@ -372,13 +376,14 @@
         }
       }
 
-      function showMenu(day) {
-        mealPlanJSON;
+      // dayIndex : 0 = Monday, 1 = Tuesday, etc
+      function showMenu(dayIndex) {
         // Fetch and display menu items for the selected day
         // For simplicity, using placeholder data
-        const lunchMenu = getFixLunchMealFromJSON(day);
-        const dinnerMenu = getFixDinnerMealFromJSON(day);
-        const alternativeMenu = getAlternativeMealsFromJSON(day);
+
+        const lunchMenu = weeklyMealPlan[dayIndex].lunch;
+        const dinnerMenu = weeklyMealPlan[dayIndex].dinner;
+        const alternativeMenu = weeklyMealPlan[dayIndex].alternative;
 
         displayMenu("lunchMenu", lunchMenu);
         displayMenu("dinnerMenu", dinnerMenu);
@@ -397,16 +402,18 @@
         const menuGrid = document.getElementById(menuId);
         menuGrid.innerHTML = "";
 
-        menuItems.forEach((item, index) => {
-          const mealItem = document.createElement("div");
-          mealItem.className = "meal-item";
-          mealItem.innerHTML = `
-        <img src="assets/images/meals/${item}" onerror="this.onerror=null; this.src='assets/images/misc/missing-meal.jpg'" alt="Meal Image Here">
-        <div class="meal-label">${item.replace(/\.jpg$/, "")}</div>
+        menuItems.forEach((mealName, index) => {
+          const mealItemDOM = document.createElement("div");
+          mealItemDOM.className = "meal-item";
+          mealItemDOM.innerHTML = `
+        <img src="assets/images/meals/${
+          mealName.tr + ".jpg"
+        }" onerror="this.onerror=null; this.src='assets/images/misc/missing-meal.jpg'" alt="Meal Image Here">
+        <div class="meal-label">${mealName.tr}</div>
       `;
-          mealItem.addEventListener("click", () => openModal(item));
+          mealItemDOM.addEventListener("click", () => openModal(mealName.tr));
 
-          menuGrid.appendChild(mealItem);
+          menuGrid.appendChild(mealItemDOM);
         });
       }
 
@@ -441,11 +448,10 @@
 
         modalContent.innerHTML = `
           <button class="close-button" onclick="closeModal()">X</button>
-          <img src="assets/images/meals/${item}" onerror="this.onerror=null; this.src='assets/images/misc/missing-meal.jpg'; onMissingError();" alt="Meal Image">
-          <h2>${item.replace(
-            /\.jpg$/,
-            ""
-          )}<button id='contribute-btn'>Contribute Now</button></h2>
+          <img src="assets/images/meals/${
+            item + ".jpg"
+          }" onerror="this.onerror=null; this.src='assets/images/misc/missing-meal.jpg'; onMissingError();" alt="Meal Image">
+          <h2>${item}<button id='contribute-btn'>Contribute Now</button></h2>
         `;
 
         modal.style.display = "flex";

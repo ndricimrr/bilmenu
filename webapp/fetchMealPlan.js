@@ -1,5 +1,5 @@
 // This file is used to fetch the JSON data for the current day. To be then used in the index.html
-var mealPlanJSON = {};
+var weeklyMealPlan = {};
 
 function loadJSON(filename, callback) {
   fetch(filename)
@@ -20,8 +20,8 @@ function loadJSON(filename, callback) {
 
 loadJSON(getCurrentWeekFileName(), function (jsonObject) {
   if (jsonObject) {
-    mealPlanJSON = jsonObject;
-    console.log("Meal Plan Loaded.", jsonObject);
+    weeklyMealPlan = window.Week.fromJSON(jsonObject).days;
+    console.log("Meal Plan Loaded.", weeklyMealPlan);
   } else {
     console.log("Failed to load JSON file from " + getCurrentWeekFileName());
   }
