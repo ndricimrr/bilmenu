@@ -411,7 +411,7 @@
         }" onerror="this.onerror=null; this.src='assets/images/misc/missing-meal.jpg'" alt="Meal Image Here">
         <div class="meal-label">${mealName.tr}</div>
       `;
-          mealItemDOM.addEventListener("click", () => openModal(mealName));
+          mealItemDOM.addEventListener("click", () => openModal(mealName.tr));
 
           menuGrid.appendChild(mealItemDOM);
         });
@@ -448,11 +448,10 @@
 
         modalContent.innerHTML = `
           <button class="close-button" onclick="closeModal()">X</button>
-          <img src="assets/images/meals/${item}" onerror="this.onerror=null; this.src='assets/images/misc/missing-meal.jpg'; onMissingError();" alt="Meal Image">
-          <h2>${item.replace(
-            /\.jpg$/,
-            ""
-          )}<button id='contribute-btn'>Contribute Now</button></h2>
+          <img src="assets/images/meals/${
+            item + ".jpg"
+          }" onerror="this.onerror=null; this.src='assets/images/misc/missing-meal.jpg'; onMissingError();" alt="Meal Image">
+          <h2>${item}<button id='contribute-btn'>Contribute Now</button></h2>
         `;
 
         modal.style.display = "flex";

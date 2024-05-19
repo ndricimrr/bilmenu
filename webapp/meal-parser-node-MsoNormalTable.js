@@ -10,9 +10,9 @@ const Week = require("./week");
 const cheerio = require("cheerio");
 
 function parseDataMSO(responseData) {
-  // console.log(
-  //   "\n\nParsing algorithm being used: \x1b[32m*** MSONormalTable ***\x1b[0m"
-  // );
+  console.log(
+    "\n\nParsing algorithm being used: \x1b[32m*** MSONormalTable ***\x1b[0m"
+  );
   // Parse HTML using cheerio
   const $ = cheerio.load(responseData);
 
@@ -23,7 +23,7 @@ function parseDataMSO(responseData) {
   const listOfDays = [];
 
   // holds data for the week
-  const week = new Week();
+  const weeklyPlan = new Week();
 
   // set to true only if a certain meal plan
   // does not have the fixed meal number: lunch/dinner/alternative=4/4/12
@@ -63,9 +63,6 @@ function parseDataMSO(responseData) {
         date = /^\d+\.\d+\.\d{4}/.test(date)
           ? date.match(/^\d+\.\d+\.\d{4}/)[0]
           : null;
-
-        let lunchDishes = [];
-        let dinnerDishes = [];
 
         // ODD Index = Lunch, Even Index = Dinner
         if (index % 2 !== 0) {
@@ -109,8 +106,6 @@ function parseDataMSO(responseData) {
 
               const meal = new Meal(tr_en[0].trim(), tr_en[1].trim());
               currentDay.addLunchMeal(meal);
-
-              lunchDishes.push(meal);
             }
           });
 
@@ -150,8 +145,8 @@ function parseDataMSO(responseData) {
           }
 
           // add length too for easier debugging
-          const length_lunch = lunchDishes.length;
-          const length_dinner = dinnerDishes.length;
+          const length_lunch = currentDay.lunch.length;
+          const length_dinner = currentDay.dinner.length;
 
           // TODO: Change when adding Vegan Option, should be 5 afterwards
           if (length_dinner !== 4 && length_lunch != 4) {
@@ -163,21 +158,7 @@ function parseDataMSO(responseData) {
             // process.exit();
             incompatibleMealSize = true;
           }
-
-          // Extract lunch dishes text
-          lunchData.push({
-            date,
-            lunchDishes,
-            length_lunch,
-          });
-
-          dinnerData.push({
-            date,
-            dinnerDishes,
-            length_dinner,
-          });
-
-          week.addDay(currentDay);
+          weeklyPlan.addDay(currentDay);
         }
       }
     });
@@ -206,7 +187,7 @@ function parseDataMSO(responseData) {
           ? date.match(/^\d+\.\d+\.\d{4}/)[0]
           : null;
 
-        const currentDay = week.getDay(date);
+        const currentDay = weeklyPlan.getDay(date);
 
         let alternativeDishes = [];
         const dishElement = $(element).find("td:nth-child(2)");
@@ -255,10 +236,10 @@ function parseDataMSO(responseData) {
           // });
         });
 
-        const length = alternativeDishes.length;
+        const length = currentDay.alternative.length;
 
         // TODO: Change when adding Vegan Option, if needed be
-        if (length !== 12 && false) {
+        if (length !== 12) {
           console.log("length_alternative=", length);
           console.error(
             "Length Alternative have less then or more than 12 Items. Must have 12"
@@ -273,64 +254,41 @@ function parseDataMSO(responseData) {
     });
   }
 
-  const weekJson = JSON.stringify(week.toJSON(), null, 2);
-  const fs = require("fs");
-
-  fs.writeFileSync("test1.json", weekJson, { encoding: "utf-8" });
-
-  console.log("reading now....");
-
-  // Read the JSON from the file with UTF-8 encoding and convert it back to a Week instance
-  const loadedWeekJson = fs.readFileSync("test1.json", { encoding: "utf-8" });
-  const loadedWeek = Week.fromJSON(JSON.parse(loadedWeekJson));
-
-  // Verify that the loaded Week instance has the same data
-  console.log(loadedWeek.toString());
-
-  return;
-
-  // Print the extracted data
-  let result = {
-    fixMenuLunch: lunchData,
-    fixMenuDinner: dinnerData,
-    alternativeMenu: alternativeData,
-  };
-
-  if (
-    lunchData.length === 0 ||
-    dinnerData.length === 0 ||
-    alternativeData.length === 0
-  ) {
+  if (weeklyPlan.days.length === 0) {
+    console.log("0000");
     return WRONG_PARSING;
   }
 
   if (incompatibleMealSize) {
+    console.log("1111");
+
     return WRONG_PARSING;
   }
-  return result;
+
+  return weeklyPlan;
 }
 
 // Uncomment for testing
 
-async function fetchMealData(url) {
-  try {
-    const response = await axios.get(url, {
-      responseType: "arraybuffer",
-    });
+// async function fetchMealData(url) {
+//   try {
+//     const response = await axios.get(url, {
+//       responseType: "arraybuffer",
+//     });
 
-    const decoder = new TextDecoder("ISO-8859-9"); // Assuming ISO-8859-9 (Turkish) encoding
-    const responseData = decoder.decode(response.data);
+//     const decoder = new TextDecoder("ISO-8859-9"); // Assuming ISO-8859-9 (Turkish) encoding
+//     const responseData = decoder.decode(response.data);
 
-    return responseData;
-  } catch (error) {
-    throw new Error(`Error fetching HTML: ${error}`);
-  }
-}
-const URL = "http://kafemud.bilkent.edu.tr/monu_eng.html";
+//     return responseData;
+//   } catch (error) {
+//     throw new Error(`Error fetching HTML: ${error}`);
+//   }
+// }
+// const URL = "http://kafemud.bilkent.edu.tr/monu_eng.html";
 
-const responseData = fetchMealData(URL).then((responseData) => {
-  parseDataMSO(responseData);
-});
+// const responseData = fetchMealData(URL).then((responseData) => {
+//   parseDataMSO(responseData);
+// });
 
 module.exports = {
   parseDataMSO,
