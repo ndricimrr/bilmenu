@@ -2,6 +2,8 @@
 
 Welcome to the BilMenu project! This open-source project aims to provide a simple and interactive way for Bilkent University students to view cafeteria menus for different days of the week. The project focuses on displaying meal options with images, creating an easy-to-navigate interface for users.
 
+A little history on how the app came to be [here](history.md)
+
 ## Features
 
 - View cafeteria menus for each day of the week.
@@ -14,9 +16,9 @@ Welcome to the BilMenu project! This open-source project aims to provide a simpl
 ## Getting Started
 
 ## Information
-- Site that is parsed: http://kafemud.bilkent.edu.tr/monu_eng.html
-- After parsing the result is served on our side on this json file: `https://www.bilmenu.com/mealplans/meal_plan_week_[Insert Week Number]_2024.json`
 
+- Site that is parsed: http://kafemud.bilkent.edu.tr/monu_eng.html
+- After parsing the result is served on our side on this json file: `https://www.bilmenu.com/mealplans/meal_plan_week_[Insert Week Number]_[Insert Year].json`
 
 ### Prerequisites
 
