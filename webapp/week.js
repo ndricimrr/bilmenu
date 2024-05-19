@@ -7,9 +7,6 @@ if (isNodeEnvironment) {
 } else {
   Day = window.Day;
 }
-// const Day = require("./day");
-
-// import "./day.js";
 
 class Week {
   constructor() {

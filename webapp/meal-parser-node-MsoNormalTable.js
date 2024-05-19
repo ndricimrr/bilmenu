@@ -16,13 +16,7 @@ function parseDataMSO(responseData) {
   // Parse HTML using cheerio
   const $ = cheerio.load(responseData);
 
-  // Extract information from the table
-  const lunchData = [];
-  const dinnerData = [];
-
-  const listOfDays = [];
-
-  // holds data for the week
+  // holds data for the weekly plan
   const weeklyPlan = new Week();
 
   // set to true only if a certain meal plan
@@ -229,11 +223,6 @@ function parseDataMSO(responseData) {
             tr_en[1] && tr_en[1].trim()
           );
           currentDay.addAlternativeMeal(meal);
-
-          // alternativeDishes.push({
-          //   tr: tr_en[0] && tr_en[0].trim(),
-          //   en: tr_en[1] && tr_en[1].trim(),
-          // });
         });
 
         const length = currentDay.alternative.length;
@@ -255,13 +244,10 @@ function parseDataMSO(responseData) {
   }
 
   if (weeklyPlan.days.length === 0) {
-    console.log("0000");
     return WRONG_PARSING;
   }
 
   if (incompatibleMealSize) {
-    console.log("1111");
-
     return WRONG_PARSING;
   }
 

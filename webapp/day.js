@@ -7,7 +7,6 @@ if (isNodeEnvironment) {
 } else {
   Meal = window.Meal;
 }
-// import "./meal.js";
 
 function getDayOfTheWeek(dateString) {
   const [day, month, year] = dateString.split(".").map(Number);
