@@ -312,11 +312,6 @@
       const modalContent = document.getElementById("modalContent");
       const modalContributeBtn = document.getElementById("contribute-btn");
       const modalImage = document.getElementById("modalImage");
-      // Attach the error handling function to the image
-      modalImage.onerror = function () {
-        handleImageError(this);
-      };
-
       const modalNameTr = document.getElementById("modalNameTr");
       const modalImageEn = document.getElementById("modalNameEn");
 
@@ -390,19 +385,34 @@
           "https://github.com/ndricimrr/bilmenu/blob/main/CONTRIBUTING_IMAGES.md";
       }
 
-      // function called when opening the modal with a missing image
-      function handleImageError(img) {
-        img.onerror = null; // Prevent infinite loop in case the fallback image also fails
-        img.src = "assets/images/misc/missing-meal.jpg"; // Set fallback image
-
-        modalContributeBtn.style.display = "inline";
+      function checkImageExists(url, callback) {
+        const img = new Image();
+        img.onload = function () {
+          callback(true);
+        };
+        img.onerror = function () {
+          callback(false);
+        };
+        img.src = url;
       }
 
+      // Display the selected meal item in a larger modal
       function openModal(item) {
-        // Display the selected meal item in a larger modal
-        modalImage.src = `assets/images/meals/${item.tr}.jpg`;
-        modalNameTr.innerHTML = item.tr;
-        modalImageEn.innerHTML = item.en;
+        const imageURL = `assets/images/meals/${item.tr}.jpg`;
+
+        checkImageExists(imageURL, function (imageExists) {
+          if (imageExists) {
+            modalImage.src = `assets/images/meals/${item.tr}.jpg`;
+          } else {
+            // show fallback image and contribute button
+            modalImage.src = `assets/images/misc/missing-meal.jpg`;
+            modalContributeBtn.style.display = "inline";
+          }
+
+          // show meal names tr/en
+          modalNameTr.innerHTML = item.tr;
+          modalImageEn.innerHTML = item.en;
+        });
 
         modal.style.display = "flex";
         setTimeout(() => {
