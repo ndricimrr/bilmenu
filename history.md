@@ -2,7 +2,7 @@
 
 _BilMenu_ is a web/mobile app that was first published on _October 30, 2017_.
 
-As a foreign student at Bilkent University, I always found it hard to read the _University's Cafeteria menu_ with both English and Turkish names. This menu shows a list of the daily meals of around 20 meal items. This is the standard in most universities, but I found it very annoying. Especially, after just coming out of a final exam for which you had to read 300 slides + textbooks, the last thing I wanted to do was to read a long list of foods, most of which I don't understand or I just couldn't create the visual image in my mind fast enough.
+As a foreign student at Bilkent University, I always found it hard to read the [University's Cafeteria menu](http://kafemud.bilkent.edu.tr/monu_eng.html) with both English and Turkish names. This menu shows a list of the daily meals of around 20 meal items. This is the standard in most universities, but I found it very annoying. Especially, after just coming out of a final exam for which you had to read 300 slides + textbooks, the last thing I wanted to do was to read a long list of foods, most of which I don't understand or I just couldn't create the visual image in my mind fast enough.
 
 So I came up with the idea of showing the meals visually using images for my own sake.
 
