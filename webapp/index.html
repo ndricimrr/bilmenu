@@ -290,7 +290,6 @@
             id="modalImage"
             src="https://via.placeholder.com/600x400"
             alt="Meal Image"
-            onerror="this.onerror=null; this.src='assets/images/misc/missing-meal.jpg'; onMissingError();"
           />
           <h2 id="modalNameTr">Yemek</h2>
           <p id="modalNameEn">Food</p>
@@ -311,6 +310,11 @@
       const modalContent = document.getElementById("modalContent");
 
       const modalImage = document.getElementById("modalImage");
+      // Attach the error handling function to the image
+      modalImage.onerror = function () {
+        handleImageError(this);
+      };
+
       const modalNameTr = document.getElementById("modalNameTr");
       const modalImageEn = document.getElementById("modalNameEn");
 
@@ -385,7 +389,10 @@
       }
 
       // function called when opening the modal with a missing image
-      function onMissingError() {
+      function handleImageError(img) {
+        img.onerror = null; // Prevent infinite loop in case the fallback image also fails
+        img.src = "assets/images/misc/missing-meal.jpg"; // Set fallback image
+
         const button = document.getElementById("contribute-btn");
         button.style.display = "inline";
         button.onclick = goToContributions;
@@ -393,18 +400,9 @@
 
       function openModal(item) {
         // Display the selected meal item in a larger modal
-
         modalImage.src = `assets/images/meals/${item.tr}.jpg`;
         modalNameTr.innerHTML = item.tr;
         modalImageEn.innerHTML = item.en;
-
-        // modalContent.innerHTML = `
-        //   <button class="close-button" onclick="closeModal()">X</button>
-        //   <img src="assets/images/meals/${
-        //     item + ".jpg"
-        //   }" onerror="this.onerror=null; this.src='assets/images/misc/missing-meal.jpg'; onMissingError();" alt="Meal Image">
-        //   <h2>${item}<button id='contribute-btn'>Contribute Now</button></h2>
-        // `;
 
         modal.style.display = "flex";
         setTimeout(() => {
