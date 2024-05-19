@@ -2,9 +2,9 @@
 
 _BilMenu_ is a web/mobile app that was first published on _October 30, 2017_.
 
-As a foreign student at Bilkent University, I always found it hard to read the [University's Cafeteria menu](http://kafemud.bilkent.edu.tr/monu_eng.html) with both English and Turkish names. This menu shows a list of the daily meals of around 20 meal items. This is the standard in most universities, but I found it very annoying. Especially, after just coming out of a final exam for which you had to read 300 slides + textbooks, the last thing I wanted to do was to read a long list of foods, most of which I don't understand or I just couldn't create the visual image in my mind fast enough.
+As a foreign student at Bilkent University, I always found it hard to read the [University's Cafeteria menu](http://kafemud.bilkent.edu.tr/monu_eng.html) with both English and Turkish names. This menu shows a list of the daily meals of around 20 meal items. This is the standard in most universities, but I found it very annoying. Especially, after just coming out of a final exam for which you had to read 300 slides + textbooks, the last thing I wanted to do was to read a long list of foods, most of which I don't understand or I just couldn't even bother to create a visual image of it.
 
-So I came up with the idea of showing the meals visually using images for my own sake.
+So I came up with the idea of showing the meals visually using images _for my own sake_.
 
 One problem with fetching images from Google or other public sources is image copyrights and privacy policies. As the app was supposed to be for free, fetching public images didn't make sense. I needed a solution but lacked the budget, so spending money for it was not an option.
 
@@ -12,7 +12,7 @@ Therefore, I decided to instead take a picture of meals every day and collect th
 
 After I had collected about _100 images_, I started editing them out on Photoshop one by one to edit out the background, which is why you see only the plate there. This was done for personal UX reasons only.
 
-At this point, I had already done a first version of the [Android App](https://play.google.com/store/apps/details?id=com.bilmenu), and included the images on it too. After first publishing to Google Play Store, I shared it with a couple of friends at the University and started to get some feedback.
+At this point, I had already done a first version of the [Android App](https://play.google.com/store/apps/details?id=com.bilmenu), and included the images on it too. After talking with some friends and because I was excited to know how such apps could be published live I decided to publish it to Google Play Store. I shared it with a couple of friends at the University and started to get some feedback.
 
 The main problem of the app was that there weren't enough pictures so I continued to collect more. Some friends also helped from time to time. I maintained the app up until my graduation which was in _2019_. The app managed to get about _700 total downloads_ and at its peak it had about _100 Active users per week_. It was a nice experiment on live production and deployment.
 
