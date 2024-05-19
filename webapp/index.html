@@ -15,6 +15,7 @@
     <!-- <script src="meal-parser.js"></script> -->
     <script src="utilities.js"></script>
 
+    <script type="module" src="constants.js"></script>
     <script type="module" src="meal.js"></script>
     <script type="module" src="day.js"></script>
     <script type="module" src="week.js"></script>
@@ -208,6 +209,12 @@
         font-size: large;
         font-style: italic;
       }
+
+      .linkToKafemud {
+        color: blue; /* Set text color */
+        text-decoration: underline; /* Add underline */
+        cursor: pointer; /* Change cursor to pointer on hover */
+      }
     </style>
   </head>
   <body>
@@ -301,10 +308,16 @@
     </div>
     <footer style="display: flex; justify-content: center">
       The data was parsed from&nbsp;
-      <a href="http://kafemud.bilkent.edu.tr/monu_eng.html">
+      <a
+        class="linkToKafemud"
+        target="_blank"
+        href="#"
+        onclick="this.href=window.URL"
+      >
         Bilkent University Cafeteria Page</a
       >
     </footer>
+
     <script>
       const daysList = document.getElementById("daysList");
       const menuView = document.getElementById("menuView");

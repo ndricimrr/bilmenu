@@ -1,12 +1,13 @@
 const axios = require("axios");
-const url = "http://kafemud.bilkent.edu.tr/monu_eng.html";
+const URL = require("./constants").URL;
+
 const fs = require("fs");
 const { getWeekAndDate } = require("./utilities_node");
 
 const { parseAndWriteToJSON } = require("./parser");
 
 axios
-  .get(url, {
+  .get(URL, {
     responseType: "arraybuffer",
   })
   .then((response) => {
