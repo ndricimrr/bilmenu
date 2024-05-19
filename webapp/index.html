@@ -203,6 +203,11 @@
       #contribute-btn:hover {
         background-color: #ff7f00; /* Darker orange background on hover */
       }
+
+      #modalNameEn {
+        font-size: large;
+        font-style: italic;
+      }
     </style>
   </head>
   <body>
@@ -281,8 +286,15 @@
       <div class="modal" id="modal">
         <div class="modal-content" id="modalContent">
           <button class="close-button" onclick="closeModal()">X</button>
-          <img src="https://via.placeholder.com/600x400" alt="Meal Image" />
-          <h2>Selected Meal</h2>
+          <img
+            id="modalImage"
+            src="https://via.placeholder.com/600x400"
+            alt="Meal Image"
+            onerror="this.onerror=null; this.src='assets/images/misc/missing-meal.jpg'; onMissingError();"
+          />
+          <h2 id="modalNameTr">Yemek</h2>
+          <p id="modalNameEn">Food</p>
+          <button id="contribute-btn">Contribute Now</button>
         </div>
       </div>
     </div>
@@ -298,6 +310,10 @@
       const modal = document.getElementById("modal");
       const modalContent = document.getElementById("modalContent");
 
+      const modalImage = document.getElementById("modalImage");
+      const modalNameTr = document.getElementById("modalNameTr");
+      const modalImageEn = document.getElementById("modalNameEn");
+
       const DaysOfWeek = {
         Monday: 0,
         Tuesday: 1,
@@ -307,74 +323,6 @@
         Saturday: 5,
         Sunday: 6,
       };
-
-      function getFixLunchMealFromJSON(day) {
-        if (mealPlanJSON.fixMenuLunch) {
-          const fixMenuLunch = mealPlanJSON.fixMenuLunch;
-          if (day > fixMenuLunch.length) {
-            console.warn("fixMenuLunch cant be found for day index = ", day);
-          }
-          const lunchDishes = Array.from(fixMenuLunch[day].lunchDishes);
-          if (!lunchDishes || lunchDishes.length === 0) {
-            console.warn(
-              "lunchDishes list of dishes found to be undefined|empty for day = ",
-              day,
-              fixMenuLunch[day].date
-            );
-          }
-          return lunchDishes.map((dish) => {
-            return dish.tr + ".jpg";
-          });
-        } else {
-          console.warn("mealPlanJSON.fixMenuLunch undefined");
-        }
-      }
-
-      function getFixDinnerMealFromJSON(day) {
-        if (mealPlanJSON.fixMenuLunch) {
-          const fixMenuDinner = mealPlanJSON.fixMenuDinner;
-          if (day > fixMenuDinner.length) {
-            console.warn("fixMenuDinner cant be found for day index = ", day);
-          }
-          const dinnerDishes = Array.from(fixMenuDinner[day].dinnerDishes);
-          if (!dinnerDishes || dinnerDishes.length === 0) {
-            console.warn(
-              "dinnerDishes list of dishes found to be undefined|empty for day = ",
-              day,
-              fixMenuDinner[day].date
-            );
-          }
-          return dinnerDishes.map((dish) => {
-            return dish.tr + ".jpg";
-          });
-        } else {
-          console.warn("mealPlanJSON.fixMenuDinner undefined");
-        }
-      }
-
-      function getAlternativeMealsFromJSON(day) {
-        if (mealPlanJSON.alternativeMenu) {
-          const alternativeMenu = mealPlanJSON.alternativeMenu;
-          if (day > alternativeMenu.length) {
-            console.warn("alternativeMenu cant be found for day index = ", day);
-          }
-          const alternativeDishes = Array.from(
-            alternativeMenu[day].alternativeDishes
-          );
-          if (!alternativeDishes || alternativeDishes.length === 0) {
-            console.warn(
-              "alternativeDishes list of dishes found to be undefined|empty for day = ",
-              day,
-              alternativeDishes[day].date
-            );
-          }
-          return alternativeDishes.map((dish) => {
-            return dish.tr + ".jpg";
-          });
-        } else {
-          console.warn("mealPlanJSON.alternativeMenu undefined");
-        }
-      }
 
       // dayIndex : 0 = Monday, 1 = Tuesday, etc
       function showMenu(dayIndex) {
@@ -411,7 +359,7 @@
         }" onerror="this.onerror=null; this.src='assets/images/misc/missing-meal.jpg'" alt="Meal Image Here">
         <div class="meal-label">${mealName.tr}</div>
       `;
-          mealItemDOM.addEventListener("click", () => openModal(mealName.tr));
+          mealItemDOM.addEventListener("click", () => openModal(mealName));
 
           menuGrid.appendChild(mealItemDOM);
         });
@@ -446,13 +394,17 @@
       function openModal(item) {
         // Display the selected meal item in a larger modal
 
-        modalContent.innerHTML = `
-          <button class="close-button" onclick="closeModal()">X</button>
-          <img src="assets/images/meals/${
-            item + ".jpg"
-          }" onerror="this.onerror=null; this.src='assets/images/misc/missing-meal.jpg'; onMissingError();" alt="Meal Image">
-          <h2>${item}<button id='contribute-btn'>Contribute Now</button></h2>
-        `;
+        modalImage.src = `assets/images/meals/${item.tr}.jpg`;
+        modalNameTr.innerHTML = item.tr;
+        modalImageEn.innerHTML = item.en;
+
+        // modalContent.innerHTML = `
+        //   <button class="close-button" onclick="closeModal()">X</button>
+        //   <img src="assets/images/meals/${
+        //     item + ".jpg"
+        //   }" onerror="this.onerror=null; this.src='assets/images/misc/missing-meal.jpg'; onMissingError();" alt="Meal Image">
+        //   <h2>${item}<button id='contribute-btn'>Contribute Now</button></h2>
+        // `;
 
         modal.style.display = "flex";
         setTimeout(() => {
