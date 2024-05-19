@@ -43,16 +43,26 @@
     <!-- Header -->
     <header class="site-header">
       <div class="nav-container">
-        <h1 class="page-title">
-          <img src="assets/images/logos/logo.jpg" alt="GitHub Logo" />
-          BilMenu |
-          <span style="font-size: medium"><i>Bil</i>kent Cafeteria</span>
-        </h1>
-        <h2></h2>
+        <div class="page-title" onclick="goHome()" title="Go Home">
+          <img
+            class="home-logo"
+            src="assets/images/logos/logo_m.png"
+            alt="Logo"
+          />
+          <div class="title-text">
+            BilMenu
+            <span style="font-size: small">Bilkent University Cafeteria</span>
+          </div>
+        </div>
 
         <nav class="main-nav">
           <ul class="nav-list">
-            <li><a href="index.html">Menu</a></li>
+            <li>
+              <a href="index.html"
+                ><b style="color: blue"> &#8635;</b> <u>Refresh</u></a
+              >
+            </li>
+
             <li>
               <a
                 href="https://github.com/ndricimrr/bilmenu"
@@ -60,13 +70,13 @@
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <!-- Replace 'github-mark.png' with your actual image file -->
                 Github Project
                 <img src="github-mark.png" alt="GitHub Logo" />
               </a>
             </li>
             <li><a href="contributions.html">Contributions</a></li>
             <li><a href="privacy-policy.html">Privacy Policy</a></li>
+            <li><a href="about-us.html">About</a></li>
           </ul>
           <button class="mobile-menu-toggle">&#9776;</button>
         </nav>
