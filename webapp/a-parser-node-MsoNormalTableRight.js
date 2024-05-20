@@ -44,35 +44,31 @@ function parseDataMSO(responseData) {
       filteredSecondToLastMSONormalTable.find("tbody > tr");
     const fs = require("fs");
 
+    fs.writeFileSync("output1.html", filteredSecondToLastMSONormalTable.html());
+
+    // return;
     let output = [];
+
+    console.log("-------");
     // iterating for Fix Menu : Lunch + Dinner dishes
     secondToLasTbodyTr.each((index, element) => {
       // skip index = 0 as it is table header (Days / Dishes / Nutrition Facts)
-      if (index > 1) {
-        output.push("<br/>--turkish--<br/>");
 
-        output.push($(element).find("td:first-child"));
-        output.push("<br/>--English--<br/>");
-        output.push($(element).find("td:nth-child(2)"));
-        output.push("<br/>----<br/>");
-        output.push("<br/>----<br/>");
-
-        output.push("<br/>----<br/>");
-
-        return;
+      if (index >= 1) {
         // date is in first column (td), meals are on second td, and nutritional facts on third td
-
-        let date = $(element).find("td:first-child").text().trim();
-        // remove spaces
-        date = date.replace(/\s+/g, " ").trim();
-
-        // Pick only date and skip DoW string. dd.mm.yyyy
-        date = /^\d+\.\d+\.\d{4}/.test(date)
-          ? date.match(/^\d+\.\d+\.\d{4}/)[0]
-          : null;
 
         // ODD Index = Lunch, Even Index = Dinner
         if (index % 2 !== 0) {
+          let date = $(element).find("td:first-child").text().trim();
+          // console.log(date);
+          // remove spaces
+          date = date.replace(/\s+/g, " ").trim();
+
+          // Pick only date and skip DoW string. dd.mm.yyyy
+          date = /^\d+\.\d+\.\d{4}/.test(date)
+            ? date.match(/^\d+\.\d+\.\d{4}/)[0]
+            : null;
+
           const currentDay = new Day(date);
           /****************************************
           /************** LUNCH PARSING ***********
@@ -81,41 +77,110 @@ function parseDataMSO(responseData) {
           // Parse Lunch dishes
           const dishElement = $(element).find("td:nth-child(2)");
 
-          // split html based on paragraph and break line html elements to extract single meals
-          const meals = $(dishElement)
+          const dishElementsTr = $(element).find("td:nth-child(2)");
+          const dishElementsEn = $(element).find("td:nth-child(3)");
+
+          let splitTurkishLunchMeals = $(dishElementsTr)
             .html()
-            .split(/<br\s*\/?>|<p\s*\/?>/);
+            .split(/<\/?p[^>]*>\s*/g)
+            .map((item) => item.trim())
+            .filter((item) => item !== "");
 
-          let dishText;
+          let splitEnglishLunchMeals = $(dishElementsEn)
+            .html()
+            .split(/<\/?p[^>]*>\s*/g)
+            .map((item) => item.trim())
+            .filter((item) => item !== "");
+
+          output.push(
+            "<br/>-------<br/>" +
+              date +
+              "<br /> Turkish:<br />" +
+              splitTurkishLunchMeals
+          );
+
+          output.push(
+            "<br/>------<br/>" +
+              date +
+              "<br /> English:" +
+              splitEnglishLunchMeals
+          );
+
+          // return;
+          // split html based on paragraph and break line html elements to extract single meals
+          // const meals = $(dishElement)
+          //   .html()
+          //   .split(/<br\s*\/?>|<p\s*\/?>/);
+
+          let lunchTurkishDishes = [];
+          let currentLunchDish;
+
+          splitTurkishLunchMeals = splitTurkishLunchMeals
+            .map((mealItemHTML, index) => {
+              const dishText = cheerio.load(mealItemHTML).root().text().trim();
+              return dishText
+                .replace("Öğle Yemeği", "")
+                .replace(/\s+/g, " ")
+                .trim()
+                .replace(/[\n\t]+/g, " ");
+            })
+            .flatMap((item) => {
+              if (item.includes("veya")) {
+                // Split the item by 'veya' and return the resulting parts
+                return item.split("veya").map((part) => part.trim());
+              } else {
+                // If the item doesn't contain 'veya', return it as is
+                return item;
+              }
+            })
+            .filter((item) => item !== "");
+
+          splitEnglishLunchMeals = splitEnglishLunchMeals
+            .map((mealItemHTML, index) => {
+              const dishText = cheerio.load(mealItemHTML).root().text().trim();
+              return dishText
+                .replace("Lunch", "")
+                .replace(/\s+/g, " ")
+                .trim()
+                .replace(/[\n\t]+/g, " ");
+            })
+            .flatMap((item) => {
+              if (item.includes("or /")) {
+                // Split the item by 'veya' and return the resulting parts
+                return item.split("or /").map((part) => part.trim());
+              } else {
+                // If the item doesn't contain 'veya', return it as is
+                return item;
+              }
+            })
+            .filter((item) => item !== "");
+
+          console.log(splitTurkishLunchMeals);
+
+          console.log(splitEnglishLunchMeals);
+
+          return;
           // Iterate over the parts
-          meals.forEach((mealItemHTML, index) => {
-            // skip 0 & 1
-            //  index 0 is just null value
-            //  index 1  is "Ogle Yemeği / Lunch" TD header text
-            if (index > 1) {
-              // extract only text part from HTML
-              dishText = cheerio.load(mealItemHTML).root().text().trim();
+          splitTurkishLunchMeals.forEach((mealItemHTML, index) => {
+            // extract only text part from HTML
+            currentLunchDish = cheerio.load(mealItemHTML).root().text().trim();
 
-              // remove white space
-              dishText = dishText.replace(/\s+/g, " ").trim();
+            currentLunchDish = currentLunchDish.replace("Öğle Yemeği", "");
 
-              // remove new line and tabs and replace with 1 space
-              dishText = dishText.replace(/[\n\t]+/g, " ");
+            // remove 'veya' text if it exists
+            // currentLunchDish = currentLunchDish.replace("veya", "");
 
-              // split to get the Turkish/English text elements separated
-              const tr_en = dishText.split("/");
+            // remove white space
+            currentLunchDish = currentLunchDish.replace(/\s+/g, " ").trim();
 
-              // TODO: Get Vegan options
-              // TODO: Add UI to make Image Box Green or add a Vegan icon of some sort.
-              // Example: There are two parts that are split. If second part contains 'veya / or' text
-              // then split again accordingly to add the vegan meal there too
-              // Sebzeli Tavuk Sote / Chicken sautéed with vegetables veya / or Vegan Barbunya / Kidney beans (Vegan)
-
-              const meal = new Meal(tr_en[0].trim(), tr_en[1].trim());
-              currentDay.addLunchMeal(meal);
-            }
+            // remove new line and tabs and replace with 1 space
+            currentLunchDish = currentLunchDish.replace(/[\n\t]+/g, " ");
+            lunchTurkishDishes.push(currentLunchDish);
           });
+          lunchTurkishDishes.filter((item) => item !== "");
+          console.log(lunchTurkishDishes);
 
+          return;
           // EVEN index = dinner. Instead of waiting for next loop. do both lunch/dinner in one go and skip last index = 14
           // Parse Dinner Dishes: It should be the next() element right after the odd one (=even)
           // this saves always the last iteration. which is why, index <= 13.
