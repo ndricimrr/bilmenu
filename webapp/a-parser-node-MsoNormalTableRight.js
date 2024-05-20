@@ -37,7 +37,7 @@ function parseDataMSO(responseData) {
     // remove extra unnecessary attributes to make it easier to read and debug
     const filteredSecondToLastMSONormalTable = secondToLastMsoNormalTable
       .find("*")
-      .removeAttr("style class lang width");
+      .removeAttr("style class lang width align");
 
     // Query its tbody > tr
     const secondToLasTbodyTr =
@@ -48,8 +48,17 @@ function parseDataMSO(responseData) {
     // iterating for Fix Menu : Lunch + Dinner dishes
     secondToLasTbodyTr.each((index, element) => {
       // skip index = 0 as it is table header (Days / Dishes / Nutrition Facts)
-      if (index > 0) {
-        output.push($(element).html());
+      if (index > 1) {
+        output.push("<br/>--turkish--<br/>");
+
+        output.push($(element).find("td:first-child"));
+        output.push("<br/>--English--<br/>");
+        output.push($(element).find("td:nth-child(2)"));
+        output.push("<br/>----<br/>");
+        output.push("<br/>----<br/>");
+
+        output.push("<br/>----<br/>");
+
         return;
         // date is in first column (td), meals are on second td, and nutritional facts on third td
 
