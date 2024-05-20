@@ -86,7 +86,6 @@ async function parseAndWriteToJSON(isDailyFetch) {
     const responseData = await fetchMealData(URL);
     const parsedResult = parseData(responseData);
 
-    console.log(parsedResult, 11);
     writeResultToJSONFile(parsedResult, isDailyFetch);
   } catch (error) {
     throw new Error(error);
