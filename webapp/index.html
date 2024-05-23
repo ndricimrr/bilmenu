@@ -368,11 +368,20 @@
         menuItems.forEach((mealName, index) => {
           const mealItemDOM = document.createElement("div");
           mealItemDOM.className = "meal-item";
+
+          // handle custom vegan UI for Vegan Food
+          const isVegan = mealName.tr.includes("Vegan");
+          const veganStyle = "background: green;";
+          if (isVegan) {
+            mealItemDOM.style.border = "1px solid green";
+          }
           mealItemDOM.innerHTML = `
         <img src="assets/images/meals/${
           mealName.tr + ".jpg"
         }" onerror="this.onerror=null; this.src='assets/images/misc/missing-meal.jpg'" alt="Meal Image Here">
-        <div class="meal-label">${mealName.tr}</div>
+        <div class="meal-label" style="${isVegan ? veganStyle : ""}">${
+            mealName.tr
+          }</div>
       `;
           mealItemDOM.addEventListener("click", () => openModal(mealName));
 
@@ -421,6 +430,25 @@
             // show fallback image and contribute button
             modalImage.src = `assets/images/misc/missing-meal.jpg`;
             modalContributeBtn.style.display = "inline";
+          }
+
+          const previousStyle = modalContributeBtn.style;
+
+          // handle custom vegan UI for Vegan Food
+          const isVegan = item.tr.includes("Vegan");
+          const veganStyle = "color: green;";
+          if (isVegan) {
+            modalNameTr.style = veganStyle;
+            modalImageEn.style = veganStyle;
+            if (!imageExists) modalContributeBtn.style.background = "green";
+          } else {
+            // reset color so it doesnt get stuck to green
+            modalNameTr.style = "color: black";
+            modalImageEn.style = "color: black";
+            if (!imageExists) {
+              modalContributeBtn.style.display = "inline";
+              modalContributeBtn.style.background = "#ffa500";
+            }
           }
 
           // show meal names tr/en
