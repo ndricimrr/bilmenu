@@ -9,7 +9,7 @@ const {
 const { parseDataIcerik } = require("./meal-parser-node-icerik");
 const { parseDataMSO } = require("./meal-parser-node-MsoNormalTable");
 
-// similar to parseDataMSO algorithm but they changed alignment
+// similar to parseDataMSO algorithm but they changed alignment of the text, splitting english and turkish in separate columns
 const { parseDataMSORight } = require("./parser-node-MsoNormalTableRight.js");
 
 const WRONG_PARSING = "IS_WRONG_PARSING";
@@ -50,7 +50,6 @@ function writeResultToJSONFile(content, isDailyFetch) {
 // select strategy also, with which algorithm to parse
 function parseData(responseData) {
   const msoAlignRightResult = parseDataMSORight(responseData);
-  console.log(msoAlignRightResult);
   if (msoAlignRightResult !== WRONG_PARSING) {
     console.log(
       "\n\nParsing algorithm finished successfully: \x1b[32m*** MSONormalTable ***\x1b[0m"
@@ -80,7 +79,6 @@ function parseData(responseData) {
 }
 
 // Usage
-//
 async function parseAndWriteToJSON(isDailyFetch) {
   try {
     const responseData = await fetchMealData(URL);
