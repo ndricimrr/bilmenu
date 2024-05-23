@@ -23,10 +23,8 @@ function parseDataMSORight(responseData) {
   // does not have the fixed meal number: lunch/dinner/alternative=4/4/12
   let incompatibleMealSize = false;
 
-  // Select all DOM elements with class name "Jimmy"
+  // Select all DOM elements with class name "MsoNormalTable"
   const MsoNormalTableElements = $(".MsoNormalTable");
-
-  let alternativeData = [];
 
   // Check if there are at least 5 elements with class name "MsoNormalTable"
   // Simple search on Inspect Element reveals 5 on DOM thats why
@@ -42,25 +40,16 @@ function parseDataMSORight(responseData) {
     // Query its tbody > tr
     const secondToLasTbodyTr =
       filteredSecondToLastMSONormalTable.find("tbody > tr");
-    const fs = require("fs");
 
-    fs.writeFileSync("output1.html", filteredSecondToLastMSONormalTable.html());
-
-    // return;
-    let output = [];
-
-    console.log("-------");
     // iterating for Fix Menu : Lunch + Dinner dishes
     secondToLasTbodyTr.each((index, element) => {
       // skip index = 0 as it is table header (Days / Dishes / Nutrition Facts)
 
       if (index >= 1) {
-        // date is in first column (td), meals are on second td, and nutritional facts on third td
-
-        let splitTurkishLunchMeals;
-        let splitEnglishLunchMeals;
         // ODD Index = Lunch, Even Index = Dinner
         if (index % 2 !== 0) {
+          // date is in first column (td), meals are on second td, and nutritional facts on third td
+
           let date = $(element).find("td:first-child").text().trim();
           // console.log(date);
           // remove spaces
@@ -138,10 +127,6 @@ function parseDataMSORight(responseData) {
             currentDay.addLunchMeal(lunchMeal);
           });
 
-          // console.log("\n\n\n List Lunch");
-          // console.log(splitTurkishLunchMeals, splitTurkishLunchMeals.length);
-          // console.log(splitEnglishLunchMeals, splitEnglishLunchMeals.length);
-
           // EVEN index = dinner. Instead of waiting for next loop. do both lunch/dinner in one go and skip last index = 14
           // Parse Dinner Dishes: It should be the next() element right after the odd one (=even)
           // this saves always the last iteration. which is why, index <= 13.
@@ -212,11 +197,6 @@ function parseDataMSORight(responseData) {
             currentDay.addDinnerMeal(lunchMeal);
           });
 
-          // console.log("\n\n\n List Dinner");
-
-          // console.log(splitTurkishDinnerMeals, splitTurkishDinnerMeals.length);
-          // console.log(splitEnglishDinnerMeals, splitEnglishDinnerMeals.length);
-
           // add length too for easier debugging
           const length_lunch = currentDay.lunch.length;
           const length_dinner = currentDay.dinner.length;
@@ -237,92 +217,93 @@ function parseDataMSORight(responseData) {
     });
 
     /*
-      ************************************
-      /// ALTERNATIVE SECTION PARSING ////
-      ************************************
-      */
+     ************************************
+     *** ALTERNATIVE SECTION PARSING  ***
+     ************************************
+     */
 
     // Select the last element with class name "MsoNormalTable" which corresponds to alternative menu table
     const lastMsoNormalTable = MsoNormalTableElements.eq(-1);
 
+    // console.log("TEST", lastMsoNormalTable.html());
+
+    // fs.writeFileSync("output2.html", lastMsoNormalTable.html());
+
+    const lastMsoNormalTableFiltered = lastMsoNormalTable
+      .find("*")
+      .removeAttr("style class lang width align valign");
+
+    // return;
     // Query its tbody > tr
-    // const lastTbodyTr = lastMsoNormalTable.find("tbody > tr");
+    const lastTbodyTr = lastMsoNormalTableFiltered.find("tbody > tr");
 
-    // lastTbodyTr.each((index, element) => {
-    //   if (index > 0) {
-    //     let date = $(element).find("td:first-child").text().trim();
+    lastTbodyTr.each((index, element) => {
+      if (index > 0) {
+        let date = $(element).find("td:first-child").text().trim();
 
-    //     // remove spaces
-    //     date = date.replace(/\s+/g, " ").trim();
+        // remove spaces
+        date = date.replace(/\s+/g, " ").trim();
 
-    //     // Pick only date and skip DoW string
-    //     date = /^\d+\.\d+\.\d{4}/.test(date)
-    //       ? date.match(/^\d+\.\d+\.\d{4}/)[0]
-    //       : null;
+        // Pick only date and skip DoW string
+        date = /^\d+\.\d+\.\d{4}/.test(date)
+          ? date.match(/^\d+\.\d+\.\d{4}/)[0]
+          : null;
 
-    //     const currentDay = weeklyPlan.getDay(date);
+        // get the day that is already created before during lunch/dinner parsing
+        const currentDay = weeklyPlan.getDay(date);
 
-    //     let alternativeDishes = [];
-    //     const dishElement = $(element).find("td:nth-child(2)");
+        const dishElementsTr = $(element).find("td:nth-child(2)");
+        const dishElementsEn = $(element).find("td:nth-child(3)");
 
-    //     // remove style, class and lang properties to make html output more readable and remove whitespace
-    //     let filteredDishElementHTML = $(dishElement)
-    //       .find("*")
-    //       .removeAttr("style class lang")
-    //       .end()
-    //       .html()
-    //       .replace(/\s+/g, " ");
+        let splitTurkishAlternativeMeals = $(dishElementsTr)
+          .html()
+          .split(/<\/?p[^>]*>\s*/g)
+          .map((item) => item.trim())
+          .filter((item) => item !== "")
+          .map((mealItemHTML, index) => {
+            const dishText = cheerio.load(mealItemHTML).root().text().trim();
+            return dishText
+              .replace(/\s+/g, " ")
+              .trim()
+              .replace(/[\n\t]+/g, " ");
+          })
+          .filter((item) => item !== "");
 
-    //     // split html based on paragraph and break line html elements to extract single meals
-    //     let meals = filteredDishElementHTML.split(/<br\s*\/?>|<p\s*\/?>/);
+        let splitEnglishAlternativeMeals = $(dishElementsEn)
+          .html()
+          .split(/<\/?p[^>]*>\s*/g)
+          .map((item) => item.trim())
+          .filter((item) => item !== "")
+          .map((mealItemHTML, index) => {
+            const dishText = cheerio.load(mealItemHTML).root().text().trim();
+            return dishText
+              .replace(/\s+/g, " ")
+              .trim()
+              .replace(/[\n\t]+/g, " ");
+          })
+          .filter((item) => item !== "");
 
-    //     // remove empty string meal items
-    //     meals = meals.map((str) => str.trim()).filter((str) => str !== "");
+        splitTurkishAlternativeMeals.forEach((mealTr, index) => {
+          const englishName = splitEnglishAlternativeMeals[index];
+          const alternativeMeal = new Meal(mealTr, englishName);
+          currentDay.addAlternativeMeal(alternativeMeal);
+        });
 
-    //     // represents the text for a single dish, ex: "Muz / Banana"
-    //     let dishText;
+        const length = currentDay.alternative.length;
 
-    //     // iterate over the list of 12 alternative meals for current date
-    //     meals.forEach((mealItem) => {
-    //       // reload String HTML back to cheerio to be able to extrat HTML innerHTML text out of it
-    //       const $temp = cheerio.load(mealItem);
-    //       dishText = $temp.text();
-
-    //       // remove white space
-    //       dishText = dishText.replace(/\s+/g, " ").trim();
-
-    //       // remove new line and tabs and replace with 1 space
-    //       dishText = dishText.replace(/[\n\t]+/g, " ");
-
-    //       // Split based on slash to get turkish and english separate words in two parts
-    //       const tr_en = dishText.split("/");
-
-    //       const meal = new Meal(
-    //         tr_en[0] && tr_en[0].trim(),
-    //         tr_en[1] && tr_en[1].trim()
-    //       );
-    //       currentDay.addAlternativeMeal(meal);
-    //     });
-
-    //     const length = currentDay.alternative.length;
-
-    //     // TODO: Change when adding Vegan Option, if needed be
-    //     if (length !== 12) {
-    //       console.log("length_alternative=", length);
-    //       console.error(
-    //         "Length Alternative have less then or more than 12 Items. Must have 12"
-    //       );
-    //       incompatibleMealSize = true;
-    //       // process.exit();
-    //     }
-
-    //     // Extract lunch dishes text
-    //     alternativeData.push({ date, alternativeDishes, length });
-    //   }
-    // });
+        // TODO: Change when adding Vegan Option, if needed be
+        if (length !== 12) {
+          console.log("length_alternative=", length);
+          console.error(
+            "Length Alternative have less then or more than 12 Items. Must have 12"
+          );
+          incompatibleMealSize = true;
+          // process.exit();
+        }
+      }
+    });
   }
 
-  console.log(weeklyPlan, 222);
   if (weeklyPlan.days.length === 0) {
     return WRONG_PARSING;
   }
@@ -354,7 +335,7 @@ function parseDataMSORight(responseData) {
 // const URL = require("./constants").URL;
 
 // const responseData = fetchMealData(URL).then((responseData) => {
-//   parseDataMSO(responseData);
+//   parseDataMSORight(responseData);
 // });
 
 module.exports = {
