@@ -51,7 +51,6 @@ function parseDataMSORight(responseData) {
           // date is in first column (td), meals are on second td, and nutritional facts on third td
 
           let date = $(element).find("td:first-child").text().trim();
-          // console.log(date);
           // remove spaces
           date = date.replace(/\s+/g, " ").trim();
 
@@ -225,19 +224,15 @@ function parseDataMSORight(responseData) {
     // Select the last element with class name "MsoNormalTable" which corresponds to alternative menu table
     const lastMsoNormalTable = MsoNormalTableElements.eq(-1);
 
-    // console.log("TEST", lastMsoNormalTable.html());
-
-    // fs.writeFileSync("output2.html", lastMsoNormalTable.html());
-
     const lastMsoNormalTableFiltered = lastMsoNormalTable
       .find("*")
       .removeAttr("style class lang width align valign");
 
-    // return;
-    // Query its tbody > tr
+    // Query its tbody > tr , rows
     const lastTbodyTr = lastMsoNormalTableFiltered.find("tbody > tr");
 
     lastTbodyTr.each((index, element) => {
+      // skip first index 0 as it is the table header, and is not needed
       if (index > 0) {
         let date = $(element).find("td:first-child").text().trim();
 
@@ -291,7 +286,6 @@ function parseDataMSORight(responseData) {
 
         const length = currentDay.alternative.length;
 
-        // TODO: Change when adding Vegan Option, if needed be
         if (length !== 12) {
           console.log("length_alternative=", length);
           console.error(
