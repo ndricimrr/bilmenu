@@ -25,7 +25,7 @@ axios
       );
 
       // set true to save to /kafemud_daily_parsing_snapshots instead of webapp/mealplans
-      parseAndWriteToJSON(true);
+      // parseAndWriteToJSON(true);
     } catch (error) {
       console.error(`Error writing file ${fileName} HTML:`, error);
       process.exit(1);
