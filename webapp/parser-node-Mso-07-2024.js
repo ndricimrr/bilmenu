@@ -86,15 +86,16 @@ function parseDataMSO_07_2024(responseData) {
        
         // Parse Lunch / Dinner dishes
         const currentDishTrRaw = $(element).find("td:first-child").text();
-        const currentDishTr = currentDishTrRaw.replace(/\s+/g, " ").replace(/[\n\t]+/g, " ").trim();
+        const currentDishTr = currentDishTrRaw.replace(/\s+/g, " ").replace(/[\n\t]+/g, " ").replace(/\bveya\b/g, '').trim();
         const currentDishEnRaw = $(element).find("td:nth-child(2)").text();
-        const currentDishEn = currentDishEnRaw.replace(/\s+/g, " ").replace(/[\n\t]+/g, " ").trim();
+        const currentDishEn = currentDishEnRaw.replace(/\s+/g, " ").replace(/[\n\t]+/g, " ").replace(/\bor\b/g, '').trim();
 
         // Caputre the index for TR elements that contain lunch meals
         if (index % 12 >= 1 && index % 12 <= 5) {
           const lunchMeal = new Meal(currentDishTr, currentDishEn);
           currentDay.addLunchMeal(lunchMeal);
         } else {
+          if (index % 12 === 6)  return; // skip header "Aksam Yemegi/Dinner"
           // rest of indexes belong to dinner meals
           const dinnerMeal = new Meal(currentDishTr, currentDishEn);
           currentDay.addDinnerMeal(dinnerMeal);
@@ -163,8 +164,8 @@ function parseDataMSO_07_2024(responseData) {
         const currentDishTrRaw = $(element).find(turkishSelector).text();
         const currentDishEnRaw = $(element).find(englishSelector).text();
 
-        const currentDishTr = currentDishTrRaw.replace(/\s+/g, " ").replace(/[\n\t]+/g, " ").trim();
-        const currentDishEn = currentDishEnRaw.replace(/\s+/g, " ").replace(/[\n\t]+/g, " ").trim();
+        const currentDishTr = currentDishTrRaw.replace(/\s+/g, " ").replace(/[\n\t]+/g, " ").replace(/\bveya\b/g, '').trim();
+        const currentDishEn = currentDishEnRaw.replace(/\s+/g, " ").replace(/[\n\t]+/g, " ").replace(/\bor\b/g, '').trim();
 
         const alternativeMeal = new Meal(currentDishTr, currentDishEn);
         currentDay.addAlternativeMeal(alternativeMeal);
@@ -192,7 +193,7 @@ function checkFixMenuLength(currentDay) {
    const length_dinner = currentDay.dinner.length;
 
    // TODO: Change when adding Vegan Option, should be 5 afterwards
-   if (length_dinner !== 5 && length_lunch != 5) {
+   if (length_dinner !== 5 || length_lunch != 5) {
      console.log("length_dinner=", length_dinner);
      console.log("length_lunch=", length_lunch);
      console.error(
@@ -223,7 +224,7 @@ function checkFixMenuLength(currentDay) {
 // const URL = require("./constants").URL;
 
 // const responseData = fetchMealData(URL).then((responseData) => {
-//   parseDataMSORight(responseData);
+//   parseDataMSO_07_2024(responseData);
 // });
 
 module.exports = {
