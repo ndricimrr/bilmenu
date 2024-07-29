@@ -207,25 +207,25 @@ function checkFixMenuLength(currentDay) {
 
 // Uncomment for testing
 
-async function fetchMealData(url) {
-  try {
-    const response = await axios.get(url, {
-      responseType: "arraybuffer",
-    });
+// async function fetchMealData(url) {
+//   try {
+//     const response = await axios.get(url, {
+//       responseType: "arraybuffer",
+//     });
 
-    const decoder = new TextDecoder("ISO-8859-9"); // Assuming ISO-8859-9 (Turkish) encoding
-    const responseData = decoder.decode(response.data);
+//     const decoder = new TextDecoder("ISO-8859-9"); // Assuming ISO-8859-9 (Turkish) encoding
+//     const responseData = decoder.decode(response.data);
 
-    return responseData;
-  } catch (error) {
-    throw new Error(`Error fetching HTML: ${error}`);
-  }
-}
-const URL = require("./constants").URL;
+//     return responseData;
+//   } catch (error) {
+//     throw new Error(`Error fetching HTML: ${error}`);
+//   }
+// }
+// const URL = require("./constants").URL;
 
-const responseData = fetchMealData(URL).then((responseData) => {
-  parseDataMSO_07_2024(responseData);
-});
+// const responseData = fetchMealData(URL).then((responseData) => {
+//   parseDataMSO_07_2024(responseData);
+// });
 
 module.exports = {
   parseDataMSO_07_2024,
