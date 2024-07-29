@@ -34,7 +34,7 @@ A little history on how the app came to be [here](history.md)
 
 ### Current Status UI Web (In Progress) Go to -> www.bilmenu.com
 
-![User Interface](image.png)
+![User Interface](app_screenshot.png)
 
 ## Contributions
 
