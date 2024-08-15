@@ -1,3 +1,5 @@
+(**NOTICE**: The original parsed website is very volatile and parsing needs to be fixed. Waiting until it is stable again.)
+
 # BilMenu - Bilkent University Cafeteria Menu Project
 
 Welcome to the BilMenu project! This open-source project aims to provide a simple and interactive way for Bilkent University students to view cafeteria menus for different days of the week. The project focuses on displaying meal options with images, creating an easy-to-navigate interface for users.
