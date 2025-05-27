@@ -34,22 +34,22 @@ jobs:
             "sections": [{ "heading": "...", "content": "..." }]
           } No explanation or markdown. Only return JSON.'
 
-          curl "https://jsonplaceholder.typicode.com/todos/1" \
-            -H 'Content-Type: application/json' \
-            -X GET \
-            -d '{
-              "contents": [
-                {
-                  "parts": [
-                    {
-                      "text": "'"$PROMPT\n\nHere is the HTML:\n"'$CLEANED_HTML'"
-                    }
-                  ]
-                }
-              ]
-            }' | jq '.candidates[0].content.parts[0].text' > output.json
-
       - name: Show Result
         run: cat output.json
 
         # https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}
+
+        # curl "https://jsonplaceholder.typicode.com/todos/1" \
+        #     -H 'Content-Type: application/json' \
+        #     -X GET \
+        #     -d '{
+        #       "contents": [
+        #         {
+        #           "parts": [
+        #             {
+        #               "text": "'"$PROMPT\n\nHere is the HTML:\n"'$CLEANED_HTML'"
+        #             }
+        #           ]
+        #         }
+        #       ]
+        #     }' | jq '.candidates[0].content.parts[0].text' > output.json
