@@ -21,7 +21,7 @@ jobs:
         run: npm install
 
       - name: Clean HTML
-        run: node webapp/cleanHtmlScript.js > cleaned.txt
+        run: node webapp/cleanHtmlScript.js >
 
       - name: Call Gemini API with cleaned HTML
         env:
@@ -33,24 +33,16 @@ jobs:
             "title": "...",
             "sections": [{ "heading": "...", "content": "..." }]
           } No explanation or markdown. Only return JSON.'
-          echo "CLEANED_HTML: $CLEANED_HTML" | jq -R . > cleaned.json
+
+          echo '{
+          "title": "Sample Title",
+          "sections": [
+            { "heading": "Introduction", "content": "This is a sample introduction." },
+            { "heading": "Details", "content": "These are sample details." }
+          ]
+          }' > output.json
 
       - name: Show Result
         run: cat output.json
 
         # https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}
-
-        # curl "https://jsonplaceholder.typicode.com/todos/1" \
-        #     -H 'Content-Type: application/json' \
-        #     -X GET \
-        #     -d '{
-        #       "contents": [
-        #         {
-        #           "parts": [
-        #             {
-        #               "text": "'"$PROMPT\n\nHere is the HTML:\n"'$CLEANED_HTML'"
-        #             }
-        #           ]
-        #         }
-        #       ]
-        #     }' | jq '.candidates[0].content.parts[0].text' > output.json
