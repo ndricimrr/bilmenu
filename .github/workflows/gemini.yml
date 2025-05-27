@@ -21,7 +21,7 @@ jobs:
         run: npm install
 
       - name: Clean HTML
-        run: node webapp/cleanHtmlScript.js
+        run: node webapp/cleanHtmlScript.js > cleaned.txt
 
       - name: Call Gemini API with cleaned HTML
         env:
