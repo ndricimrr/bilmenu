@@ -33,6 +33,7 @@ jobs:
             "title": "...",
             "sections": [{ "heading": "...", "content": "..." }]
           } No explanation or markdown. Only return JSON.'
+          echo "CLEANED_HTML: $CLEANED_HTML" | jq -R . > cleaned.json
 
       - name: Show Result
         run: cat output.json
