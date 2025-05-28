@@ -1,23 +1,19 @@
-console.log("Hello World!");
 const axios = require("axios");
 const URL = require("./constants").URL;
 
 // Only applicable for a html which contains the "icerik" css class in it. Check inspect element of the URL below or /kafemud_html_snapshots
 
 const cheerio = require("cheerio");
+const minify = require("html-minifier").minify;
 
-function getTableHTML(responseData) {
-  console.log(
-    "\n\nParsing algorithm being used: \x1b[32m*** Icerik ***\x1b[0m"
-  );
-
+// gets the HTML
+function getHTMLCleaned(responseData) {
   // Parse HTML using cheerio
   if (!responseData) {
     console.error("Response data is null or undefined.");
     return WRONG_PARSING;
   }
   const $ = cheerio.load(responseData);
-  console.log("HTML loaded successfully.");
 
   // Remove all <style> blocks
   $("style").remove();
@@ -81,7 +77,13 @@ function getTableHTML(responseData) {
   });
 
   // ✅ Get only <body> content
-  const bodyHtml = $("body").html();
+  const bodyHtml = minify($("body").html(), {
+    collapseWhitespace: true,
+    removeComments: true,
+    removeEmptyAttributes: true,
+    minifyCSS: true,
+    minifyJS: true,
+  });
 
   return bodyHtml;
 }
@@ -103,20 +105,16 @@ async function fetchMealData(url) {
   }
 }
 
-fetchMealData(URL)
-  .then((responseData) => {
-    console.log("-----");
-    // console.log("Fetched HTML data:", responseData);
-    console.log("-----*********");
-
-    const tableHTML = getTableHTML(responseData);
-    console.log("Cleaned table HTML:", tableHTML);
-    console.log("-----+");
-  })
-  .catch((error) => {
-    console.error("Error during fetching or parsing:", error);
-  });
+(async () => {
+  const responseData = await fetchMealData(URL);
+  if (!responseData) {
+    console.error("Failed to fetch response data.");
+    process.exit(1);
+  }
+  const tableHTML = getHTMLCleaned(responseData);
+  console.log(tableHTML);
+})();
 
 module.exports = {
-  getTableHTML,
+  getHTMLCleaned,
 };

@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "axios": "^1.6.7",
-    "cheerio": "^1.0.0-rc.12"
+    "cheerio": "^1.0.0-rc.12",
+    "html-minifier": "^4.0.0"
   }
 }

@@ -1,0 +1,25 @@
+You are an expert HTML parser, extracting weekly cafeteria meal data. The HTML structure is inconsistent; focus on content patterns.
+**Your Goal:** Extract all meal items (Lunch, Dinner, Alternative) for each day into a precise JSON format.
+**Output Format (Strict Adherence Required):**
+```json
+[
+  {
+    "date": "DD.MM.YYYY",
+    "dayOfWeek": "DayNameInEnglish",
+    "lunch": [{"tr": "TurkishMealName", "en": "EnglishTranslation"}],
+    "dinner": [{"tr": "TurkishMealName", "en": "EnglishTranslation"}],
+    "alternative": [{"tr": "TurkishMealName", "en": "EnglishTranslation"}]
+  }
+  // ... continue for all days found ...
+]
+
+Parsing Instructions (Robust & Concise):
+1. Section Identification: Identify "Fixed Menu" (e.g., "TABİLDOT FİKS MENÜ / TABLE D'HOTE FIXED MENU") and "Alternative Menu" (e.g., "TABİLDOT SEÇMELİ MENÜ / TABLE D'HOTE ALTERNATIVE MENU") sections using their bold Turkish/English headings.
+2. Daily Blocks: For each section, locate daily entries by the robust pattern: <b>DD.MM.YYYY<br>TurkishDay<br>EnglishDay</b>. Extract date and dayOfWeek from these. All subsequent meals belong to this day until the next daily marker or section end.
+3. Meal Type Sub-sections (Fixed Menu Only): Within the Fixed Menu, identify "Lunch" (e.g., "Öğle Yemeği / Lunch") and "Dinner" (e.g., "Akşam Yemeği / Dinner") using their bold headings.
+4. Item Extraction: Identify individual meal items as adjacent Turkish/English text pairs.
+4.1 - Cleaning: Strip all HTML tags (<b>, <i>, <p>, <span>). Remove leading/trailing whitespace.
+4.2 - Splitting Options: If a single text block contains "X veya Y" (or "X or Y"), split it into two distinct meal objects: one for "X" and one for "Y", each with its tr and en. If "(Vegan)" is part of a specific item's name, retain it.
+5. Consolidation: Create one JSON object per day. Populate lunch, dinner, and alternative arrays.
+6. Empty Arrays: If any lunch, dinner, or alternative section has no items for a day, set its array to []. Do not omit the key.
+7. Final Output: Output only the complete JSON array. No conversational text.
