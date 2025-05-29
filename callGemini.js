@@ -4,7 +4,7 @@ const { getCurrentWeekJSONFileName } = require("./webapp/utilities_node");
 
 // Load prompt and cleaned HTML
 const prompt = fs.readFileSync("prompt.txt", "utf8");
-const cleanedHtml = fs.readFileSync("webapp/cleaned.html", "utf8");
+const cleanedHtml = fs.readFileSync("cleaned.html", "utf8");
 
 // Combine prompt and cleaned HTML
 const finalPrompt = `${prompt} ${cleanedHtml}`;
@@ -25,6 +25,8 @@ const payload = {
 // Send the request to the Gemini API
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
+
+console.log("Calling Gemini API with payload");
 
 axios
   .post(url, payload, {
