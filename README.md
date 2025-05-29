@@ -1,6 +1,8 @@
-(**NOTICE**: The original parsed website is very volatile and parsing needs to be fixed. Waiting until it is stable again.)
-
 # BilMenu - Bilkent University Cafeteria Menu Project
+
+![User Interface](app_screenshot.png)
+
+Go to -> [www.bilmenu.com](www.bilmenu.com)
 
 Welcome to the BilMenu project! This open-source project aims to provide a simple and interactive way for Bilkent University students to view cafeteria menus for different days of the week. The project focuses on displaying meal options with images, creating an easy-to-navigate interface for users.
 
@@ -9,6 +11,7 @@ A little history on how the app came to be [here](history.md)
 ## Features
 
 - View cafeteria menus for each day of the week.
+- Meals parsed with **AI** for better accuracy
 - Explore lunch, dinner, and alternative meal options for each day.
 - Dynamic grid layout for meal items, including images and labels.
 - Responsive design for optimal viewing on both desktop and mobile devices.

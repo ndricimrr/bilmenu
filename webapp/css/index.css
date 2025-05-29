@@ -1,0 +1,192 @@
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #e0b15a;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.days-list {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: opacity 0.2s ease; /* Smooth opacity transition */
+}
+
+.days-list button {
+  margin: 10px;
+  padding: 15px;
+  background-color: #db6034;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  width: 150px; /* Set a fixed width for all buttons */
+  transition: background-color 0.2s ease, transform 0.2s ease; /* Smooth background color and transform transition */
+}
+
+.menu-view {
+  display: none;
+  transition: opacity 0.2s ease; /* Smooth opacity transition */
+}
+
+.back-button {
+  text-decoration: none;
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: #db9b34;
+  color: white;
+  font-weight: bold;
+  border-radius: 10%;
+  border: 1px solid rgba(255, 255, 255, 0.527);
+}
+
+.back-button:hover {
+  background-color: #f56f08;
+  color: rgb(255, 255, 255);
+}
+
+.back-button:active {
+  background-color: #c94d13;
+  transform: translateY(2px);
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.menu-category {
+  margin-top: 20px;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease; /* Smooth transform transition */
+}
+
+.menu-category h2 {
+  color: #ffffff;
+  background-color: #db6034;
+  padding: 15px;
+  margin: 0;
+  font-size: 20px;
+}
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
+  padding: 10px;
+}
+
+.meal-item {
+  position: relative;
+  cursor: pointer;
+  border-radius: 8px;
+  overflow: hidden;
+  height: 220px; /* Set a fixed height for each Meal Item */
+  transition: transform 0.2s ease; /* Smooth transform transition */
+}
+
+.meal-item:hover {
+  transform: scale(1.1);
+}
+
+.meal-item img {
+  width: 100%;
+  height: 80%;
+  object-fit: cover;
+  border-bottom: 2px solid #fff; /* Add a border to separate image and label */
+  transition: transform 0.2s ease; /* Smooth transform transition */
+}
+
+.meal-label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  padding: 5px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 0.5s ease; /* Smooth opacity transition */
+}
+
+.modal-content {
+  background: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  width: 70%;
+  max-width: 600px;
+  position: relative;
+}
+
+.modal-content img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.close-button {
+  background-color: #e74c3c;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+#contribute-btn {
+  display: none;
+  background-color: #ffa500; /* Orange background */
+  color: #ffffff; /* White text */
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  margin: 4px 2px;
+  margin-left: 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+#contribute-btn:hover {
+  background-color: #ff7f00; /* Darker orange background on hover */
+}
+
+#modalNameEn {
+  font-size: large;
+  font-style: italic;
+}
+
+.linkToKafemud {
+  color: blue; /* Set text color */
+  text-decoration: underline; /* Add underline */
+  cursor: pointer; /* Change cursor to pointer on hover */
+}
