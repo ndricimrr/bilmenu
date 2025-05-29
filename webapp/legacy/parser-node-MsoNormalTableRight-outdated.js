@@ -3,9 +3,9 @@ const WRONG_PARSING = "IS_WRONG_PARSING";
 const axios = require("axios");
 const { TextDecoder } = require("util");
 
-const Day = require("./day");
-const Meal = require("./meal");
-const Week = require("./week");
+const Day = require("../day");
+const Meal = require("../meal");
+const Week = require("../week");
 
 const cheerio = require("cheerio");
 

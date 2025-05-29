@@ -2,7 +2,7 @@
 // const cheerio = require("cheerio");
 
 // URL of the HTML page
-const url = require("./constants").URL;
+const url = require("../constants").URL;
 
 // Make a request to the URL
 
