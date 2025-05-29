@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  process:
+  parse-html-and-save:
     runs-on: ubuntu-latest
 
     steps:
@@ -20,8 +20,20 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Clean HTML
+      - name: Generate Clean HTML
         run: node webapp/cleanHtmlScript.js > cleaned.html
+
+      - name: Check if cleaned HTML file exists and is not empty
+        run: |
+          if [ ! -s cleaned.html ]; then
+            echo "Cleaned HTML file does not exist or is empty. Exiting."
+            exit 1
+          fi
+
+      - name: Display cleaned HTML content
+        run: |
+          echo "Displaying cleaned HTML content:"
+          cat cleaned.html
 
       - name: Call Gemini API with cleaned HTML
         env:
