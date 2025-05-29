@@ -35,7 +35,47 @@ axios
     },
   })
   .then((response) => {
-    const rawText = response?.candidates?.[0]?.content?.parts?.[0]?.text;
+    if (!response) {
+      throw new Error("No response from Gemini API");
+    }
+    if (!response.candidates) {
+      throw new Error(
+        "Invalid AI response structure: candidates is undefined",
+        response
+      );
+    }
+    if (!response.candidates[0]) {
+      throw new Error(
+        "Invalid AI response structure: candidates[0] is undefined",
+        response
+      );
+    }
+    if (!response.candidates[0].content) {
+      throw new Error(
+        "Invalid AI response structure: candidates[0].content is undefined",
+        response
+      );
+    }
+    if (!response.candidates[0].content.parts) {
+      throw new Error(
+        "Invalid AI response structure: candidates[0].content.parts is undefined",
+        response
+      );
+    }
+    if (!response.candidates[0].content.parts[0]) {
+      throw new Error(
+        "Invalid AI response structure: candidates[0].content.parts[0] is undefined",
+        response
+      );
+    }
+    if (!response.candidates[0].content.parts[0].text) {
+      throw new Error(
+        "Invalid AI response structure: candidates[0].content.parts[0].text is undefined",
+        response
+      );
+    }
+
+    const rawText = response.candidates[0].content.parts[0].text;
     if (!rawText) {
       throw new Error("Invalid AI response structure: rawText is undefined");
     }

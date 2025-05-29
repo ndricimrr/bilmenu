@@ -4,10 +4,10 @@ const URL = require("./constants").URL;
 // Only applicable for a html which contains the "icerik" css class in it. Check inspect element of the URL below or /kafemud_html_snapshots
 
 const cheerio = require("cheerio");
-const minify = require("html-minifier").minify;
+const { minify } = require("html-minifier-terser");
 
 // gets the HTML
-function getHTMLCleaned(responseData) {
+async function getHTMLCleaned(responseData) {
   // Parse HTML using cheerio
   if (!responseData) {
     console.error("Response data is null or undefined.");
@@ -77,7 +77,7 @@ function getHTMLCleaned(responseData) {
   });
 
   // ✅ Get only <body> content
-  const bodyHtml = minify($("body").html(), {
+  const bodyHtml = await minify($("body").html(), {
     collapseWhitespace: true,
     removeComments: true,
     removeEmptyAttributes: true,
@@ -111,7 +111,7 @@ async function fetchMealData(url) {
     console.error("Failed to fetch response data.");
     process.exit(1);
   }
-  const tableHTML = getHTMLCleaned(responseData);
+  const tableHTML = await getHTMLCleaned(responseData);
   console.log(tableHTML);
 })();
 
