@@ -1,9 +1,9 @@
 name: Generate Daily HTML & JSON Snapshot and Commit File
 
 on:
-  schedule:
-    # Run every day at 11:00 AM Turkish time (EET)
-    - cron: "0 8 * * *" # 8:00 UTC = 11:00 EET
+  # schedule:
+  #   # Run every day at 11:00 AM Turkish time (EET)
+  #   - cron: "0 8 * * *" # 8:00 UTC = 11:00 EET
   workflow_dispatch:
 
 jobs:
