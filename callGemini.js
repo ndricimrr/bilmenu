@@ -1,6 +1,6 @@
 const fs = require("fs");
 const axios = require("axios");
-const { getCurrentWeekJSONFileName } = require("./webapp/utilities_node");
+const { getCurrentWeekJSONFileName } = require("./webapp/js/utilities_node");
 const { GoogleGenAI } = require("@google/genai");
 
 // Load prompt and cleaned HTML
