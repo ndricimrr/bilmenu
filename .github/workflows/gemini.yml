@@ -21,7 +21,7 @@ jobs:
         run: npm install
 
       - name: Generate Clean HTML
-        run: node webapp/cleanHtmlScript.js > cleaned.html
+        run: node webapp/js/cleanHtmlScript.js > cleaned.html
 
       - name: Check if cleaned HTML file exists and is not empty
         run: |
