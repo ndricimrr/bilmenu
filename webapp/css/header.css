@@ -8,28 +8,42 @@
 }
 
 .site-header {
-  background-color: #e86a04;
-  padding: 10px 0;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  padding: 16px 0;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .page-title {
-  color: white;
+  color: #333;
   margin: 0;
-  font-size: 24px;
+  font-size: 1.5rem;
+  font-weight: 700;
   cursor: pointer;
   display: flex;
   flex-direction: row;
+  align-items: center;
+  transition: all 0.3s ease;
 }
 
 .page-title:hover {
-  color: rgb(18, 41, 216);
+  color: #667eea;
+  transform: translateY(-1px);
 }
 
 .title-text {
   display: flex;
   flex-direction: column;
   align-items: start;
-  margin-left: 7px;
+  margin-left: 12px;
+}
+
+.title-text span {
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: #666;
+  margin-top: 2px;
 }
 
 .main-nav {
@@ -59,15 +73,18 @@
 
 .nav-list li a {
   text-decoration: none;
-
-  color: white;
-  font-weight: bold;
-  font-size: 16px;
-  transition: color 0.3s ease;
+  color: #333;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  padding: 8px 16px;
+  border-radius: 8px;
 }
 
 .nav-list li a:hover {
-  color: #007bff;
+  color: #667eea;
+  background: rgba(102, 126, 234, 0.1);
+  transform: translateY(-1px);
 }
 
 .mobile-menu-toggle {

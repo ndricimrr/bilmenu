@@ -82,6 +82,16 @@
     </header>
     <!-- Page Container -->
     <div class="container">
+      <!-- Hero Section -->
+      <div class="hero-section">
+        <h1 class="hero-title">BilMenu</h1>
+        <h2 class="hero-subtitle">Bilkent University Cafeteria</h2>
+        <p class="hero-description">
+          Discover today's delicious meals and plan your dining experience at
+          Bilkent University. Fresh, nutritious, and always available.
+        </p>
+      </div>
+
       <div class="days-list" id="daysList">
         <button onclick="showMenu(DaysOfWeek.Monday)">Monday</button>
         <button onclick="showMenu(DaysOfWeek.Tuesday)">Tuesday</button>
@@ -128,17 +138,40 @@
       </div>
     </div>
     <footer
-      style="display: flex; justify-content: center; padding-bottom: 100px"
+      style="
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 40px 20px;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        margin-top: 60px;
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 0.9rem;
+      "
     >
-      The data was parsed with&nbsp;<b> AI </b>&nbsp;from&nbsp;
-      <a
-        class="linkToKafemud"
-        target="_blank"
-        href="#"
-        onclick="this.href=window.URL; window.open(this.href, '_blank');"
-      >
-        Bilkent University Cafeteria Page</a
-      >
+      <div style="text-align: center">
+        <p style="margin: 0 0 8px 0">
+          The data was parsed with
+          <strong style="color: #667eea">AI</strong> from
+        </p>
+        <a
+          class="linkToKafemud"
+          target="_blank"
+          href="#"
+          onclick="this.href=window.URL; window.open(this.href, '_blank');"
+          style="
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+          "
+          onmouseover="this.style.color='#764ba2'"
+          onmouseout="this.style.color='#667eea'"
+        >
+          Bilkent University Cafeteria Page
+        </a>
+      </div>
     </footer>
 
     <script>
@@ -281,6 +314,7 @@
         modal.style.display = "flex";
         setTimeout(() => {
           modal.style.opacity = "1";
+          modal.classList.add("show");
         }, 10); // Allow time for display to take effect before applying opacity transition
       }
 
@@ -288,10 +322,11 @@
         modalContributeBtn.style.display = "none";
 
         // Close the modal with a smooth transition
+        modal.classList.remove("show");
         modal.style.opacity = "0";
         setTimeout(() => {
           modal.style.display = "none";
-        }, 500); // Wait for opacity transition to complete
+        }, 300); // Wait for opacity transition to complete
       }
 
       // Close modal when clicking outside the content
