@@ -38,6 +38,23 @@
     <script src="js/fetchMealPlan.js"></script>
   </head>
   <body>
+    <!-- Modal -->
+    <div class="modal" id="modal">
+      <div class="modal-content" id="modalContent">
+        <button class="close-button" onclick="closeModal()">X</button>
+        <img
+          id="modalImage"
+          src="https://dummyimage.com/600x400"
+          alt="Meal Image"
+        />
+        <h2 id="modalNameTr">Yemek</h2>
+        <p id="modalNameEn">Food</p>
+        <button id="contribute-btn" onclick="goToContributions()">
+          Contribute Now
+        </button>
+      </div>
+    </div>
+
     <!-- Header -->
     <header class="site-header">
       <div class="nav-container">
@@ -198,22 +215,6 @@
         <div class="menu-category">
           <h2>Alternative Menu</h2>
           <div class="menu-grid" id="alternativeMenu"></div>
-        </div>
-      </div>
-
-      <div class="modal" id="modal">
-        <div class="modal-content" id="modalContent">
-          <button class="close-button" onclick="closeModal()">X</button>
-          <img
-            id="modalImage"
-            src="https://dummyimage.com/600x400"
-            alt="Meal Image"
-          />
-          <h2 id="modalNameTr">Yemek</h2>
-          <p id="modalNameEn">Food</p>
-          <button id="contribute-btn" onclick="goToContributions()">
-            Contribute Now
-          </button>
         </div>
       </div>
     </div>
@@ -513,20 +514,13 @@
           modalImageEn.innerHTML = item.en;
         });
 
-        // Show modal immediately
+        // Show modal
         modal.style.display = "block";
-
-        // Force a reflow to ensure the modal is rendered
-        modal.offsetHeight;
-
-        // Add show class for animation
         modal.classList.add("show");
       }
 
       function closeModal() {
         modalContributeBtn.style.display = "none";
-
-        // Close the modal with a smooth transition
         modal.classList.remove("show");
         setTimeout(() => {
           modal.style.display = "none";
