@@ -434,22 +434,26 @@
           modalImageEn.innerHTML = item.en;
         });
 
-        modal.style.display = "flex";
+        // Prevent body scrolling when modal is open
+        document.body.style.overflow = "hidden";
+
+        modal.style.display = "block";
         setTimeout(() => {
-          modal.style.opacity = "1";
           modal.classList.add("show");
-        }, 10); // Allow time for display to take effect before applying opacity transition
+        }, 10);
       }
 
       function closeModal() {
         modalContributeBtn.style.display = "none";
 
+        // Restore body scrolling when modal is closed
+        document.body.style.overflow = "auto";
+
         // Close the modal with a smooth transition
         modal.classList.remove("show");
-        modal.style.opacity = "0";
         setTimeout(() => {
           modal.style.display = "none";
-        }, 300); // Wait for opacity transition to complete
+        }, 300);
       }
 
       // Close modal when clicking outside the content
