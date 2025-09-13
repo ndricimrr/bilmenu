@@ -145,6 +145,35 @@
         </div>
       </div>
 
+      <!-- Meal Type Control Panel -->
+      <div
+        class="meal-control-panel"
+        id="mealControlPanel"
+        style="display: none"
+      >
+        <button
+          class="meal-type-btn active"
+          onclick="showMealType('lunch')"
+          data-type="lunch"
+        >
+          🍽️ Lunch
+        </button>
+        <button
+          class="meal-type-btn"
+          onclick="showMealType('dinner')"
+          data-type="dinner"
+        >
+          🌙 Dinner
+        </button>
+        <button
+          class="meal-type-btn"
+          onclick="showMealType('alternative')"
+          data-type="alternative"
+        >
+          🥗 Alternative
+        </button>
+      </div>
+
       <!-- Error Message -->
       <div class="error-message" id="errorMessage" style="display: none">
         <h3>⚠️ Unable to Load Menu</h3>
@@ -247,6 +276,7 @@
       };
 
       let currentDayIndex = -1;
+      let currentMealType = "lunch";
 
       // Get current day of week (Monday = 0, Sunday = 6)
       function getCurrentDayOfWeek() {
@@ -289,6 +319,7 @@
         errorMessage.style.display = "block";
         menuView.style.display = "none";
         daysList.style.display = "flex";
+        document.getElementById("mealControlPanel").style.display = "none";
         updateActiveDayButton(-1);
       }
 
@@ -338,13 +369,61 @@
         displayMenu("dinnerMenu", dinnerMenu);
         displayMenu("alternativeMenu", alternativeMenu);
 
-        // Show the menu view
+        // Show only the current meal type
+        showMealType(currentMealType);
+
+        // Show the menu view and control panel
         menuView.style.display = "block";
         menuView.style.opacity = "1";
+        document.getElementById("mealControlPanel").style.display = "flex";
 
         // Update active button
         updateActiveDayButton(dayIndex);
         currentDayIndex = dayIndex;
+      }
+
+      // Show specific meal type
+      function showMealType(mealType) {
+        currentMealType = mealType;
+
+        // Hide all menu categories
+        const lunchCategory = document.querySelector(
+          ".menu-category:nth-child(1)"
+        );
+        const dinnerCategory = document.querySelector(
+          ".menu-category:nth-child(2)"
+        );
+        const alternativeCategory = document.querySelector(
+          ".menu-category:nth-child(3)"
+        );
+
+        if (lunchCategory) lunchCategory.style.display = "none";
+        if (dinnerCategory) dinnerCategory.style.display = "none";
+        if (alternativeCategory) alternativeCategory.style.display = "none";
+
+        // Show selected meal type
+        if (mealType === "lunch" && lunchCategory) {
+          lunchCategory.style.display = "block";
+        } else if (mealType === "dinner" && dinnerCategory) {
+          dinnerCategory.style.display = "block";
+        } else if (mealType === "alternative" && alternativeCategory) {
+          alternativeCategory.style.display = "block";
+        }
+
+        // Update active button in control panel
+        updateActiveMealTypeButton(mealType);
+      }
+
+      // Update active meal type button
+      function updateActiveMealTypeButton(mealType) {
+        const buttons = document.querySelectorAll(".meal-type-btn");
+        buttons.forEach((button) => {
+          if (button.dataset.type === mealType) {
+            button.classList.add("active");
+          } else {
+            button.classList.remove("active");
+          }
+        });
       }
 
       function displayMenu(menuId, menuItems) {
@@ -434,20 +513,18 @@
           modalImageEn.innerHTML = item.en;
         });
 
-        // Prevent body scrolling when modal is open
-        document.body.style.overflow = "hidden";
-
+        // Show modal immediately
         modal.style.display = "block";
-        setTimeout(() => {
-          modal.classList.add("show");
-        }, 10);
+
+        // Force a reflow to ensure the modal is rendered
+        modal.offsetHeight;
+
+        // Add show class for animation
+        modal.classList.add("show");
       }
 
       function closeModal() {
         modalContributeBtn.style.display = "none";
-
-        // Restore body scrolling when modal is closed
-        document.body.style.overflow = "auto";
 
         // Close the modal with a smooth transition
         modal.classList.remove("show");
@@ -459,6 +536,13 @@
       // Close modal when clicking outside the content
       window.addEventListener("click", (event) => {
         if (event.target === modal) {
+          closeModal();
+        }
+      });
+
+      // Close modal when pressing Escape key
+      window.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && modal.style.display === "block") {
           closeModal();
         }
       });
