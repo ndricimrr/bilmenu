@@ -306,6 +306,19 @@
         });
       }
 
+      // Update today label to show on actual current day
+      function updateTodayLabel() {
+        const todayIndex = getCurrentDayOfWeek();
+        const columns = daysList.querySelectorAll(".day-column");
+        columns.forEach((column, index) => {
+          if (index === todayIndex) {
+            column.classList.add("today");
+          } else {
+            column.classList.remove("today");
+          }
+        });
+      }
+
       // dayIndex : 0 = Monday, 1 = Tuesday, etc
       function showMenu(dayIndex) {
         // Check if data is available for this day
@@ -448,6 +461,8 @@
 
       // Initialize the app when the page loads
       document.addEventListener("DOMContentLoaded", function () {
+        // Set up today label first
+        updateTodayLabel();
         // Wait a bit for the meal data to load
         setTimeout(initializeApp, 100);
       });

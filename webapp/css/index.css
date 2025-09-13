@@ -589,7 +589,7 @@ body {
   line-height: 16px;
 }
 
-.day-column.active .today-label {
+.day-column.today .today-label {
   background: #ff6b6b;
   color: white;
   border: 1px solid white;
