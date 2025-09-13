@@ -92,19 +92,70 @@
         </p>
       </div>
 
+      <!-- Day Selection -->
       <div class="days-list" id="daysList">
-        <button onclick="showMenu(DaysOfWeek.Monday)">Monday</button>
-        <button onclick="showMenu(DaysOfWeek.Tuesday)">Tuesday</button>
-        <button onclick="showMenu(DaysOfWeek.Wednesday)">Wednesday</button>
-        <button onclick="showMenu(DaysOfWeek.Thursday)">Thursday</button>
-        <button onclick="showMenu(DaysOfWeek.Friday)">Friday</button>
-        <button onclick="showMenu(DaysOfWeek.Saturday)">Saturday</button>
-        <button onclick="showMenu(DaysOfWeek.Sunday)">Sunday</button>
+        <div class="day-column">
+          <div class="today-label">Today</div>
+          <button onclick="showMenu(DaysOfWeek.Monday)" data-day="0">
+            <span class="day-full">Monday</span>
+            <span class="day-short">Mon</span>
+          </button>
+        </div>
+        <div class="day-column">
+          <div class="today-label">Today</div>
+          <button onclick="showMenu(DaysOfWeek.Tuesday)" data-day="1">
+            <span class="day-full">Tuesday</span>
+            <span class="day-short">Tue</span>
+          </button>
+        </div>
+        <div class="day-column">
+          <div class="today-label">Today</div>
+          <button onclick="showMenu(DaysOfWeek.Wednesday)" data-day="2">
+            <span class="day-full">Wednesday</span>
+            <span class="day-short">Wed</span>
+          </button>
+        </div>
+        <div class="day-column">
+          <div class="today-label">Today</div>
+          <button onclick="showMenu(DaysOfWeek.Thursday)" data-day="3">
+            <span class="day-full">Thursday</span>
+            <span class="day-short">Thu</span>
+          </button>
+        </div>
+        <div class="day-column">
+          <div class="today-label">Today</div>
+          <button onclick="showMenu(DaysOfWeek.Friday)" data-day="4">
+            <span class="day-full">Friday</span>
+            <span class="day-short">Fri</span>
+          </button>
+        </div>
+        <div class="day-column">
+          <div class="today-label">Today</div>
+          <button onclick="showMenu(DaysOfWeek.Saturday)" data-day="5">
+            <span class="day-full">Saturday</span>
+            <span class="day-short">Sat</span>
+          </button>
+        </div>
+        <div class="day-column">
+          <div class="today-label">Today</div>
+          <button onclick="showMenu(DaysOfWeek.Sunday)" data-day="6">
+            <span class="day-full">Sunday</span>
+            <span class="day-short">Sun</span>
+          </button>
+        </div>
       </div>
 
-      <div class="menu-view" id="menuView">
-        <a href="#" class="back-button" onclick="goBack()"> &#8249; Back</a>
+      <!-- Error Message -->
+      <div class="error-message" id="errorMessage" style="display: none">
+        <h3>⚠️ Unable to Load Menu</h3>
+        <p>
+          Failed to load meal data due to parsing issues. Please try refreshing
+          the page or check back later.
+        </p>
+      </div>
 
+      <!-- Menu Content -->
+      <div class="menu-view" id="menuView">
         <div class="menu-category">
           <h2>Lunch Menu</h2>
           <div class="menu-grid" id="lunchMenu"></div>
@@ -177,6 +228,7 @@
     <script>
       const daysList = document.getElementById("daysList");
       const menuView = document.getElementById("menuView");
+      const errorMessage = document.getElementById("errorMessage");
       const modal = document.getElementById("modal");
       const modalContent = document.getElementById("modalContent");
       const modalContributeBtn = document.getElementById("contribute-btn");
@@ -194,10 +246,76 @@
         Sunday: 6,
       };
 
+      let currentDayIndex = -1;
+
+      // Get current day of week (Monday = 0, Sunday = 6)
+      function getCurrentDayOfWeek() {
+        const today = new Date();
+        const day = today.getDay();
+        return day === 0 ? 6 : day - 1; // Convert Sunday (0) to 6, others shift by 1
+      }
+
+      // Check if meal data is available
+      function hasMealData(dayIndex) {
+        if (
+          typeof weeklyMealPlan === "undefined" ||
+          !weeklyMealPlan[dayIndex]
+        ) {
+          return false;
+        }
+        const day = weeklyMealPlan[dayIndex];
+        return (
+          (day.lunch && day.lunch.length > 0) ||
+          (day.dinner && day.dinner.length > 0) ||
+          (day.alternative && day.alternative.length > 0)
+        );
+      }
+
+      // Initialize the app
+      function initializeApp() {
+        const todayIndex = getCurrentDayOfWeek();
+
+        if (hasMealData(todayIndex)) {
+          // Show current day if data is available
+          showMenu(todayIndex);
+        } else {
+          // Show error message if no data
+          showErrorMessage();
+        }
+      }
+
+      // Show error message
+      function showErrorMessage() {
+        errorMessage.style.display = "block";
+        menuView.style.display = "none";
+        daysList.style.display = "flex";
+        updateActiveDayButton(-1);
+      }
+
+      // Update active day button
+      function updateActiveDayButton(dayIndex) {
+        const columns = daysList.querySelectorAll(".day-column");
+        columns.forEach((column, index) => {
+          if (index === dayIndex) {
+            column.classList.add("active");
+            column.querySelector("button").classList.add("active");
+          } else {
+            column.classList.remove("active");
+            column.querySelector("button").classList.remove("active");
+          }
+        });
+      }
+
       // dayIndex : 0 = Monday, 1 = Tuesday, etc
       function showMenu(dayIndex) {
-        // Fetch and display menu items for the selected day
-        // For simplicity, using placeholder data
+        // Check if data is available for this day
+        if (!hasMealData(dayIndex)) {
+          showErrorMessage();
+          return;
+        }
+
+        // Hide error message
+        errorMessage.style.display = "none";
 
         const lunchMenu = weeklyMealPlan[dayIndex].lunch;
         const dinnerMenu = weeklyMealPlan[dayIndex].dinner;
@@ -207,13 +325,13 @@
         displayMenu("dinnerMenu", dinnerMenu);
         displayMenu("alternativeMenu", alternativeMenu);
 
-        // Show the menu view with a smooth transition
-        daysList.style.opacity = "0";
-        setTimeout(() => {
-          daysList.style.display = "none";
-          menuView.style.display = "block";
-          menuView.style.opacity = "1";
-        }, 500); // Wait for opacity transition to complete
+        // Show the menu view
+        menuView.style.display = "block";
+        menuView.style.opacity = "1";
+
+        // Update active button
+        updateActiveDayButton(dayIndex);
+        currentDayIndex = dayIndex;
       }
 
       function displayMenu(menuId, menuItems) {
@@ -244,15 +362,7 @@
         });
       }
 
-      function goBack() {
-        // Show the days list view with a smooth transition
-        menuView.style.opacity = "0";
-        setTimeout(() => {
-          menuView.style.display = "none";
-          daysList.style.display = "flex";
-          daysList.style.opacity = "1";
-        }, 500); // Wait for opacity transition to complete
-      }
+      // Remove goBack function since we're keeping day buttons always visible
 
       function goHome() {
         window.location.href = "index.html";
@@ -334,6 +444,12 @@
         if (event.target === modal) {
           closeModal();
         }
+      });
+
+      // Initialize the app when the page loads
+      document.addEventListener("DOMContentLoaded", function () {
+        // Wait a bit for the meal data to load
+        setTimeout(initializeApp, 100);
       });
     </script>
   </body>
