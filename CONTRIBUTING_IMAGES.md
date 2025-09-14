@@ -44,7 +44,7 @@ Follow [this issue](https://github.com/ndricimrr/bilmenu/issues/27) instructions
 
 ### [Option 3] Send the image as an email to us
 
-Send an email to <a href="mailto:ndricimrr@gmail.com">ndricimrr@gmail.com</a>.
+Send an email to <a href="mailto:bilmenudeveloper@gmail.com">bilmenudeveloper@gmail.com</a>.
 
 **Example Email:**
 
