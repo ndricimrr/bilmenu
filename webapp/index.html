@@ -134,6 +134,13 @@
         </p>
       </div>
 
+      <!-- Week Indicator -->
+      <div class="week-indicator" id="weekIndicator">
+        <span class="week-text" id="weekText" data-translate="week.prefix"
+          >Week 4 - 20.01.25 - 26.01.25</span
+        >
+      </div>
+
       <!-- Day Selection -->
       <div class="days-list" id="daysList">
         <div class="day-column">
@@ -338,9 +345,53 @@
         );
       }
 
+      // Calculate and display current week
+      function updateWeekIndicator() {
+        const today = new Date();
+        const weekNumber = getWeekNumber(today);
+        const weekRange = getWeekDateRange(today);
+
+        const weekText = document.getElementById("weekText");
+        if (weekText) {
+          // Get the translated week prefix
+          const weekPrefix = window.languageSwitcher
+            ? window.languageSwitcher.translate("week.prefix")
+            : "Week";
+          weekText.textContent = `${weekPrefix} ${weekNumber} - ( ${weekRange} )`;
+        }
+      }
+
+      // Get week number of the year
+      function getWeekNumber(date) {
+        const firstDayOfYear = new Date(date.getFullYear(), 0, 1);
+        const pastDaysOfYear = (date - firstDayOfYear) / 86400000;
+        return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
+      }
+
+      // Get the date range for the current week (Monday to Sunday)
+      function getWeekDateRange(date) {
+        const day = date.getDay();
+        const diff = date.getDate() - day + (day === 0 ? -6 : 1); // Adjust when day is Sunday
+        const monday = new Date(date.setDate(diff));
+        const sunday = new Date(monday);
+        sunday.setDate(monday.getDate() + 6);
+
+        const formatDate = (d) => {
+          const day = String(d.getDate()).padStart(2, "0");
+          const month = String(d.getMonth() + 1).padStart(2, "0");
+          const year = String(d.getFullYear()).slice(-2);
+          return `${day}.${month}.${year}`;
+        };
+
+        return `${formatDate(monday)} - ${formatDate(sunday)}`;
+      }
+
       // Initialize the app
       function initializeApp() {
         const todayIndex = getCurrentDayOfWeek();
+
+        // Update week indicator
+        updateWeekIndicator();
 
         if (hasMealData(todayIndex)) {
           // Show current day if data is available

@@ -47,6 +47,25 @@ body {
   line-height: 1.5;
 }
 
+/* Week Indicator */
+.week-indicator {
+  text-align: center;
+  margin: 20px 0 15px 0;
+  padding: 12px 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.week-text {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
 .days-list {
   display: flex;
   flex-wrap: nowrap;

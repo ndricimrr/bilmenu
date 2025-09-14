@@ -43,6 +43,9 @@ class LanguageSwitcher {
 
     // Update language switcher UI
     this.updateSwitcherUI();
+
+    // Update week indicator if it exists
+    this.updateWeekIndicator();
   }
 
   translateElements() {
@@ -136,6 +139,13 @@ class LanguageSwitcher {
   // Public method to translate a specific key
   translate(key) {
     return this.translations[this.currentLanguage][key] || key;
+  }
+
+  // Update week indicator with translated text
+  updateWeekIndicator() {
+    if (typeof updateWeekIndicator === "function") {
+      updateWeekIndicator();
+    }
   }
 }
 

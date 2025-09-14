@@ -55,6 +55,9 @@ const translations = {
     // Language Switcher
     "lang.en": "EN",
     "lang.tr": "TR",
+
+    // Week Indicator
+    "week.prefix": "Week",
   },
 
   tr: {
@@ -112,6 +115,9 @@ const translations = {
     // Language Switcher
     "lang.en": "EN",
     "lang.tr": "TR",
+
+    // Week Indicator
+    "week.prefix": "Hafta",
   },
 };
 
