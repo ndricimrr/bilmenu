@@ -8,6 +8,7 @@ import {
   ScrollView,
   Alert,
   Image,
+  Switch,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Header } from "@/components/header";
@@ -444,6 +445,7 @@ BilMenu User
           <TouchableOpacity
             style={[
               styles.mealTypeButton,
+              styles.mealTypeButtonLeft,
               selectedMealType === "lunch" && styles.mealTypeButtonActive,
             ]}
             onPress={() => setSelectedMealType("lunch")}
@@ -460,6 +462,7 @@ BilMenu User
           <TouchableOpacity
             style={[
               styles.mealTypeButton,
+              styles.mealTypeButtonCenter,
               selectedMealType === "dinner" && styles.mealTypeButtonActive,
             ]}
             onPress={() => setSelectedMealType("dinner")}
@@ -477,6 +480,7 @@ BilMenu User
           <TouchableOpacity
             style={[
               styles.mealTypeButton,
+              styles.mealTypeButtonRight,
               selectedMealType === "alternative" && styles.mealTypeButtonActive,
             ]}
             onPress={() => setSelectedMealType("alternative")}
@@ -527,14 +531,28 @@ BilMenu User
 
   const renderSearchView = () => (
     <>
-      <TouchableOpacity
-        style={styles.toggleButton}
-        onPress={() => setShowAllMissing(!showAllMissing)}
-      >
-        <Text style={styles.toggleButtonText}>
-          {showAllMissing ? "Show Current Week Only" : "Show All Missing Meals"}
-        </Text>
-      </TouchableOpacity>
+      <View style={styles.toggleContainer}>
+        <View style={styles.toggleRow}>
+          <View style={styles.toggleInfo}>
+            <Text style={styles.toggleLabel}>
+              {showAllMissing ? "All Missing Meals" : "Current Week Only"}
+            </Text>
+          </View>
+          <Switch
+            value={showAllMissing}
+            onValueChange={setShowAllMissing}
+            trackColor={{
+              false: BilMenuTheme.colors.switchTrack,
+              true: BilMenuTheme.colors.secondary,
+            }}
+            thumbColor={
+              showAllMissing
+                ? BilMenuTheme.colors.switchThumbActive
+                : BilMenuTheme.colors.switchThumb
+            }
+          />
+        </View>
+      </View>
 
       <TextInput
         style={styles.searchInput}
@@ -774,18 +792,40 @@ const styles = StyleSheet.create({
     color: BilMenuTheme.colors.textMuted,
     marginBottom: 10,
   },
-  toggleButton: {
+  toggleContainer: {
     backgroundColor: BilMenuTheme.colors.surface,
-    borderRadius: 8,
-    paddingHorizontal: 15,
-    paddingVertical: 8,
-    borderWidth: 1,
-    borderColor: BilMenuTheme.colors.border,
+    borderRadius: BilMenuTheme.borderRadius.medium,
+    padding: BilMenuTheme.spacing.md,
+    marginBottom: 20,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 4,
   },
-  toggleButtonText: {
-    fontSize: 14,
+  toggleRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingVertical: BilMenuTheme.spacing.xs,
+  },
+  toggleInfo: {
+    flex: 1,
+    marginRight: BilMenuTheme.spacing.sm,
+  },
+  toggleLabel: {
+    fontSize: BilMenuTheme.typography.body.fontSize,
+    fontWeight: BilMenuTheme.typography.subtitle.fontWeight,
     color: BilMenuTheme.colors.text,
-    fontWeight: "500",
+  },
+  toggleDescription: {
+    fontSize: BilMenuTheme.typography.small.fontSize,
+    color: BilMenuTheme.colors.textLight,
+    lineHeight: BilMenuTheme.typography.small.lineHeight,
+    marginTop: 2,
   },
   resultsCount: {
     fontSize: 12,
@@ -878,25 +918,38 @@ const styles = StyleSheet.create({
   },
   mealTypeButtons: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "rgba(255, 255, 255, 0.2)",
+    overflow: "hidden",
   },
   mealTypeButton: {
     flex: 1,
-    backgroundColor: BilMenuTheme.colors.surface,
-    borderRadius: 10,
     paddingVertical: 12,
     paddingHorizontal: 8,
-    marginHorizontal: 4,
     alignItems: "center",
-    borderWidth: 1,
-    borderColor: BilMenuTheme.colors.border,
+    borderRightWidth: 1,
+    borderRightColor: "rgba(255, 255, 255, 0.2)",
+  },
+  mealTypeButtonLeft: {
+    borderTopLeftRadius: 9,
+    borderBottomLeftRadius: 9,
+  },
+  mealTypeButtonCenter: {
+    // No additional border radius for center
+  },
+  mealTypeButtonRight: {
+    borderTopRightRadius: 9,
+    borderBottomRightRadius: 9,
+    borderRightWidth: 0, // Remove right border for last button
   },
   mealTypeButtonActive: {
-    backgroundColor: BilMenuTheme.colors.primary,
+    backgroundColor: "#FF9434",
   },
   mealTypeButtonText: {
     fontSize: 12,
-    color: BilMenuTheme.colors.text,
+    color: BilMenuTheme.colors.textWhite,
     fontWeight: "500",
     textAlign: "center",
   },
