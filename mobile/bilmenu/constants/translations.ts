@@ -78,6 +78,17 @@ export const translations = {
     "submit.step2.gallery": "Gallery",
     "submit.step2.backToSelection": "← Back to Meal Selection",
 
+    // Image Guidelines
+    "submit.step2.guidelines.title": "📸 Photo Guidelines",
+    "submit.step2.guidelines.subtitle":
+      "Take a clear photo from above the meal",
+    "submit.step2.guidelines.correct": "✅ Good Examples",
+    "submit.step2.guidelines.incorrect": "❌ Avoid These",
+    "submit.step2.guidelines.tips":
+      "• Take from directly above\n• Good lighting\n• Full meal visible\n• No blur or shadows",
+    "submit.step2.guidelines.acknowledgment":
+      "I understand the photo guidelines and will take a proper photo",
+
     // Step 3 - Email
     "submit.step3.emailPreview": "Email Preview",
     "submit.step3.to": "To:",
@@ -216,6 +227,17 @@ export const translations = {
     "submit.step2.or": "veya",
     "submit.step2.gallery": "Galeri",
     "submit.step2.backToSelection": "← Yemek Seçimine Dön",
+
+    // Image Guidelines
+    "submit.step2.guidelines.title": "📸 Fotoğraf Kuralları",
+    "submit.step2.guidelines.subtitle":
+      "Yemeğin üstünden net bir fotoğraf çekin",
+    "submit.step2.guidelines.correct": "✅ İyi Örnekler",
+    "submit.step2.guidelines.incorrect": "❌ Bunlardan Kaçının",
+    "submit.step2.guidelines.tips":
+      "• Doğrudan üstten çekin\n• İyi aydınlatma\n• Tüm yemek görünür\n• Bulanıklık veya gölge yok",
+    "submit.step2.guidelines.acknowledgment":
+      "Fotoğraf kurallarını anlıyorum ve uygun bir fotoğraf çekeceğim",
 
     // Step 3 - Email
     "submit.step3.emailPreview": "E-posta Önizleme",
