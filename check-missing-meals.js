@@ -230,10 +230,49 @@ function saveMissingMealsReport(report) {
   try {
     fs.writeFileSync(filepath, JSON.stringify(fullReport, null, 2), "utf8");
     console.log(`💾 Report saved to: ${filepath}`);
+
+    // Update latest-checkpoint.json
+    updateLatestCheckpointState(filename);
+
     return filepath;
   } catch (error) {
     console.error("Error saving report:", error.message);
     return null;
+  }
+}
+
+/**
+ * Update the latest checkpoint state file
+ */
+function updateLatestCheckpointState(filename) {
+  try {
+    // Count total checkpoint files
+    const files = fs.readdirSync(OUTPUT_DIR);
+    const checkpointFiles = files.filter(
+      (file) => file.startsWith("missing-checkpoint-") && file.endsWith(".json")
+    );
+    const totalCheckpoints = checkpointFiles.length;
+
+    const latestCheckpointState = {
+      latestCheckpoint: filename,
+      latestCheckpointUrl: `https://raw.githubusercontent.com/ndricim/bilmenu/main/webapp/missing-meals/${filename}`,
+      totalCheckpoints: totalCheckpoints,
+      lastUpdated: new Date().toISOString(),
+      generatedBy:
+        process.env.GITHUB_ACTIONS === "true"
+          ? "GitHub Actions"
+          : "Local Script",
+    };
+
+    const stateFilePath = path.join(OUTPUT_DIR, "latest-checkpoint.json");
+    fs.writeFileSync(
+      stateFilePath,
+      JSON.stringify(latestCheckpointState, null, 2),
+      "utf8"
+    );
+    console.log(`📊 Latest checkpoint state updated: ${filename}`);
+  } catch (error) {
+    console.error("Error updating latest checkpoint state:", error.message);
   }
 }
 

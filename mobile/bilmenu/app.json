@@ -15,7 +15,7 @@
       "buildNumber": "1",
       "infoPlist": {
         "NSUserNotificationsUsageDescription": "BilMenu sends notifications to remind you about meal times at Bilkent University cafeteria.",
-        "NSCameraUsageDescription": "This app does not use the camera.",
+        "NSCameraUsageDescription": "BilMenu uses the camera to capture images of missing meals for submission.",
         "NSLocationWhenInUseUsageDescription": "This app does not use location services."
       }
     },
@@ -29,7 +29,12 @@
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
       "package": "com.bilmenu.app",
-      "permissions": ["INTERNET", "ACCESS_NETWORK_STATE"]
+      "permissions": [
+        "INTERNET",
+        "ACCESS_NETWORK_STATE",
+        "CAMERA",
+        "WRITE_EXTERNAL_STORAGE"
+      ]
     },
     "web": {
       "output": "static",
@@ -55,6 +60,12 @@
           "icon": "./assets/images/icon.png",
           "color": "#ffffff",
           "defaultChannel": "default"
+        }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow BilMenu to access your camera to capture images of missing meals."
         }
       ]
     ],

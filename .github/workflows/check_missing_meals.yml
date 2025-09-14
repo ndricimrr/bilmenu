@@ -24,6 +24,26 @@ jobs:
           # Run the missing meals checker
           node check-missing-meals.js
 
+      - name: Update latest checkpoint state
+        run: |
+          # Get the latest checkpoint file
+          # The 'ls -t' command lists files sorted by modification time (newest first)
+          # The pattern 'missing-checkpoint-*.json' matches all checkpoint files
+          # 'head -n1' takes only the first (most recent) file from that sorted list
+          LATEST_FILE=$(ls -t webapp/missing-meals/missing-checkpoint-*.json | head -n1)
+          FILENAME=$(basename "$LATEST_FILE")
+
+          # Create latest-checkpoint.json with metadata
+          cat > webapp/missing-meals/latest-checkpoint.json << EOF
+          {
+            "latestCheckpoint": "$FILENAME",
+            "latestCheckpointUrl": "https://raw.githubusercontent.com/ndricim/bilmenu/main/webapp/missing-meals/$FILENAME",
+            "totalCheckpoints": $(ls webapp/missing-meals/missing-checkpoint-*.json | wc -l),
+            "lastUpdated": "$(date -u +"%Y-%m-%dT%H:%M:%SZ")",
+            "generatedBy": "GitHub Actions"
+          }
+          EOF
+
       - name: Commit and push changes
         run: |
           git config --local user.email "action@github.com"
@@ -31,5 +51,5 @@ jobs:
           git status
           git diff
           git add webapp/missing-meals/
-          git commit -m "Generated monthly missing meals checkpoint report" || echo "No changes to commit"
+          git commit -m "Generated monthly missing meals checkpoint report and updated latest state" || echo "No changes to commit"
           git push
