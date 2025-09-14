@@ -1,11 +1,13 @@
 const fs = require("fs");
 const axios = require("axios");
-const { getCurrentWeekJSONFileName } = require("./webapp/js/utilities_node");
+const {
+  getCurrentWeekJSONFileName,
+} = require("../../webapp/js/utilities_node");
 const { GoogleGenAI } = require("@google/genai");
 
 // Load prompt and cleaned HTML
 const prompt = fs.readFileSync("prompt.txt", "utf8");
-const cleanedHtml = fs.readFileSync("cleaned.html", "utf8");
+const cleanedHtml = fs.readFileSync("../../cleaned.html", "utf8");
 
 // Combine prompt and cleaned HTML
 const finalPrompt = `${prompt} ${cleanedHtml}`;

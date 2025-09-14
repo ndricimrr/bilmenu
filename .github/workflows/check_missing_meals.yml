@@ -22,7 +22,7 @@ jobs:
       - name: Run missing meals check script
         run: |
           # Run the missing meals checker
-          node check-missing-meals.js
+          node scripts/utils/check-missing-meals.js
 
       - name: Update latest checkpoint state
         run: |

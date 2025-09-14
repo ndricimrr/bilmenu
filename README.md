@@ -1,13 +1,13 @@
 # BilMenu - Bilkent University Cafeteria Menu Project
 
 <div align="center">
-  <img src="web_screenshot.png" alt="BilMenu Web Interface" width="800" />
+  <img src="assets/screenshots/web_screenshot.png" alt="BilMenu Web Interface" width="800" />
   <br>
   <em>Desktop Web Interface</em>
 </div>
 
 <div align="center">
-  <img src="mobile_screenshot.png" alt="BilMenu Mobile Interface" width="300" />
+  <img src="assets/screenshots/mobile_screenshot.png" alt="BilMenu Mobile Interface" width="300" />
   <br>
   <em>Mobile Interface</em>
 </div>

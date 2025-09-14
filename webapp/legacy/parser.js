@@ -1,11 +1,11 @@
 const axios = require("axios");
-const URL = require("./constants").URL;
+const URL = require("../js/constants.js").URL;
 const fs = require("fs");
 const { TextDecoder } = require("util");
 const {
   getCurrentWeekJSONFileName,
   getWeekAndDateJSONFileName,
-} = require("./utilities_node");
+} = require("../js/utilities_node.js");
 const { parseDataIcerik } = require("./meal-parser-node-icerik");
 const { parseDataMSO } = require("./meal-parser-node-MsoNormalTable");
 

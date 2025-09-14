@@ -21,7 +21,7 @@ jobs:
       - name: Run script to generate file
         run: |
           # Run the parser and write to file json
-          node webapp/save-snapshot-node.js
+          node scripts/utils/save-snapshot-node.js
 
       - name: Commit changes
         run: |

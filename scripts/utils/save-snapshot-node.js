@@ -1,10 +1,10 @@
 const axios = require("axios");
-const URL = require("./constants").URL;
+const URL = require("../../webapp/js/constants").URL;
 
 const fs = require("fs");
-const { getWeekAndDate } = require("./utilities_node");
+const { getWeekAndDate } = require("../../webapp/js/utilities_node");
 
-const { parseAndWriteToJSON } = require("./parser");
+// const { parseAndWriteToJSON } = require("./parser");
 
 axios
   .get(URL, {
@@ -25,7 +25,7 @@ axios
       );
 
       // set true to save to /kafemud_daily_parsing_snapshots instead of webapp/mealplans
-      parseAndWriteToJSON(true);
+      // parseAndWriteToJSON(true);
     } catch (error) {
       console.error(`Error writing file ${fileName} HTML:`, error);
       process.exit(1);

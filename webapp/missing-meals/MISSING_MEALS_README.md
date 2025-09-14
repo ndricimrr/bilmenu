@@ -8,7 +8,7 @@ The script analyzes all meal plan JSON files in `webapp/mealplans/` and compares
 
 ## Files
 
-- `check-missing-meals.js` - Main script that performs the analysis
+- `scripts/utils/check-missing-meals.js` - Main script that performs the analysis
 - `.github/workflows/check_missing_meals.yml` - GitHub Actions workflow
 - `webapp/missing-meals/` - Directory where reports are saved
 
@@ -18,10 +18,10 @@ The script analyzes all meal plan JSON files in `webapp/mealplans/` and compares
 
 ```bash
 # Run the script manually
-node check-missing-meals.js
+node scripts/utils/check-missing-meals.js
 
 # Or make it executable and run directly
-./check-missing-meals.js
+./scripts/utils/check-missing-meals.js
 ```
 
 ### Automated Execution (GitHub Actions)
@@ -146,7 +146,7 @@ Based on the current data (September 14, 2025):
 1. **Permission errors**: Make sure scripts are executable
 
    ```bash
-   chmod +x check-missing-meals.js
+   chmod +x scripts/utils/check-missing-meals.js
    ```
 
 2. **GitHub Actions not running**: Check repository settings and workflow permissions
