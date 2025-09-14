@@ -11,6 +11,7 @@ import {
   Switch,
   KeyboardAvoidingView,
   Platform,
+  Modal,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Header } from "@/components/header";
@@ -41,6 +42,8 @@ export default function SubmitScreen() {
   const [capturedImage, setCapturedImage] = useState<string | null>(null);
   const [imageSize, setImageSize] = useState<number | null>(null);
   const [userName, setUserName] = useState<string>("");
+  const [showAttributionModal, setShowAttributionModal] =
+    useState<boolean>(false);
   const [currentWeekMeals, setCurrentWeekMeals] = useState<MissingMeal[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [isLoading, setIsLoading] = useState(true);
@@ -726,9 +729,18 @@ ${userName || "A Bilkent student"}`;
 
         <View style={styles.nameInputContainer}>
           <View style={styles.nameInputHeader}>
-            <Text style={styles.nameInputLabel}>
-              Add your name for attribution (optional)
-            </Text>
+            <View style={styles.nameInputLabelContainer}>
+              <Text style={styles.nameInputLabel}>
+                Add your name for attribution{" "}
+                <Text style={styles.optionalText}>(optional)</Text>
+                <TouchableOpacity
+                  style={styles.helpButton}
+                  onPress={() => setShowAttributionModal(true)}
+                >
+                  <Text style={styles.helpButtonText}>?</Text>
+                </TouchableOpacity>
+              </Text>
+            </View>
             <Text
               style={[
                 styles.characterCounter,
@@ -766,6 +778,33 @@ ${userName || "A Bilkent student"}`;
       <TouchableOpacity style={styles.backButton} onPress={() => setStep(2)}>
         <Text style={styles.backButtonText}>← Back to Camera</Text>
       </TouchableOpacity>
+
+      <Modal
+        visible={showAttributionModal}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={() => setShowAttributionModal(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Attribution</Text>
+            <Text style={styles.modalText}>
+              Your name will be shown as a thank you to contributors who helped
+              improve the meal image collection.
+            </Text>
+            <Text style={styles.modalText}>
+              It will appear in a contributors section to recognize your help in
+              making BilMenu better for all students.
+            </Text>
+            <TouchableOpacity
+              style={styles.modalButton}
+              onPress={() => setShowAttributionModal(false)}
+            >
+              <Text style={styles.modalButtonText}>Got it!</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </KeyboardAvoidingView>
   );
 
@@ -959,11 +998,42 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 8,
   },
+  nameInputLabelContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    flex: 1,
+  },
   nameInputLabel: {
     fontSize: 14,
     color: BilMenuTheme.colors.textWhite,
     fontWeight: "500",
     flex: 1,
+  },
+  helpButton: {
+    width: 16,
+    height: 16,
+    borderRadius: 8,
+    backgroundColor: BilMenuTheme.colors.secondary,
+    justifyContent: "center",
+    alignItems: "center",
+    marginLeft: 6,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+    elevation: 2,
+  },
+  optionalText: {
+    color: BilMenuTheme.colors.textWhite,
+    fontWeight: "500",
+  },
+  helpButtonText: {
+    fontSize: 12,
+    color: BilMenuTheme.colors.textWhite,
+    fontWeight: "bold",
   },
   characterCounter: {
     fontSize: 12,
@@ -1099,6 +1169,45 @@ const styles = StyleSheet.create({
   backButtonText: {
     fontSize: 16,
     color: BilMenuTheme.colors.text,
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
+  },
+  modalContent: {
+    backgroundColor: BilMenuTheme.colors.surface,
+    borderRadius: 12,
+    padding: 20,
+    maxWidth: 300,
+    width: "100%",
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: BilMenuTheme.colors.text,
+    marginBottom: 12,
+    textAlign: "center",
+  },
+  modalText: {
+    fontSize: 14,
+    color: BilMenuTheme.colors.text,
+    lineHeight: 20,
+    marginBottom: 12,
+  },
+  modalButton: {
+    backgroundColor: BilMenuTheme.colors.secondary,
+    borderRadius: 8,
+    padding: 12,
+    alignItems: "center",
+    marginTop: 8,
+  },
+  modalButtonText: {
+    fontSize: 16,
+    color: BilMenuTheme.colors.textWhite,
+    fontWeight: "bold",
   },
   weekInfo: {
     marginBottom: 20,
