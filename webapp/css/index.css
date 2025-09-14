@@ -87,47 +87,52 @@ body {
 .meal-control-panel {
   display: flex;
   justify-content: center;
-  gap: 12px;
+  gap: 0;
   margin: 20px 0;
-  padding: 0 20px;
+  padding: 0;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 }
 
 .meal-type-btn {
-  padding: 12px 24px;
-  background: rgba(255, 255, 255, 0.9);
-  color: #333;
+  padding: 16px 32px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.8);
   border: none;
   cursor: pointer;
   font-size: 0.9rem;
   font-weight: 600;
-  border-radius: 25px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(10px);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
-  overflow: hidden;
   white-space: nowrap;
-  min-width: 100px;
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.meal-type-btn:last-child {
+  border-right: none;
 }
 
 .meal-type-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-  background: rgba(255, 255, 255, 1);
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 1);
 }
 
 .meal-type-btn.active {
-  background: #ff9434;
+  background: linear-gradient(135deg, #ff9434, #ff6b35);
   color: white;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(255, 148, 52, 0.4);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .meal-type-btn.active:hover {
-  background: #f83f35;
+  background: linear-gradient(135deg, #ff6b35, #ff9434);
 }
 
 .day-column {
@@ -468,15 +473,14 @@ body {
   }
 
   .meal-control-panel {
-    gap: 8px;
     margin: 16px 0;
-    padding: 0 16px;
+    padding: 0;
+    border-radius: 10px;
   }
 
   .meal-type-btn {
-    padding: 10px 16px;
+    padding: 12px 20px;
     font-size: 0.85rem;
-    min-width: 80px;
   }
 
   .modal-content {
