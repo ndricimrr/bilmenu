@@ -26,6 +26,22 @@ export default function RootLayout() {
             name="modal"
             options={{ presentation: "modal", title: "Modal" }}
           />
+          <Stack.Screen
+            name="privacy"
+            options={{
+              presentation: "modal",
+              headerShown: false,
+              title: "Privacy Policy",
+            }}
+          />
+          <Stack.Screen
+            name="about"
+            options={{
+              presentation: "modal",
+              headerShown: false,
+              title: "About BilMenu",
+            }}
+          />
         </Stack>
         <StatusBar style="auto" />
       </ThemeProvider>

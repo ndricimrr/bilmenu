@@ -7,6 +7,7 @@ import {
   ScrollView,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useRouter } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
@@ -26,6 +27,7 @@ import { BilMenuTheme } from "@/constants/theme";
 export default function SettingsScreen() {
   const { t, language } = useTranslations();
   const { expoPushToken } = useNotifications();
+  const router = useRouter();
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [lunchEnabled, setLunchEnabled] = useState(true);
   const [dinnerEnabled, setDinnerEnabled] = useState(true);
@@ -199,6 +201,32 @@ export default function SettingsScreen() {
           />
         </ThemedView>
 
+        <ThemedView style={styles.section}>
+          <ThemedText style={styles.sectionTitle}>
+            {language === "en" ? "Legal & Information" : "Yasal ve Bilgi"}
+          </ThemedText>
+
+          <TouchableOpacity
+            style={styles.navButton}
+            onPress={() => router.push("/privacy")}
+          >
+            <ThemedText style={styles.navButtonText}>
+              {language === "en" ? "Privacy Policy" : "Gizlilik Politikası"}
+            </ThemedText>
+            <ThemedText style={styles.navButtonIcon}>›</ThemedText>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.navButton}
+            onPress={() => router.push("/about")}
+          >
+            <ThemedText style={styles.navButtonText}>
+              {language === "en" ? "About BilMenu" : "BilMenu Hakkında"}
+            </ThemedText>
+            <ThemedText style={styles.navButtonIcon}>›</ThemedText>
+          </TouchableOpacity>
+        </ThemedView>
+
         <ThemedView style={styles.infoCard}>
           <ThemedText style={styles.infoText}>
             {language === "en"
@@ -246,8 +274,36 @@ const styles = StyleSheet.create({
     gap: BilMenuTheme.spacing.md,
   },
   sectionTitle: {
-    marginBottom: BilMenuTheme.spacing.md,
+    fontSize: BilMenuTheme.typography.subtitle.fontSize,
+    fontWeight: BilMenuTheme.typography.subtitle.fontWeight,
     color: BilMenuTheme.colors.textWhite,
+    marginBottom: BilMenuTheme.spacing.md,
+  },
+  navButton: {
+    backgroundColor: BilMenuTheme.colors.surface,
+    borderRadius: BilMenuTheme.borderRadius.medium,
+    padding: BilMenuTheme.spacing.md,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 4,
+  },
+  navButtonText: {
+    fontSize: BilMenuTheme.typography.body.fontSize,
+    color: BilMenuTheme.colors.text,
+    fontWeight: BilMenuTheme.typography.subtitle.fontWeight,
+  },
+  navButtonIcon: {
+    fontSize: 20,
+    color: BilMenuTheme.colors.secondary,
+    fontWeight: "bold",
   },
   settingCard: {
     backgroundColor: BilMenuTheme.colors.surface,
