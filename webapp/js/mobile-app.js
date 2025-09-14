@@ -27,8 +27,8 @@
       return window.mobileApp.language;
     }
 
-    // Fallback to existing language detection
-    return localStorage.getItem("language") || "en";
+    // Fallback to existing language detection - use correct localStorage key
+    return localStorage.getItem("bilmenu-language") || "en";
   }
 
   // Initialize mobile app integration
@@ -132,7 +132,12 @@
   window.addEventListener("load", initMobileApp);
 
   // Set language after a delay to ensure languageSwitcher is initialized
-  setTimeout(setMobileAppLanguage, 200);
+  // Only do this for mobile app, otherwise let languageSwitcher handle it
+  setTimeout(() => {
+    if (isMobileApp()) {
+      setMobileAppLanguage();
+    }
+  }, 200);
 
   // Export functions for global access
   window.mobileAppUtils = {

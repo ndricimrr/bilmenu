@@ -161,9 +161,9 @@ const translations = {
     "day.sunday.short": "Paz",
 
     // Meal Types
-    "meal.lunch": "Öğle Yemeği",
-    "meal.dinner": "Akşam Yemeği",
-    "meal.alternative": "Seçmeli",
+    "meal.lunch": "Öğle Yem.",
+    "meal.dinner": "Akşam Yem.",
+    "meal.alternative": "Alternatif",
 
     // Menu Categories
     "menu.lunch": "Öğle Yemeği Menüsü",
