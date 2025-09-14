@@ -12,7 +12,7 @@ export default function TabLayout() {
         tabBarActiveTintColor: BilMenuTheme.colors.secondary,
         tabBarInactiveTintColor: BilMenuTheme.colors.textWhite,
         tabBarStyle: {
-          backgroundColor: BilMenuTheme.colors.primary,
+          backgroundColor: BilMenuTheme.colors.primaryLight,
           borderTopColor: BilMenuTheme.colors.border,
           borderTopWidth: 1,
           height: 90,
