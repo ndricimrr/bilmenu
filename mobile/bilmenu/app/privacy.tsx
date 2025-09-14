@@ -18,7 +18,7 @@ export default function PrivacyModal() {
   const router = useRouter();
 
   const handleEmailPress = () => {
-    Linking.openURL("mailto:ndricimrr@gmail.com");
+    Linking.openURL("mailto:bilmenudeveloper@gmail.com");
   };
 
   const handleBack = () => {
@@ -102,7 +102,7 @@ export default function PrivacyModal() {
               ? "If you have any questions about this Privacy Policy, please contact us at "
               : "Bu Gizlilik Politikası hakkında herhangi bir sorunuz varsa, lütfen bizimle iletişime geçin: "}
             <ThemedText style={styles.emailLink} onPress={handleEmailPress}>
-              ndricimrr@gmail.com
+              bilmenudeveloper@gmail.com
             </ThemedText>
           </ThemedText>
 

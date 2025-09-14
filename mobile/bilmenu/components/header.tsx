@@ -23,7 +23,7 @@ export function Header({ title, showLanguageSwitcher = true }: HeaderProps) {
         {/* Logo - Mobile style (no title text) */}
         <View style={styles.logoSection}>
           <Image
-            source={require("@/assets/images/logo_m.png")}
+            source={require("@/assets/images/logo/android_108_108.png")}
             style={styles.logo}
             resizeMode="contain"
           />

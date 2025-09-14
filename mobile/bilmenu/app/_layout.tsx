@@ -42,6 +42,14 @@ export default function RootLayout() {
               title: "About BilMenu",
             }}
           />
+          <Stack.Screen
+            name="attribution"
+            options={{
+              presentation: "modal",
+              headerShown: false,
+              title: "Contributors & Attribution",
+            }}
+          />
         </Stack>
         <StatusBar style="auto" />
       </ThemeProvider>

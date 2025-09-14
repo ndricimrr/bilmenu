@@ -287,8 +287,6 @@
       <div style="text-align: center">
         <p style="margin: 0 0 8px 0">
           <span data-translate="footer.parsed">The data was parsed with</span>
-          <strong style="color: #ff9434" data-translate="footer.ai">AI</strong>
-          <span data-translate="footer.from">from</span>
         </p>
         <a
           class="linkToKafemud"
@@ -373,11 +371,18 @@
         }
       }
 
-      // Get week number of the year
+      // Get week number of the year (ISO week) - same as submitUtils.ts
       function getWeekNumber(date) {
-        const firstDayOfYear = new Date(date.getFullYear(), 0, 1);
-        const pastDaysOfYear = (date - firstDayOfYear) / 86400000;
-        return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
+        const now = new Date(date);
+        const target = new Date(now.valueOf());
+        const dayNr = (now.getDay() + 6) % 7;
+        target.setDate(target.getDate() - dayNr + 3);
+        const firstThursday = target.valueOf();
+        target.setMonth(0, 1);
+        if (target.getDay() !== 4) {
+          target.setMonth(0, 1 + ((4 - target.getDay() + 7) % 7));
+        }
+        return 1 + Math.ceil((firstThursday - target.valueOf()) / 604800000);
       }
 
       // Get the date range for the current week (Monday to Sunday)

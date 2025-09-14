@@ -18,7 +18,7 @@ export default function AboutModal() {
   const router = useRouter();
 
   const handleEmailPress = () => {
-    Linking.openURL("mailto:ndricimrr@gmail.com");
+    Linking.openURL("mailto:bilmenudeveloper@gmail.com");
   };
 
   const handleGitHubPress = () => {
@@ -116,7 +116,7 @@ export default function AboutModal() {
             onPress={handleEmailPress}
           >
             <ThemedText style={styles.linkText}>
-              📧 ndricimrr@gmail.com
+              📧 bilmenudeveloper@gmail.com
             </ThemedText>
           </TouchableOpacity>
 

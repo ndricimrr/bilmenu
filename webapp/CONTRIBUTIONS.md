@@ -35,4 +35,4 @@ After creating an issue, it will be reviewed, and you'll be given the green ligh
 
 ## Contact
 
-If you have any questions or need assistance, please feel free to contact us at [ndricimrr@gmail.com](mailto:ndricimrr@gmail.com).
+If you have any questions or need assistance, please feel free to contact us at [bilmenudeveloper@gmail.com](mailto:bilmenudeveloper@gmail.com).

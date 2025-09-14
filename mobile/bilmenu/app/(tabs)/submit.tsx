@@ -1,162 +1,58 @@
 import React, { useState, useEffect } from "react";
-import {
-  StyleSheet,
-  View,
-  Text,
-  TouchableOpacity,
-  TextInput,
-  ScrollView,
-  Alert,
-  Image,
-} from "react-native";
+import { StyleSheet, View, Text, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Header } from "@/components/header";
 import { BilMenuTheme } from "@/constants/theme";
 import * as ImagePicker from "expo-image-picker";
 import * as MailComposer from "expo-mail-composer";
-
-interface Meal {
-  tr: string;
-  en: string;
-}
-
-interface MealPlanDay {
-  date: string;
-  dayOfWeek: string;
-  lunch: Meal[];
-  dinner: Meal[];
-  alternative: Meal[];
-}
-
-interface MissingMeal {
-  name: string;
-  isMissing: boolean;
-}
+import { Step, MealType, Step1View } from "@/types/submit";
+import { getCurrentDayOfWeek, getCurrentMealTime } from "@/utils/submitUtils";
+import { useSubmitData } from "@/hooks/useSubmitData";
+import { Step1, Step2, Step3 } from "@/components/submit";
+import { useTranslations } from "@/hooks/use-translations";
 
 export default function SubmitScreen() {
+  const { t } = useTranslations();
   const [selectedMeal, setSelectedMeal] = useState<string>("");
   const [capturedImage, setCapturedImage] = useState<string | null>(null);
-  const [currentWeekMeals, setCurrentWeekMeals] = useState<MissingMeal[]>([]);
+  const [imageSize, setImageSize] = useState<number | null>(null);
+  const [userName, setUserName] = useState<string>("");
+  const [showAttributionModal, setShowAttributionModal] =
+    useState<boolean>(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
-  const [step, setStep] = useState<1 | 2 | 3>(1);
+  const [step, setStep] = useState<Step>(1);
   const [showAllMissing, setShowAllMissing] = useState(false);
-  const [allMissingMeals, setAllMissingMeals] = useState<MissingMeal[]>([]);
-  const [lastUpdated, setLastUpdated] = useState<string>("");
-  const [totalCheckpoints, setTotalCheckpoints] = useState<number>(0);
+  const [step1View, setStep1View] = useState<Step1View>("daymeal");
+  const [selectedDay, setSelectedDay] = useState<number>(0);
+  const [selectedMealType, setSelectedMealType] = useState<MealType>("lunch");
 
-  // Get current week number
-  const getCurrentWeek = () => {
-    const now = new Date();
-    const start = new Date(now.getFullYear(), 0, 1);
-    const days = Math.floor(
-      (now.getTime() - start.getTime()) / (24 * 60 * 60 * 1000)
-    );
-    return Math.ceil((days + start.getDay() + 1) / 7);
-  };
+  // Use the custom hook for data management
+  const {
+    currentWeekMeals,
+    allMissingMeals,
+    currentWeekMealPlan,
+    isLoading,
+    lastUpdated,
+    getMissingMealsForDayAndType,
+  } = useSubmitData();
 
-  // Load missing meals data
+  // Auto-select current day and meal time
   useEffect(() => {
-    loadMissingMeals();
+    const currentDay = getCurrentDayOfWeek();
+    const currentMealTime = getCurrentMealTime();
+    setSelectedDay(currentDay);
+    setSelectedMealType(currentMealTime);
   }, []);
-
-  const loadMissingMeals = async () => {
-    try {
-      setIsLoading(true);
-
-      // Get current week and year
-      const now = new Date();
-      const currentWeek = getCurrentWeek();
-      const currentYear = now.getFullYear();
-
-      // First, get the latest checkpoint URL from the state file
-      const latestCheckpointResponse = await fetch(
-        "https://raw.githubusercontent.com/ndricimrr/bilmenu/refs/heads/main/webapp/missing-meals/latest-checkpoint.json"
-      );
-
-      if (!latestCheckpointResponse.ok) {
-        throw new Error("Failed to load latest checkpoint state");
-      }
-
-      const latestCheckpointData = await latestCheckpointResponse.json();
-      const latestCheckpointUrl = latestCheckpointData.latestCheckpointUrl;
-
-      // Store metadata for display
-      setLastUpdated(latestCheckpointData.lastUpdated);
-      setTotalCheckpoints(latestCheckpointData.totalCheckpoints);
-
-      // Load the latest missing meals checkpoint using the dynamic URL
-      const missingMealsResponse = await fetch(latestCheckpointUrl);
-
-      if (!missingMealsResponse.ok) {
-        throw new Error("Failed to load missing meals data");
-      }
-
-      const missingMealsData = await missingMealsResponse.json();
-      const missingMealsSet = new Set(missingMealsData.missingMeals);
-
-      // Try to load current week's meal plan
-      let currentWeekMeals: MissingMeal[] = [];
-
-      try {
-        const mealPlanResponse = await fetch(
-          `https://raw.githubusercontent.com/ndricimrr/bilmenu/refs/heads/main/webapp/mealplans/meal_plan_week_${currentWeek}_${currentYear}.json`
-        );
-
-        if (mealPlanResponse.ok) {
-          const mealPlanData = await mealPlanResponse.json();
-          const allMeals = new Set<string>();
-
-          // Extract all meals from the current week
-          if (Array.isArray(mealPlanData)) {
-            mealPlanData.forEach((day: MealPlanDay) => {
-              if (day.lunch)
-                day.lunch.forEach((meal: Meal) => allMeals.add(meal.tr));
-              if (day.dinner)
-                day.dinner.forEach((meal: Meal) => allMeals.add(meal.tr));
-              if (day.alternative)
-                day.alternative.forEach((meal: Meal) => allMeals.add(meal.tr));
-            });
-          }
-
-          // Filter to only show missing meals from current week
-          currentWeekMeals = Array.from(allMeals)
-            .filter((meal) => missingMealsSet.has(meal))
-            .map((meal) => ({ name: meal, isMissing: true }));
-        }
-      } catch (mealPlanError) {
-        console.log(
-          "Could not load current week meal plan, showing all missing meals"
-        );
-      }
-
-      // Store all missing meals
-      const allMissing = missingMealsData.missingMeals.map((meal: string) => ({
-        name: meal,
-        isMissing: true,
-      }));
-      setAllMissingMeals(allMissing);
-
-      // If no current week meals found, show all missing meals
-      if (currentWeekMeals.length === 0) {
-        setCurrentWeekMeals(allMissing);
-      } else {
-        setCurrentWeekMeals(currentWeekMeals);
-      }
-    } catch (error) {
-      console.error("Error loading missing meals:", error);
-      Alert.alert(
-        "Error",
-        "Failed to load missing meals data. Please try again later."
-      );
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   const mealsToShow = showAllMissing ? allMissingMeals : currentWeekMeals;
   const filteredMeals = mealsToShow.filter((meal) =>
     meal.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  // Get meals for day/meal view
+  const dayMealViewMeals = getMissingMealsForDayAndType(
+    selectedDay,
+    selectedMealType
   );
 
   const handleMealSelection = (mealName: string) => {
@@ -183,10 +79,12 @@ export default function SubmitScreen() {
         allowsEditing: true,
         aspect: [4, 3],
         quality: 0.8,
+        exif: false,
       });
 
       if (!result.canceled && result.assets[0]) {
         setCapturedImage(result.assets[0].uri);
+        setImageSize(result.assets[0].fileSize || null);
         setStep(3);
       }
     } catch (error) {
@@ -195,9 +93,30 @@ export default function SubmitScreen() {
     }
   };
 
+  const handleGallerySelection = async () => {
+    try {
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 0.8,
+        exif: false,
+      });
+
+      if (!result.canceled && result.assets[0]) {
+        setCapturedImage(result.assets[0].uri);
+        setImageSize(result.assets[0].fileSize || null);
+        setStep(3);
+      }
+    } catch (error) {
+      console.error("Error selecting image:", error);
+      Alert.alert("Error", "Failed to select image. Please try again.");
+    }
+  };
+
   const handleSendEmail = async () => {
     if (!capturedImage || !selectedMeal) {
-      Alert.alert("Error", "Please select a meal and capture an image first.");
+      Alert.alert(t("submit.alerts.error"), t("submit.alerts.selectMealFirst"));
       return;
     }
 
@@ -206,26 +125,29 @@ export default function SubmitScreen() {
 
       if (!isAvailable) {
         Alert.alert(
-          "Email Not Available",
-          "Email is not configured on this device."
+          t("submit.alerts.emailNotAvailable"),
+          t("submit.alerts.emailNotConfigured")
         );
         return;
       }
 
-      const subject = `Missing Meal Image Submission: ${selectedMeal}`;
-      const body = `
-Hello BilMenu Team,
+      const subject = `BilMenu Image Submission |${selectedMeal}.jpg`;
+      const body = `${t("submit.email.greeting")}
 
-I am submitting an image for the missing meal: "${selectedMeal}"
+${t("submit.email.body")}
 
-Please find the attached image.
+${t("submit.email.mealInfo", { meal: selectedMeal })}
 
-Best regards,
-BilMenu User
-      `.trim();
+${t("submit.email.thanks")} 
+
+${t("submit.email.signature")}
+${userName || t("submit.email.defaultName")}`;
+
+      // Create filename with meal name
+      const filename = `${selectedMeal}.jpg`;
 
       await MailComposer.composeAsync({
-        recipients: ["ndricim@bilmenu.com"], // Replace with your actual email
+        recipients: ["bilmenudeveloper@gmail.com"], // Replace with your actual email
         subject,
         body,
         attachments: [capturedImage],
@@ -234,135 +156,66 @@ BilMenu User
       // Reset the form
       setSelectedMeal("");
       setCapturedImage(null);
+      setImageSize(null);
+      setUserName("");
       setStep(1);
 
-      Alert.alert(
-        "Success",
-        "Email sent successfully! Thank you for your contribution."
-      );
+      Alert.alert(t("submit.alerts.success"), t("submit.alerts.emailSent"));
     } catch (error) {
       console.error("Error sending email:", error);
-      Alert.alert("Error", "Failed to send email. Please try again.");
+      Alert.alert(t("submit.alerts.error"), t("submit.alerts.emailFailed"));
     }
   };
 
   const renderStep1 = () => (
-    <View style={styles.stepContainer}>
-      <Text style={styles.stepTitle}>Step 1: Select Missing Meal</Text>
-
-      <View style={styles.weekInfo}>
-        <Text style={styles.weekInfoText}>
-          Week {getCurrentWeek()}, {new Date().getFullYear()}
-        </Text>
-        {lastUpdated && (
-          <Text style={styles.lastUpdatedText}>
-            Data updated: {new Date(lastUpdated).toLocaleDateString()}
-          </Text>
-        )}
-        {totalCheckpoints > 0 && (
-          <Text style={styles.checkpointCountText}>
-            {totalCheckpoints} checkpoint{totalCheckpoints !== 1 ? "s" : ""}{" "}
-            available
-          </Text>
-        )}
-        <TouchableOpacity
-          style={styles.toggleButton}
-          onPress={() => setShowAllMissing(!showAllMissing)}
-        >
-          <Text style={styles.toggleButtonText}>
-            {showAllMissing
-              ? "Show Current Week Only"
-              : "Show All Missing Meals"}
-          </Text>
-        </TouchableOpacity>
-      </View>
-
-      <TextInput
-        style={styles.searchInput}
-        placeholder="Search for a meal..."
-        value={searchQuery}
-        onChangeText={setSearchQuery}
-        placeholderTextColor={BilMenuTheme.colors.textLight}
-      />
-
-      <ScrollView style={styles.mealsList} showsVerticalScrollIndicator={false}>
-        {isLoading ? (
-          <Text style={styles.loadingText}>Loading missing meals...</Text>
-        ) : filteredMeals.length === 0 ? (
-          <Text style={styles.noResultsText}>
-            {searchQuery
-              ? "No meals found matching your search."
-              : "No missing meals found."}
-          </Text>
-        ) : (
-          <>
-            <Text style={styles.resultsCount}>
-              {filteredMeals.length} missing meal
-              {filteredMeals.length !== 1 ? "s" : ""} found
-            </Text>
-            {filteredMeals.map((meal, index) => (
-              <TouchableOpacity
-                key={index}
-                style={styles.mealButton}
-                onPress={() => handleMealSelection(meal.name)}
-              >
-                <Text style={styles.mealButtonText}>{meal.name}</Text>
-              </TouchableOpacity>
-            ))}
-          </>
-        )}
-      </ScrollView>
-    </View>
+    <Step1
+      step1View={step1View}
+      onViewChange={setStep1View}
+      selectedDay={selectedDay}
+      selectedMealType={selectedMealType}
+      onDayChange={setSelectedDay}
+      onMealTypeChange={setSelectedMealType}
+      dayMealViewMeals={dayMealViewMeals}
+      searchQuery={searchQuery}
+      onSearchChange={setSearchQuery}
+      showAllMissing={showAllMissing}
+      onToggleShowAll={setShowAllMissing}
+      filteredMeals={filteredMeals}
+      isLoading={isLoading}
+      onMealSelect={handleMealSelection}
+      lastUpdated={lastUpdated}
+    />
   );
 
   const renderStep2 = () => (
-    <View style={styles.stepContainer}>
-      <Text style={styles.stepTitle}>Step 2: Capture Image</Text>
-      <Text style={styles.selectedMealText}>Selected: {selectedMeal}</Text>
-
-      <TouchableOpacity
-        style={styles.captureButton}
-        onPress={handleCameraCapture}
-      >
-        <Text style={styles.captureButtonText}>📷 Capture Image</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.backButton} onPress={() => setStep(1)}>
-        <Text style={styles.backButtonText}>← Back to Meal Selection</Text>
-      </TouchableOpacity>
-    </View>
+    <Step2
+      selectedMeal={selectedMeal}
+      onCameraCapture={handleCameraCapture}
+      onGallerySelection={handleGallerySelection}
+      onBack={() => setStep(1)}
+    />
   );
 
   const renderStep3 = () => (
-    <View style={styles.stepContainer}>
-      <Text style={styles.stepTitle}>Step 3: Send Email</Text>
-      <Text style={styles.selectedMealText}>Meal: {selectedMeal}</Text>
-
-      {capturedImage && (
-        <View style={styles.imagePreview}>
-          <Image source={{ uri: capturedImage }} style={styles.previewImage} />
-        </View>
-      )}
-
-      <TouchableOpacity style={styles.sendButton} onPress={handleSendEmail}>
-        <Text style={styles.sendButtonText}>📧 Send Email</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.backButton} onPress={() => setStep(2)}>
-        <Text style={styles.backButtonText}>← Back to Camera</Text>
-      </TouchableOpacity>
-    </View>
+    <Step3
+      selectedMeal={selectedMeal}
+      capturedImage={capturedImage}
+      imageSize={imageSize}
+      userName={userName}
+      onUserNameChange={setUserName}
+      onSendEmail={handleSendEmail}
+      onBack={() => setStep(2)}
+      showAttributionModal={showAttributionModal}
+      onToggleAttributionModal={setShowAttributionModal}
+    />
   );
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Header title="Submit Images" />
+    <SafeAreaView style={styles.container} edges={["top", "left", "right"]}>
+      <Header title={t("submit.title")} />
 
       <View style={styles.content}>
-        <Text style={styles.description}>
-          Help us complete our meal image collection by submitting photos of
-          missing meals.
-        </Text>
+        <Text style={styles.description}>{t("submit.description")}</Text>
 
         {step === 1 && renderStep1()}
         {step === 2 && renderStep2()}
@@ -379,155 +232,14 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    padding: 20,
+    paddingHorizontal: 20,
+    paddingTop: 20,
   },
   description: {
-    fontSize: 16,
-    color: BilMenuTheme.colors.text,
-    textAlign: "center",
-    marginBottom: 20,
-    lineHeight: 24,
-  },
-  stepContainer: {
-    flex: 1,
-  },
-  stepTitle: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: BilMenuTheme.colors.primary,
-    marginBottom: 20,
-    textAlign: "center",
-  },
-  searchInput: {
-    backgroundColor: BilMenuTheme.colors.surfaceLight,
-    borderRadius: 10,
-    padding: 15,
-    fontSize: 16,
-    color: BilMenuTheme.colors.text,
-    marginBottom: 20,
-    borderWidth: 1,
-    borderColor: BilMenuTheme.colors.border,
-  },
-  mealsList: {
-    flex: 1,
-  },
-  mealButton: {
-    backgroundColor: BilMenuTheme.colors.primaryLight,
-    borderRadius: 10,
-    padding: 15,
-    marginBottom: 10,
-    borderWidth: 1,
-    borderColor: BilMenuTheme.colors.border,
-  },
-  mealButtonText: {
-    fontSize: 16,
-    color: BilMenuTheme.colors.text,
-    textAlign: "center",
-  },
-  loadingText: {
-    fontSize: 16,
-    color: BilMenuTheme.colors.textLight,
-    textAlign: "center",
-    marginTop: 50,
-  },
-  noResultsText: {
-    fontSize: 16,
-    color: BilMenuTheme.colors.textLight,
-    textAlign: "center",
-    marginTop: 50,
-  },
-  selectedMealText: {
-    fontSize: 18,
-    color: BilMenuTheme.colors.primary,
-    textAlign: "center",
-    marginBottom: 30,
-    fontWeight: "600",
-  },
-  captureButton: {
-    backgroundColor: BilMenuTheme.colors.primary,
-    borderRadius: 15,
-    padding: 20,
-    alignItems: "center",
-    marginBottom: 20,
-  },
-  captureButtonText: {
-    fontSize: 18,
-    color: BilMenuTheme.colors.textWhite,
-    fontWeight: "bold",
-  },
-  imagePreview: {
-    alignItems: "center",
-    marginBottom: 30,
-  },
-  previewImage: {
-    width: 200,
-    height: 150,
-    borderRadius: 10,
-    borderWidth: 2,
-    borderColor: BilMenuTheme.colors.border,
-  },
-  sendButton: {
-    backgroundColor: BilMenuTheme.colors.secondary,
-    borderRadius: 15,
-    padding: 20,
-    alignItems: "center",
-    marginBottom: 20,
-  },
-  sendButtonText: {
-    fontSize: 18,
-    color: BilMenuTheme.colors.textWhite,
-    fontWeight: "bold",
-  },
-  backButton: {
-    backgroundColor: BilMenuTheme.colors.surfaceLight,
-    borderRadius: 10,
-    padding: 15,
-    alignItems: "center",
-    borderWidth: 1,
-    borderColor: BilMenuTheme.colors.border,
-  },
-  backButtonText: {
-    fontSize: 16,
-    color: BilMenuTheme.colors.text,
-  },
-  weekInfo: {
-    marginBottom: 20,
-    alignItems: "center",
-  },
-  weekInfoText: {
-    fontSize: 16,
-    color: BilMenuTheme.colors.primary,
-    fontWeight: "600",
-    marginBottom: 5,
-  },
-  lastUpdatedText: {
-    fontSize: 12,
-    color: BilMenuTheme.colors.textLight,
-    marginBottom: 3,
-  },
-  checkpointCountText: {
-    fontSize: 12,
-    color: BilMenuTheme.colors.textLight,
-    marginBottom: 10,
-  },
-  toggleButton: {
-    backgroundColor: BilMenuTheme.colors.surfaceLight,
-    borderRadius: 8,
-    paddingHorizontal: 15,
-    paddingVertical: 8,
-    borderWidth: 1,
-    borderColor: BilMenuTheme.colors.border,
-  },
-  toggleButtonText: {
     fontSize: 14,
-    color: BilMenuTheme.colors.primary,
-    fontWeight: "500",
-  },
-  resultsCount: {
-    fontSize: 14,
-    color: BilMenuTheme.colors.textLight,
+    color: BilMenuTheme.colors.textWhite,
     textAlign: "center",
-    marginBottom: 15,
-    fontStyle: "italic",
+    marginBottom: 20,
+    lineHeight: 20,
   },
 });
