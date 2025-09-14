@@ -1,0 +1,35 @@
+name: Check Missing Meals and Commit Report
+
+on:
+  schedule:
+    # Run on the 1st day of every month at 9:00 AM Turkish time (EET)
+    - cron: "0 6 1 * *" # 6:00 UTC = 9:00 EET
+  workflow_dispatch:
+
+jobs:
+  check-missing-meals:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+
+      - name: Run missing meals check script
+        run: |
+          # Run the missing meals checker
+          node check-missing-meals.js
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git status
+          git diff
+          git add webapp/missing-meals/
+          git commit -m "Generated monthly missing meals checkpoint report" || echo "No changes to commit"
+          git push
