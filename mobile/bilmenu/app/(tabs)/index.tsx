@@ -12,13 +12,14 @@ export default function HomeScreen() {
   const [canGoBack, setCanGoBack] = useState(false);
   const [currentUrl, setCurrentUrl] = useState("");
   const [isOnHomepage, setIsOnHomepage] = useState(true);
+  const [webViewUrl, setWebViewUrl] = useState(
+    `https://www.bilmenu.com?mobile=true&lang=${language}&source=mobile-app`
+  );
 
-  // Reload WebView when language changes
+  // Update WebView URL when language changes
   useEffect(() => {
-    if (webViewRef.current) {
-      const newUrl = `https://www.bilmenu.com?mobile=true&lang=${language}&source=mobile-app`;
-      webViewRef.current.reload();
-    }
+    const newUrl = `https://www.bilmenu.com?mobile=true&lang=${language}&source=mobile-app`;
+    setWebViewUrl(newUrl);
   }, [language]);
 
   const handleMessage = (event: any) => {
@@ -58,7 +59,6 @@ export default function HomeScreen() {
     setCurrentUrl(navState.url);
 
     // Check if we're on the homepage
-    const homepageUrl = `https://www.bilmenu.com?mobile=true&lang=${language}&source=mobile-app`;
     const isHomepage =
       navState.url.includes("bilmenu.com") &&
       navState.url.includes("mobile=true") &&
@@ -74,8 +74,7 @@ export default function HomeScreen() {
     }
   };
 
-  // Build URL with mobile app parameters
-  const webappUrl = `https://www.bilmenu.com?mobile=true&lang=${language}&source=mobile-app`;
+  // URL is now managed by state and updated when language changes
 
   return (
     <SafeAreaView style={styles.container} edges={["top", "left", "right"]}>
@@ -95,7 +94,7 @@ export default function HomeScreen() {
 
       <WebView
         ref={webViewRef}
-        source={{ uri: webappUrl }}
+        source={{ uri: webViewUrl }}
         style={styles.webview}
         onMessage={handleMessage}
         onError={handleError}
