@@ -26,6 +26,7 @@ const OUTPUT_DIR = path.join(__dirname, "webapp", "missing-meals");
 // Ensure output directory exists
 if (!fs.existsSync(OUTPUT_DIR)) {
   fs.mkdirSync(OUTPUT_DIR, { recursive: true });
+  console.log(`📁 Created output directory: ${OUTPUT_DIR}`);
 }
 
 /**
@@ -242,6 +243,11 @@ function saveMissingMealsReport(report) {
 function main() {
   console.log("🚀 Missing Meals Checker");
   console.log("========================");
+
+  // Check if running in GitHub Actions
+  if (process.env.GITHUB_ACTIONS === "true") {
+    console.log("🤖 Running in GitHub Actions environment");
+  }
 
   const report = findMissingMeals();
 

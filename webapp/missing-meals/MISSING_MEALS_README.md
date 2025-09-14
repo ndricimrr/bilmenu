@@ -9,7 +9,7 @@ The script analyzes all meal plan JSON files in `webapp/mealplans/` and compares
 ## Files
 
 - `check-missing-meals.js` - Main script that performs the analysis
-- `run-missing-meals-check.sh` - CRON job wrapper script
+- `.github/workflows/check_missing_meals.yml` - GitHub Actions workflow
 - `webapp/missing-meals/` - Directory where reports are saved
 
 ## Usage
@@ -24,31 +24,25 @@ node check-missing-meals.js
 ./check-missing-meals.js
 ```
 
-### Automated Execution (CRON)
+### Automated Execution (GitHub Actions)
 
-1. **Add to crontab:**
+The missing meals check runs automatically via GitHub Actions:
 
-   ```bash
-   crontab -e
-   ```
+1. **Automatic Schedule:**
 
-2. **Add one of these lines (choose your preferred schedule):**
+   - Runs on the 1st day of every month at 9:00 AM Turkish time
+   - Generates a new checkpoint report and commits it to the repository
 
-   ```bash
-   # Run every Monday at 9 AM
-   0 9 * * 1 /Users/ndricim/Documents/coding/bilmenu/run-missing-meals-check.sh
+2. **Manual Execution:**
 
-   # Run daily at 6 AM
-   0 6 * * * /Users/ndricim/Documents/coding/bilmenu/run-missing-meals-check.sh
+   - Go to the "Actions" tab in your GitHub repository
+   - Select "Check Missing Meals and Commit Report"
+   - Click "Run workflow" to trigger manually
 
-   # Run weekly on Sunday at 8 PM
-   0 20 * * 0 /Users/ndricim/Documents/coding/bilmenu/run-missing-meals-check.sh
-   ```
-
-3. **Check CRON logs:**
-   ```bash
-   tail -f missing-meals-check.log
-   ```
+3. **View Results:**
+   - Check the Actions tab for execution logs
+   - New checkpoint files appear in `webapp/missing-meals/` directory
+   - Each run commits the generated report automatically
 
 ## Output
 
@@ -139,7 +133,7 @@ The script handles two different JSON structures:
 
 ## Example Results
 
-Based on the current data:
+Based on the current data (September 14, 2025):
 
 - **Total unique meals**: 471
 - **Meals with images**: 217 (46%)
@@ -153,21 +147,17 @@ Based on the current data:
 
    ```bash
    chmod +x check-missing-meals.js
-   chmod +x run-missing-meals-check.sh
    ```
 
-2. **CRON not running**: Check CRON service status
+2. **GitHub Actions not running**: Check repository settings and workflow permissions
 
-   ```bash
-   sudo systemctl status cron
-   ```
-
-3. **Path issues**: Use absolute paths in crontab entries
+3. **Node.js version issues**: The workflow uses Node.js 18, ensure compatibility
 
 ### Logs
 
-- CRON execution logs: `missing-meals-check.log`
+- GitHub Actions execution logs: Available in the Actions tab
 - Script output: Console and JSON reports
+- Commit history: Shows when new checkpoint files are added
 
 ## Integration
 
