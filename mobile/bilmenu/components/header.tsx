@@ -47,7 +47,9 @@ export function Header({ title, showLanguageSwitcher = true }: HeaderProps) {
                   <ThemedText style={styles.langBtnTextActive}>EN</ThemedText>
                 </LinearGradient>
               ) : (
-                <ThemedText style={styles.langBtnText}>EN</ThemedText>
+                <View style={styles.langBtnInactive}>
+                  <ThemedText style={styles.langBtnText}>EN</ThemedText>
+                </View>
               )}
             </TouchableOpacity>
             <TouchableOpacity
@@ -65,7 +67,9 @@ export function Header({ title, showLanguageSwitcher = true }: HeaderProps) {
                   <ThemedText style={styles.langBtnTextActive}>TR</ThemedText>
                 </LinearGradient>
               ) : (
-                <ThemedText style={styles.langBtnText}>TR</ThemedText>
+                <View style={styles.langBtnInactive}>
+                  <ThemedText style={styles.langBtnText}>TR</ThemedText>
+                </View>
               )}
             </TouchableOpacity>
           </View>
@@ -125,8 +129,8 @@ const styles = StyleSheet.create({
   },
   langBtn: {
     backgroundColor: "transparent",
-    paddingHorizontal: 12, // Exact match: padding: 6px 12px
-    paddingVertical: 2, // Further reduced height to make more rectangular
+    paddingHorizontal: 0, // Remove padding from TouchableOpacity
+    paddingVertical: 0, // Remove padding from TouchableOpacity
     borderRadius: 15, // Exact match: border-radius: 15px
     minWidth: 35, // Exact match: min-width: 35px
     alignItems: "center",
@@ -149,6 +153,14 @@ const styles = StyleSheet.create({
     shadowRadius: 12,
     // Android shadow
     elevation: 6,
+  },
+  langBtnInactive: {
+    paddingHorizontal: 12,
+    paddingVertical: 2,
+    borderRadius: 15,
+    minWidth: 35,
+    alignItems: "center",
+    justifyContent: "center",
   },
   langBtnText: {
     fontSize: 12.8, // Exact match: font-size: 0.8rem (0.8 * 16 = 12.8)
