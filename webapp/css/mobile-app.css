@@ -1,0 +1,46 @@
+/* Mobile App Integration Styles */
+
+/* Hide header when accessed from mobile app */
+body.mobile-app .site-header {
+  display: none !important;
+}
+
+/* Hide burger menu when accessed from mobile app */
+body.mobile-app .mobile-menu-toggle {
+  display: none !important;
+}
+
+/* Adjust container padding when header is hidden */
+body.mobile-app .container {
+  padding-top: 20px !important;
+}
+
+/* Hide language switcher in header when in mobile app */
+body.mobile-app .language-switcher {
+  display: none !important;
+}
+
+/* Ensure content takes full width when header is hidden */
+body.mobile-app .container {
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+}
+
+/* Mobile app specific optimizations */
+body.mobile-app {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body.mobile-app * {
+  touch-action: manipulation;
+}
+
+/* Ensure proper spacing for mobile app */
+body.mobile-app .hero-section {
+  margin-top: 0 !important;
+  padding-top: 20px !important;
+}
