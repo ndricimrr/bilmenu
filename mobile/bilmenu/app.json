@@ -3,6 +3,7 @@
     "name": "BilMenu",
     "slug": "bilmenu",
     "version": "1.0.0",
+    "projectId": "bilmenu-mobile-app",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "bilmenu",

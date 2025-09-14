@@ -8,7 +8,8 @@ import {
   useNotifications,
   scheduleLunchNotification,
   scheduleDinnerNotification,
-  cancelAllNotifications,
+  cancelLunchNotification,
+  cancelDinnerNotification,
 } from "@/hooks/use-notifications";
 import { Switch } from "react-native";
 
@@ -29,7 +30,7 @@ export default function NotificationsScreen() {
           : "Öğle yemeği bildirimleri etkinleştirildi! Her gün 11:30'da hatırlatılacaksınız."
       );
     } else {
-      await cancelAllNotifications();
+      await cancelLunchNotification();
       Alert.alert(
         t("lunchReminder"),
         language === "en"
@@ -50,7 +51,7 @@ export default function NotificationsScreen() {
           : "Akşam yemeği bildirimleri etkinleştirildi! Her gün 17:30'da hatırlatılacaksınız."
       );
     } else {
-      await cancelAllNotifications();
+      await cancelDinnerNotification();
       Alert.alert(
         t("dinnerReminder"),
         language === "en"
