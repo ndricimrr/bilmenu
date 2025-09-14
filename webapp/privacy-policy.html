@@ -23,33 +23,98 @@
 
     <style>
       body {
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
         margin: 0;
         padding: 0;
-        background-color: #f4f4f4;
+        background: #1e2f6b;
         color: #333;
+        min-height: 100vh;
+        line-height: 1.6;
       }
 
       .container {
         max-width: 800px;
         margin: 0 auto;
-        padding: 20px;
+        padding: 40px 20px;
         box-sizing: border-box;
       }
 
-      h1,
-      h2,
+      .content-card {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 16px 48px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(10px);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .content-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 24px 64px rgba(0, 0, 0, 0.15);
+      }
+
+      h1 {
+        color: #1e2f6b;
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin: 0 0 30px 0;
+        text-align: center;
+      }
+
+      h2 {
+        color: #1e2f6b;
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin: 30px 0 15px 0;
+        border-bottom: 2px solid #ff9434;
+        padding-bottom: 8px;
+      }
+
       p {
         margin-bottom: 15px;
+        color: #333;
+        font-size: 1rem;
+        line-height: 1.7;
       }
 
       a {
-        color: #3498db;
+        color: #ff9434;
         text-decoration: none;
+        font-weight: 600;
+        transition: color 0.3s ease;
       }
 
       a:hover {
+        color: #f83f35;
         text-decoration: underline;
+      }
+
+      footer {
+        margin-top: 40px;
+        padding-top: 20px;
+        border-top: 1px solid #e0e0e0;
+        text-align: center;
+        color: #666;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 20px 16px;
+        }
+
+        .content-card {
+          padding: 24px;
+          border-radius: 16px;
+        }
+
+        h1 {
+          font-size: 2rem;
+        }
+
+        h2 {
+          font-size: 1.3rem;
+        }
       }
     </style>
   </head>
@@ -97,50 +162,52 @@
       </div>
     </header>
     <div class="container">
-      <h1>Privacy Policy</h1>
+      <div class="content-card">
+        <h1>Privacy Policy</h1>
 
-      <p>
-        This Privacy Policy applies to the mobile application BilMenu Bilkent
-        Cafeteria ("App") provided by "Ndricim Rrapi" as a developer. This
-        policy describes how we handle information we collect from users of the
-        App.
-      </p>
+        <p>
+          This Privacy Policy applies to the mobile application BilMenu Bilkent
+          Cafeteria ("App") provided by "Ndricim Rrapi" as a developer. This
+          policy describes how we handle information we collect from users of
+          the App.
+        </p>
 
-      <h2>Information We Don't Collect</h2>
+        <h2>Information We Don't Collect</h2>
 
-      <p>
-        We do not collect any personally identifiable information from users of
-        our App. We do not use cookies, analytics tools, or any other means to
-        track users' online activities.
-      </p>
+        <p>
+          We do not collect any personally identifiable information from users
+          of our App. We do not use cookies, analytics tools, or any other means
+          to track users' online activities.
+        </p>
 
-      <h2>Data Source</h2>
+        <h2>Data Source</h2>
 
-      <p>
-        Our App simply visualizes data sourced from another website. This data
-        is used solely for the purpose of providing users with information
-        within the App.
-      </p>
+        <p>
+          Our App simply visualizes data sourced from another website. This data
+          is used solely for the purpose of providing users with information
+          within the App.
+        </p>
 
-      <h2>Third-Party Links</h2>
+        <h2>Third-Party Links</h2>
 
-      <p>
-        Our App may contain links to third-party websites. Please be aware that
-        we are not responsible for the privacy practices of such other sites. We
-        encourage users to read the privacy statements of each website that
-        collects personally identifiable information.
-      </p>
+        <p>
+          Our App may contain links to third-party websites. Please be aware
+          that we are not responsible for the privacy practices of such other
+          sites. We encourage users to read the privacy statements of each
+          website that collects personally identifiable information.
+        </p>
 
-      <h2>Contact Us</h2>
+        <h2>Contact Us</h2>
 
-      <p>
-        If you have any questions about this Privacy Policy, please contact us
-        at <a href="mailto:ndricimrr@gmail.com">ndricimrr@gmail.com</a>.
-      </p>
+        <p>
+          If you have any questions about this Privacy Policy, please contact us
+          at <a href="mailto:ndricimrr@gmail.com">ndricimrr@gmail.com</a>.
+        </p>
 
-      <footer>
-        <p>Last updated: <b> 06.03.2024</b></p>
-      </footer>
+        <footer>
+          <p>Last updated: <b> 06.03.2024</b></p>
+        </footer>
+      </div>
     </div>
   </body>
 </html>

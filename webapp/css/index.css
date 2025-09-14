@@ -3,7 +3,7 @@ body {
     "Helvetica Neue", Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #1e2f6b;
   min-height: 100vh;
   color: #333;
   line-height: 1.6;
@@ -101,14 +101,14 @@ body {
 }
 
 .meal-type-btn.active {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #ff9434;
   color: white;
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 8px 24px rgba(255, 148, 52, 0.4);
 }
 
 .meal-type-btn.active:hover {
-  background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+  background: #f83f35;
 }
 
 .day-column {
@@ -202,7 +202,7 @@ body {
 
 .menu-category h2 {
   color: white;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #1e2f6b;
   padding: 24px;
   margin: 0;
   font-size: 1.5rem;
@@ -248,11 +248,7 @@ body {
 
 .meal-label {
   position: relative;
-  background: linear-gradient(
-    135deg,
-    rgba(102, 126, 234, 0.95) 0%,
-    rgba(118, 75, 162, 0.95) 100%
-  );
+  background: #1e2f6b;
   color: white;
   padding: 12px;
   text-align: center;
@@ -332,7 +328,7 @@ body {
 
 #contribute-btn {
   display: none;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #ff9434;
   color: white;
   border: none;
   padding: 16px 32px;
@@ -344,12 +340,13 @@ body {
   cursor: pointer;
   border-radius: 12px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 8px 24px rgba(255, 148, 52, 0.4);
 }
 
 #contribute-btn:hover {
+  background: #f83f35;
   transform: translateY(-2px);
-  box-shadow: 0 12px 32px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 12px 32px rgba(255, 148, 52, 0.5);
 }
 
 #modalNameTr {
@@ -367,14 +364,14 @@ body {
 }
 
 .linkToKafemud {
-  color: #667eea;
+  color: #ff9434;
   text-decoration: none;
   cursor: pointer;
   transition: color 0.3s ease;
 }
 
 .linkToKafemud:hover {
-  color: #764ba2;
+  color: #f83f35;
 }
 
 /* Responsive Design */
@@ -611,17 +608,17 @@ body {
 /* Error Message Styles */
 .error-message {
   background: rgba(255, 255, 255, 0.95);
-  border: 2px solid #ff6b6b;
+  border: 2px solid #f83f35;
   border-radius: 16px;
   padding: 24px;
   margin: 20px 0;
   text-align: center;
-  box-shadow: 0 8px 32px rgba(255, 107, 107, 0.2);
+  box-shadow: 0 8px 32px rgba(248, 63, 53, 0.2);
   backdrop-filter: blur(10px);
 }
 
 .error-message h3 {
-  color: #ff6b6b;
+  color: #f83f35;
   margin: 0 0 12px 0;
   font-size: 1.2rem;
   font-weight: 600;
@@ -636,16 +633,16 @@ body {
 
 /* Day Selection Active State */
 .days-list button.active {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #ff9434;
   color: white;
   transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
-  border: 2px solid #ff6b6b;
+  box-shadow: 0 6px 20px rgba(30, 47, 107, 0.4);
+  border: 2px solid #ffae31;
   position: relative;
 }
 
 .days-list button.active:hover {
-  background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+  background: #f83f35;
   transform: translateY(-2px);
 }
 
@@ -665,7 +662,7 @@ body {
 }
 
 .day-column.today .today-label {
-  background: #ff6b6b;
+  background: #ff9434;
   color: white;
   border: 1px solid white;
 }
