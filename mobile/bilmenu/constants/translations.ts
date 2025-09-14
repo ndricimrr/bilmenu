@@ -116,7 +116,7 @@ export const translations = {
     "submit.email.body":
       "This meal was missing from BilMenu, so I'm sharing a photo.",
     "submit.email.mealInfo": "This is: {meal}",
-    "submit.email.thanks": "Thanks for BilMenu!",
+    "submit.email.thanks": "Thanks!",
     "submit.email.signature": "Best regards,",
     "submit.email.defaultName": "A Bilkent student",
 
@@ -273,8 +273,8 @@ export const translations = {
     "submit.email.greeting": "Merhaba! 👋",
     "submit.email.body":
       "Bu yemek BilMenu'da eksikti, bu yüzden bir fotoğraf paylaşıyorum.",
-    "submit.email.mealInfo": "Bu: {meal}",
-    "submit.email.thanks": "BilMenu için teşekkürler!",
+    "submit.email.mealInfo": 'Bu: "{meal}"',
+    "submit.email.thanks": "Teşekkürler!",
     "submit.email.signature": "Saygılarımla,",
     "submit.email.defaultName": "Bir Bilkent öğrencisi",
 

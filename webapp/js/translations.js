@@ -50,9 +50,9 @@ const translations = {
     "modal.contribute": "Contribute Now",
 
     // Footer
-    "footer.parsed": "The data was parsed with",
-    "footer.ai": "AI",
-    "footer.from": "from",
+    "footer.parsed": "The data was parsed with AI from the following page:",
+    "footer.ai": "",
+    "footer.from": "",
     "footer.source": "Bilkent University Cafeteria Page",
 
     // Language Switcher
@@ -180,9 +180,9 @@ const translations = {
     "modal.contribute": "Şimdi Katkıda Bulun",
 
     // Footer
-    "footer.parsed": "Veriler",
-    "footer.ai": "Yapay Zeka",
-    "footer.from": "ile ayrıştırıldı",
+    "footer.parsed": "Veriler aşağıdaki sayfadan Yapay Zeka ile ayrıştırıldı:",
+    "footer.ai": "",
+    "footer.from": "",
     "footer.source": "Bilkent Üniversitesi Kafeterya Sayfası",
 
     // Language Switcher

@@ -131,7 +131,7 @@ export default function SubmitScreen() {
         return;
       }
 
-      const subject = t("submit.email.subject");
+      const subject = "BilMenu Image Submission";
       const body = `${t("submit.email.greeting")}
 
 ${t("submit.email.body")}

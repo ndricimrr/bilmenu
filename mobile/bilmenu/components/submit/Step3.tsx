@@ -45,7 +45,7 @@ export const Step3: React.FC<Step3Props> = ({
     <KeyboardAvoidingView
       style={styles.stepContainer}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
-      keyboardVerticalOffset={Platform.OS === "ios" ? 50 : 50}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 110 : 110}
       enabled={true}
     >
       <ScrollView
@@ -108,7 +108,7 @@ export const Step3: React.FC<Step3Props> = ({
               <Text style={styles.emailPreviewLabel}>
                 {t("submit.step3.subject")}
               </Text>{" "}
-              {t("submit.email.subject")}
+              BilMenu Image Submission
               {"\n"}
             </Text>
 
