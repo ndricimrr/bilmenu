@@ -11,6 +11,7 @@ import {
   Modal,
   Image,
 } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { BilMenuTheme } from "@/constants/theme";
 import { useTranslations } from "@/hooks/use-translations";
@@ -55,7 +56,20 @@ export const Step3: React.FC<Step3Props> = ({
         removeClippedSubviews={false}
         scrollEventThrottle={16}
       >
-        <Text style={styles.stepTitle}>{t("submit.step3.title")}</Text>
+        <View style={styles.headerRow}>
+          <TouchableOpacity style={styles.backButtonTop} onPress={onBack}>
+            <Ionicons
+              name="chevron-back"
+              size={20}
+              color={BilMenuTheme.colors.textWhite}
+            />
+            <Text style={styles.backButtonTopText}>Back</Text>
+          </TouchableOpacity>
+          <View style={styles.titleContainer}>
+            <Text style={styles.stepNumber}>Step 3:</Text>
+            <Text style={styles.stepTitle}>Send Email</Text>
+          </View>
+        </View>
         <Text style={styles.selectedMealText}>
           <Text style={styles.selectedLabel}>
             {t("submit.step2.selectedMeal", { meal: selectedMeal })}
@@ -172,12 +186,6 @@ export const Step3: React.FC<Step3Props> = ({
         </TouchableOpacity>
       </ScrollView>
 
-      <TouchableOpacity style={styles.backButton} onPress={onBack}>
-        <Text style={styles.backButtonText}>
-          {t("submit.step3.backToCamera")}
-        </Text>
-      </TouchableOpacity>
-
       <Modal
         visible={showAttributionModal}
         transparent={true}
@@ -232,13 +240,51 @@ const styles = StyleSheet.create({
   step3ScrollContent: {
     flexGrow: 1,
     paddingBottom: 20,
+    paddingHorizontal: 20,
+    paddingTop: 20,
+  },
+  headerRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 16,
+    paddingHorizontal: 4,
+  },
+  backButtonTop: {
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 8,
+    paddingHorizontal: 12,
+    position: "absolute",
+    left: 0,
+    zIndex: 1,
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: "rgba(255, 255, 255, 0.2)",
+  },
+  backButtonTopText: {
+    fontSize: 16,
+    color: BilMenuTheme.colors.textWhite,
+    marginLeft: 4,
+    fontWeight: "500",
+  },
+  titleContainer: {
+    flex: 1,
+    alignItems: "flex-start",
+    marginLeft: 100, // Account for back button width + padding + extra space
+    marginRight: 20, // Reduced right margin since we're left-aligned
+  },
+  stepNumber: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: BilMenuTheme.colors.textMuted,
+    textAlign: "left",
   },
   stepTitle: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: "bold",
     color: BilMenuTheme.colors.textWhite,
-    marginBottom: 20,
-    textAlign: "center",
+    textAlign: "left",
   },
   selectedMealText: {
     fontSize: 18,
@@ -435,20 +481,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: BilMenuTheme.colors.textWhite,
     fontWeight: "bold",
-  },
-  backButton: {
-    backgroundColor: BilMenuTheme.colors.surface,
-    borderRadius: 10,
-    padding: 15,
-    alignItems: "center",
-    borderWidth: 1,
-    borderColor: BilMenuTheme.colors.border,
-    marginTop: "auto",
-    marginBottom: 20,
-  },
-  backButtonText: {
-    fontSize: 16,
-    color: BilMenuTheme.colors.text,
   },
   modalOverlay: {
     flex: 1,

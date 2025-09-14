@@ -47,7 +47,20 @@ export const Step2: React.FC<Step2Props> = ({
         contentContainerStyle={styles.scrollContent}
       >
         <View style={styles.step2Content}>
-          <Text style={styles.stepTitle}>{t("submit.step2.title")}</Text>
+          <View style={styles.headerRow}>
+            <TouchableOpacity style={styles.backButtonTop} onPress={onBack}>
+              <Ionicons
+                name="chevron-back"
+                size={20}
+                color={BilMenuTheme.colors.textWhite}
+              />
+              <Text style={styles.backButtonTopText}>Back</Text>
+            </TouchableOpacity>
+            <View style={styles.titleContainer}>
+              <Text style={styles.stepNumber}>Step 2:</Text>
+              <Text style={styles.stepTitle}>Capture Image</Text>
+            </View>
+          </View>
           <Text style={styles.selectedMealText}>
             <Text style={styles.selectedLabel}>
               {t("submit.step2.selectedMeal", { meal: selectedMeal })}
@@ -71,9 +84,24 @@ export const Step2: React.FC<Step2Props> = ({
               {t("submit.step2.guidelines.subtitle")}
             </Text>
 
-            <Text style={styles.guidelinesTips}>
-              {t("submit.step2.guidelines.tips")}
-            </Text>
+            <View style={styles.guidelinesTipsGrid}>
+              <View style={styles.tipRow}>
+                <View style={styles.tipBox}>
+                  <Text style={styles.tipText}>Take from directly above</Text>
+                </View>
+                <View style={styles.tipBox}>
+                  <Text style={styles.tipText}>Good lighting</Text>
+                </View>
+              </View>
+              <View style={styles.tipRow}>
+                <View style={styles.tipBox}>
+                  <Text style={styles.tipText}>Full meal visible</Text>
+                </View>
+                <View style={styles.tipBox}>
+                  <Text style={styles.tipText}>No blur or shadows</Text>
+                </View>
+              </View>
+            </View>
 
             <View style={styles.examplesContainer}>
               <Text style={styles.exampleLabel}>
@@ -190,12 +218,6 @@ export const Step2: React.FC<Step2Props> = ({
           </TouchableOpacity>
         </View>
       </ScrollView>
-
-      <TouchableOpacity style={styles.backButton} onPress={onBack}>
-        <Text style={styles.backButtonText}>
-          {t("submit.step2.backToSelection")}
-        </Text>
-      </TouchableOpacity>
     </View>
   );
 };
@@ -217,12 +239,48 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingTop: 20,
   },
+  headerRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 16,
+    paddingHorizontal: 4,
+  },
+  backButtonTop: {
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 8,
+    paddingHorizontal: 12,
+    position: "absolute",
+    left: 0,
+    zIndex: 1,
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: "rgba(255, 255, 255, 0.2)",
+  },
+  backButtonTopText: {
+    fontSize: 16,
+    color: BilMenuTheme.colors.textWhite,
+    marginLeft: 4,
+    fontWeight: "500",
+  },
+  titleContainer: {
+    flex: 1,
+    alignItems: "flex-start",
+    marginLeft: 100, // Account for back button width + padding + extra space
+    marginRight: 20, // Reduced right margin since we're left-aligned
+  },
+  stepNumber: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: BilMenuTheme.colors.textMuted,
+    textAlign: "left",
+  },
   stepTitle: {
-    fontSize: 24,
+    fontSize: 18,
     fontWeight: "bold",
     color: BilMenuTheme.colors.textWhite,
-    marginBottom: 16,
-    textAlign: "center",
+    textAlign: "left",
   },
   selectedMealText: {
     fontSize: 16,
@@ -272,6 +330,32 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     marginBottom: 20,
     textAlign: "center",
+  },
+  guidelinesTipsGrid: {
+    marginBottom: 12,
+  },
+  tipRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 8,
+    gap: 8,
+  },
+  tipBox: {
+    flex: 1,
+    backgroundColor: BilMenuTheme.colors.background,
+    borderRadius: 8,
+    padding: 6,
+    borderWidth: 1,
+    borderColor: BilMenuTheme.colors.border,
+    alignItems: "center",
+    justifyContent: "center",
+    minHeight: 36,
+  },
+  tipText: {
+    fontSize: 11,
+    color: BilMenuTheme.colors.textWhite,
+    textAlign: "center",
+    lineHeight: 14,
   },
   examplesContainer: {
     width: "100%",
@@ -385,20 +469,5 @@ const styles = StyleSheet.create({
   },
   galleryButtonTextDisabled: {
     color: BilMenuTheme.colors.textMuted,
-  },
-  backButton: {
-    backgroundColor: BilMenuTheme.colors.surface,
-    borderRadius: 12,
-    padding: 16,
-    alignItems: "center",
-    borderWidth: 1,
-    borderColor: BilMenuTheme.colors.border,
-    marginHorizontal: 20,
-    marginBottom: 20,
-  },
-  backButtonText: {
-    fontSize: 16,
-    color: BilMenuTheme.colors.text,
-    fontWeight: "500",
   },
 });
