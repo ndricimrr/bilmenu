@@ -335,7 +335,10 @@ BilMenu User
   };
 
   const renderStep1 = () => (
-    <View style={styles.stepContainer}>
+    <ScrollView
+      style={styles.stepContainer}
+      showsVerticalScrollIndicator={true}
+    >
       <Text style={styles.stepTitle}>Step 1: Select Missing Meal</Text>
 
       <View style={styles.weekInfo}>
@@ -392,7 +395,7 @@ BilMenu User
       </View>
 
       {step1View === "daymeal" ? renderDayMealView() : renderSearchView()}
-    </View>
+    </ScrollView>
   );
 
   const renderDayMealView = () => (
@@ -400,11 +403,7 @@ BilMenu User
       {/* Day Selection */}
       <View style={styles.daysContainer}>
         <Text style={styles.sectionTitle}>Select Day</Text>
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          style={styles.daysScrollView}
-        >
+        <View style={styles.daysGrid}>
           {[0, 1, 2, 3, 4, 5, 6].map((dayIndex) => (
             <TouchableOpacity
               key={dayIndex}
@@ -424,11 +423,18 @@ BilMenu User
                 {getShortDayName(dayIndex)}
               </Text>
               {dayIndex === getCurrentDayOfWeek() && (
-                <Text style={styles.todayLabel}>Today</Text>
+                <Text
+                  style={[
+                    styles.todayLabel,
+                    selectedDay === dayIndex && styles.todayLabelActive,
+                  ]}
+                >
+                  Today
+                </Text>
               )}
             </TouchableOpacity>
           ))}
-        </ScrollView>
+        </View>
       </View>
 
       {/* Meal Type Selection */}
@@ -671,14 +677,14 @@ const styles = StyleSheet.create({
   },
   mealButton: {
     backgroundColor: BilMenuTheme.colors.surface,
-    borderRadius: 10,
-    padding: 15,
-    marginBottom: 10,
+    borderRadius: 8,
+    padding: 10,
+    marginBottom: 8,
     borderWidth: 1,
     borderColor: BilMenuTheme.colors.border,
   },
   mealButtonText: {
-    fontSize: 16,
+    fontSize: 14,
     color: BilMenuTheme.colors.text,
     textAlign: "center",
   },
@@ -782,10 +788,10 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
   resultsCount: {
-    fontSize: 14,
+    fontSize: 12,
     color: BilMenuTheme.colors.textMuted,
     textAlign: "center",
-    marginBottom: 15,
+    marginBottom: 12,
     fontStyle: "italic",
   },
   viewSelector: {
@@ -823,17 +829,22 @@ const styles = StyleSheet.create({
   daysContainer: {
     marginBottom: 20,
   },
-  daysScrollView: {
-    flexGrow: 0,
+  daysGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
   },
   dayButton: {
     backgroundColor: BilMenuTheme.colors.surface,
-    borderRadius: 10,
-    paddingVertical: 12,
-    paddingHorizontal: 16,
-    marginRight: 8,
+    borderRadius: 6,
+    paddingVertical: 2,
+    paddingHorizontal: 6,
+    marginBottom: 8,
     alignItems: "center",
-    minWidth: 60,
+    justifyContent: "center",
+    flexBasis: "13.5%",
+    minWidth: 48,
+    height: 32,
     borderWidth: 1,
     borderColor: BilMenuTheme.colors.border,
   },
@@ -845,7 +856,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
   },
   dayButtonText: {
-    fontSize: 14,
+    fontSize: 11,
     color: BilMenuTheme.colors.text,
     fontWeight: "500",
   },
@@ -854,10 +865,13 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   todayLabel: {
-    fontSize: 10,
-    color: BilMenuTheme.colors.secondary,
+    fontSize: 8,
+    color: BilMenuTheme.colors.text,
     fontWeight: "600",
-    marginTop: 2,
+    marginTop: 1,
+  },
+  todayLabelActive: {
+    color: BilMenuTheme.colors.textWhite,
   },
   mealTypeContainer: {
     marginBottom: 20,
