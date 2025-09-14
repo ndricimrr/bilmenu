@@ -10,9 +10,9 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: BilMenuTheme.colors.secondary,
-        tabBarInactiveTintColor: BilMenuTheme.colors.textMuted,
+        tabBarInactiveTintColor: BilMenuTheme.colors.textWhite,
         tabBarStyle: {
-          backgroundColor: BilMenuTheme.colors.surface,
+          backgroundColor: BilMenuTheme.colors.primary,
           borderTopColor: BilMenuTheme.colors.border,
           borderTopWidth: 1,
           height: 90,
