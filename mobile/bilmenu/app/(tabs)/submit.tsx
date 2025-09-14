@@ -44,6 +44,14 @@ export default function SubmitScreen() {
   const [allMissingMeals, setAllMissingMeals] = useState<MissingMeal[]>([]);
   const [lastUpdated, setLastUpdated] = useState<string>("");
   const [totalCheckpoints, setTotalCheckpoints] = useState<number>(0);
+  const [step1View, setStep1View] = useState<"search" | "daymeal">("daymeal");
+  const [selectedDay, setSelectedDay] = useState<number>(0);
+  const [selectedMealType, setSelectedMealType] = useState<
+    "lunch" | "dinner" | "alternative"
+  >("lunch");
+  const [currentWeekMealPlan, setCurrentWeekMealPlan] = useState<MealPlanDay[]>(
+    []
+  );
 
   // Get current week number
   const getCurrentWeek = () => {
@@ -55,9 +63,63 @@ export default function SubmitScreen() {
     return Math.ceil((days + start.getDay() + 1) / 7);
   };
 
+  // Get current day of week (Monday = 0, Sunday = 6)
+  const getCurrentDayOfWeek = () => {
+    const today = new Date();
+    const day = today.getDay();
+    return day === 0 ? 6 : day - 1; // Convert Sunday (0) to 6, others shift by 1
+  };
+
+  // Get current meal time based on hour
+  const getCurrentMealTime = (): "lunch" | "dinner" | "alternative" => {
+    const now = new Date();
+    const hour = now.getHours();
+
+    // Lunch: 11:00 - 15:00
+    if (hour >= 11 && hour < 15) {
+      return "lunch";
+    }
+    // Dinner: 17:00 - 21:00
+    else if (hour >= 17 && hour < 21) {
+      return "dinner";
+    }
+    // Default to lunch for other times
+    else {
+      return "lunch";
+    }
+  };
+
+  // Get day name
+  const getDayName = (dayIndex: number) => {
+    const days = [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+      "Sunday",
+    ];
+    return days[dayIndex];
+  };
+
+  // Get short day name
+  const getShortDayName = (dayIndex: number) => {
+    const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+    return days[dayIndex];
+  };
+
   // Load missing meals data
   useEffect(() => {
     loadMissingMeals();
+  }, []);
+
+  // Auto-select current day and meal time
+  useEffect(() => {
+    const currentDay = getCurrentDayOfWeek();
+    const currentMealTime = getCurrentMealTime();
+    setSelectedDay(currentDay);
+    setSelectedMealType(currentMealTime);
   }, []);
 
   const loadMissingMeals = async () => {
@@ -107,8 +169,10 @@ export default function SubmitScreen() {
           const mealPlanData = await mealPlanResponse.json();
           const allMeals = new Set<string>();
 
-          // Extract all meals from the current week
+          // Store the meal plan data for day/meal view
           if (Array.isArray(mealPlanData)) {
+            setCurrentWeekMealPlan(mealPlanData);
+
             mealPlanData.forEach((day: MealPlanDay) => {
               if (day.lunch)
                 day.lunch.forEach((meal: Meal) => allMeals.add(meal.tr));
@@ -154,10 +218,30 @@ export default function SubmitScreen() {
     }
   };
 
+  // Get missing meals for selected day and meal type
+  const getMissingMealsForDayAndType = () => {
+    if (currentWeekMealPlan.length === 0 || !allMissingMeals.length) {
+      return [];
+    }
+
+    const dayData = currentWeekMealPlan[selectedDay];
+    if (!dayData) return [];
+
+    const mealsForType = dayData[selectedMealType] || [];
+    const missingMealsSet = new Set(allMissingMeals.map((meal) => meal.name));
+
+    return mealsForType
+      .filter((meal: Meal) => missingMealsSet.has(meal.tr))
+      .map((meal: Meal) => ({ name: meal.tr, isMissing: true }));
+  };
+
   const mealsToShow = showAllMissing ? allMissingMeals : currentWeekMeals;
   const filteredMeals = mealsToShow.filter((meal) =>
     meal.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  // Get meals for day/meal view
+  const dayMealViewMeals = getMissingMealsForDayAndType();
 
   const handleMealSelection = (mealName: string) => {
     setSelectedMeal(mealName);
@@ -265,17 +349,182 @@ BilMenu User
             available
           </Text>
         )}
+      </View>
+
+      {/* View Selection Buttons */}
+      <View style={styles.viewSelector}>
         <TouchableOpacity
-          style={styles.toggleButton}
-          onPress={() => setShowAllMissing(!showAllMissing)}
+          style={[
+            styles.viewButton,
+            step1View === "daymeal" && styles.viewButtonActive,
+          ]}
+          onPress={() => setStep1View("daymeal")}
         >
-          <Text style={styles.toggleButtonText}>
-            {showAllMissing
-              ? "Show Current Week Only"
-              : "Show All Missing Meals"}
+          <Text
+            style={[
+              styles.viewButtonText,
+              step1View === "daymeal" && styles.viewButtonTextActive,
+            ]}
+          >
+            📅 Day & Meal
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[
+            styles.viewButton,
+            step1View === "search" && styles.viewButtonActive,
+          ]}
+          onPress={() => setStep1View("search")}
+        >
+          <Text
+            style={[
+              styles.viewButtonText,
+              step1View === "search" && styles.viewButtonTextActive,
+            ]}
+          >
+            🔍 Search All
           </Text>
         </TouchableOpacity>
       </View>
+
+      {step1View === "daymeal" ? renderDayMealView() : renderSearchView()}
+    </View>
+  );
+
+  const renderDayMealView = () => (
+    <>
+      {/* Day Selection */}
+      <View style={styles.daysContainer}>
+        <Text style={styles.sectionTitle}>Select Day</Text>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={styles.daysScrollView}
+        >
+          {[0, 1, 2, 3, 4, 5, 6].map((dayIndex) => (
+            <TouchableOpacity
+              key={dayIndex}
+              style={[
+                styles.dayButton,
+                selectedDay === dayIndex && styles.dayButtonActive,
+                dayIndex === getCurrentDayOfWeek() && styles.dayButtonToday,
+              ]}
+              onPress={() => setSelectedDay(dayIndex)}
+            >
+              <Text
+                style={[
+                  styles.dayButtonText,
+                  selectedDay === dayIndex && styles.dayButtonTextActive,
+                ]}
+              >
+                {getShortDayName(dayIndex)}
+              </Text>
+              {dayIndex === getCurrentDayOfWeek() && (
+                <Text style={styles.todayLabel}>Today</Text>
+              )}
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+      </View>
+
+      {/* Meal Type Selection */}
+      <View style={styles.mealTypeContainer}>
+        <Text style={styles.sectionTitle}>Select Meal Type</Text>
+        <View style={styles.mealTypeButtons}>
+          <TouchableOpacity
+            style={[
+              styles.mealTypeButton,
+              selectedMealType === "lunch" && styles.mealTypeButtonActive,
+            ]}
+            onPress={() => setSelectedMealType("lunch")}
+          >
+            <Text
+              style={[
+                styles.mealTypeButtonText,
+                selectedMealType === "lunch" && styles.mealTypeButtonTextActive,
+              ]}
+            >
+              ☀️ Lunch
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[
+              styles.mealTypeButton,
+              selectedMealType === "dinner" && styles.mealTypeButtonActive,
+            ]}
+            onPress={() => setSelectedMealType("dinner")}
+          >
+            <Text
+              style={[
+                styles.mealTypeButtonText,
+                selectedMealType === "dinner" &&
+                  styles.mealTypeButtonTextActive,
+              ]}
+            >
+              🌙 Dinner
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[
+              styles.mealTypeButton,
+              selectedMealType === "alternative" && styles.mealTypeButtonActive,
+            ]}
+            onPress={() => setSelectedMealType("alternative")}
+          >
+            <Text
+              style={[
+                styles.mealTypeButtonText,
+                selectedMealType === "alternative" &&
+                  styles.mealTypeButtonTextActive,
+              ]}
+            >
+              💰 Alternative
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+
+      {/* Missing Meals List */}
+      <ScrollView style={styles.mealsList} showsVerticalScrollIndicator={true}>
+        {isLoading ? (
+          <Text style={styles.loadingText}>Loading missing meals...</Text>
+        ) : dayMealViewMeals.length === 0 ? (
+          <Text style={styles.noResultsText}>
+            No missing meals found for {getDayName(selectedDay)}{" "}
+            {selectedMealType}.
+          </Text>
+        ) : (
+          <>
+            <Text style={styles.resultsCount}>
+              {dayMealViewMeals.length} missing meal
+              {dayMealViewMeals.length !== 1 ? "s" : ""} found for{" "}
+              {getDayName(selectedDay)} {selectedMealType}
+            </Text>
+            {dayMealViewMeals.map((meal, index) => (
+              <TouchableOpacity
+                key={index}
+                style={styles.mealButton}
+                onPress={() => handleMealSelection(meal.name)}
+              >
+                <Text style={styles.mealButtonText}>{meal.name}</Text>
+              </TouchableOpacity>
+            ))}
+          </>
+        )}
+      </ScrollView>
+    </>
+  );
+
+  const renderSearchView = () => (
+    <>
+      <TouchableOpacity
+        style={styles.toggleButton}
+        onPress={() => setShowAllMissing(!showAllMissing)}
+      >
+        <Text style={styles.toggleButtonText}>
+          {showAllMissing ? "Show Current Week Only" : "Show All Missing Meals"}
+        </Text>
+      </TouchableOpacity>
 
       <TextInput
         style={styles.searchInput}
@@ -312,7 +561,7 @@ BilMenu User
           </>
         )}
       </ScrollView>
-    </View>
+    </>
   );
 
   const renderStep2 = () => (
@@ -534,5 +783,107 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 15,
     fontStyle: "italic",
+  },
+  viewSelector: {
+    flexDirection: "row",
+    marginBottom: 20,
+    backgroundColor: BilMenuTheme.colors.surfaceLight,
+    borderRadius: 10,
+    padding: 4,
+  },
+  viewButton: {
+    flex: 1,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderRadius: 8,
+    alignItems: "center",
+  },
+  viewButtonActive: {
+    backgroundColor: BilMenuTheme.colors.surface,
+  },
+  viewButtonText: {
+    fontSize: 14,
+    color: BilMenuTheme.colors.textMuted,
+    fontWeight: "500",
+  },
+  viewButtonTextActive: {
+    color: BilMenuTheme.colors.text,
+    fontWeight: "600",
+  },
+  sectionTitle: {
+    fontSize: 16,
+    color: BilMenuTheme.colors.textWhite,
+    fontWeight: "600",
+    marginBottom: 10,
+  },
+  daysContainer: {
+    marginBottom: 20,
+  },
+  daysScrollView: {
+    flexGrow: 0,
+  },
+  dayButton: {
+    backgroundColor: BilMenuTheme.colors.surface,
+    borderRadius: 10,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    marginRight: 8,
+    alignItems: "center",
+    minWidth: 60,
+    borderWidth: 1,
+    borderColor: BilMenuTheme.colors.border,
+  },
+  dayButtonActive: {
+    backgroundColor: BilMenuTheme.colors.secondary,
+  },
+  dayButtonToday: {
+    borderColor: BilMenuTheme.colors.secondary,
+    borderWidth: 2,
+  },
+  dayButtonText: {
+    fontSize: 14,
+    color: BilMenuTheme.colors.text,
+    fontWeight: "500",
+  },
+  dayButtonTextActive: {
+    color: BilMenuTheme.colors.textWhite,
+    fontWeight: "600",
+  },
+  todayLabel: {
+    fontSize: 10,
+    color: BilMenuTheme.colors.secondary,
+    fontWeight: "600",
+    marginTop: 2,
+  },
+  mealTypeContainer: {
+    marginBottom: 20,
+  },
+  mealTypeButtons: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  mealTypeButton: {
+    flex: 1,
+    backgroundColor: BilMenuTheme.colors.surface,
+    borderRadius: 10,
+    paddingVertical: 12,
+    paddingHorizontal: 8,
+    marginHorizontal: 4,
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: BilMenuTheme.colors.border,
+  },
+  mealTypeButtonActive: {
+    backgroundColor: BilMenuTheme.colors.primary,
+  },
+  mealTypeButtonText: {
+    fontSize: 12,
+    color: BilMenuTheme.colors.text,
+    fontWeight: "500",
+    textAlign: "center",
+  },
+  mealTypeButtonTextActive: {
+    color: BilMenuTheme.colors.textWhite,
+    fontWeight: "600",
   },
 });
