@@ -282,10 +282,10 @@ BilMenu User
         placeholder="Search for a meal..."
         value={searchQuery}
         onChangeText={setSearchQuery}
-        placeholderTextColor={BilMenuTheme.colors.textMuted}
+        placeholderTextColor={BilMenuTheme.colors.textLight}
       />
 
-      <ScrollView style={styles.mealsList} showsVerticalScrollIndicator={false}>
+      <ScrollView style={styles.mealsList} showsVerticalScrollIndicator={true}>
         {isLoading ? (
           <Text style={styles.loadingText}>Loading missing meals...</Text>
         ) : filteredMeals.length === 0 ? (
@@ -355,7 +355,7 @@ BilMenu User
   );
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container} edges={["top", "left", "right"]}>
       <Header title="Submit Images" />
 
       <View style={styles.content}>
@@ -410,6 +410,11 @@ const styles = StyleSheet.create({
   },
   mealsList: {
     flex: 1,
+    borderWidth: 1,
+    borderColor: BilMenuTheme.colors.border,
+    borderRadius: 10,
+    padding: 10,
+    backgroundColor: BilMenuTheme.colors.surfaceLight,
   },
   mealButton: {
     backgroundColor: BilMenuTheme.colors.surface,
