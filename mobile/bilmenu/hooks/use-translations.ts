@@ -1,20 +1,12 @@
-import { useState, useEffect } from "react";
-import {
-  translations,
-  Language,
-  TranslationKey,
-} from "@/constants/translations";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { TranslationKey } from "@/constants/translations";
+import { translations } from "@/constants/translations";
 
 export function useTranslations() {
-  const [language, setLanguage] = useState<Language>("en");
+  const { language, changeLanguage } = useLanguage();
 
   const t = (key: TranslationKey): string => {
     return translations[language][key];
-  };
-
-  const changeLanguage = (newLanguage: Language) => {
-    setLanguage(newLanguage);
-    // You can add AsyncStorage here to persist language preference
   };
 
   return {
