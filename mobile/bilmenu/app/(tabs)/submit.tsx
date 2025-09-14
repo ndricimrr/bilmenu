@@ -53,14 +53,18 @@ export default function SubmitScreen() {
     []
   );
 
-  // Get current week number
+  // Get current week number (ISO week)
   const getCurrentWeek = () => {
     const now = new Date();
-    const start = new Date(now.getFullYear(), 0, 1);
-    const days = Math.floor(
-      (now.getTime() - start.getTime()) / (24 * 60 * 60 * 1000)
-    );
-    return Math.ceil((days + start.getDay() + 1) / 7);
+    const target = new Date(now.valueOf());
+    const dayNr = (now.getDay() + 6) % 7;
+    target.setDate(target.getDate() - dayNr + 3);
+    const firstThursday = target.valueOf();
+    target.setMonth(0, 1);
+    if (target.getDay() !== 4) {
+      target.setMonth(0, 1 + ((4 - target.getDay() + 7) % 7));
+    }
+    return 1 + Math.ceil((firstThursday - target.valueOf()) / 604800000);
   };
 
   // Get current day of week (Monday = 0, Sunday = 6)
