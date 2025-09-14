@@ -131,7 +131,7 @@ export default function SubmitScreen() {
         return;
       }
 
-      const subject = "BilMenu Image Submission";
+      const subject = `BilMenu Image Submission |${selectedMeal}.jpg`;
       const body = `${t("submit.email.greeting")}
 
 ${t("submit.email.body")}
@@ -147,7 +147,7 @@ ${userName || t("submit.email.defaultName")}`;
       const filename = `${selectedMeal}.jpg`;
 
       await MailComposer.composeAsync({
-        recipients: ["ndricim@bilmenu.com"], // Replace with your actual email
+        recipients: ["bilmenudeveloper@gmail.com"], // Replace with your actual email
         subject,
         body,
         attachments: [capturedImage],

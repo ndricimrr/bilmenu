@@ -115,7 +115,7 @@ export const translations = {
     "submit.email.greeting": "Hi! 👋",
     "submit.email.body":
       "This meal was missing from BilMenu, so I'm sharing a photo.",
-    "submit.email.mealInfo": "This is: {meal}",
+    "submit.email.mealInfo": 'This is: "{meal}"',
     "submit.email.thanks": "Thanks!",
     "submit.email.signature": "Best regards,",
     "submit.email.defaultName": "A Bilkent student",

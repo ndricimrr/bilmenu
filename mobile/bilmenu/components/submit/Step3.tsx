@@ -103,7 +103,7 @@ export const Step3: React.FC<Step3Props> = ({
               <Text style={styles.emailPreviewLabel}>
                 {t("submit.step3.to")}
               </Text>{" "}
-              ndricim@bilmenu.com
+              bilmenudeveloper@gmail.com
               {"\n"}
               <Text style={styles.emailPreviewLabel}>
                 {t("submit.step3.subject")}
