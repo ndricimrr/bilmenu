@@ -9,6 +9,8 @@ import {
   Alert,
   Image,
   Switch,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Header } from "@/components/header";
@@ -37,6 +39,8 @@ interface MissingMeal {
 export default function SubmitScreen() {
   const [selectedMeal, setSelectedMeal] = useState<string>("");
   const [capturedImage, setCapturedImage] = useState<string | null>(null);
+  const [imageSize, setImageSize] = useState<number | null>(null);
+  const [userName, setUserName] = useState<string>("");
   const [currentWeekMeals, setCurrentWeekMeals] = useState<MissingMeal[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [isLoading, setIsLoading] = useState(true);
@@ -272,15 +276,38 @@ export default function SubmitScreen() {
         allowsEditing: true,
         aspect: [4, 3],
         quality: 0.8,
+        exif: false,
       });
 
       if (!result.canceled && result.assets[0]) {
         setCapturedImage(result.assets[0].uri);
+        setImageSize(result.assets[0].fileSize || null);
         setStep(3);
       }
     } catch (error) {
       console.error("Error capturing image:", error);
       Alert.alert("Error", "Failed to capture image. Please try again.");
+    }
+  };
+
+  const handleGallerySelection = async () => {
+    try {
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 0.8,
+        exif: false,
+      });
+
+      if (!result.canceled && result.assets[0]) {
+        setCapturedImage(result.assets[0].uri);
+        setImageSize(result.assets[0].fileSize || null);
+        setStep(3);
+      }
+    } catch (error) {
+      console.error("Error selecting image:", error);
+      Alert.alert("Error", "Failed to select image. Please try again.");
     }
   };
 
@@ -301,17 +328,20 @@ export default function SubmitScreen() {
         return;
       }
 
-      const subject = `Missing Meal Image Submission: ${selectedMeal}`;
-      const body = `
-Hello BilMenu Team,
+      const subject = "BilMenu Image Submission";
+      const body = `Hi! 👋
 
-I am submitting an image for the missing meal: "${selectedMeal}"
+This meal was missing from BilMenu, so I'm sharing a photo.
 
-Please find the attached image.
+This is: ${selectedMeal}
+
+Thanks for BilMenu! 
 
 Best regards,
-BilMenu User
-      `.trim();
+${userName || "A Bilkent student"}`;
+
+      // Create filename with meal name
+      const filename = `${selectedMeal}.jpg`;
 
       await MailComposer.composeAsync({
         recipients: ["ndricim@bilmenu.com"], // Replace with your actual email
@@ -323,6 +353,8 @@ BilMenu User
       // Reset the form
       setSelectedMeal("");
       setCapturedImage(null);
+      setImageSize(null);
+      setUserName("");
       setStep(1);
 
       Alert.alert(
@@ -609,6 +641,13 @@ BilMenu User
         >
           <Text style={styles.captureButtonText}>📷 Capture Image</Text>
         </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.galleryButton}
+          onPress={handleGallerySelection}
+        >
+          <Text style={styles.galleryButtonText}>🖼️ Select from Gallery</Text>
+        </TouchableOpacity>
       </View>
 
       <TouchableOpacity style={styles.backButton} onPress={() => setStep(1)}>
@@ -618,27 +657,116 @@ BilMenu User
   );
 
   const renderStep3 = () => (
-    <View style={styles.stepContainer}>
-      <Text style={styles.stepTitle}>Step 3: Send Email</Text>
-      <Text style={styles.selectedMealText}>
-        <Text style={styles.selectedLabel}>Meal: </Text>
-        <Text style={styles.selectedMealName}>{selectedMeal}</Text>
-      </Text>
+    <KeyboardAvoidingView
+      style={styles.stepContainer}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 50 : 50}
+      enabled={true}
+    >
+      <ScrollView
+        style={styles.step3Content}
+        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
+        contentContainerStyle={styles.step3ScrollContent}
+        removeClippedSubviews={false}
+        scrollEventThrottle={16}
+      >
+        <Text style={styles.stepTitle}>Step 3: Send Email</Text>
+        <Text style={styles.selectedMealText}>
+          <Text style={styles.selectedLabel}>Meal: </Text>
+          <Text style={styles.selectedMealName}>{selectedMeal}</Text>
+        </Text>
+        <View style={styles.previewContainer}>
+          {capturedImage && (
+            <View style={styles.imagePreviewContainer}>
+              <View style={styles.imagePreviewSmall}>
+                <Image
+                  source={{ uri: capturedImage }}
+                  style={styles.previewImageSmall}
+                />
+              </View>
+              <Text style={styles.imageFilenameText}>{selectedMeal}.jpg</Text>
+              {imageSize && (
+                <Text style={styles.imageSizeText}>
+                  {(imageSize / (1024 * 1024)).toFixed(1)} MB
+                </Text>
+              )}
+            </View>
+          )}
 
-      {capturedImage && (
-        <View style={styles.imagePreview}>
-          <Image source={{ uri: capturedImage }} style={styles.previewImage} />
+          <View style={styles.emailPreview}>
+            <Text style={styles.emailPreviewTitle}>Email Preview</Text>
+            <Text style={styles.emailPreviewCompact}>
+              <Text style={styles.emailPreviewLabel}>To:</Text>{" "}
+              ndricim@bilmenu.com
+              {"\n"}
+              <Text style={styles.emailPreviewLabel}>Subject:</Text> BilMenu
+              Image Submission
+              {"\n"}
+            </Text>
+
+            <View style={styles.subjectNameContainer}>
+              <Text
+                style={[
+                  styles.subjectNameText,
+                  userName.length > 0 && styles.subjectNameTextBold,
+                ]}
+              >
+                By: {userName || "No name provided"}
+              </Text>
+            </View>
+
+            <Text style={styles.emailPreviewCompact}>
+              <Text style={styles.emailPreviewLabel}>Message:</Text> Hi! 👋 This
+              meal was missing from BilMenu, so I'm sharing a photo. This is:{" "}
+              {selectedMeal}. Thanks for BilMenu!
+            </Text>
+          </View>
         </View>
-      )}
 
-      <TouchableOpacity style={styles.sendButton} onPress={handleSendEmail}>
-        <Text style={styles.sendButtonText}>📧 Send Email</Text>
-      </TouchableOpacity>
+        <View style={styles.nameInputContainer}>
+          <View style={styles.nameInputHeader}>
+            <Text style={styles.nameInputLabel}>
+              Add your name for attribution (optional)
+            </Text>
+            <Text
+              style={[
+                styles.characterCounter,
+                userName.length === 50 && styles.characterCounterLimit,
+              ]}
+            >
+              {userName.length}/50
+            </Text>
+          </View>
+          <View style={styles.nameInputWrapper}>
+            <TextInput
+              style={styles.nameInput}
+              placeholder="Your name"
+              value={userName}
+              onChangeText={setUserName}
+              placeholderTextColor={BilMenuTheme.colors.textLight}
+              maxLength={50}
+            />
+            {userName.length > 0 && (
+              <TouchableOpacity
+                style={styles.clearButton}
+                onPress={() => setUserName("")}
+              >
+                <Text style={styles.clearButtonText}>×</Text>
+              </TouchableOpacity>
+            )}
+          </View>
+        </View>
+
+        <TouchableOpacity style={styles.sendButton} onPress={handleSendEmail}>
+          <Text style={styles.sendButtonText}>📧 Send Email</Text>
+        </TouchableOpacity>
+      </ScrollView>
 
       <TouchableOpacity style={styles.backButton} onPress={() => setStep(2)}>
         <Text style={styles.backButtonText}>← Back to Camera</Text>
       </TouchableOpacity>
-    </View>
+    </KeyboardAvoidingView>
   );
 
   return (
@@ -777,6 +905,20 @@ const styles = StyleSheet.create({
     color: BilMenuTheme.colors.textWhite,
     fontWeight: "bold",
   },
+  galleryButton: {
+    backgroundColor: BilMenuTheme.colors.surface,
+    borderRadius: 15,
+    padding: 20,
+    alignItems: "center",
+    marginTop: 15,
+    borderWidth: 1,
+    borderColor: BilMenuTheme.colors.border,
+  },
+  galleryButtonText: {
+    fontSize: 18,
+    color: BilMenuTheme.colors.text,
+    fontWeight: "bold",
+  },
   imagePreview: {
     alignItems: "center",
     marginBottom: 30,
@@ -789,15 +931,159 @@ const styles = StyleSheet.create({
     borderColor: BilMenuTheme.colors.border,
   },
   sendButton: {
-    backgroundColor: BilMenuTheme.colors.primary,
-    borderRadius: 15,
-    padding: 20,
+    backgroundColor: BilMenuTheme.colors.secondary,
+    borderRadius: 12,
+    padding: 15,
     alignItems: "center",
     marginBottom: 20,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 4,
   },
   sendButtonText: {
-    fontSize: 18,
+    fontSize: 16,
     color: BilMenuTheme.colors.textWhite,
+    fontWeight: "bold",
+  },
+  nameInputContainer: {
+    marginBottom: 15,
+  },
+  nameInputHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  nameInputLabel: {
+    fontSize: 14,
+    color: BilMenuTheme.colors.textWhite,
+    fontWeight: "500",
+    flex: 1,
+  },
+  characterCounter: {
+    fontSize: 12,
+    color: BilMenuTheme.colors.textWhite,
+    fontWeight: "400",
+  },
+  characterCounterLimit: {
+    color: "#FF4444",
+    fontWeight: "600",
+  },
+  nameInputWrapper: {
+    position: "relative",
+  },
+  nameInput: {
+    backgroundColor: BilMenuTheme.colors.surface,
+    borderRadius: 8,
+    padding: 12,
+    paddingRight: 40,
+    borderWidth: 1,
+    borderColor: BilMenuTheme.colors.border,
+    fontSize: 14,
+    color: BilMenuTheme.colors.text,
+  },
+  clearButton: {
+    position: "absolute",
+    right: 8,
+    top: "50%",
+    transform: [{ translateY: -12 }],
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    backgroundColor: BilMenuTheme.colors.textLight,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  clearButtonText: {
+    fontSize: 16,
+    color: BilMenuTheme.colors.surface,
+    fontWeight: "bold",
+    lineHeight: 16,
+  },
+  step3Content: {
+    flex: 1,
+    marginBottom: 20,
+  },
+  step3ScrollContent: {
+    flexGrow: 1,
+    paddingBottom: 20,
+  },
+  previewContainer: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    marginBottom: 15,
+    gap: 12,
+  },
+  imagePreviewContainer: {
+    alignItems: "center",
+  },
+  imagePreviewSmall: {
+    width: 100,
+    height: 100,
+    borderRadius: 8,
+    borderWidth: 2,
+    borderColor: BilMenuTheme.colors.border,
+    overflow: "hidden",
+  },
+  previewImageSmall: {
+    width: "100%",
+    height: "100%",
+    resizeMode: "cover",
+  },
+  imageSizeText: {
+    fontSize: 10,
+    color: BilMenuTheme.colors.textWhite,
+    marginTop: 4,
+    textAlign: "center",
+  },
+  imageFilenameText: {
+    fontSize: 9,
+    color: BilMenuTheme.colors.textWhite,
+    marginTop: 2,
+    textAlign: "center",
+    fontStyle: "italic",
+  },
+  emailPreview: {
+    backgroundColor: BilMenuTheme.colors.surface,
+    borderRadius: 8,
+    padding: 8,
+    flex: 1,
+    borderWidth: 1,
+    borderColor: BilMenuTheme.colors.border,
+  },
+  emailPreviewTitle: {
+    fontSize: 12,
+    fontWeight: "bold",
+    color: BilMenuTheme.colors.text,
+    marginBottom: 6,
+  },
+  emailPreviewCompact: {
+    fontSize: 11,
+    color: BilMenuTheme.colors.text,
+    lineHeight: 14,
+  },
+  emailPreviewLabel: {
+    fontSize: 11,
+    fontWeight: "600",
+    color: BilMenuTheme.colors.text,
+  },
+  subjectNameContainer: {
+    height: 32,
+    justifyContent: "center",
+    marginTop: 1,
+    marginBottom: 1,
+  },
+  subjectNameText: {
+    fontSize: 11,
+    color: BilMenuTheme.colors.text,
+    fontWeight: "500",
+  },
+  subjectNameTextBold: {
     fontWeight: "bold",
   },
   backButton: {
