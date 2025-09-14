@@ -59,8 +59,16 @@
 
     // Set language from mobile app
     const language = getLanguage();
-    if (language && window.setLanguage) {
-      window.setLanguage(language);
+    if (language) {
+      // Override localStorage with mobile app language
+      localStorage.setItem("bilmenu-language", language);
+
+      // Set language using the language switcher if available
+      if (window.languageSwitcher) {
+        window.languageSwitcher.setLanguage(language);
+      } else if (window.setLanguage) {
+        window.setLanguage(language);
+      }
     }
 
     // Add mobile app class to body for additional styling
@@ -78,6 +86,41 @@
     }
   }
 
+  // Function to set language with retry mechanism
+  function setMobileAppLanguage() {
+    const language = getLanguage();
+    if (language) {
+      // Override localStorage with mobile app language
+      localStorage.setItem("bilmenu-language", language);
+
+      // Try to set language with retry mechanism
+      let attempts = 0;
+      const maxAttempts = 10;
+
+      const trySetLanguage = () => {
+        attempts++;
+        if (window.languageSwitcher) {
+          window.languageSwitcher.setLanguage(language);
+          console.log(
+            `BilMenu: Language set to ${language} via languageSwitcher`
+          );
+        } else if (window.setLanguage) {
+          window.setLanguage(language);
+          console.log(`BilMenu: Language set to ${language} via setLanguage`);
+        } else if (attempts < maxAttempts) {
+          // Retry after a short delay
+          setTimeout(trySetLanguage, 100);
+        } else {
+          console.warn(
+            "BilMenu: Could not set language - languageSwitcher not available"
+          );
+        }
+      };
+
+      trySetLanguage();
+    }
+  }
+
   // Wait for DOM to be ready
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", initMobileApp);
@@ -87,6 +130,9 @@
 
   // Also run when window loads (in case DOMContentLoaded already fired)
   window.addEventListener("load", initMobileApp);
+
+  // Set language after a delay to ensure languageSwitcher is initialized
+  setTimeout(setMobileAppLanguage, 200);
 
   // Export functions for global access
   window.mobileAppUtils = {

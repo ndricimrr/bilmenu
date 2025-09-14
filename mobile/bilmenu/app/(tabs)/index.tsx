@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { StyleSheet, Alert, TouchableOpacity, View, Text } from "react-native";
 import { WebView } from "react-native-webview";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -12,6 +12,14 @@ export default function HomeScreen() {
   const [canGoBack, setCanGoBack] = useState(false);
   const [currentUrl, setCurrentUrl] = useState("");
   const [isOnHomepage, setIsOnHomepage] = useState(true);
+
+  // Reload WebView when language changes
+  useEffect(() => {
+    if (webViewRef.current) {
+      const newUrl = `https://www.bilmenu.com?mobile=true&lang=${language}&source=mobile-app`;
+      webViewRef.current.reload();
+    }
+  }, [language]);
 
   const handleMessage = (event: any) => {
     try {
@@ -101,6 +109,7 @@ export default function HomeScreen() {
         domStorageEnabled={true}
         mixedContentMode="compatibility"
         userAgent="BilMenu-Mobile-App/1.0"
+        key={language} // Force re-render when language changes
         injectedJavaScript={`
           // Add mobile-specific styling and hide webapp header
           const style = document.createElement('style');
