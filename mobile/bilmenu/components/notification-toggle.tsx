@@ -21,7 +21,7 @@ export function NotificationToggle({
     <View style={styles.settingCard}>
       <View style={styles.settingRow}>
         <View style={styles.settingInfo}>
-          <ThemedText type="body" style={styles.settingTitle}>
+          <ThemedText type="default" style={styles.settingTitle}>
             {title}
           </ThemedText>
           <ThemedText style={styles.settingDescription}>
