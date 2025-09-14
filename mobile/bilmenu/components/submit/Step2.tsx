@@ -57,8 +57,12 @@ export const Step2: React.FC<Step2Props> = ({
               <Text style={styles.backButtonTopText}>Back</Text>
             </TouchableOpacity>
             <View style={styles.titleContainer}>
-              <Text style={styles.stepNumber}>Step 2:</Text>
-              <Text style={styles.stepTitle}>Capture Image</Text>
+              <Text style={styles.stepNumber}>
+                {t("submit.step2.stepNumber")}
+              </Text>
+              <Text style={styles.stepTitle}>
+                {t("submit.step2.stepTitle")}
+              </Text>
             </View>
           </View>
           <Text style={styles.selectedMealText}>
@@ -87,18 +91,26 @@ export const Step2: React.FC<Step2Props> = ({
             <View style={styles.guidelinesTipsGrid}>
               <View style={styles.tipRow}>
                 <View style={styles.tipBox}>
-                  <Text style={styles.tipText}>Take from directly above</Text>
+                  <Text style={styles.tipText}>
+                    {t("submit.step2.guidelines.tip1")}
+                  </Text>
                 </View>
                 <View style={styles.tipBox}>
-                  <Text style={styles.tipText}>Good lighting</Text>
+                  <Text style={styles.tipText}>
+                    {t("submit.step2.guidelines.tip2")}
+                  </Text>
                 </View>
               </View>
               <View style={styles.tipRow}>
                 <View style={styles.tipBox}>
-                  <Text style={styles.tipText}>Full meal visible</Text>
+                  <Text style={styles.tipText}>
+                    {t("submit.step2.guidelines.tip3")}
+                  </Text>
                 </View>
                 <View style={styles.tipBox}>
-                  <Text style={styles.tipText}>No blur or shadows</Text>
+                  <Text style={styles.tipText}>
+                    {t("submit.step2.guidelines.tip4")}
+                  </Text>
                 </View>
               </View>
             </View>
@@ -232,12 +244,10 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     flexGrow: 1,
-    paddingBottom: 20,
   },
   step2Content: {
     flex: 1,
     paddingHorizontal: 20,
-    paddingTop: 20,
   },
   headerRow: {
     flexDirection: "row",
@@ -342,18 +352,18 @@ const styles = StyleSheet.create({
   },
   tipBox: {
     flex: 1,
-    backgroundColor: BilMenuTheme.colors.background,
+    backgroundColor: "rgba(0, 0, 0, 0.05)",
     borderRadius: 8,
     padding: 6,
     borderWidth: 1,
-    borderColor: BilMenuTheme.colors.border,
+    borderColor: "rgba(0, 0, 0, 0.2)",
     alignItems: "center",
     justifyContent: "center",
     minHeight: 36,
   },
   tipText: {
     fontSize: 11,
-    color: BilMenuTheme.colors.textWhite,
+    color: BilMenuTheme.colors.text,
     textAlign: "center",
     lineHeight: 14,
   },

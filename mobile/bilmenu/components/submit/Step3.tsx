@@ -66,8 +66,10 @@ export const Step3: React.FC<Step3Props> = ({
             <Text style={styles.backButtonTopText}>Back</Text>
           </TouchableOpacity>
           <View style={styles.titleContainer}>
-            <Text style={styles.stepNumber}>Step 3:</Text>
-            <Text style={styles.stepTitle}>Send Email</Text>
+            <Text style={styles.stepNumber}>
+              {t("submit.step3.stepNumber")}
+            </Text>
+            <Text style={styles.stepTitle}>{t("submit.step3.stepTitle")}</Text>
           </View>
         </View>
         <Text style={styles.selectedMealText}>

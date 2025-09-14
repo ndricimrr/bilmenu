@@ -39,6 +39,10 @@ export const translations = {
     "submit.step1.title": "Step 1: Select Missing Meal",
     "submit.step2.title": "Step 2: Capture Image",
     "submit.step3.title": "Step 3: Send Email",
+    "submit.step2.stepNumber": "Step 2:",
+    "submit.step2.stepTitle": "Capture Image",
+    "submit.step3.stepNumber": "Step 3:",
+    "submit.step3.stepTitle": "Send Email",
 
     // Step 1 - Meal Selection
     "submit.step1.weekInfo": "Week {week}, {year}",
@@ -83,11 +87,15 @@ export const translations = {
     "submit.step2.guidelines.subtitle":
       "Take a clear photo from above the meal",
     "submit.step2.guidelines.correct": "✅ Good Examples",
-    "submit.step2.guidelines.incorrect": "❌ Avoid These",
+    "submit.step2.guidelines.incorrect": "❌ Bad Examples",
     "submit.step2.guidelines.tips":
       "• Take from directly above\n• Good lighting\n• Full meal visible\n• No blur or shadows",
     "submit.step2.guidelines.acknowledgment":
       "I understand the photo guidelines and will take a proper photo",
+    "submit.step2.guidelines.tip1": "Take from directly above",
+    "submit.step2.guidelines.tip2": "Good lighting",
+    "submit.step2.guidelines.tip3": "Full meal visible",
+    "submit.step2.guidelines.tip4": "No blur or shadows",
 
     // Step 3 - Email
     "submit.step3.emailPreview": "Email Preview",
@@ -227,17 +235,25 @@ export const translations = {
     "submit.step2.or": "veya",
     "submit.step2.gallery": "Galeri",
     "submit.step2.backToSelection": "← Yemek Seçimine Dön",
+    "submit.step2.stepNumber": "Adım 2:",
+    "submit.step2.stepTitle": "Görsel Çek",
+    "submit.step3.stepNumber": "Adım 3:",
+    "submit.step3.stepTitle": "E-posta Gönder",
 
     // Image Guidelines
     "submit.step2.guidelines.title": "📸 Fotoğraf Kuralları",
     "submit.step2.guidelines.subtitle":
       "Yemeğin üstünden net bir fotoğraf çekin",
     "submit.step2.guidelines.correct": "✅ İyi Örnekler",
-    "submit.step2.guidelines.incorrect": "❌ Bunlardan Kaçının",
+    "submit.step2.guidelines.incorrect": "❌ Yanlış Örnekler",
     "submit.step2.guidelines.tips":
       "• Doğrudan üstten çekin\n• İyi aydınlatma\n• Tüm yemek görünür\n• Bulanıklık veya gölge yok",
     "submit.step2.guidelines.acknowledgment":
       "Fotoğraf kurallarını anlıyorum ve uygun bir fotoğraf çekeceğim",
+    "submit.step2.guidelines.tip1": "Doğrudan üstten çekin",
+    "submit.step2.guidelines.tip2": "İyi aydınlatma",
+    "submit.step2.guidelines.tip3": "Tüm yemek görünür",
+    "submit.step2.guidelines.tip4": "Bulanıklık veya gölge yok",
 
     // Step 3 - Email
     "submit.step3.emailPreview": "E-posta Önizleme",
