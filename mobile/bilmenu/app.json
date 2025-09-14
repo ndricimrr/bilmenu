@@ -5,7 +5,7 @@
     "version": "1.0.0",
     "projectId": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/logo/master_ios_bilmenu_1024_1024.png",
     "scheme": "bilmenu",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -22,10 +22,9 @@
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
-        "foregroundImage": "./assets/images/android-icon-foreground.png",
-        "backgroundImage": "./assets/images/android-icon-background.png",
-        "monochromeImage": "./assets/images/android-icon-monochrome.png"
+        "foregroundImage": "./assets/images/logo/android_108_108.png"
       },
+      "icon": "./assets/images/logo/android_512_512.png",
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
       "package": "com.bilmenu.app",
@@ -57,7 +56,7 @@
       [
         "expo-notifications",
         {
-          "icon": "./assets/images/icon.png",
+          "icon": "./assets/images/logo/android_108_108.png",
           "color": "#ffffff",
           "defaultChannel": "default"
         }
