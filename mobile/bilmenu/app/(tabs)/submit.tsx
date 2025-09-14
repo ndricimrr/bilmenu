@@ -520,6 +520,7 @@ BilMenu User
                 style={styles.mealButton}
                 onPress={() => handleMealSelection(meal.name)}
               >
+                <Text style={styles.mealButtonIcon}>+</Text>
                 <Text style={styles.mealButtonText}>{meal.name}</Text>
               </TouchableOpacity>
             ))}
@@ -583,6 +584,7 @@ BilMenu User
                 style={styles.mealButton}
                 onPress={() => handleMealSelection(meal.name)}
               >
+                <Text style={styles.mealButtonIcon}>+</Text>
                 <Text style={styles.mealButtonText}>{meal.name}</Text>
               </TouchableOpacity>
             ))}
@@ -594,15 +596,20 @@ BilMenu User
 
   const renderStep2 = () => (
     <View style={styles.stepContainer}>
-      <Text style={styles.stepTitle}>Step 2: Capture Image</Text>
-      <Text style={styles.selectedMealText}>Selected: {selectedMeal}</Text>
+      <View style={styles.step2Content}>
+        <Text style={styles.stepTitle}>Step 2: Capture Image</Text>
+        <Text style={styles.selectedMealText}>
+          <Text style={styles.selectedLabel}>Selected: </Text>
+          <Text style={styles.selectedMealName}>{selectedMeal}</Text>
+        </Text>
 
-      <TouchableOpacity
-        style={styles.captureButton}
-        onPress={handleCameraCapture}
-      >
-        <Text style={styles.captureButtonText}>📷 Capture Image</Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.captureButton}
+          onPress={handleCameraCapture}
+        >
+          <Text style={styles.captureButtonText}>📷 Capture Image</Text>
+        </TouchableOpacity>
+      </View>
 
       <TouchableOpacity style={styles.backButton} onPress={() => setStep(1)}>
         <Text style={styles.backButtonText}>← Back to Meal Selection</Text>
@@ -613,7 +620,10 @@ BilMenu User
   const renderStep3 = () => (
     <View style={styles.stepContainer}>
       <Text style={styles.stepTitle}>Step 3: Send Email</Text>
-      <Text style={styles.selectedMealText}>Meal: {selectedMeal}</Text>
+      <Text style={styles.selectedMealText}>
+        <Text style={styles.selectedLabel}>Meal: </Text>
+        <Text style={styles.selectedMealName}>{selectedMeal}</Text>
+      </Text>
 
       {capturedImage && (
         <View style={styles.imagePreview}>
@@ -668,6 +678,11 @@ const styles = StyleSheet.create({
   stepContainer: {
     flex: 1,
   },
+  step2Content: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
   stepTitle: {
     fontSize: 20,
     fontWeight: "bold",
@@ -696,15 +711,32 @@ const styles = StyleSheet.create({
   mealButton: {
     backgroundColor: BilMenuTheme.colors.surface,
     borderRadius: 8,
-    padding: 10,
+    padding: 12,
     marginBottom: 8,
     borderWidth: 1,
     borderColor: BilMenuTheme.colors.border,
+    flexDirection: "row",
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
+  },
+  mealButtonIcon: {
+    fontSize: 18,
+    color: BilMenuTheme.colors.secondary,
+    fontWeight: "bold",
+    marginRight: 8,
   },
   mealButtonText: {
     fontSize: 14,
     color: BilMenuTheme.colors.text,
-    textAlign: "center",
+    flex: 1,
+    textAlign: "left",
   },
   loadingText: {
     fontSize: 16,
@@ -720,9 +752,17 @@ const styles = StyleSheet.create({
   },
   selectedMealText: {
     fontSize: 18,
-    color: BilMenuTheme.colors.secondary,
     textAlign: "center",
     marginBottom: 30,
+  },
+  selectedLabel: {
+    color: BilMenuTheme.colors.textMuted,
+    fontSize: 18,
+    fontWeight: "500",
+  },
+  selectedMealName: {
+    color: BilMenuTheme.colors.secondary,
+    fontSize: 18,
     fontWeight: "600",
   },
   captureButton: {
@@ -767,6 +807,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderWidth: 1,
     borderColor: BilMenuTheme.colors.border,
+    marginTop: "auto",
+    marginBottom: 20,
   },
   backButtonText: {
     fontSize: 16,
