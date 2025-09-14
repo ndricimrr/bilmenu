@@ -44,6 +44,7 @@ const translations = {
     "error.title": "⚠️ Unable to Load Menu",
     "error.message":
       "Failed to load meal data due to parsing issues. Please try refreshing the page or check back later.",
+    "error.refresh": "🔄 Refresh Page",
 
     // Modal
     "modal.contribute": "Contribute Now",
@@ -173,6 +174,7 @@ const translations = {
     "error.title": "⚠️ Menü Yüklenemedi",
     "error.message":
       "Ayrıştırma sorunları nedeniyle yemek verileri yüklenemedi. Lütfen sayfayı yenilemeyi deneyin veya daha sonra tekrar kontrol edin.",
+    "error.refresh": "🔄 Sayfayı Yenile",
 
     // Modal
     "modal.contribute": "Şimdi Katkıda Bulun",

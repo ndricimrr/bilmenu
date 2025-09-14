@@ -651,9 +651,35 @@ body {
 
 .error-message p {
   color: #666;
-  margin: 0;
+  margin: 0 0 16px 0;
   font-size: 0.95rem;
   line-height: 1.5;
+}
+
+.error-refresh-btn {
+  background: linear-gradient(135deg, #ff9434, #ff6b35);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 25px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 16px rgba(255, 148, 52, 0.3);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.error-refresh-btn:hover {
+  background: linear-gradient(135deg, #ff6b35, #ff9434);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 148, 52, 0.4);
+}
+
+.error-refresh-btn:active {
+  transform: translateY(0);
 }
 
 /* Day Selection Active State */
