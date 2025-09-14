@@ -52,6 +52,7 @@ export const translations = {
       "No missing meals found for the selected criteria.",
     "submit.step1.loading": "Loading meals...",
     "submit.step1.selectMeal": "Select a meal to continue",
+    "submit.step1.usingCache": "cached",
 
     // DayMealView
     "submit.dayMeal.selectDay": "Select Day",
@@ -192,6 +193,7 @@ export const translations = {
       "Seçilen kriterlere göre eksik yemek bulunamadı.",
     "submit.step1.loading": "Yemekler yükleniyor...",
     "submit.step1.selectMeal": "Devam etmek için bir yemek seçin",
+    "submit.step1.usingCache": "önbellek",
 
     // DayMealView
     "submit.dayMeal.selectDay": "Gün Seç",

@@ -30,6 +30,7 @@ interface Step1Props {
   onMealSelect: (mealName: string) => void;
   lastUpdated: string;
   totalCheckpoints: number;
+  isUsingCache: boolean;
 }
 
 export const Step1: React.FC<Step1Props> = ({
@@ -49,6 +50,7 @@ export const Step1: React.FC<Step1Props> = ({
   onMealSelect,
   lastUpdated,
   totalCheckpoints,
+  isUsingCache,
 }) => {
   const { t } = useTranslations();
   return (
@@ -70,6 +72,12 @@ export const Step1: React.FC<Step1Props> = ({
             {t("submit.step1.dataUpdated", {
               date: new Date(lastUpdated).toLocaleDateString(),
             })}
+            {isUsingCache && (
+              <Text style={styles.cacheIndicator}>
+                {" "}
+                (📱 {t("submit.step1.usingCache")})
+              </Text>
+            )}
           </Text>
         )}
         {totalCheckpoints > 0 && (
@@ -168,6 +176,11 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: BilMenuTheme.colors.textMuted,
     marginBottom: 3,
+  },
+  cacheIndicator: {
+    fontSize: 11,
+    color: BilMenuTheme.colors.secondary,
+    fontStyle: "italic",
   },
   checkpointCountText: {
     fontSize: 12,

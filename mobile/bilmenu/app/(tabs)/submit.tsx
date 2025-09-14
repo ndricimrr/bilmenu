@@ -34,6 +34,7 @@ export default function SubmitScreen() {
     isLoading,
     lastUpdated,
     totalCheckpoints,
+    isUsingCache,
     getMissingMealsForDayAndType,
   } = useSubmitData();
 
@@ -186,6 +187,7 @@ ${userName || t("submit.email.defaultName")}`;
       onMealSelect={handleMealSelection}
       lastUpdated={lastUpdated}
       totalCheckpoints={totalCheckpoints}
+      isUsingCache={isUsingCache}
     />
   );
 
