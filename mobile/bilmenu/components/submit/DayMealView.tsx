@@ -144,7 +144,7 @@ export const DayMealView: React.FC<DayMealViewProps> = ({
           <Text style={styles.noResultsText}>
             {t("submit.dayMeal.noResults", {
               day: getDayName(selectedDay, t),
-              mealType: selectedMealType,
+              mealType: t(`submit.dayMeal.${selectedMealType}`),
             })}
           </Text>
         ) : (
@@ -152,9 +152,14 @@ export const DayMealView: React.FC<DayMealViewProps> = ({
             <Text style={styles.resultsCount}>
               {t("submit.dayMeal.resultsCount", {
                 count: meals.length,
-                plural: meals.length !== 1 ? "s" : "",
+                plural:
+                  meals.length !== 1
+                    ? t("submit.dayMeal.lunch").includes("Yemeği")
+                      ? "ler"
+                      : "s"
+                    : "",
                 day: getDayName(selectedDay, t),
-                mealType: selectedMealType,
+                mealType: t(`submit.dayMeal.${selectedMealType}`),
               })}
             </Text>
             {meals.map((meal, index) => (
@@ -238,14 +243,17 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "rgba(255, 255, 255, 0.2)",
     overflow: "hidden",
+    minHeight: 50,
   },
   mealTypeButton: {
     flex: 1,
-    paddingVertical: 12,
-    paddingHorizontal: 8,
+    paddingVertical: 16,
+    paddingHorizontal: 6,
     alignItems: "center",
+    justifyContent: "center",
     borderRightWidth: 1,
     borderRightColor: "rgba(255, 255, 255, 0.2)",
+    minHeight: 50,
   },
   mealTypeButtonLeft: {
     borderTopLeftRadius: 9,
@@ -263,10 +271,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#FF9434",
   },
   mealTypeButtonText: {
-    fontSize: 12,
+    fontSize: 11,
     color: BilMenuTheme.colors.textWhite,
     fontWeight: "500",
     textAlign: "center",
+    lineHeight: 14,
+    flexWrap: "wrap",
   },
   mealTypeButtonTextActive: {
     color: BilMenuTheme.colors.textWhite,

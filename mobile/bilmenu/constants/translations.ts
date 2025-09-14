@@ -203,7 +203,7 @@ export const translations = {
     "submit.dayMeal.loading": "Eksik yemekler yükleniyor...",
     "submit.dayMeal.noResults": "{day} {mealType} için eksik yemek bulunamadı.",
     "submit.dayMeal.resultsCount":
-      "{day} {mealType} için {count} eksik yemek bulundu",
+      "{day} {mealType} için {count} eksik yemek{plural} bulundu",
 
     // SearchView
     "submit.search.allMissingMeals": "Tüm Eksik Yemekler",

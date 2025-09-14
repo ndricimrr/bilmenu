@@ -237,10 +237,10 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   description: {
-    fontSize: 16,
+    fontSize: 14,
     color: BilMenuTheme.colors.textWhite,
     textAlign: "center",
     marginBottom: 20,
-    lineHeight: 24,
+    lineHeight: 20,
   },
 });
