@@ -37,7 +37,7 @@ jobs:
           cat > webapp/missing-meals/latest-checkpoint.json << EOF
           {
             "latestCheckpoint": "$FILENAME",
-            "latestCheckpointUrl": "https://raw.githubusercontent.com/ndricim/bilmenu/main/webapp/missing-meals/$FILENAME",
+            "latestCheckpointUrl": "https://raw.githubusercontent.com/ndricimrr/bilmenu/refs/heads/main/webapp/missing-meals/$FILENAME",
             "totalCheckpoints": $(ls webapp/missing-meals/missing-checkpoint-*.json | wc -l),
             "lastUpdated": "$(date -u +"%Y-%m-%dT%H:%M:%SZ")",
             "generatedBy": "GitHub Actions"

@@ -255,7 +255,7 @@ function updateLatestCheckpointState(filename) {
 
     const latestCheckpointState = {
       latestCheckpoint: filename,
-      latestCheckpointUrl: `https://raw.githubusercontent.com/ndricim/bilmenu/refs/heads/main/webapp/missing-meals/${filename}`,
+      latestCheckpointUrl: `https://raw.githubusercontent.com/ndricimrr/bilmenu/refs/heads/main/webapp/missing-meals/${filename}`,
       totalCheckpoints: totalCheckpoints,
       lastUpdated: new Date().toISOString(),
       generatedBy:
