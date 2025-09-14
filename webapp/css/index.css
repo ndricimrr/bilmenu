@@ -57,6 +57,7 @@ body {
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE and Edge */
   transition: opacity 0.3s ease;
+  justify-content: center;
 }
 
 .days-list::-webkit-scrollbar {
@@ -402,7 +403,7 @@ body {
     gap: 4px;
     margin: 15px 0;
     padding: 0 5px;
-    justify-content: space-between;
+    justify-content: center;
   }
 
   .day-column {
