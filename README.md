@@ -1,22 +1,35 @@
 # BilMenu - Bilkent University Cafeteria Menu Project
 
-![User Interface](app_screenshot.png)
+<div align="center">
+  <img src="web_screenshot.png" alt="BilMenu Web Interface" width="800" />
+  <br>
+  <em>Desktop Web Interface</em>
+</div>
 
-Go to -> [www.bilmenu.com](www.bilmenu.com)
+<div align="center">
+  <img src="mobile_screenshot.png" alt="BilMenu Mobile Interface" width="300" />
+  <br>
+  <em>Mobile Interface</em>
+</div>
+
+**🌐 Live Demo:** [www.bilmenu.com](https://www.bilmenu.com)
 
 Welcome to the BilMenu project! This open-source project aims to provide a simple and interactive way for Bilkent University students to view cafeteria menus for different days of the week. The project focuses on displaying meal options with images, creating an easy-to-navigate interface for users.
 
 A little history on how the app came to be [here](history.md)
 
-## Features
+## ✨ Features
 
-- View cafeteria menus for each day of the week.
-- Meals parsed with **AI** for better accuracy
-- Explore lunch, dinner, and alternative meal options for each day.
-- Dynamic grid layout for meal items, including images and labels.
-- Responsive design for optimal viewing on both desktop and mobile devices.
-- Modal view for an enlarged display of selected meal items.
-- Contributions welcome for collecting more meal images, improving code quality, enhancing UX, and keeping the parsing algorithm up to date.
+- 📅 **Weekly Menu View**: Browse cafeteria menus for each day of the week
+- 🤖 **AI-Powered Parsing**: Automated meal data extraction with high accuracy
+- 🍽️ **Meal Categories**: Explore lunch, dinner, and alternative meal options
+- 🖼️ **Visual Interface**: Dynamic grid layout with meal images and labels
+- 📱 **Responsive Design**: Optimized for desktop, tablet, and mobile devices
+- 🔍 **Modal View**: Enlarged display of selected meal items with details
+- 🌍 **Bilingual Support**: Switch between English and Turkish languages
+- ⚡ **Real-time Updates**: Current week indicator with date ranges
+- 🎨 **Modern UI/UX**: Clean, professional interface with smooth animations
+- 🔄 **Error Handling**: User-friendly error messages with refresh options
 
 ## Getting Started
 
@@ -35,11 +48,42 @@ A little history on how the app came to be [here](history.md)
 
    ```bash
    git clone https://github.com/ndricimrr/bilmenu.git
+   cd bilmenu
    ```
 
-### Current Status UI Web (In Progress) Go to -> www.bilmenu.com
+2. Serve the web application:
 
-![User Interface](app_screenshot.png)
+   **Option 1: Python (Recommended)**
+
+   ```bash
+   # Python 3
+   python -m http.server 8000
+
+   # Python 2
+   python -m SimpleHTTPServer 8000
+   ```
+
+   **Option 2: Node.js**
+
+   ```bash
+   npx serve webapp -p 8000
+   ```
+
+   **Option 3: PHP**
+
+   ```bash
+   php -S localhost:8000 -t webapp
+   ```
+
+3. Open your browser and navigate to `http://localhost:8000`
+
+### Current Status
+
+✅ **Web Application**: Fully functional with modern UI/UX  
+✅ **Mobile Responsive**: Optimized for all device sizes  
+✅ **Bilingual Support**: English and Turkish language switching  
+✅ **AI-Powered Parsing**: Automated meal data extraction  
+🌐 **Live at**: [www.bilmenu.com](https://www.bilmenu.com)
 
 ## Contributions
 
