@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { Header } from "@/components/header";
@@ -20,48 +21,97 @@ export default function NotificationsScreen() {
   const { expoPushToken } = useNotifications();
   const [lunchEnabled, setLunchEnabled] = useState(true);
   const [dinnerEnabled, setDinnerEnabled] = useState(true);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  // Load saved notification settings on app start
+  useEffect(() => {
+    loadNotificationSettings();
+  }, []);
+
+  const loadNotificationSettings = async () => {
+    try {
+      const [lunchSettings, dinnerSettings] = await Promise.all([
+        AsyncStorage.getItem("bilmenu-lunch-notifications"),
+        AsyncStorage.getItem("bilmenu-dinner-notifications"),
+      ]);
+
+      if (lunchSettings !== null) {
+        setLunchEnabled(JSON.parse(lunchSettings));
+      }
+      if (dinnerSettings !== null) {
+        setDinnerEnabled(JSON.parse(dinnerSettings));
+      }
+    } catch (error) {
+      console.log("Error loading notification settings:", error);
+    } finally {
+      setIsLoaded(true);
+    }
+  };
 
   const handleLunchToggle = async (value: boolean) => {
-    setLunchEnabled(value);
-    if (value) {
-      await scheduleLunchNotification(language);
-      Alert.alert(
-        t("lunchReminder"),
-        language === "en"
-          ? "Lunch notifications enabled! You'll be reminded at 11:30 AM daily."
-          : "Öğle yemeği bildirimleri etkinleştirildi! Her gün 11:30'da hatırlatılacaksınız."
+    try {
+      await AsyncStorage.setItem(
+        "bilmenu-lunch-notifications",
+        JSON.stringify(value)
       );
-    } else {
-      await cancelLunchNotification();
-      Alert.alert(
-        t("lunchReminder"),
-        language === "en"
-          ? "Lunch notifications disabled."
-          : "Öğle yemeği bildirimleri devre dışı bırakıldı."
-      );
+      setLunchEnabled(value);
+
+      if (value) {
+        await scheduleLunchNotification(language);
+        Alert.alert(
+          t("lunchReminder"),
+          language === "en"
+            ? "Lunch notifications enabled! You'll be reminded at 11:30 AM daily."
+            : "Öğle yemeği bildirimleri etkinleştirildi! Her gün 11:30'da hatırlatılacaksınız."
+        );
+      } else {
+        await cancelLunchNotification();
+        Alert.alert(
+          t("lunchReminder"),
+          language === "en"
+            ? "Lunch notifications disabled."
+            : "Öğle yemeği bildirimleri devre dışı bırakıldı."
+        );
+      }
+    } catch (error) {
+      console.log("Error saving lunch notification settings:", error);
     }
   };
 
   const handleDinnerToggle = async (value: boolean) => {
-    setDinnerEnabled(value);
-    if (value) {
-      await scheduleDinnerNotification(language);
-      Alert.alert(
-        t("dinnerReminder"),
-        language === "en"
-          ? "Dinner notifications enabled! You'll be reminded at 5:30 PM daily."
-          : "Akşam yemeği bildirimleri etkinleştirildi! Her gün 17:30'da hatırlatılacaksınız."
+    try {
+      await AsyncStorage.setItem(
+        "bilmenu-dinner-notifications",
+        JSON.stringify(value)
       );
-    } else {
-      await cancelDinnerNotification();
-      Alert.alert(
-        t("dinnerReminder"),
-        language === "en"
-          ? "Dinner notifications disabled."
-          : "Akşam yemeği bildirimleri devre dışı bırakıldı."
-      );
+      setDinnerEnabled(value);
+
+      if (value) {
+        await scheduleDinnerNotification(language);
+        Alert.alert(
+          t("dinnerReminder"),
+          language === "en"
+            ? "Dinner notifications enabled! You'll be reminded at 5:30 PM daily."
+            : "Akşam yemeği bildirimleri etkinleştirildi! Her gün 17:30'da hatırlatılacaksınız."
+        );
+      } else {
+        await cancelDinnerNotification();
+        Alert.alert(
+          t("dinnerReminder"),
+          language === "en"
+            ? "Dinner notifications disabled."
+            : "Akşam yemeği bildirimleri devre dışı bırakıldı."
+        );
+      }
+    } catch (error) {
+      console.log("Error saving dinner notification settings:", error);
     }
   };
+
+  // Don't render until settings are loaded
+  if (!isLoaded) {
+    return null;
+  }
 
   return (
     <SafeAreaView style={styles.safeArea}>

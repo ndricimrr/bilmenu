@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Alert, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { Header } from "@/components/header";
@@ -11,20 +12,54 @@ import { BilMenuTheme } from "@/constants/theme";
 export default function SettingsScreen() {
   const { t, language } = useTranslations();
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
+  const [isLoaded, setIsLoaded] = useState(false);
 
-  const handleNotificationsToggle = (value: boolean) => {
-    setNotificationsEnabled(value);
-    Alert.alert(
-      t("notificationsEnabled"),
-      value
-        ? language === "en"
-          ? "Notifications enabled"
-          : "Bildirimler etkinleştirildi"
-        : language === "en"
-        ? "Notifications disabled"
-        : "Bildirimler devre dışı bırakıldı"
-    );
+  // Load saved notification settings on app start
+  useEffect(() => {
+    loadNotificationSettings();
+  }, []);
+
+  const loadNotificationSettings = async () => {
+    try {
+      const savedSettings = await AsyncStorage.getItem(
+        "bilmenu-notifications-enabled"
+      );
+      if (savedSettings !== null) {
+        setNotificationsEnabled(JSON.parse(savedSettings));
+      }
+    } catch (error) {
+      console.log("Error loading notification settings:", error);
+    } finally {
+      setIsLoaded(true);
+    }
   };
+
+  const handleNotificationsToggle = async (value: boolean) => {
+    try {
+      await AsyncStorage.setItem(
+        "bilmenu-notifications-enabled",
+        JSON.stringify(value)
+      );
+      setNotificationsEnabled(value);
+      Alert.alert(
+        t("notificationsEnabled"),
+        value
+          ? language === "en"
+            ? "Notifications enabled"
+            : "Bildirimler etkinleştirildi"
+          : language === "en"
+          ? "Notifications disabled"
+          : "Bildirimler devre dışı bırakıldı"
+      );
+    } catch (error) {
+      console.log("Error saving notification settings:", error);
+    }
+  };
+
+  // Don't render until settings are loaded
+  if (!isLoaded) {
+    return null;
+  }
 
   return (
     <SafeAreaView style={styles.safeArea}>

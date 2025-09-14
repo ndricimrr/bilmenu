@@ -1,4 +1,11 @@
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Language } from "@/constants/translations";
 
 interface LanguageContextType {
@@ -16,10 +23,39 @@ interface LanguageProviderProps {
 
 export function LanguageProvider({ children }: LanguageProviderProps) {
   const [language, setLanguage] = useState<Language>("en");
+  const [isLoaded, setIsLoaded] = useState(false);
 
-  const changeLanguage = (newLanguage: Language) => {
-    setLanguage(newLanguage);
+  // Load saved language on app start
+  useEffect(() => {
+    loadLanguage();
+  }, []);
+
+  const loadLanguage = async () => {
+    try {
+      const savedLanguage = await AsyncStorage.getItem("bilmenu-language");
+      if (savedLanguage && (savedLanguage === "en" || savedLanguage === "tr")) {
+        setLanguage(savedLanguage as Language);
+      }
+    } catch (error) {
+      console.log("Error loading language:", error);
+    } finally {
+      setIsLoaded(true);
+    }
   };
+
+  const changeLanguage = async (newLanguage: Language) => {
+    try {
+      await AsyncStorage.setItem("bilmenu-language", newLanguage);
+      setLanguage(newLanguage);
+    } catch (error) {
+      console.log("Error saving language:", error);
+    }
+  };
+
+  // Don't render until language is loaded
+  if (!isLoaded) {
+    return null;
+  }
 
   return (
     <LanguageContext.Provider value={{ language, changeLanguage }}>
