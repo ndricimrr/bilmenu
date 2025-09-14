@@ -225,6 +225,18 @@ export default function SettingsScreen() {
             </ThemedText>
             <ThemedText style={styles.navButtonIcon}>›</ThemedText>
           </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.navButton}
+            onPress={() => router.push("/attribution")}
+          >
+            <ThemedText style={styles.navButtonText}>
+              {language === "en"
+                ? "Contributors & Attribution"
+                : "Katkıda Bulunanlar"}
+            </ThemedText>
+            <ThemedText style={styles.navButtonIcon}>›</ThemedText>
+          </TouchableOpacity>
         </ThemedView>
 
         <ThemedView style={styles.infoCard}>

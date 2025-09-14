@@ -11,6 +11,7 @@ import {
   Modal,
   Image,
 } from "react-native";
+import { useRouter } from "expo-router";
 import { BilMenuTheme } from "@/constants/theme";
 
 interface Step3Props {
@@ -36,6 +37,7 @@ export const Step3: React.FC<Step3Props> = ({
   showAttributionModal,
   onToggleAttributionModal,
 }) => {
+  const router = useRouter();
   return (
     <KeyboardAvoidingView
       style={styles.stepContainer}
@@ -174,6 +176,17 @@ export const Step3: React.FC<Step3Props> = ({
               making BilMenu better for all students.
             </Text>
             <TouchableOpacity
+              style={styles.modalSecondaryButton}
+              onPress={() => {
+                onToggleAttributionModal(false);
+                router.push("/attribution");
+              }}
+            >
+              <Text style={styles.modalSecondaryButtonText}>
+                View Contributors
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
               style={styles.modalButton}
               onPress={() => onToggleAttributionModal(false)}
             >
@@ -254,6 +267,8 @@ const styles = StyleSheet.create({
     marginTop: 2,
     textAlign: "center",
     fontStyle: "italic",
+    maxWidth: 100,
+    flexWrap: "wrap",
   },
   emailPreview: {
     backgroundColor: BilMenuTheme.colors.surface,
@@ -439,6 +454,20 @@ const styles = StyleSheet.create({
     color: BilMenuTheme.colors.text,
     lineHeight: 20,
     marginBottom: 12,
+  },
+  modalSecondaryButton: {
+    backgroundColor: BilMenuTheme.colors.surface,
+    borderRadius: 8,
+    padding: 12,
+    alignItems: "center",
+    marginTop: 8,
+    borderWidth: 1,
+    borderColor: BilMenuTheme.colors.border,
+  },
+  modalSecondaryButtonText: {
+    fontSize: 16,
+    color: BilMenuTheme.colors.text,
+    fontWeight: "600",
   },
   modalButton: {
     backgroundColor: BilMenuTheme.colors.secondary,
