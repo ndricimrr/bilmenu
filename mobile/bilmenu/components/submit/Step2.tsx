@@ -107,6 +107,14 @@ export const Step2: React.FC<Step2Props> = ({
                   resizeMode="cover"
                 />
               </View>
+              <View style={styles.exampleRow}>
+                <Image
+                  source={require("@/assets/images/guidelines/sample_wrong_meal_group.jpg")}
+                  style={styles.exampleImage}
+                  resizeMode="cover"
+                />
+                <View style={styles.exampleImage} />
+              </View>
             </View>
 
             {/* Acknowledgment Checkbox */}
@@ -253,7 +261,7 @@ const styles = StyleSheet.create({
   },
   guidelinesSubtitle: {
     fontSize: 14,
-    color: BilMenuTheme.colors.textMuted,
+    color: BilMenuTheme.colors.textLight,
     textAlign: "center",
     marginBottom: 16,
     lineHeight: 20,
@@ -272,7 +280,7 @@ const styles = StyleSheet.create({
   exampleLabel: {
     fontSize: 14,
     fontWeight: "600",
-    color: BilMenuTheme.colors.textWhite,
+    color: BilMenuTheme.colors.text,
     marginBottom: 12,
     marginTop: 16,
   },
@@ -317,7 +325,7 @@ const styles = StyleSheet.create({
   acknowledgmentText: {
     flex: 1,
     fontSize: 14,
-    color: BilMenuTheme.colors.text,
+    color: BilMenuTheme.colors.textWhite,
     lineHeight: 20,
   },
   // Button styles
