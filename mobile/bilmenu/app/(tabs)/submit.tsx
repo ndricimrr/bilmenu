@@ -71,7 +71,7 @@ export default function SubmitScreen() {
 
       // First, get the latest checkpoint URL from the state file
       const latestCheckpointResponse = await fetch(
-        "https://raw.githubusercontent.com/ndricim/bilmenu/main/webapp/missing-meals/latest-checkpoint.json"
+        "https://raw.githubusercontent.com/ndricim/bilmenu/refs/heads/main/webapp/missing-meals/latest-checkpoint.json"
       );
 
       if (!latestCheckpointResponse.ok) {
@@ -100,7 +100,7 @@ export default function SubmitScreen() {
 
       try {
         const mealPlanResponse = await fetch(
-          `https://raw.githubusercontent.com/ndricim/bilmenu/main/webapp/mealplans/meal_plan_week_${currentWeek}_${currentYear}.json`
+          `https://raw.githubusercontent.com/ndricim/bilmenu/refs/heads/main/webapp/mealplans/meal_plan_week_${currentWeek}_${currentYear}.json`
         );
 
         if (mealPlanResponse.ok) {
