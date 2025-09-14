@@ -3,23 +3,14 @@ import { StyleSheet, View, Alert, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
+import { Header } from "@/components/header";
 import { useTranslations } from "@/hooks/use-translations";
 import { Switch } from "react-native";
 import { BilMenuTheme } from "@/constants/theme";
 
 export default function SettingsScreen() {
-  const { t, language, changeLanguage } = useTranslations();
+  const { t, language } = useTranslations();
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
-
-  const handleLanguageChange = (newLanguage: "en" | "tr") => {
-    changeLanguage(newLanguage);
-    Alert.alert(
-      t("language"),
-      newLanguage === "en"
-        ? "Language changed to English"
-        : "Dil Türkçe olarak değiştirildi"
-    );
-  };
 
   const handleNotificationsToggle = (value: boolean) => {
     setNotificationsEnabled(value);
@@ -37,8 +28,9 @@ export default function SettingsScreen() {
 
   return (
     <SafeAreaView style={styles.safeArea}>
+      <Header />
       <View style={styles.container}>
-        <View style={styles.header}>
+        <View style={styles.screenHeader}>
           <ThemedText style={styles.title}>{t("settings")}</ThemedText>
           <ThemedText style={styles.subtitle}>
             {language === "en"
@@ -77,54 +69,6 @@ export default function SettingsScreen() {
           </View>
         </ThemedView>
 
-        <ThemedView style={styles.section}>
-          <ThemedText type="subtitle" style={styles.sectionTitle}>
-            {t("language")}
-          </ThemedText>
-
-          <View style={styles.languageCard}>
-            <TouchableOpacity
-              style={[
-                styles.languageOption,
-                language === "en" && styles.selectedLanguage,
-              ]}
-              onPress={() => handleLanguageChange("en")}
-            >
-              <ThemedText
-                style={[
-                  styles.languageText,
-                  language === "en" && styles.selectedLanguageText,
-                ]}
-              >
-                🇺🇸 {t("english")}
-              </ThemedText>
-              {language === "en" && (
-                <ThemedText style={styles.checkmark}>✓</ThemedText>
-              )}
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={[
-                styles.languageOption,
-                language === "tr" && styles.selectedLanguage,
-              ]}
-              onPress={() => handleLanguageChange("tr")}
-            >
-              <ThemedText
-                style={[
-                  styles.languageText,
-                  language === "tr" && styles.selectedLanguageText,
-                ]}
-              >
-                🇹🇷 {t("turkish")}
-              </ThemedText>
-              {language === "tr" && (
-                <ThemedText style={styles.checkmark}>✓</ThemedText>
-              )}
-            </TouchableOpacity>
-          </View>
-        </ThemedView>
-
         <ThemedView style={styles.infoCard}>
           <ThemedText style={styles.infoText}>
             {language === "en"
@@ -147,7 +91,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: BilMenuTheme.spacing.lg,
   },
-  header: {
+  screenHeader: {
     marginBottom: BilMenuTheme.spacing.xl,
     alignItems: "center",
   },
@@ -200,48 +144,6 @@ const styles = StyleSheet.create({
     color: BilMenuTheme.colors.textLight,
     lineHeight: BilMenuTheme.typography.caption.lineHeight,
     marginTop: BilMenuTheme.spacing.xs,
-  },
-  languageCard: {
-    backgroundColor: BilMenuTheme.colors.surface,
-    borderRadius: BilMenuTheme.borderRadius.large,
-    padding: BilMenuTheme.spacing.lg,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.15,
-    shadowRadius: 16,
-    elevation: 8,
-    gap: BilMenuTheme.spacing.sm,
-  },
-  languageOption: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingVertical: BilMenuTheme.spacing.md,
-    paddingHorizontal: BilMenuTheme.spacing.md,
-    borderRadius: BilMenuTheme.borderRadius.medium,
-    borderWidth: 1,
-    borderColor: BilMenuTheme.colors.border,
-    backgroundColor: BilMenuTheme.colors.surfaceLight,
-  },
-  selectedLanguage: {
-    backgroundColor: BilMenuTheme.colors.secondaryLight,
-    borderColor: BilMenuTheme.colors.secondary,
-  },
-  languageText: {
-    fontSize: BilMenuTheme.typography.body.fontSize,
-    color: BilMenuTheme.colors.text,
-  },
-  selectedLanguageText: {
-    fontWeight: BilMenuTheme.typography.subtitle.fontWeight,
-    color: BilMenuTheme.colors.primary,
-  },
-  checkmark: {
-    fontSize: BilMenuTheme.typography.subtitle.fontSize,
-    color: BilMenuTheme.colors.secondary,
-    fontWeight: BilMenuTheme.typography.subtitle.fontWeight,
   },
   infoCard: {
     backgroundColor: BilMenuTheme.colors.surfaceLight,

@@ -5,6 +5,9 @@ export const translations = {
     notifications: "Notifications",
     settings: "Settings",
 
+    // Header
+    "header.subtitle": "Bilkent University Cafeteria",
+
     // Notifications
     lunchReminder: "Lunch Time! 🍽️",
     dinnerReminder: "Dinner Time! 🌙",
@@ -32,6 +35,9 @@ export const translations = {
     bilmenu: "BilMenu",
     notifications: "Bildirimler",
     settings: "Ayarlar",
+
+    // Header
+    "header.subtitle": "Bilkent Üniversitesi Kafeteryası",
 
     // Notifications
     lunchReminder: "Öğle Yemeği Zamanı! 🍽️",
