@@ -27,6 +27,9 @@ jobs:
       - name: Update latest checkpoint state
         run: |
           # Get the latest checkpoint file
+          # The 'ls -t' command lists files sorted by modification time (newest first)
+          # The pattern 'missing-checkpoint-*.json' matches all checkpoint files
+          # 'head -n1' takes only the first (most recent) file from that sorted list
           LATEST_FILE=$(ls -t webapp/missing-meals/missing-checkpoint-*.json | head -n1)
           FILENAME=$(basename "$LATEST_FILE")
 
