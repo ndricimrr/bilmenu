@@ -1,5 +1,11 @@
-import React from "react";
-import { StyleSheet, View, ScrollView, TouchableOpacity } from "react-native";
+import React, { useState, useEffect } from "react";
+import {
+  StyleSheet,
+  View,
+  ScrollView,
+  TouchableOpacity,
+  Linking,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import { ThemedText } from "@/components/themed-text";
@@ -7,19 +13,57 @@ import { ThemedView } from "@/components/themed-view";
 import { Header } from "@/components/header";
 import { useTranslations } from "@/hooks/use-translations";
 import { BilMenuTheme } from "@/constants/theme";
+import { IconSymbol } from "@/components/ui/icon-symbol";
+
+interface ImageContributor {
+  name: string;
+  contribution: string;
+  imageCount: number;
+}
+
+interface CodeContributor {
+  name: string;
+  contribution: string;
+}
+
+interface ContributorsData {
+  imageContributors: ImageContributor[];
+  codeContributors: CodeContributor[];
+  lastUpdated: string;
+}
 
 export default function AttributionScreen() {
   const { t, language } = useTranslations();
   const router = useRouter();
 
-  // Mock contributors data - you can replace this with real data
-  const contributors = [
-    { name: "Ahmet Yılmaz", contribution: "Meal Image Contributions" },
-    { name: "Fatma Demir", contribution: "Menu Data Verification" },
-    { name: "Mehmet Kaya", contribution: "UI/UX Feedback" },
-    { name: "Ayşe Özkan", contribution: "Translation Support" },
-    { name: "Can Arslan", contribution: "Bug Reports & Testing" },
-  ];
+  const [contributors, setContributors] = useState<ContributorsData>({
+    imageContributors: [],
+    codeContributors: [],
+    lastUpdated: "",
+  });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchContributors();
+  }, []);
+
+  const fetchContributors = async () => {
+    try {
+      const response = await fetch("https://www.bilmenu.com/contributors.json");
+      const data = await response.json();
+      setContributors(data);
+    } catch (error) {
+      console.error("Failed to fetch contributors:", error);
+      // Fallback to empty arrays if fetch fails
+      setContributors({
+        imageContributors: [],
+        codeContributors: [],
+        lastUpdated: "",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleBack = () => {
     router.back();
@@ -44,11 +88,6 @@ export default function AttributionScreen() {
         contentContainerStyle={styles.scrollContent}
       >
         <View style={styles.screenHeader}>
-          <ThemedText style={styles.title}>
-            {language === "en"
-              ? "Contributors & Attribution"
-              : "Katkıda Bulunanlar"}
-          </ThemedText>
           <ThemedText style={styles.subtitle}>
             {language === "en"
               ? "Thank you to everyone who helped make BilMenu better"
@@ -58,9 +97,7 @@ export default function AttributionScreen() {
 
         <ThemedView style={styles.section}>
           <ThemedText style={styles.sectionTitle}>
-            {language === "en"
-              ? "Image Contributors"
-              : "Görsel Katkıda Bulunanlar"}
+            {language === "en" ? "Image Contributions" : "Görsel Katkıları"}
           </ThemedText>
           <ThemedText style={styles.sectionDescription}>
             {language === "en"
@@ -68,16 +105,102 @@ export default function AttributionScreen() {
               : "Bu harika insanlar, görsel koleksiyonumuzu tamamlamaya yardımcı olmak için yemek fotoğrafları katkısında bulundu:"}
           </ThemedText>
 
-          {contributors.map((contributor, index) => (
-            <View key={index} style={styles.contributorCard}>
-              <ThemedText style={styles.contributorName}>
-                {contributor.name}
-              </ThemedText>
-              <ThemedText style={styles.contributorContribution}>
-                {contributor.contribution}
-              </ThemedText>
-            </View>
-          ))}
+          {loading ? (
+            <ThemedText style={styles.loadingText}>
+              {language === "en"
+                ? "Loading contributors..."
+                : "Katkıda bulunanlar yükleniyor..."}
+            </ThemedText>
+          ) : contributors.imageContributors.length > 0 ? (
+            contributors.imageContributors.map((contributor, index) => (
+              <View key={index} style={styles.contributorCard}>
+                <ThemedText style={styles.contributorName}>
+                  {contributor.name}
+                </ThemedText>
+                <ThemedText style={styles.contributorContribution}>
+                  {contributor.contribution} ({contributor.imageCount}{" "}
+                  {language === "en" ? "images" : "görsel"})
+                </ThemedText>
+              </View>
+            ))
+          ) : (
+            <ThemedText style={styles.emptyText}>
+              {language === "en"
+                ? "No image contributors yet."
+                : "Henüz görsel katkıda bulunan yok."}
+            </ThemedText>
+          )}
+
+          <TouchableOpacity
+            style={styles.submitButton}
+            onPress={() => {
+              router.dismissAll();
+              router.push("/(tabs)/submit");
+            }}
+          >
+            <IconSymbol
+              name="camera.fill"
+              size={16}
+              color={BilMenuTheme.colors.textWhite}
+            />
+            <ThemedText style={styles.submitButtonText}>
+              {language === "en" ? "Submit Images" : "Görsel Gönder"}
+            </ThemedText>
+          </TouchableOpacity>
+        </ThemedView>
+
+        <ThemedView style={styles.section}>
+          <ThemedText style={styles.sectionTitle}>
+            {language === "en" ? "Code Contributions" : "Kod Katkıları"}
+          </ThemedText>
+          <ThemedText style={styles.sectionDescription}>
+            {language === "en"
+              ? "These talented developers helped build and improve BilMenu:"
+              : "Bu yetenekli geliştiriciler BilMenu'yu oluşturmaya ve geliştirmeye yardımcı oldu:"}
+          </ThemedText>
+
+          {loading ? (
+            <ThemedText style={styles.loadingText}>
+              {language === "en"
+                ? "Loading contributors..."
+                : "Katkıda bulunanlar yükleniyor..."}
+            </ThemedText>
+          ) : contributors.codeContributors.length > 0 ? (
+            contributors.codeContributors.map((contributor, index) => (
+              <View key={index} style={styles.contributorCard}>
+                <ThemedText style={styles.contributorName}>
+                  {contributor.name}
+                </ThemedText>
+                <ThemedText style={styles.contributorContribution}>
+                  {contributor.contribution}
+                </ThemedText>
+              </View>
+            ))
+          ) : (
+            <ThemedText style={styles.emptyText}>
+              {language === "en"
+                ? "No code contributors yet."
+                : "Henüz kod katkıda bulunan yok."}
+            </ThemedText>
+          )}
+
+          <TouchableOpacity
+            style={styles.githubButton}
+            onPress={() => {
+              // Open GitHub repository
+              const githubUrl = "https://github.com/ndricimrr/bilmenu";
+              Linking.openURL(githubUrl);
+            }}
+          >
+            <IconSymbol
+              name="chevron.left.forwardslash.chevron.right"
+              size={16}
+              color={BilMenuTheme.colors.text}
+            />
+            <ThemedText style={styles.githubButtonText}>
+              {language === "en" ? "Contribute Now" : "Şimdi Katkıda Bulun"}
+            </ThemedText>
+          </TouchableOpacity>
         </ThemedView>
 
         <ThemedView style={styles.section}>
@@ -126,8 +249,8 @@ export default function AttributionScreen() {
           </ThemedText>
           <ThemedText style={styles.sectionDescription}>
             {language === "en"
-              ? "Contributors are recognized in this section and may be featured in app updates and social media posts. Your name will appear exactly as you provide it when submitting images."
-              : "Katkıda bulunanlar bu bölümde tanınır ve uygulama güncellemelerinde ve sosyal medya gönderilerinde yer alabilir. Adınız, görsel gönderirken sağladığınız şekilde görünecektir."}
+              ? "Contributors are recognized in this section and may be featured in app updates. Your name will appear exactly as you provide it when submitting images."
+              : "Katkıda bulunanlar bu bölümde tanınır ve uygulama güncellemelerinde yer alabilir. Adınız, görsel gönderirken sağladığınız şekilde görünecektir."}
           </ThemedText>
         </ThemedView>
       </ScrollView>
@@ -173,7 +296,7 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     padding: BilMenuTheme.spacing.md,
-    paddingTop: BilMenuTheme.spacing.sm,
+    paddingTop: BilMenuTheme.spacing.lg,
     paddingBottom: BilMenuTheme.spacing.xxl,
   },
   screenHeader: {
@@ -244,5 +367,73 @@ const styles = StyleSheet.create({
     color: BilMenuTheme.colors.textMuted,
     flex: 1,
     lineHeight: BilMenuTheme.typography.body.lineHeight,
+  },
+  githubButton: {
+    backgroundColor: BilMenuTheme.colors.surface,
+    borderRadius: BilMenuTheme.borderRadius.medium,
+    paddingHorizontal: BilMenuTheme.spacing.md,
+    paddingVertical: BilMenuTheme.spacing.sm,
+    alignItems: "center",
+    marginTop: BilMenuTheme.spacing.sm,
+    borderWidth: 2,
+    borderColor: BilMenuTheme.colors.secondary,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 2,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignSelf: "center",
+    minWidth: 160,
+  },
+  githubButtonText: {
+    fontSize: BilMenuTheme.typography.body.fontSize,
+    color: BilMenuTheme.colors.text,
+    fontWeight: BilMenuTheme.typography.subtitle.fontWeight,
+    marginLeft: BilMenuTheme.spacing.xs,
+  },
+  submitButton: {
+    backgroundColor: BilMenuTheme.colors.secondary,
+    borderRadius: BilMenuTheme.borderRadius.medium,
+    paddingHorizontal: BilMenuTheme.spacing.md,
+    paddingVertical: BilMenuTheme.spacing.sm,
+    alignItems: "center",
+    marginTop: BilMenuTheme.spacing.sm,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.15,
+    shadowRadius: 4,
+    elevation: 3,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignSelf: "center",
+    minWidth: 160,
+  },
+  submitButtonText: {
+    fontSize: BilMenuTheme.typography.body.fontSize,
+    color: BilMenuTheme.colors.textWhite,
+    fontWeight: BilMenuTheme.typography.subtitle.fontWeight,
+    marginLeft: BilMenuTheme.spacing.xs,
+  },
+  loadingText: {
+    fontSize: BilMenuTheme.typography.body.fontSize,
+    color: BilMenuTheme.colors.textMuted,
+    textAlign: "center",
+    fontStyle: "italic",
+    marginVertical: BilMenuTheme.spacing.md,
+  },
+  emptyText: {
+    fontSize: BilMenuTheme.typography.body.fontSize,
+    color: BilMenuTheme.colors.textMuted,
+    textAlign: "center",
+    fontStyle: "italic",
+    marginVertical: BilMenuTheme.spacing.md,
   },
 });

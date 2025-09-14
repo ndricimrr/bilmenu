@@ -461,8 +461,16 @@ const styles = StyleSheet.create({
     padding: 12,
     alignItems: "center",
     marginTop: 8,
-    borderWidth: 1,
-    borderColor: BilMenuTheme.colors.border,
+    borderWidth: 2,
+    borderColor: BilMenuTheme.colors.secondary,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 2,
   },
   modalSecondaryButtonText: {
     fontSize: 16,
