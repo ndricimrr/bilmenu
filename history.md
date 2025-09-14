@@ -28,10 +28,11 @@ Therefore, I decided to instead of using a hosting website with a paid subscript
 
 There is a list of issues on the _GitHub Repo_ that need to be tackled before the project can be called as "Done".
 
-However, some challenges remain:
+Some past and new challenges:
 
 - the parsing algorithm highly depends on the parsed website. Sometimes the parsed website maintainers randomly decide to change the structure, which leads to us having to change the parsing algorithm again.
-- the currently parsed website is a very old one too. It seems like the meal plans are saved in some sort of Microsoft Word format, which is then dropped into some CMS system (possibly Wordpress). This makes parsing the meals out of it a real challenge. Any innovative ideas, suggestions are appreciated.
+- the currently parsed official Cafeteria website is a very old one too. It seems like the meal plans are saved in some sort of Microsoft Word format, which is then dropped into some CMS system (possibly Wordpress). This makes parsing the meals out of it a real challenge.
+- With AI, the parsing was finally solved. In 2025 I started using Gemini API free credits, to request it to parse the meals and so far it has been working pretty well.
 - The website domain name _bilmenu.com_ is currently the only cost of the project. It would be nice to have an option to somehow make it at least a zero-cost project to offset costs, be it through donations, or maybe cooperating with the university.
 - The Android App needs to be re-written. The current goal is to just wire the Website into an Android App since rewriting the design in a native app would be too time-consuming. Luckily, for publishing this to Google Play Store there are no extra charges.
 - There is not yet an Apple Store app, obviously because it costs around 100$ per year, but it would be very much needed as lots of students have iPhones and not only Androids. This could be done if I decide to make other iOS apps too, but it's currently far away in the RoadMap.

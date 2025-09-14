@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
   mobileMenuToggle.addEventListener("click", function () {
     if (window.innerWidth <= 768) {
       navList.classList.toggle("show-mobile");
+      mobileMenuToggle.classList.toggle("active");
     }
   });
 
@@ -13,8 +14,13 @@ document.addEventListener("DOMContentLoaded", function () {
     const isClickInside =
       navList.contains(event.target) || mobileMenuToggle.contains(event.target);
 
-    if (!isClickInside && window.innerWidth <= 768) {
+    if (
+      !isClickInside &&
+      window.innerWidth <= 768 &&
+      navList.classList.contains("show-mobile")
+    ) {
       navList.classList.remove("show-mobile");
+      mobileMenuToggle.classList.remove("active");
     }
   });
 
@@ -22,6 +28,18 @@ document.addEventListener("DOMContentLoaded", function () {
   window.addEventListener("resize", function () {
     if (window.innerWidth > 768) {
       navList.classList.remove("show-mobile");
+      mobileMenuToggle.classList.remove("active");
     }
+  });
+
+  // Close mobile menu when clicking on a link
+  const navLinks = document.querySelectorAll(".nav-list a");
+  navLinks.forEach((link) => {
+    link.addEventListener("click", function () {
+      if (window.innerWidth <= 768) {
+        navList.classList.remove("show-mobile");
+        mobileMenuToggle.classList.remove("active");
+      }
+    });
   });
 });

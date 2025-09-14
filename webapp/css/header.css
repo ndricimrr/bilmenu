@@ -13,6 +13,8 @@
   padding: 4px 0;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+  z-index: 1000000;
 }
 
 .page-title {
@@ -89,10 +91,35 @@
 
 .mobile-menu-toggle {
   display: none; /* Hide the toggle button by default */
-  font-size: 24px;
+  width: 30px;
+  height: 30px;
   cursor: pointer;
   border: none;
   background: none;
+  position: relative;
+  z-index: 1001;
+}
+
+.mobile-menu-toggle span {
+  display: block;
+  width: 25px;
+  height: 3px;
+  background: #333;
+  margin: 5px 0;
+  transition: 0.3s;
+  border-radius: 2px;
+}
+
+.mobile-menu-toggle.active span:nth-child(1) {
+  transform: rotate(-45deg) translate(-5px, 6px);
+}
+
+.mobile-menu-toggle.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.mobile-menu-toggle.active span:nth-child(3) {
+  transform: rotate(45deg) translate(-5px, -6px);
 }
 
 @media (max-width: 768px) {
@@ -107,6 +134,7 @@
 
   .main-nav {
     margin-top: 0;
+    position: relative;
   }
 
   .github-logo img {
@@ -116,19 +144,39 @@
   }
 
   .nav-list {
-    display: none; /* Hide the list by default on mobile */
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 200px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     flex-direction: column;
-    align-items: flex-start;
-    width: 100%;
+    padding: 10px 0;
+    z-index: 1000001;
   }
 
   .nav-list.show-mobile {
-    display: flex; /* Show the list when the show-mobile class is added */
+    display: flex;
   }
 
   .nav-list li {
-    margin-right: 0;
-    margin-bottom: 10px;
+    margin: 0;
+    width: 100%;
+  }
+
+  .nav-list li a {
+    display: block;
+    padding: 12px 20px;
+    font-size: 0.9rem;
+    color: #333;
+    text-decoration: none;
+    transition: background 0.2s ease;
+  }
+
+  .nav-list li a:hover {
+    background: rgba(102, 126, 234, 0.1);
   }
 
   .mobile-menu-toggle {
