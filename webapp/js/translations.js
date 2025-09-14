@@ -95,7 +95,7 @@ const translations = {
     // Menu Categories
     "menu.lunch": "Öğle Yemeği Menüsü",
     "menu.dinner": "Akşam Yemeği Menüsü",
-    "menu.alternative": "Alternatif Menü",
+    "menu.alternative": "Seçmeli Menü",
 
     // Error Messages
     "error.title": "⚠️ Menü Yüklenemedi",

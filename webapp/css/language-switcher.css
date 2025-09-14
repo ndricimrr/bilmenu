@@ -2,7 +2,7 @@
 .language-switcher {
   display: flex;
   align-items: center;
-  margin-right: 20px;
+  margin-right: 30px;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 25px;
   padding: 4px;
@@ -15,7 +15,6 @@
 .language-switcher:hover {
   background: rgba(255, 255, 255, 0.15);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-  transform: translateY(-1px);
 }
 
 .lang-btn {

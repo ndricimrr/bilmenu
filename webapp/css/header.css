@@ -54,7 +54,7 @@
 }
 
 .github-logo img {
-  width: 20px;
+  width: 16px;
   margin-bottom: -3px;
 }
 
@@ -70,17 +70,17 @@
 }
 
 .nav-list li {
-  margin-right: 35px;
+  margin-right: 20px;
 }
 
 .nav-list li a {
   text-decoration: none;
   color: #333;
   font-weight: 600;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   transition: all 0.3s ease;
-  padding: 8px 16px;
-  border-radius: 8px;
+  padding: 6px 12px;
+  border-radius: 6px;
 }
 
 .nav-list li a:hover {
@@ -138,7 +138,7 @@
   }
 
   .github-logo img {
-    width: 15px;
+    width: 14px;
     margin-right: 0;
     margin-bottom: -3px;
   }
