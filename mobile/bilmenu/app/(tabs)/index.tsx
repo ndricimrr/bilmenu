@@ -1,5 +1,5 @@
-import React from "react";
-import { StyleSheet, Alert } from "react-native";
+import React, { useRef, useState } from "react";
+import { StyleSheet, Alert, TouchableOpacity, View, Text } from "react-native";
 import { WebView } from "react-native-webview";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Header } from "@/components/header";
@@ -8,6 +8,10 @@ import { BilMenuTheme } from "@/constants/theme";
 
 export default function HomeScreen() {
   const { language } = useTranslations();
+  const webViewRef = useRef<WebView>(null);
+  const [canGoBack, setCanGoBack] = useState(false);
+  const [currentUrl, setCurrentUrl] = useState("");
+  const [isOnHomepage, setIsOnHomepage] = useState(true);
 
   const handleMessage = (event: any) => {
     try {
@@ -41,18 +45,54 @@ export default function HomeScreen() {
     }
   };
 
+  const handleNavigationStateChange = (navState: any) => {
+    setCanGoBack(navState.canGoBack);
+    setCurrentUrl(navState.url);
+
+    // Check if we're on the homepage
+    const homepageUrl = `https://www.bilmenu.com?mobile=true&lang=${language}&source=mobile-app`;
+    const isHomepage =
+      navState.url.includes("bilmenu.com") &&
+      navState.url.includes("mobile=true") &&
+      !navState.url.includes("about") &&
+      !navState.url.includes("privacy") &&
+      !navState.url.includes("contributions");
+    setIsOnHomepage(isHomepage);
+  };
+
+  const goBack = () => {
+    if (webViewRef.current && canGoBack) {
+      webViewRef.current.goBack();
+    }
+  };
+
   // Build URL with mobile app parameters
   const webappUrl = `https://www.bilmenu.com?mobile=true&lang=${language}&source=mobile-app`;
 
   return (
     <SafeAreaView style={styles.container} edges={["top", "left", "right"]}>
       <Header />
+
+      {/* Navigation Bar - Only show when not on homepage */}
+      {!isOnHomepage && canGoBack && (
+        <View style={styles.navigationBar}>
+          <TouchableOpacity style={styles.backButton} onPress={goBack}>
+            <View style={styles.backButtonContent}>
+              <View style={styles.backArrow} />
+              <Text style={styles.backText}>Back</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      )}
+
       <WebView
+        ref={webViewRef}
         source={{ uri: webappUrl }}
         style={styles.webview}
         onMessage={handleMessage}
         onError={handleError}
         onHttpError={handleHttpError}
+        onNavigationStateChange={handleNavigationStateChange}
         startInLoadingState={true}
         scalesPageToFit={true}
         allowsInlineMediaPlayback={true}
@@ -109,6 +149,40 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: BilMenuTheme.colors.background,
+  },
+  navigationBar: {
+    backgroundColor: BilMenuTheme.colors.primaryLight,
+    paddingHorizontal: BilMenuTheme.spacing.lg,
+    paddingVertical: BilMenuTheme.spacing.md,
+    borderBottomWidth: 1,
+    borderBottomColor: BilMenuTheme.colors.border,
+  },
+  backButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: BilMenuTheme.spacing.sm,
+  },
+  backButtonContent: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  backArrow: {
+    width: 0,
+    height: 0,
+    borderLeftWidth: 0,
+    borderRightWidth: 8,
+    borderTopWidth: 6,
+    borderBottomWidth: 6,
+    borderLeftColor: "transparent",
+    borderRightColor: BilMenuTheme.colors.textWhite,
+    borderTopColor: "transparent",
+    borderBottomColor: "transparent",
+    marginRight: BilMenuTheme.spacing.sm,
+  },
+  backText: {
+    fontSize: BilMenuTheme.typography.body.fontSize,
+    color: BilMenuTheme.colors.textWhite,
+    fontWeight: BilMenuTheme.typography.subtitle.fontWeight,
   },
   webview: {
     flex: 1,
