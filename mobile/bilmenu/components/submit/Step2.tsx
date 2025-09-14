@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { BilMenuTheme } from "@/constants/theme";
+import { useTranslations } from "@/hooks/use-translations";
 
 interface Step2Props {
   selectedMeal: string;
@@ -16,13 +17,15 @@ export const Step2: React.FC<Step2Props> = ({
   onGallerySelection,
   onBack,
 }) => {
+  const { t } = useTranslations();
   return (
     <View style={styles.stepContainer}>
       <View style={styles.step2Content}>
-        <Text style={styles.stepTitle}>Step 2: Capture Image</Text>
+        <Text style={styles.stepTitle}>{t("submit.step2.title")}</Text>
         <Text style={styles.selectedMealText}>
-          <Text style={styles.selectedLabel}>Selected: </Text>
-          <Text style={styles.selectedMealName}>{selectedMeal}</Text>
+          <Text style={styles.selectedLabel}>
+            {t("submit.step2.selectedMeal", { meal: selectedMeal })}
+          </Text>
         </Text>
 
         <TouchableOpacity
@@ -34,22 +37,28 @@ export const Step2: React.FC<Step2Props> = ({
             size={24}
             color={BilMenuTheme.colors.textWhite}
           />
-          <Text style={styles.captureButtonText}>Capture Image</Text>
+          <Text style={styles.captureButtonText}>
+            {t("submit.step2.captureImage")}
+          </Text>
         </TouchableOpacity>
 
-        <Text style={styles.orText}>or</Text>
+        <Text style={styles.orText}>{t("submit.step2.or")}</Text>
 
         <TouchableOpacity
           style={styles.galleryButton}
           onPress={onGallerySelection}
         >
           <Ionicons name="images" size={16} color={BilMenuTheme.colors.text} />
-          <Text style={styles.galleryButtonText}>Gallery</Text>
+          <Text style={styles.galleryButtonText}>
+            {t("submit.step2.gallery")}
+          </Text>
         </TouchableOpacity>
       </View>
 
       <TouchableOpacity style={styles.backButton} onPress={onBack}>
-        <Text style={styles.backButtonText}>← Back to Meal Selection</Text>
+        <Text style={styles.backButtonText}>
+          {t("submit.step2.backToSelection")}
+        </Text>
       </TouchableOpacity>
     </View>
   );

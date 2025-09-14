@@ -13,6 +13,7 @@ import {
 } from "react-native";
 import { useRouter } from "expo-router";
 import { BilMenuTheme } from "@/constants/theme";
+import { useTranslations } from "@/hooks/use-translations";
 
 interface Step3Props {
   selectedMeal: string;
@@ -38,6 +39,7 @@ export const Step3: React.FC<Step3Props> = ({
   onToggleAttributionModal,
 }) => {
   const router = useRouter();
+  const { t } = useTranslations();
   return (
     <KeyboardAvoidingView
       style={styles.stepContainer}
@@ -53,10 +55,11 @@ export const Step3: React.FC<Step3Props> = ({
         removeClippedSubviews={false}
         scrollEventThrottle={16}
       >
-        <Text style={styles.stepTitle}>Step 3: Send Email</Text>
+        <Text style={styles.stepTitle}>{t("submit.step3.title")}</Text>
         <Text style={styles.selectedMealText}>
-          <Text style={styles.selectedLabel}>Meal: </Text>
-          <Text style={styles.selectedMealName}>{selectedMeal}</Text>
+          <Text style={styles.selectedLabel}>
+            {t("submit.step2.selectedMeal", { meal: selectedMeal })}
+          </Text>
         </Text>
         <View style={styles.previewContainer}>
           {capturedImage && (
@@ -77,13 +80,19 @@ export const Step3: React.FC<Step3Props> = ({
           )}
 
           <View style={styles.emailPreview}>
-            <Text style={styles.emailPreviewTitle}>Email Preview</Text>
+            <Text style={styles.emailPreviewTitle}>
+              {t("submit.step3.emailPreview")}
+            </Text>
             <Text style={styles.emailPreviewCompact}>
-              <Text style={styles.emailPreviewLabel}>To:</Text>{" "}
+              <Text style={styles.emailPreviewLabel}>
+                {t("submit.step3.to")}
+              </Text>{" "}
               ndricim@bilmenu.com
               {"\n"}
-              <Text style={styles.emailPreviewLabel}>Subject:</Text> BilMenu
-              Image Submission
+              <Text style={styles.emailPreviewLabel}>
+                {t("submit.step3.subject")}
+              </Text>{" "}
+              {t("submit.email.subject")}
               {"\n"}
             </Text>
 
@@ -94,14 +103,19 @@ export const Step3: React.FC<Step3Props> = ({
                   userName.length > 0 && styles.subjectNameTextBold,
                 ]}
               >
-                By: {userName || "No name provided"}
+                {t("submit.step3.by", {
+                  name: userName || t("submit.step3.noNameProvided"),
+                })}
               </Text>
             </View>
 
             <Text style={styles.emailPreviewCompact}>
-              <Text style={styles.emailPreviewLabel}>Message:</Text> Hi! 👋 This
-              meal was missing from BilMenu, so I'm sharing a photo. This is:{" "}
-              {selectedMeal}. Thanks for BilMenu!
+              <Text style={styles.emailPreviewLabel}>
+                {t("submit.step3.message")}
+              </Text>{" "}
+              {t("submit.email.greeting")} {t("submit.email.body")}{" "}
+              {t("submit.email.mealInfo", { meal: selectedMeal })}.{" "}
+              {t("submit.email.thanks")}
             </Text>
           </View>
         </View>
@@ -110,8 +124,10 @@ export const Step3: React.FC<Step3Props> = ({
           <View style={styles.nameInputHeader}>
             <View style={styles.nameInputLabelContainer}>
               <Text style={styles.nameInputLabel}>
-                Add your name for attribution{" "}
-                <Text style={styles.optionalText}>(optional)</Text>
+                {t("submit.step3.addName")}{" "}
+                <Text style={styles.optionalText}>
+                  {t("submit.step3.optional")}
+                </Text>
                 <TouchableOpacity
                   style={styles.helpButton}
                   onPress={() => onToggleAttributionModal(true)}
@@ -132,7 +148,7 @@ export const Step3: React.FC<Step3Props> = ({
           <View style={styles.nameInputWrapper}>
             <TextInput
               style={styles.nameInput}
-              placeholder="Your name"
+              placeholder={t("submit.step3.placeholder")}
               value={userName}
               onChangeText={onUserNameChange}
               placeholderTextColor={BilMenuTheme.colors.textLight}
@@ -150,12 +166,16 @@ export const Step3: React.FC<Step3Props> = ({
         </View>
 
         <TouchableOpacity style={styles.sendButton} onPress={onSendEmail}>
-          <Text style={styles.sendButtonText}>📧 Send Email</Text>
+          <Text style={styles.sendButtonText}>
+            {t("submit.step3.sendEmail")}
+          </Text>
         </TouchableOpacity>
       </ScrollView>
 
       <TouchableOpacity style={styles.backButton} onPress={onBack}>
-        <Text style={styles.backButtonText}>← Back to Camera</Text>
+        <Text style={styles.backButtonText}>
+          {t("submit.step3.backToCamera")}
+        </Text>
       </TouchableOpacity>
 
       <Modal
@@ -166,14 +186,14 @@ export const Step3: React.FC<Step3Props> = ({
       >
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Attribution</Text>
-            <Text style={styles.modalText}>
-              Your name will be shown as a thank you to contributors who helped
-              improve the meal image collection.
+            <Text style={styles.modalTitle}>
+              {t("submit.attribution.title")}
             </Text>
             <Text style={styles.modalText}>
-              It will appear in a contributors section to recognize your help in
-              making BilMenu better for all students.
+              {t("submit.attribution.description1")}
+            </Text>
+            <Text style={styles.modalText}>
+              {t("submit.attribution.description2")}
             </Text>
             <TouchableOpacity
               style={styles.modalSecondaryButton}
@@ -183,14 +203,16 @@ export const Step3: React.FC<Step3Props> = ({
               }}
             >
               <Text style={styles.modalSecondaryButtonText}>
-                View Contributors
+                {t("submit.attribution.viewContributors")}
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.modalButton}
               onPress={() => onToggleAttributionModal(false)}
             >
-              <Text style={styles.modalButtonText}>Got it!</Text>
+              <Text style={styles.modalButtonText}>
+                {t("submit.attribution.gotIt")}
+              </Text>
             </TouchableOpacity>
           </View>
         </View>

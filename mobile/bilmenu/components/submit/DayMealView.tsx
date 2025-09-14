@@ -13,6 +13,7 @@ import {
   getDayName,
   getShortDayName,
 } from "@/utils/submitUtils";
+import { useTranslations } from "@/hooks/use-translations";
 
 interface DayMealViewProps {
   selectedDay: number;
@@ -33,11 +34,12 @@ export const DayMealView: React.FC<DayMealViewProps> = ({
   isLoading,
   onMealSelect,
 }) => {
+  const { t } = useTranslations();
   return (
     <>
       {/* Day Selection */}
       <View style={styles.daysContainer}>
-        <Text style={styles.sectionTitle}>Select Day</Text>
+        <Text style={styles.sectionTitle}>{t("submit.dayMeal.selectDay")}</Text>
         <View style={styles.daysGrid}>
           {[0, 1, 2, 3, 4, 5, 6].map((dayIndex) => (
             <TouchableOpacity
@@ -55,7 +57,7 @@ export const DayMealView: React.FC<DayMealViewProps> = ({
                   selectedDay === dayIndex && styles.dayButtonTextActive,
                 ]}
               >
-                {getShortDayName(dayIndex)}
+                {getShortDayName(dayIndex, t)}
               </Text>
               {dayIndex === getCurrentDayOfWeek() && (
                 <Text
@@ -64,7 +66,7 @@ export const DayMealView: React.FC<DayMealViewProps> = ({
                     selectedDay === dayIndex && styles.todayLabelActive,
                   ]}
                 >
-                  Today
+                  {t("submit.dayMeal.today")}
                 </Text>
               )}
             </TouchableOpacity>
@@ -74,7 +76,9 @@ export const DayMealView: React.FC<DayMealViewProps> = ({
 
       {/* Meal Type Selection */}
       <View style={styles.mealTypeContainer}>
-        <Text style={styles.sectionTitle}>Select Meal Type</Text>
+        <Text style={styles.sectionTitle}>
+          {t("submit.dayMeal.selectMealType")}
+        </Text>
         <View style={styles.mealTypeButtons}>
           <TouchableOpacity
             style={[
@@ -90,7 +94,7 @@ export const DayMealView: React.FC<DayMealViewProps> = ({
                 selectedMealType === "lunch" && styles.mealTypeButtonTextActive,
               ]}
             >
-              ☀️ Lunch
+              ☀️ {t("submit.dayMeal.lunch")}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -108,7 +112,7 @@ export const DayMealView: React.FC<DayMealViewProps> = ({
                   styles.mealTypeButtonTextActive,
               ]}
             >
-              🌙 Dinner
+              🌙 {t("submit.dayMeal.dinner")}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -126,7 +130,7 @@ export const DayMealView: React.FC<DayMealViewProps> = ({
                   styles.mealTypeButtonTextActive,
               ]}
             >
-              💰 Alternative
+              💰 {t("submit.dayMeal.alternative")}
             </Text>
           </TouchableOpacity>
         </View>
@@ -135,18 +139,23 @@ export const DayMealView: React.FC<DayMealViewProps> = ({
       {/* Missing Meals List */}
       <ScrollView style={styles.mealsList} showsVerticalScrollIndicator={true}>
         {isLoading ? (
-          <Text style={styles.loadingText}>Loading missing meals...</Text>
+          <Text style={styles.loadingText}>{t("submit.dayMeal.loading")}</Text>
         ) : meals.length === 0 ? (
           <Text style={styles.noResultsText}>
-            No missing meals found for {getDayName(selectedDay)}{" "}
-            {selectedMealType}.
+            {t("submit.dayMeal.noResults", {
+              day: getDayName(selectedDay, t),
+              mealType: selectedMealType,
+            })}
           </Text>
         ) : (
           <>
             <Text style={styles.resultsCount}>
-              {meals.length} missing meal
-              {meals.length !== 1 ? "s" : ""} found for{" "}
-              {getDayName(selectedDay)} {selectedMealType}
+              {t("submit.dayMeal.resultsCount", {
+                count: meals.length,
+                plural: meals.length !== 1 ? "s" : "",
+                day: getDayName(selectedDay, t),
+                mealType: selectedMealType,
+              })}
             </Text>
             {meals.map((meal, index) => (
               <TouchableOpacity

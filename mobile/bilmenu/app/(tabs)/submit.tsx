@@ -9,8 +9,10 @@ import { Step, MealType, Step1View } from "@/types/submit";
 import { getCurrentDayOfWeek, getCurrentMealTime } from "@/utils/submitUtils";
 import { useSubmitData } from "@/hooks/useSubmitData";
 import { Step1, Step2, Step3 } from "@/components/submit";
+import { useTranslations } from "@/hooks/use-translations";
 
 export default function SubmitScreen() {
+  const { t } = useTranslations();
   const [selectedMeal, setSelectedMeal] = useState<string>("");
   const [capturedImage, setCapturedImage] = useState<string | null>(null);
   const [imageSize, setImageSize] = useState<number | null>(null);
@@ -115,7 +117,7 @@ export default function SubmitScreen() {
 
   const handleSendEmail = async () => {
     if (!capturedImage || !selectedMeal) {
-      Alert.alert("Error", "Please select a meal and capture an image first.");
+      Alert.alert(t("submit.alerts.error"), t("submit.alerts.selectMealFirst"));
       return;
     }
 
@@ -124,23 +126,23 @@ export default function SubmitScreen() {
 
       if (!isAvailable) {
         Alert.alert(
-          "Email Not Available",
-          "Email is not configured on this device."
+          t("submit.alerts.emailNotAvailable"),
+          t("submit.alerts.emailNotConfigured")
         );
         return;
       }
 
-      const subject = "BilMenu Image Submission";
-      const body = `Hi! 👋
+      const subject = t("submit.email.subject");
+      const body = `${t("submit.email.greeting")}
 
-This meal was missing from BilMenu, so I'm sharing a photo.
+${t("submit.email.body")}
 
-This is: ${selectedMeal}
+${t("submit.email.mealInfo", { meal: selectedMeal })}
 
-Thanks for BilMenu! 
+${t("submit.email.thanks")} 
 
-Best regards,
-${userName || "A Bilkent student"}`;
+${t("submit.email.signature")}
+${userName || t("submit.email.defaultName")}`;
 
       // Create filename with meal name
       const filename = `${selectedMeal}.jpg`;
@@ -159,13 +161,10 @@ ${userName || "A Bilkent student"}`;
       setUserName("");
       setStep(1);
 
-      Alert.alert(
-        "Success",
-        "Email sent successfully! Thank you for your contribution."
-      );
+      Alert.alert(t("submit.alerts.success"), t("submit.alerts.emailSent"));
     } catch (error) {
       console.error("Error sending email:", error);
-      Alert.alert("Error", "Failed to send email. Please try again.");
+      Alert.alert(t("submit.alerts.error"), t("submit.alerts.emailFailed"));
     }
   };
 
@@ -215,13 +214,10 @@ ${userName || "A Bilkent student"}`;
 
   return (
     <SafeAreaView style={styles.container} edges={["top", "left", "right"]}>
-      <Header title="Submit Images" />
+      <Header title={t("submit.title")} />
 
       <View style={styles.content}>
-        <Text style={styles.description}>
-          Help us complete our meal image collection by submitting photos of
-          missing meals.
-        </Text>
+        <Text style={styles.description}>{t("submit.description")}</Text>
 
         {step === 1 && renderStep1()}
         {step === 2 && renderStep2()}

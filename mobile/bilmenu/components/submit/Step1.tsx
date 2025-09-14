@@ -11,6 +11,7 @@ import { MissingMeal, MealType, Step1View } from "@/types/submit";
 import { getCurrentWeek } from "@/utils/submitUtils";
 import { DayMealView } from "./DayMealView";
 import { SearchView } from "./SearchView";
+import { useTranslations } from "@/hooks/use-translations";
 
 interface Step1Props {
   step1View: Step1View;
@@ -49,26 +50,34 @@ export const Step1: React.FC<Step1Props> = ({
   lastUpdated,
   totalCheckpoints,
 }) => {
+  const { t } = useTranslations();
   return (
     <ScrollView
       style={styles.stepContainer}
       showsVerticalScrollIndicator={true}
     >
-      <Text style={styles.stepTitle}>Step 1: Select Missing Meal</Text>
+      <Text style={styles.stepTitle}>{t("submit.step1.title")}</Text>
 
       <View style={styles.weekInfo}>
         <Text style={styles.weekInfoText}>
-          Week {getCurrentWeek()}, {new Date().getFullYear()}
+          {t("submit.step1.weekInfo", {
+            week: getCurrentWeek(),
+            year: new Date().getFullYear(),
+          })}
         </Text>
         {lastUpdated && (
           <Text style={styles.lastUpdatedText}>
-            Data updated: {new Date(lastUpdated).toLocaleDateString()}
+            {t("submit.step1.dataUpdated", {
+              date: new Date(lastUpdated).toLocaleDateString(),
+            })}
           </Text>
         )}
         {totalCheckpoints > 0 && (
           <Text style={styles.checkpointCountText}>
-            {totalCheckpoints} checkpoint{totalCheckpoints !== 1 ? "s" : ""}{" "}
-            available
+            {t("submit.step1.checkpointsAvailable", {
+              count: totalCheckpoints,
+              plural: totalCheckpoints !== 1 ? "s" : "",
+            })}
           </Text>
         )}
       </View>
@@ -88,7 +97,7 @@ export const Step1: React.FC<Step1Props> = ({
               step1View === "daymeal" && styles.viewButtonTextActive,
             ]}
           >
-            📅 Day & Meal
+            📅 {t("submit.step1.viewSelector.dayMeal")}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -104,7 +113,7 @@ export const Step1: React.FC<Step1Props> = ({
               step1View === "search" && styles.viewButtonTextActive,
             ]}
           >
-            🔍 Search All
+            🔍 {t("submit.step1.viewSelector.search")}
           </Text>
         </TouchableOpacity>
       </View>

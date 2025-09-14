@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { BilMenuTheme } from "@/constants/theme";
 import { MissingMeal } from "@/types/submit";
+import { useTranslations } from "@/hooks/use-translations";
 
 interface SearchViewProps {
   searchQuery: string;
@@ -30,13 +31,16 @@ export const SearchView: React.FC<SearchViewProps> = ({
   isLoading,
   onMealSelect,
 }) => {
+  const { t } = useTranslations();
   return (
     <>
       <View style={styles.toggleContainer}>
         <View style={styles.toggleRow}>
           <View style={styles.toggleInfo}>
             <Text style={styles.toggleLabel}>
-              {showAllMissing ? "All Missing Meals" : "Current Week Only"}
+              {showAllMissing
+                ? t("submit.search.allMissingMeals")
+                : t("submit.search.currentWeekOnly")}
             </Text>
           </View>
           <Switch
@@ -57,7 +61,7 @@ export const SearchView: React.FC<SearchViewProps> = ({
 
       <TextInput
         style={styles.searchInput}
-        placeholder="Search for a meal..."
+        placeholder={t("submit.search.placeholder")}
         value={searchQuery}
         onChangeText={onSearchChange}
         placeholderTextColor={BilMenuTheme.colors.textLight}
@@ -65,18 +69,20 @@ export const SearchView: React.FC<SearchViewProps> = ({
 
       <ScrollView style={styles.mealsList} showsVerticalScrollIndicator={true}>
         {isLoading ? (
-          <Text style={styles.loadingText}>Loading missing meals...</Text>
+          <Text style={styles.loadingText}>{t("submit.dayMeal.loading")}</Text>
         ) : filteredMeals.length === 0 ? (
           <Text style={styles.noResultsText}>
             {searchQuery
-              ? "No meals found matching your search."
-              : "No missing meals found."}
+              ? t("submit.search.noResults")
+              : t("submit.step1.noMealsFound")}
           </Text>
         ) : (
           <>
             <Text style={styles.resultsCount}>
-              {filteredMeals.length} missing meal
-              {filteredMeals.length !== 1 ? "s" : ""} found
+              {t("submit.search.resultsCount", {
+                count: filteredMeals.length,
+                plural: filteredMeals.length !== 1 ? "s" : "",
+              })}
             </Text>
             {filteredMeals.map((meal, index) => (
               <TouchableOpacity

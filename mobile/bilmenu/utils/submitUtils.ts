@@ -1,4 +1,5 @@
 import { MealType } from "@/types/submit";
+import { TranslationKey } from "@/constants/translations";
 
 // Get current week number (ISO week)
 export const getCurrentWeek = () => {
@@ -40,8 +41,25 @@ export const getCurrentMealTime = (): MealType => {
   }
 };
 
-// Get day name
-export const getDayName = (dayIndex: number) => {
+// Get day name with translation support
+export const getDayName = (
+  dayIndex: number,
+  t?: (key: TranslationKey) => string
+) => {
+  if (t) {
+    const dayKeys: TranslationKey[] = [
+      "days.monday",
+      "days.tuesday",
+      "days.wednesday",
+      "days.thursday",
+      "days.friday",
+      "days.saturday",
+      "days.sunday",
+    ];
+    return t(dayKeys[dayIndex]);
+  }
+
+  // Fallback to English if no translation function provided
   const days = [
     "Monday",
     "Tuesday",
@@ -54,8 +72,25 @@ export const getDayName = (dayIndex: number) => {
   return days[dayIndex];
 };
 
-// Get short day name
-export const getShortDayName = (dayIndex: number) => {
+// Get short day name with translation support
+export const getShortDayName = (
+  dayIndex: number,
+  t?: (key: TranslationKey) => string
+) => {
+  if (t) {
+    const dayKeys: TranslationKey[] = [
+      "days.mon",
+      "days.tue",
+      "days.wed",
+      "days.thu",
+      "days.fri",
+      "days.sat",
+      "days.sun",
+    ];
+    return t(dayKeys[dayIndex]);
+  }
+
+  // Fallback to English if no translation function provided
   const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
   return days[dayIndex];
 };
