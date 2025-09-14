@@ -50,6 +50,8 @@ const translations = {
 
     // Footer
     "footer.parsed": "The data was parsed with",
+    "footer.ai": "AI",
+    "footer.from": "from",
     "footer.source": "Bilkent University Cafeteria Page",
 
     // Language Switcher
@@ -177,6 +179,8 @@ const translations = {
 
     // Footer
     "footer.parsed": "Veriler",
+    "footer.ai": "Yapay Zeka",
+    "footer.from": "ile ayrıştırıldı",
     "footer.source": "Bilkent Üniversitesi Kafeterya Sayfası",
 
     // Language Switcher
