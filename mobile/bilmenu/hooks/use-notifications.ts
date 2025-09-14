@@ -78,11 +78,10 @@ async function registerForPushNotificationsAsync() {
       return;
     }
     try {
-      token = (
-        await Notifications.getExpoPushTokenAsync({
-          projectId: "bilmenu-mobile-app",
-        })
-      ).data;
+      // For local development, we don't need push tokens
+      // The notifications will work with local scheduling
+      console.log("Local notifications enabled - no push token needed");
+      return;
     } catch (error) {
       console.log("Error getting push token:", error);
       return;
