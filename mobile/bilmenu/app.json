@@ -3,7 +3,7 @@
     "name": "BilMenu",
     "slug": "bilmenu",
     "version": "1.0.0",
-    "projectId": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "projectId": "your-actual-expo-project-id",
     "orientation": "portrait",
     "icon": "./assets/images/logo/master_ios_bilmenu_1024_1024.png",
     "scheme": "bilmenu",
