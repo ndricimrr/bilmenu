@@ -3,16 +3,22 @@ import React from "react";
 
 import { HapticTab } from "@/components/haptic-tab";
 import { IconSymbol } from "@/components/ui/icon-symbol";
-import { Colors } from "@/constants/theme";
-import { useColorScheme } from "@/hooks/use-color-scheme";
+import { BilMenuTheme } from "@/constants/theme";
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
+        tabBarActiveTintColor: BilMenuTheme.colors.secondary,
+        tabBarInactiveTintColor: BilMenuTheme.colors.textMuted,
+        tabBarStyle: {
+          backgroundColor: BilMenuTheme.colors.surface,
+          borderTopColor: BilMenuTheme.colors.border,
+          borderTopWidth: 1,
+          height: 90,
+          paddingBottom: 20,
+          paddingTop: 10,
+        },
         headerShown: false,
         tabBarButton: HapticTab,
       }}

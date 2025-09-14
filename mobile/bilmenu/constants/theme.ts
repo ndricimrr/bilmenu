@@ -1,53 +1,95 @@
-/**
- * Below are the colors that are used in the app. The colors are defined in the light and dark mode.
- * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
- */
+// BilMenu Mobile App Theme - Based on webapp colors
+export const BilMenuTheme = {
+  colors: {
+    // Primary colors from webapp
+    primary: "#1a2a5c", // Main dark blue background
+    primaryLight: "#1e2f6b", // Lighter blue for accents
+    secondary: "#ff9434", // Orange accent color
+    secondaryDark: "#ff6b35", // Darker orange
+    secondaryLight: "#ffae31", // Light orange
 
-import { Platform } from 'react-native';
+    // Background colors
+    background: "#1a2a5c", // Main background
+    surface: "rgba(255, 255, 255, 0.95)", // Card backgrounds
+    surfaceLight: "rgba(255, 255, 255, 0.1)", // Light overlays
 
-const tintColorLight = '#0a7ea4';
-const tintColorDark = '#fff';
+    // Text colors
+    text: "#333", // Dark text
+    textLight: "#666", // Light text
+    textWhite: "#ffffff", // White text
+    textMuted: "rgba(255, 255, 255, 0.8)", // Muted white text
 
-export const Colors = {
-  light: {
-    text: '#11181C',
-    background: '#fff',
-    tint: tintColorLight,
-    icon: '#687076',
-    tabIconDefault: '#687076',
-    tabIconSelected: tintColorLight,
+    // Status colors
+    success: "#4caf50",
+    warning: "#ff9800",
+    error: "#f83f35",
+
+    // Border colors
+    border: "rgba(255, 255, 255, 0.2)",
+    borderLight: "rgba(255, 255, 255, 0.1)",
+
+    // Switch colors
+    switchTrack: "#767577",
+    switchTrackActive: "#81b0ff",
+    switchThumb: "#f4f3f4",
+    switchThumbActive: "#f5dd4b",
   },
-  dark: {
-    text: '#ECEDEE',
-    background: '#151718',
-    tint: tintColorDark,
-    icon: '#9BA1A6',
-    tabIconDefault: '#9BA1A6',
-    tabIconSelected: tintColorDark,
+
+  gradients: {
+    primary: "linear-gradient(135deg, #ff9434, #ff6b35)",
+    primaryReverse: "linear-gradient(135deg, #ff6b35, #ff9434)",
+    surface:
+      "linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.9))",
+  },
+
+  shadows: {
+    small: "0 2px 8px rgba(0, 0, 0, 0.1)",
+    medium: "0 4px 16px rgba(0, 0, 0, 0.15)",
+    large: "0 8px 32px rgba(0, 0, 0, 0.2)",
+    card: "0 16px 48px rgba(0, 0, 0, 0.15)",
+  },
+
+  borderRadius: {
+    small: 8,
+    medium: 12,
+    large: 16,
+    xlarge: 20,
+  },
+
+  spacing: {
+    xs: 4,
+    sm: 8,
+    md: 16,
+    lg: 24,
+    xl: 32,
+    xxl: 40,
+  },
+
+  typography: {
+    title: {
+      fontSize: 24,
+      fontWeight: "700" as const,
+      lineHeight: 32,
+    },
+    subtitle: {
+      fontSize: 18,
+      fontWeight: "600" as const,
+      lineHeight: 24,
+    },
+    body: {
+      fontSize: 16,
+      fontWeight: "400" as const,
+      lineHeight: 22,
+    },
+    caption: {
+      fontSize: 14,
+      fontWeight: "400" as const,
+      lineHeight: 20,
+    },
+    small: {
+      fontSize: 12,
+      fontWeight: "400" as const,
+      lineHeight: 16,
+    },
   },
 };
-
-export const Fonts = Platform.select({
-  ios: {
-    /** iOS `UIFontDescriptorSystemDesignDefault` */
-    sans: 'system-ui',
-    /** iOS `UIFontDescriptorSystemDesignSerif` */
-    serif: 'ui-serif',
-    /** iOS `UIFontDescriptorSystemDesignRounded` */
-    rounded: 'ui-rounded',
-    /** iOS `UIFontDescriptorSystemDesignMonospaced` */
-    mono: 'ui-monospace',
-  },
-  default: {
-    sans: 'normal',
-    serif: 'serif',
-    rounded: 'normal',
-    mono: 'monospace',
-  },
-  web: {
-    sans: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
-    serif: "Georgia, 'Times New Roman', serif",
-    rounded: "'SF Pro Rounded', 'Hiragino Maru Gothic ProN', Meiryo, 'MS PGothic', sans-serif",
-    mono: "SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
-  },
-});

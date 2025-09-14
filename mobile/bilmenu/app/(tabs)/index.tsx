@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, Alert } from "react-native";
 import { WebView } from "react-native-webview";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { BilMenuTheme } from "@/constants/theme";
 
 export default function HomeScreen() {
   const handleMessage = (event: any) => {
@@ -83,10 +84,10 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#ffffff",
+    backgroundColor: BilMenuTheme.colors.background,
   },
   webview: {
     flex: 1,
-    backgroundColor: "#ffffff",
+    backgroundColor: BilMenuTheme.colors.background,
   },
 });
