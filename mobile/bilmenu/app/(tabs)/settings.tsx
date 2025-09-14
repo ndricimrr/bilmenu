@@ -1,17 +1,34 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, Alert, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Alert,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { Header } from "@/components/header";
+import { NotificationToggle } from "@/components/notification-toggle";
 import { useTranslations } from "@/hooks/use-translations";
+import {
+  useNotifications,
+  scheduleLunchNotification,
+  scheduleDinnerNotification,
+  cancelLunchNotification,
+  cancelDinnerNotification,
+} from "@/hooks/use-notifications";
 import { Switch } from "react-native";
 import { BilMenuTheme } from "@/constants/theme";
 
 export default function SettingsScreen() {
   const { t, language } = useTranslations();
+  const { expoPushToken } = useNotifications();
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
+  const [lunchEnabled, setLunchEnabled] = useState(true);
+  const [dinnerEnabled, setDinnerEnabled] = useState(true);
   const [isLoaded, setIsLoaded] = useState(false);
 
   // Load saved notification settings on app start
@@ -21,11 +38,21 @@ export default function SettingsScreen() {
 
   const loadNotificationSettings = async () => {
     try {
-      const savedSettings = await AsyncStorage.getItem(
-        "bilmenu-notifications-enabled"
-      );
-      if (savedSettings !== null) {
-        setNotificationsEnabled(JSON.parse(savedSettings));
+      const [generalSettings, lunchSettings, dinnerSettings] =
+        await Promise.all([
+          AsyncStorage.getItem("bilmenu-notifications-enabled"),
+          AsyncStorage.getItem("bilmenu-lunch-notifications"),
+          AsyncStorage.getItem("bilmenu-dinner-notifications"),
+        ]);
+
+      if (generalSettings !== null) {
+        setNotificationsEnabled(JSON.parse(generalSettings));
+      }
+      if (lunchSettings !== null) {
+        setLunchEnabled(JSON.parse(lunchSettings));
+      }
+      if (dinnerSettings !== null) {
+        setDinnerEnabled(JSON.parse(dinnerSettings));
       }
     } catch (error) {
       console.log("Error loading notification settings:", error);
@@ -56,15 +83,78 @@ export default function SettingsScreen() {
     }
   };
 
+  const handleLunchToggle = async (value: boolean) => {
+    try {
+      await AsyncStorage.setItem(
+        "bilmenu-lunch-notifications",
+        JSON.stringify(value)
+      );
+      setLunchEnabled(value);
+
+      if (value) {
+        await scheduleLunchNotification(language);
+        Alert.alert(
+          t("lunchReminder"),
+          language === "en"
+            ? "Lunch notifications enabled! You'll be reminded at 11:30 AM daily."
+            : "Öğle yemeği bildirimleri etkinleştirildi! Her gün 11:30'da hatırlatılacaksınız."
+        );
+      } else {
+        await cancelLunchNotification();
+        Alert.alert(
+          t("lunchReminder"),
+          language === "en"
+            ? "Lunch notifications disabled."
+            : "Öğle yemeği bildirimleri devre dışı bırakıldı."
+        );
+      }
+    } catch (error) {
+      console.log("Error saving lunch notification settings:", error);
+    }
+  };
+
+  const handleDinnerToggle = async (value: boolean) => {
+    try {
+      await AsyncStorage.setItem(
+        "bilmenu-dinner-notifications",
+        JSON.stringify(value)
+      );
+      setDinnerEnabled(value);
+
+      if (value) {
+        await scheduleDinnerNotification(language);
+        Alert.alert(
+          t("dinnerReminder"),
+          language === "en"
+            ? "Dinner notifications enabled! You'll be reminded at 5:30 PM daily."
+            : "Akşam yemeği bildirimleri etkinleştirildi! Her gün 17:30'da hatırlatılacaksınız."
+        );
+      } else {
+        await cancelDinnerNotification();
+        Alert.alert(
+          t("dinnerReminder"),
+          language === "en"
+            ? "Dinner notifications disabled."
+            : "Akşam yemeği bildirimleri devre dışı bırakıldı."
+        );
+      }
+    } catch (error) {
+      console.log("Error saving dinner notification settings:", error);
+    }
+  };
+
   // Don't render until settings are loaded
   if (!isLoaded) {
     return null;
   }
 
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <SafeAreaView style={styles.safeArea} edges={["top", "left", "right"]}>
       <Header />
-      <View style={styles.container}>
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={styles.scrollContent}
+      >
         <View style={styles.screenHeader}>
           <ThemedText style={styles.title}>{t("settings")}</ThemedText>
           <ThemedText style={styles.subtitle}>
@@ -75,33 +165,38 @@ export default function SettingsScreen() {
         </View>
 
         <ThemedView style={styles.section}>
-          <View style={styles.settingCard}>
-            <View style={styles.settingRow}>
-              <View style={styles.settingInfo}>
-                <ThemedText type="subtitle">
-                  {t("notificationsEnabled")}
-                </ThemedText>
-                <ThemedText style={styles.settingDescription}>
-                  {language === "en"
-                    ? "Enable or disable all notifications"
-                    : "Tüm bildirimleri etkinleştir veya devre dışı bırak"}
-                </ThemedText>
-              </View>
-              <Switch
-                value={notificationsEnabled}
-                onValueChange={handleNotificationsToggle}
-                trackColor={{
-                  false: BilMenuTheme.colors.switchTrack,
-                  true: BilMenuTheme.colors.secondary,
-                }}
-                thumbColor={
-                  notificationsEnabled
-                    ? BilMenuTheme.colors.switchThumbActive
-                    : BilMenuTheme.colors.switchThumb
-                }
-              />
-            </View>
-          </View>
+          <NotificationToggle
+            title={t("notificationsEnabled")}
+            description={
+              language === "en"
+                ? "Enable or disable all notifications"
+                : "Tüm bildirimleri etkinleştir veya devre dışı bırak"
+            }
+            enabled={notificationsEnabled}
+            onToggle={handleNotificationsToggle}
+          />
+
+          <NotificationToggle
+            title={t("lunchNotifications")}
+            description={
+              language === "en"
+                ? "Daily reminder at 11:30 AM"
+                : "Her gün 11:30'da hatırlatma"
+            }
+            enabled={lunchEnabled}
+            onToggle={handleLunchToggle}
+          />
+
+          <NotificationToggle
+            title={t("dinnerNotifications")}
+            description={
+              language === "en"
+                ? "Daily reminder at 5:30 PM"
+                : "Her gün 17:30'da hatırlatma"
+            }
+            enabled={dinnerEnabled}
+            onToggle={handleDinnerToggle}
+          />
         </ThemedView>
 
         <ThemedView style={styles.infoCard}>
@@ -112,7 +207,7 @@ export default function SettingsScreen() {
           </ThemedText>
           <ThemedText style={styles.versionText}>Version 1.0.0</ThemedText>
         </ThemedView>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -124,7 +219,10 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
+  },
+  scrollContent: {
     padding: BilMenuTheme.spacing.lg,
+    paddingBottom: BilMenuTheme.spacing.xxl, // Extra padding at bottom for better scrolling
   },
   screenHeader: {
     marginBottom: BilMenuTheme.spacing.xl,
