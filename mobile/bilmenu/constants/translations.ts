@@ -43,7 +43,6 @@ export const translations = {
     // Step 1 - Meal Selection
     "submit.step1.weekInfo": "Week {week}, {year}",
     "submit.step1.dataUpdated": "Data updated: {date}",
-    "submit.step1.checkpointsAvailable": "{count} checkpoint{plural} available",
     "submit.step1.viewSelector.dayMeal": "Day & Meal",
     "submit.step1.viewSelector.search": "Search",
     "submit.step1.showAllMissing": "Show All Missing",
@@ -52,7 +51,6 @@ export const translations = {
       "No missing meals found for the selected criteria.",
     "submit.step1.loading": "Loading meals...",
     "submit.step1.selectMeal": "Select a meal to continue",
-    "submit.step1.usingCache": "cached",
 
     // DayMealView
     "submit.dayMeal.selectDay": "Select Day",
@@ -184,7 +182,6 @@ export const translations = {
     // Step 1 - Meal Selection
     "submit.step1.weekInfo": "Hafta {week}, {year}",
     "submit.step1.dataUpdated": "Veri güncellendi: {date}",
-    "submit.step1.checkpointsAvailable": "{count} kontrol noktası mevcut",
     "submit.step1.viewSelector.dayMeal": "Gün ve Yemek",
     "submit.step1.viewSelector.search": "Arama",
     "submit.step1.showAllMissing": "Tüm Eksikleri Göster",
@@ -193,7 +190,6 @@ export const translations = {
       "Seçilen kriterlere göre eksik yemek bulunamadı.",
     "submit.step1.loading": "Yemekler yükleniyor...",
     "submit.step1.selectMeal": "Devam etmek için bir yemek seçin",
-    "submit.step1.usingCache": "önbellek",
 
     // DayMealView
     "submit.dayMeal.selectDay": "Gün Seç",

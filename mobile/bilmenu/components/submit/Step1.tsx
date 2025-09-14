@@ -29,8 +29,6 @@ interface Step1Props {
   isLoading: boolean;
   onMealSelect: (mealName: string) => void;
   lastUpdated: string;
-  totalCheckpoints: number;
-  isUsingCache: boolean;
 }
 
 export const Step1: React.FC<Step1Props> = ({
@@ -49,8 +47,6 @@ export const Step1: React.FC<Step1Props> = ({
   isLoading,
   onMealSelect,
   lastUpdated,
-  totalCheckpoints,
-  isUsingCache,
 }) => {
   const { t } = useTranslations();
   return (
@@ -71,20 +67,6 @@ export const Step1: React.FC<Step1Props> = ({
           <Text style={styles.lastUpdatedText}>
             {t("submit.step1.dataUpdated", {
               date: new Date(lastUpdated).toLocaleDateString(),
-            })}
-            {isUsingCache && (
-              <Text style={styles.cacheIndicator}>
-                {" "}
-                (📱 {t("submit.step1.usingCache")})
-              </Text>
-            )}
-          </Text>
-        )}
-        {totalCheckpoints > 0 && (
-          <Text style={styles.checkpointCountText}>
-            {t("submit.step1.checkpointsAvailable", {
-              count: totalCheckpoints,
-              plural: totalCheckpoints !== 1 ? "s" : "",
             })}
           </Text>
         )}
@@ -176,16 +158,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: BilMenuTheme.colors.textMuted,
     marginBottom: 3,
-  },
-  cacheIndicator: {
-    fontSize: 11,
-    color: BilMenuTheme.colors.secondary,
-    fontStyle: "italic",
-  },
-  checkpointCountText: {
-    fontSize: 12,
-    color: BilMenuTheme.colors.textMuted,
-    marginBottom: 10,
   },
   viewSelector: {
     flexDirection: "row",
