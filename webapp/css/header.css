@@ -30,7 +30,7 @@
 }
 
 .page-title:hover {
-  color: #667eea;
+  color: #ff9434;
   transform: translateY(-1px);
 }
 
@@ -54,7 +54,7 @@
 }
 
 .github-logo img {
-  width: 20px;
+  width: 16px;
   margin-bottom: -3px;
 }
 
@@ -70,22 +70,22 @@
 }
 
 .nav-list li {
-  margin-right: 35px;
+  margin-right: 20px;
 }
 
 .nav-list li a {
   text-decoration: none;
   color: #333;
   font-weight: 600;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   transition: all 0.3s ease;
-  padding: 8px 16px;
-  border-radius: 8px;
+  padding: 6px 12px;
+  border-radius: 6px;
 }
 
 .nav-list li a:hover {
-  color: #667eea;
-  background: rgba(102, 126, 234, 0.1);
+  color: #ff9434;
+  background: rgba(255, 148, 52, 0.1);
   transform: translateY(-1px);
 }
 
@@ -138,7 +138,7 @@
   }
 
   .github-logo img {
-    width: 15px;
+    width: 14px;
     margin-right: 0;
     margin-bottom: -3px;
   }
@@ -176,7 +176,7 @@
   }
 
   .nav-list li a:hover {
-    background: rgba(102, 126, 234, 0.1);
+    background: rgba(255, 148, 52, 0.1);
   }
 
   .mobile-menu-toggle {

@@ -3,7 +3,7 @@ body {
     "Helvetica Neue", Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #1a2a5c;
   min-height: 100vh;
   color: #333;
   line-height: 1.6;
@@ -47,6 +47,25 @@ body {
   line-height: 1.5;
 }
 
+/* Week Indicator */
+.week-indicator {
+  text-align: center;
+  margin: 20px 0 15px 0;
+  padding: 12px 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.week-text {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
 .days-list {
   display: flex;
   flex-wrap: nowrap;
@@ -68,47 +87,52 @@ body {
 .meal-control-panel {
   display: flex;
   justify-content: center;
-  gap: 12px;
+  gap: 0;
   margin: 20px 0;
-  padding: 0 20px;
+  padding: 0;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 }
 
 .meal-type-btn {
-  padding: 12px 24px;
-  background: rgba(255, 255, 255, 0.9);
-  color: #333;
+  padding: 16px 32px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.8);
   border: none;
   cursor: pointer;
   font-size: 0.9rem;
   font-weight: 600;
-  border-radius: 25px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(10px);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
-  overflow: hidden;
   white-space: nowrap;
-  min-width: 100px;
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.meal-type-btn:last-child {
+  border-right: none;
 }
 
 .meal-type-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-  background: rgba(255, 255, 255, 1);
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 1);
 }
 
 .meal-type-btn.active {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #ff9434, #ff6b35);
   color: white;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .meal-type-btn.active:hover {
-  background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+  background: linear-gradient(135deg, #ff6b35, #ff9434);
 }
 
 .day-column {
@@ -183,16 +207,18 @@ body {
   display: block;
   opacity: 1;
   transition: opacity 0.3s ease;
+  margin-top: 20px;
 }
 
 .menu-category {
-  margin: 30px 0;
+  margin: 20px 0;
   border-radius: 20px;
   overflow: hidden;
-  background: rgba(255, 255, 255, 0.95);
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15);
   backdrop-filter: blur(10px);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .menu-category:hover {
@@ -202,7 +228,7 @@ body {
 
 .menu-category h2 {
   color: white;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #1a2a5c;
   padding: 24px;
   margin: 0;
   font-size: 1.5rem;
@@ -248,11 +274,7 @@ body {
 
 .meal-label {
   position: relative;
-  background: linear-gradient(
-    135deg,
-    rgba(102, 126, 234, 0.95) 0%,
-    rgba(118, 75, 162, 0.95) 100%
-  );
+  background: #1e2f6b;
   color: white;
   padding: 12px;
   text-align: center;
@@ -332,7 +354,7 @@ body {
 
 #contribute-btn {
   display: none;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #ff9434;
   color: white;
   border: none;
   padding: 16px 32px;
@@ -344,12 +366,13 @@ body {
   cursor: pointer;
   border-radius: 12px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 8px 24px rgba(255, 148, 52, 0.4);
 }
 
 #contribute-btn:hover {
+  background: #f83f35;
   transform: translateY(-2px);
-  box-shadow: 0 12px 32px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 12px 32px rgba(255, 148, 52, 0.5);
 }
 
 #modalNameTr {
@@ -367,14 +390,14 @@ body {
 }
 
 .linkToKafemud {
-  color: #667eea;
+  color: #ff9434;
   text-decoration: none;
   cursor: pointer;
   transition: color 0.3s ease;
 }
 
 .linkToKafemud:hover {
-  color: #764ba2;
+  color: #f83f35;
 }
 
 /* Responsive Design */
@@ -450,15 +473,14 @@ body {
   }
 
   .meal-control-panel {
-    gap: 8px;
     margin: 16px 0;
-    padding: 0 16px;
+    padding: 0;
+    border-radius: 10px;
   }
 
   .meal-type-btn {
-    padding: 10px 16px;
+    padding: 12px 20px;
     font-size: 0.85rem;
-    min-width: 80px;
   }
 
   .modal-content {
@@ -611,17 +633,17 @@ body {
 /* Error Message Styles */
 .error-message {
   background: rgba(255, 255, 255, 0.95);
-  border: 2px solid #ff6b6b;
+  border: 2px solid #f83f35;
   border-radius: 16px;
   padding: 24px;
   margin: 20px 0;
   text-align: center;
-  box-shadow: 0 8px 32px rgba(255, 107, 107, 0.2);
+  box-shadow: 0 8px 32px rgba(248, 63, 53, 0.2);
   backdrop-filter: blur(10px);
 }
 
 .error-message h3 {
-  color: #ff6b6b;
+  color: #f83f35;
   margin: 0 0 12px 0;
   font-size: 1.2rem;
   font-weight: 600;
@@ -629,23 +651,49 @@ body {
 
 .error-message p {
   color: #666;
-  margin: 0;
+  margin: 0 0 16px 0;
   font-size: 0.95rem;
   line-height: 1.5;
 }
 
+.error-refresh-btn {
+  background: linear-gradient(135deg, #ff9434, #ff6b35);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 25px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 16px rgba(255, 148, 52, 0.3);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.error-refresh-btn:hover {
+  background: linear-gradient(135deg, #ff6b35, #ff9434);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 148, 52, 0.4);
+}
+
+.error-refresh-btn:active {
+  transform: translateY(0);
+}
+
 /* Day Selection Active State */
 .days-list button.active {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #ff9434;
   color: white;
   transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
-  border: 2px solid #ff6b6b;
+  box-shadow: 0 6px 20px rgba(30, 47, 107, 0.4);
+  border: 2px solid #ffae31;
   position: relative;
 }
 
 .days-list button.active:hover {
-  background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+  background: #f83f35;
   transform: translateY(-2px);
 }
 
@@ -665,7 +713,7 @@ body {
 }
 
 .day-column.today .today-label {
-  background: #ff6b6b;
+  background: #ff9434;
   color: white;
   border: 1px solid white;
 }

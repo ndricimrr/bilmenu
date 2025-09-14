@@ -19,39 +19,117 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Contributions</title>
     <link rel="stylesheet" href="css/header.css" />
+    <link rel="stylesheet" href="css/language-switcher.css" />
     <script src="js/burger.js"></script>
 
     <style>
       body {
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
         margin: 0;
         padding: 0;
-        background-color: #f4f4f4;
+        background: #1e2f6b;
         color: #333;
+        min-height: 100vh;
+        line-height: 1.6;
       }
 
       .container {
         max-width: 800px;
         margin: 0 auto;
-        padding: 20px;
+        padding: 40px 20px;
         box-sizing: border-box;
       }
 
-      h1,
-      h2,
+      .content-card {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 16px 48px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(10px);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .content-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 24px 64px rgba(0, 0, 0, 0.15);
+      }
+
+      h1 {
+        color: #1e2f6b;
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin: 0 0 30px 0;
+        text-align: center;
+      }
+
+      h2 {
+        color: #1e2f6b;
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin: 30px 0 15px 0;
+        border-bottom: 2px solid #ff9434;
+        padding-bottom: 8px;
+      }
+
+      h3 {
+        color: #1e2f6b;
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin: 20px 0 10px 0;
+      }
+
       p {
         margin-bottom: 15px;
+        color: #333;
+        font-size: 1rem;
       }
 
       a {
-        color: #3498db;
+        color: #ff9434;
         text-decoration: none;
+        font-weight: 600;
+        transition: color 0.3s ease;
       }
 
       a:hover {
+        color: #f83f35;
         text-decoration: underline;
       }
+
+      ol,
+      ul {
+        margin: 15px 0;
+        padding-left: 25px;
+      }
+
+      li {
+        margin-bottom: 8px;
+        color: #333;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 20px 16px;
+        }
+
+        .content-card {
+          padding: 24px;
+          border-radius: 16px;
+        }
+
+        h1 {
+          font-size: 2rem;
+        }
+
+        h2 {
+          font-size: 1.3rem;
+        }
+      }
     </style>
+    <!-- Translation System -->
+    <script src="js/translations.js"></script>
+    <script src="js/language-switcher.js"></script>
   </head>
   <body>
     <!-- Header -->
@@ -73,7 +151,8 @@
           <ul class="nav-list">
             <li>
               <a href="index.html"
-                ><b style="color: blue"> &#8635;</b> <u>Refresh</u></a
+                ><b style="color: blue"> &#8635;</b>
+                <u data-translate="nav.refresh">Refresh</u></a
               >
             </li>
 
@@ -84,15 +163,29 @@
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Github Project
+                <span data-translate="nav.github">Github Project</span>
                 <img src="images/github-mark.png" alt="GitHub Logo" />
               </a>
             </li>
-            <li><a href="contributions.html">Contributions</a></li>
-            <li><a href="privacy-policy.html">Privacy Policy</a></li>
-            <li><a href="about-us.html">About</a></li>
+            <li>
+              <a href="contributions.html" data-translate="nav.contributions"
+                >Contributions</a
+              >
+            </li>
+            <li>
+              <a href="privacy-policy.html" data-translate="nav.privacy"
+                >Privacy Policy</a
+              >
+            </li>
+            <li>
+              <a href="about-us.html" data-translate="nav.about">About</a>
+            </li>
           </ul>
-          <button class="mobile-menu-toggle">&#9776;</button>
+          <button class="mobile-menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
         </nav>
       </div>
     </header>
@@ -102,90 +195,118 @@
       }
     </script>
     <div class="container">
-      <h1>Contributions</h1>
+      <div class="content-card">
+        <h1 data-translate="contrib.title">Contributions</h1>
 
-      <p>
-        Thank you for considering contributing to our open-source project! Here
-        are some ways you can help:
-      </p>
+        <p data-translate="contrib.intro">
+          Thank you for considering contributing to our open-source project!
+          Here are some ways you can help:
+        </p>
 
-      <h2>How to Contribute</h2>
+        <h2 data-translate="contrib.how_title">How to Contribute</h2>
 
-      <h3>Add missing images</h3>
+        <h3 data-translate="contrib.images_title">Add missing images</h3>
 
-      <ol>
-        <li>
-          Collect more images of the meals by taking pictures at the cafeteria
-          and uploading them to the project. Check steps
+        <ol>
+          <li>
+            <span data-translate="contrib.images_step"
+              >Collect more images of the meals by taking pictures at the
+              cafeteria and uploading them to the project. Check steps</span
+            >
+            <a
+              href="https://github.com/ndricimrr/bilmenu/blob/main/CONTRIBUTING_IMAGES.md"
+              data-translate="contrib.images_here"
+              >here</a
+            >
+          </li>
+        </ol>
+
+        <h3 data-translate="contrib.code_title">Contribute to code</h3>
+
+        <ol>
+          <li data-translate="contrib.code_1">
+            Help improve the quality of code by submitting pull requests.
+          </li>
+          <li data-translate="contrib.code_2">
+            Contribute to the improvement of the UX (User Experience) of the
+            site.
+          </li>
+          <li data-translate="contrib.code_3">
+            Assist with keeping the parsing algorithm up to date if the source
+            website changes its design.
+          </li>
+          <li data-translate="contrib.code_4">
+            Address any other issues or improvements that come to your mind.
+          </li>
+        </ol>
+
+        <p>
+          <span data-translate="contrib.code_steps">Check steps</span>
           <a
-            href="https://github.com/ndricimrr/bilmenu/blob/main/CONTRIBUTING_IMAGES.md"
+            href="https://github.com/ndricimrr/bilmenu/blob/main/CONTRIBUTING_GUIDELINES.md"
+            data-translate="contrib.code_here"
             >here</a
           >
-        </li>
-      </ol>
+        </p>
 
-      <h3>Contribute to code</h3>
+        <h2 data-translate="contrib.getting_started_title">Getting Started</h2>
 
-      <ol>
-        <li>Help improve the quality of code by submitting pull requests.</li>
-        <li>
-          Contribute to the improvement of the UX (User Experience) of the site.
-        </li>
-        <li>
-          Assist with keeping the parsing algorithm up to date if the source
-          website changes its design.
-        </li>
-        <li>
-          Address any other issues or improvements that come to your mind.
-        </li>
-      </ol>
+        <p data-translate="contrib.getting_started_text">
+          If you're interested in contributing, please follow these steps:
+        </p>
 
-      <p>
-        Check steps
-        <a
-          href="https://github.com/ndricimrr/bilmenu/blob/main/CONTRIBUTING_GUIDELINES.md"
-          >here</a
-        >
-      </p>
+        <ol>
+          <li data-translate="contrib.step_1">
+            Fork the repository on GitHub.
+          </li>
+          <li data-translate="contrib.step_2">
+            Create a new branch with a meaningful name for your contribution.
+          </li>
+          <li data-translate="contrib.step_3">
+            Make your changes and commit them with clear messages.
+          </li>
+          <li data-translate="contrib.step_4">
+            Push your branch to your fork.
+          </li>
+          <li data-translate="contrib.step_5">
+            Submit a pull request, describing the changes you made and the
+            reason for them.
+          </li>
+        </ol>
 
-      <h2>Getting Started</h2>
+        <h2 data-translate="contrib.issues_title">Issues</h2>
 
-      <p>If you're interested in contributing, please follow these steps:</p>
+        <p>
+          <span data-translate="contrib.issues_text"
+            >If you want to contribute but don't know where to start, check
+            the</span
+          >
+          <a
+            href="https://github.com/ndricimrr/bilmenu/issues"
+            data-translate="contrib.issues_link"
+            >Issues</a
+          >
+          <span data-translate="contrib.issues_text2"
+            >section on GitHub. You can create a new issue to propose new
+            features or report bugs.</span
+          >
+        </p>
 
-      <ol>
-        <li>Fork the repository on GitHub.</li>
-        <li>
-          Create a new branch with a meaningful name for your contribution.
-        </li>
-        <li>Make your changes and commit them with clear messages.</li>
-        <li>Push your branch to your fork.</li>
-        <li>
-          Submit a pull request, describing the changes you made and the reason
-          for them.
-        </li>
-      </ol>
+        <p data-translate="contrib.issues_review">
+          After creating an issue, it will be reviewed, and you'll be given the
+          green light to proceed with your contribution.
+        </p>
 
-      <h2>Issues</h2>
+        <h2 data-translate="contrib.contact_title">Contact</h2>
 
-      <p>
-        If you want to contribute but don't know where to start, check the
-        <a href="https://github.com/ndricimrr/bilmenu/issues">Issues</a>
-        section on GitHub. You can create a new issue to propose new features or
-        report bugs.
-      </p>
-
-      <p>
-        After creating an issue, it will be reviewed, and you'll be given the
-        green light to proceed with your contribution.
-      </p>
-
-      <h2>Contact</h2>
-
-      <p>
-        If you have any questions or need assistance, please feel free to
-        contact us at
-        <a href="mailto:ndricimrr@gmail.com">ndricimrr@gmail.com</a>.
-      </p>
+        <p>
+          <span data-translate="contrib.contact_text"
+            >If you have any questions or need assistance, please feel free to
+            contact us at</span
+          >
+          <a href="mailto:ndricimrr@gmail.com">ndricimrr@gmail.com</a>.
+        </p>
+      </div>
     </div>
   </body>
 </html>
