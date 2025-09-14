@@ -282,7 +282,7 @@ BilMenu User
         placeholder="Search for a meal..."
         value={searchQuery}
         onChangeText={setSearchQuery}
-        placeholderTextColor={BilMenuTheme.colors.textLight}
+        placeholderTextColor={BilMenuTheme.colors.textMuted}
       />
 
       <ScrollView style={styles.mealsList} showsVerticalScrollIndicator={false}>
@@ -383,7 +383,7 @@ const styles = StyleSheet.create({
   },
   description: {
     fontSize: 16,
-    color: BilMenuTheme.colors.text,
+    color: BilMenuTheme.colors.textWhite,
     textAlign: "center",
     marginBottom: 20,
     lineHeight: 24,
@@ -394,12 +394,12 @@ const styles = StyleSheet.create({
   stepTitle: {
     fontSize: 20,
     fontWeight: "bold",
-    color: BilMenuTheme.colors.primary,
+    color: BilMenuTheme.colors.textWhite,
     marginBottom: 20,
     textAlign: "center",
   },
   searchInput: {
-    backgroundColor: BilMenuTheme.colors.surfaceLight,
+    backgroundColor: BilMenuTheme.colors.surface,
     borderRadius: 10,
     padding: 15,
     fontSize: 16,
@@ -412,7 +412,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   mealButton: {
-    backgroundColor: BilMenuTheme.colors.primaryLight,
+    backgroundColor: BilMenuTheme.colors.surface,
     borderRadius: 10,
     padding: 15,
     marginBottom: 10,
@@ -426,25 +426,25 @@ const styles = StyleSheet.create({
   },
   loadingText: {
     fontSize: 16,
-    color: BilMenuTheme.colors.textLight,
+    color: BilMenuTheme.colors.textMuted,
     textAlign: "center",
     marginTop: 50,
   },
   noResultsText: {
     fontSize: 16,
-    color: BilMenuTheme.colors.textLight,
+    color: BilMenuTheme.colors.textMuted,
     textAlign: "center",
     marginTop: 50,
   },
   selectedMealText: {
     fontSize: 18,
-    color: BilMenuTheme.colors.primary,
+    color: BilMenuTheme.colors.secondary,
     textAlign: "center",
     marginBottom: 30,
     fontWeight: "600",
   },
   captureButton: {
-    backgroundColor: BilMenuTheme.colors.primary,
+    backgroundColor: BilMenuTheme.colors.secondary,
     borderRadius: 15,
     padding: 20,
     alignItems: "center",
@@ -467,7 +467,7 @@ const styles = StyleSheet.create({
     borderColor: BilMenuTheme.colors.border,
   },
   sendButton: {
-    backgroundColor: BilMenuTheme.colors.secondary,
+    backgroundColor: BilMenuTheme.colors.primary,
     borderRadius: 15,
     padding: 20,
     alignItems: "center",
@@ -479,7 +479,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   backButton: {
-    backgroundColor: BilMenuTheme.colors.surfaceLight,
+    backgroundColor: BilMenuTheme.colors.surface,
     borderRadius: 10,
     padding: 15,
     alignItems: "center",
@@ -496,22 +496,22 @@ const styles = StyleSheet.create({
   },
   weekInfoText: {
     fontSize: 16,
-    color: BilMenuTheme.colors.primary,
+    color: BilMenuTheme.colors.textWhite,
     fontWeight: "600",
     marginBottom: 5,
   },
   lastUpdatedText: {
     fontSize: 12,
-    color: BilMenuTheme.colors.textLight,
+    color: BilMenuTheme.colors.textMuted,
     marginBottom: 3,
   },
   checkpointCountText: {
     fontSize: 12,
-    color: BilMenuTheme.colors.textLight,
+    color: BilMenuTheme.colors.textMuted,
     marginBottom: 10,
   },
   toggleButton: {
-    backgroundColor: BilMenuTheme.colors.surfaceLight,
+    backgroundColor: BilMenuTheme.colors.surface,
     borderRadius: 8,
     paddingHorizontal: 15,
     paddingVertical: 8,
@@ -520,12 +520,12 @@ const styles = StyleSheet.create({
   },
   toggleButtonText: {
     fontSize: 14,
-    color: BilMenuTheme.colors.primary,
+    color: BilMenuTheme.colors.text,
     fontWeight: "500",
   },
   resultsCount: {
     fontSize: 14,
-    color: BilMenuTheme.colors.textLight,
+    color: BilMenuTheme.colors.textMuted,
     textAlign: "center",
     marginBottom: 15,
     fontStyle: "italic",
