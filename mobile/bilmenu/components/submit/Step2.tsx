@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import { BilMenuTheme } from "@/constants/theme";
 
 interface Step2Props {
@@ -28,14 +29,22 @@ export const Step2: React.FC<Step2Props> = ({
           style={styles.captureButton}
           onPress={onCameraCapture}
         >
-          <Text style={styles.captureButtonText}>📷 Capture Image</Text>
+          <Ionicons
+            name="camera"
+            size={24}
+            color={BilMenuTheme.colors.textWhite}
+          />
+          <Text style={styles.captureButtonText}>Capture Image</Text>
         </TouchableOpacity>
+
+        <Text style={styles.orText}>or</Text>
 
         <TouchableOpacity
           style={styles.galleryButton}
           onPress={onGallerySelection}
         >
-          <Text style={styles.galleryButtonText}>🖼️ Select from Gallery</Text>
+          <Ionicons name="images" size={16} color={BilMenuTheme.colors.text} />
+          <Text style={styles.galleryButtonText}>Gallery</Text>
         </TouchableOpacity>
       </View>
 
@@ -83,25 +92,40 @@ const styles = StyleSheet.create({
     padding: 20,
     alignItems: "center",
     marginBottom: 20,
+    flexDirection: "row",
+    justifyContent: "center",
+    gap: 8,
   },
   captureButtonText: {
     fontSize: 18,
     color: BilMenuTheme.colors.textWhite,
     fontWeight: "bold",
   },
+  orText: {
+    fontSize: 14,
+    color: BilMenuTheme.colors.textMuted,
+    textAlign: "center",
+    marginVertical: 8,
+    fontStyle: "italic",
+  },
   galleryButton: {
     backgroundColor: BilMenuTheme.colors.surface,
-    borderRadius: 15,
-    padding: 20,
+    borderRadius: 8,
+    padding: 8,
+    paddingHorizontal: 16,
     alignItems: "center",
-    marginTop: 15,
+    marginTop: 10,
     borderWidth: 1,
     borderColor: BilMenuTheme.colors.border,
+    alignSelf: "center",
+    flexDirection: "row",
+    justifyContent: "center",
+    gap: 6,
   },
   galleryButtonText: {
-    fontSize: 18,
+    fontSize: 14,
     color: BilMenuTheme.colors.text,
-    fontWeight: "bold",
+    fontWeight: "500",
   },
   backButton: {
     backgroundColor: BilMenuTheme.colors.surface,
