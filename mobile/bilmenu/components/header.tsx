@@ -12,40 +12,60 @@ interface HeaderProps {
 export function Header({ title, showLanguageSwitcher = true }: HeaderProps) {
   const { t, language, changeLanguage } = useTranslations();
 
-  const handleLanguageToggle = () => {
-    const newLanguage = language === "en" ? "tr" : "en";
+  const handleLanguageChange = (newLanguage: "en" | "tr") => {
     changeLanguage(newLanguage);
   };
 
   return (
     <View style={styles.header}>
       <View style={styles.headerContent}>
-        {/* Logo and Title */}
+        {/* Logo - Mobile style (no title text) */}
         <View style={styles.logoSection}>
           <Image
             source={require("@/assets/images/logo_m.png")}
             style={styles.logo}
             resizeMode="contain"
           />
-          <View style={styles.titleSection}>
-            <ThemedText style={styles.title}>BilMenu</ThemedText>
-            <ThemedText style={styles.subtitle}>
-              {t("header.subtitle")}
-            </ThemedText>
-          </View>
         </View>
 
-        {/* Language Switcher */}
+        {/* Language Switcher - Two button design like webapp */}
         {showLanguageSwitcher && (
-          <TouchableOpacity
-            style={styles.languageButton}
-            onPress={handleLanguageToggle}
-            activeOpacity={0.7}
-          >
-            <ThemedText style={styles.languageText}>
-              {language === "en" ? "🇺🇸 EN" : "🇹🇷 TR"}
-            </ThemedText>
-          </TouchableOpacity>
+          <View style={styles.languageSwitcher}>
+            <TouchableOpacity
+              style={[
+                styles.langBtn,
+                language === "en" && styles.langBtnActive,
+              ]}
+              onPress={() => handleLanguageChange("en")}
+              activeOpacity={0.8}
+            >
+              <ThemedText
+                style={[
+                  styles.langBtnText,
+                  language === "en" && styles.langBtnTextActive,
+                ]}
+              >
+                EN
+              </ThemedText>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[
+                styles.langBtn,
+                language === "tr" && styles.langBtnActive,
+              ]}
+              onPress={() => handleLanguageChange("tr")}
+              activeOpacity={0.8}
+            >
+              <ThemedText
+                style={[
+                  styles.langBtnText,
+                  language === "tr" && styles.langBtnTextActive,
+                ]}
+              >
+                TR
+              </ThemedText>
+            </TouchableOpacity>
+          </View>
         )}
       </View>
     </View>
@@ -56,7 +76,7 @@ const styles = StyleSheet.create({
   header: {
     backgroundColor: BilMenuTheme.colors.surface,
     paddingHorizontal: BilMenuTheme.spacing.lg,
-    paddingVertical: BilMenuTheme.spacing.md,
+    paddingVertical: BilMenuTheme.spacing.sm,
     borderBottomWidth: 1,
     borderBottomColor: BilMenuTheme.colors.border,
     shadowColor: "#000",
@@ -76,40 +96,57 @@ const styles = StyleSheet.create({
   logoSection: {
     flexDirection: "row",
     alignItems: "center",
-    flex: 1,
   },
   logo: {
     width: 35,
     height: 35,
-    marginRight: BilMenuTheme.spacing.md,
   },
-  titleSection: {
-    flex: 1,
-  },
-  title: {
-    fontSize: BilMenuTheme.typography.subtitle.fontSize,
-    fontWeight: BilMenuTheme.typography.subtitle.fontWeight,
-    color: BilMenuTheme.colors.text,
-    marginBottom: 2,
-  },
-  subtitle: {
-    fontSize: BilMenuTheme.typography.caption.fontSize,
-    color: BilMenuTheme.colors.textLight,
-    lineHeight: BilMenuTheme.typography.caption.lineHeight,
-  },
-  languageButton: {
-    backgroundColor: BilMenuTheme.colors.surfaceLight,
-    paddingHorizontal: BilMenuTheme.spacing.md,
-    paddingVertical: BilMenuTheme.spacing.sm,
-    borderRadius: BilMenuTheme.borderRadius.medium,
-    borderWidth: 1,
-    borderColor: BilMenuTheme.colors.border,
-    minWidth: 60,
+  languageSwitcher: {
+    flexDirection: "row",
     alignItems: "center",
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
+    borderRadius: 20,
+    padding: 3,
+    borderWidth: 1,
+    borderColor: "rgba(255, 255, 255, 0.2)",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 16,
+    elevation: 4,
   },
-  languageText: {
-    fontSize: BilMenuTheme.typography.caption.fontSize,
-    fontWeight: BilMenuTheme.typography.subtitle.fontWeight,
+  langBtn: {
+    backgroundColor: "transparent",
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 15,
+    minWidth: 35,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  langBtnActive: {
+    backgroundColor: BilMenuTheme.colors.secondary,
+    shadowColor: BilMenuTheme.colors.secondary,
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 12,
+    elevation: 4,
+  },
+  langBtnText: {
+    fontSize: 12,
+    fontWeight: "600",
     color: BilMenuTheme.colors.text,
+    fontFamily:
+      "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif",
+  },
+  langBtnTextActive: {
+    color: "#ffffff",
+    fontWeight: "600",
   },
 });
