@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Translation Test - BilMenu</title>
+    <link rel="stylesheet" href="css/header.css" />
+    <link rel="stylesheet" href="css/language-switcher.css" />
+    <script src="js/burger.js"></script>
+
+    <!-- Translation System -->
+    <script src="js/translations.js"></script>
+    <script src="js/language-switcher.js"></script>
+
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background: #1e2f6b;
+        color: #333;
+        min-height: 100vh;
+        line-height: 1.6;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 40px 20px;
+        box-sizing: border-box;
+      }
+
+      .content-card {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 16px 48px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(10px);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      h1 {
+        color: #1e2f6b;
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin: 0 0 30px 0;
+        text-align: center;
+      }
+
+      .test-section {
+        margin: 20px 0;
+        padding: 20px;
+        background: rgba(255, 148, 52, 0.1);
+        border-radius: 10px;
+        border-left: 4px solid #ff9434;
+      }
+
+      .test-section h3 {
+        color: #1e2f6b;
+        margin-top: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="site-header">
+      <div class="nav-container">
+        <div class="page-title" onclick="goHome()" title="Go Home">
+          <img
+            class="home-logo"
+            src="assets/images/logos/logo_m.png"
+            alt="Logo"
+          />
+          <div class="title-text">
+            BilMenu
+            <span style="font-size: small">Bilkent University Cafeteria</span>
+          </div>
+        </div>
+
+        <nav class="main-nav">
+          <ul class="nav-list">
+            <li>
+              <a href="index.html">
+                <b style="color: blue"> &#8635;</b>
+                <u data-translate="nav.refresh">Refresh</u>
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://github.com/ndricimrr/bilmenu"
+                class="github-logo"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <span data-translate="nav.github">Github Project</span>
+                <img src="images/github-mark.png" alt="GitHub Logo" />
+              </a>
+            </li>
+            <li>
+              <a href="contributions.html" data-translate="nav.contributions"
+                >Contributions</a
+              >
+            </li>
+            <li>
+              <a href="privacy-policy.html" data-translate="nav.privacy"
+                >Privacy Policy</a
+              >
+            </li>
+            <li>
+              <a href="about-us.html" data-translate="nav.about">About</a>
+            </li>
+          </ul>
+          <button class="mobile-menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </nav>
+      </div>
+    </header>
+
+    <div class="container">
+      <div class="content-card">
+        <h1>Translation System Test</h1>
+
+        <div class="test-section">
+          <h3>Navigation Elements</h3>
+          <p>
+            <strong>Refresh:</strong>
+            <span data-translate="nav.refresh">Refresh</span>
+          </p>
+          <p>
+            <strong>Github Project:</strong>
+            <span data-translate="nav.github">Github Project</span>
+          </p>
+          <p>
+            <strong>Contributions:</strong>
+            <span data-translate="nav.contributions">Contributions</span>
+          </p>
+          <p>
+            <strong>Privacy Policy:</strong>
+            <span data-translate="nav.privacy">Privacy Policy</span>
+          </p>
+          <p>
+            <strong>About:</strong>
+            <span data-translate="nav.about">About</span>
+          </p>
+        </div>
+
+        <div class="test-section">
+          <h3>Hero Section</h3>
+          <p>
+            <strong>Title:</strong>
+            <span data-translate="hero.title">BilMenu</span>
+          </p>
+          <p>
+            <strong>Subtitle:</strong>
+            <span data-translate="hero.subtitle"
+              >Bilkent University Cafeteria Menu</span
+            >
+          </p>
+          <p>
+            <strong>Description:</strong>
+            <span data-translate="hero.description"
+              >Discover today's mealplan</span
+            >
+          </p>
+        </div>
+
+        <div class="test-section">
+          <h3>Days of Week</h3>
+          <p>
+            <strong>Today:</strong>
+            <span data-translate="day.today">Today</span>
+          </p>
+          <p>
+            <strong>Monday:</strong>
+            <span data-translate="day.monday">Monday</span> /
+            <span data-translate="day.monday.short">Mon</span>
+          </p>
+          <p>
+            <strong>Tuesday:</strong>
+            <span data-translate="day.tuesday">Tuesday</span> /
+            <span data-translate="day.tuesday.short">Tue</span>
+          </p>
+          <p>
+            <strong>Wednesday:</strong>
+            <span data-translate="day.wednesday">Wednesday</span> /
+            <span data-translate="day.wednesday.short">Wed</span>
+          </p>
+        </div>
+
+        <div class="test-section">
+          <h3>Meal Types</h3>
+          <p>
+            <strong>Lunch:</strong>
+            <span data-translate="meal.lunch">Lunch</span>
+          </p>
+          <p>
+            <strong>Dinner:</strong>
+            <span data-translate="meal.dinner">Dinner</span>
+          </p>
+          <p>
+            <strong>Alternative:</strong>
+            <span data-translate="meal.alternative">Alternative</span>
+          </p>
+        </div>
+
+        <div class="test-section">
+          <h3>Menu Categories</h3>
+          <p>
+            <strong>Lunch Menu:</strong>
+            <span data-translate="menu.lunch">Lunch Menu</span>
+          </p>
+          <p>
+            <strong>Dinner Menu:</strong>
+            <span data-translate="menu.dinner">Dinner Menu</span>
+          </p>
+          <p>
+            <strong>Alternative Menu:</strong>
+            <span data-translate="menu.alternative">Alternative Menu</span>
+          </p>
+        </div>
+
+        <div class="test-section">
+          <h3>Error Messages</h3>
+          <p>
+            <strong>Error Title:</strong>
+            <span data-translate="error.title">⚠️ Unable to Load Menu</span>
+          </p>
+          <p>
+            <strong>Error Message:</strong>
+            <span data-translate="error.message"
+              >Failed to load meal data due to parsing issues. Please try
+              refreshing the page or check back later.</span
+            >
+          </p>
+        </div>
+
+        <div class="test-section">
+          <h3>Footer</h3>
+          <p>
+            <strong>Parsed Text:</strong>
+            <span data-translate="footer.parsed">The data was parsed with</span>
+          </p>
+          <p>
+            <strong>Source:</strong>
+            <span data-translate="footer.source"
+              >Bilkent University Cafeteria Page</span
+            >
+          </p>
+        </div>
+
+        <div class="test-section">
+          <h3>Instructions</h3>
+          <p>
+            Use the language switcher in the header to switch between English
+            (EN) and Turkish (TR). All the text above should change accordingly.
+          </p>
+          <p>
+            The language preference will be saved in your browser's localStorage
+            and persist across page visits.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function goHome() {
+        window.location.href = "index.html";
+      }
+    </script>
+  </body>
+</html>

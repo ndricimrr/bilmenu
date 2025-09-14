@@ -19,6 +19,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>History</title>
     <link rel="stylesheet" href="css/header.css" />
+    <link rel="stylesheet" href="css/language-switcher.css" />
     <script src="js/burger.js"></script>
     <style>
       body {
@@ -119,6 +120,9 @@
         }
       }
     </style>
+    <!-- Translation System -->
+    <script src="js/translations.js"></script>
+    <script src="js/language-switcher.js"></script>
   </head>
   <body>
     <header class="site-header">
@@ -139,7 +143,8 @@
           <ul class="nav-list">
             <li>
               <a href="index.html"
-                ><b style="color: blue"> &#8635;</b> <u>Refresh</u></a
+                ><b style="color: blue"> &#8635;</b>
+                <u data-translate="nav.refresh">Refresh</u></a
               >
             </li>
 
@@ -150,13 +155,23 @@
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Github Project
+                <span data-translate="nav.github">Github Project</span>
                 <img src="images/github-mark.png" alt="GitHub Logo" />
               </a>
             </li>
-            <li><a href="contributions.html">Contributions</a></li>
-            <li><a href="privacy-policy.html">Privacy Policy</a></li>
-            <li><a href="about-us.html">About</a></li>
+            <li>
+              <a href="contributions.html" data-translate="nav.contributions"
+                >Contributions</a
+              >
+            </li>
+            <li>
+              <a href="privacy-policy.html" data-translate="nav.privacy"
+                >Privacy Policy</a
+              >
+            </li>
+            <li>
+              <a href="about-us.html" data-translate="nav.about">About</a>
+            </li>
           </ul>
           <button class="mobile-menu-toggle">
             <span></span>

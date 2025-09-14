@@ -26,6 +26,7 @@
 
     <link rel="stylesheet" href="css/header.css" />
     <link rel="stylesheet" href="css/index.css" />
+    <link rel="stylesheet" href="css/language-switcher.css" />
     <script src="js/burger.js"></script>
     <!-- <script src="meal-parser.js"></script> -->
     <script src="js/utilities.js"></script>
@@ -36,6 +37,10 @@
     <script type="module" src="js/week.js"></script>
 
     <script src="js/fetchMealPlan.js"></script>
+
+    <!-- Translation System -->
+    <script src="js/translations.js"></script>
+    <script src="js/language-switcher.js"></script>
   </head>
   <body>
     <!-- Modal -->
@@ -49,7 +54,11 @@
         />
         <h2 id="modalNameTr">Yemek</h2>
         <p id="modalNameEn">Food</p>
-        <button id="contribute-btn" onclick="goToContributions()">
+        <button
+          id="contribute-btn"
+          onclick="goToContributions()"
+          data-translate="modal.contribute"
+        >
           Contribute Now
         </button>
       </div>
@@ -74,7 +83,8 @@
           <ul class="nav-list">
             <li>
               <a href="index.html"
-                ><b style="color: blue"> &#8635;</b> <u>Refresh</u></a
+                ><b style="color: blue"> &#8635;</b>
+                <u data-translate="nav.refresh">Refresh</u></a
               >
             </li>
 
@@ -85,13 +95,23 @@
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Github Project
+                <span data-translate="nav.github">Github Project</span>
                 <img src="images/github-mark.png" alt="GitHub Logo" />
               </a>
             </li>
-            <li><a href="contributions.html">Contributions</a></li>
-            <li><a href="privacy-policy.html">Privacy Policy</a></li>
-            <li><a href="about-us.html">About</a></li>
+            <li>
+              <a href="contributions.html" data-translate="nav.contributions"
+                >Contributions</a
+              >
+            </li>
+            <li>
+              <a href="privacy-policy.html" data-translate="nav.privacy"
+                >Privacy Policy</a
+              >
+            </li>
+            <li>
+              <a href="about-us.html" data-translate="nav.about">About</a>
+            </li>
           </ul>
           <button class="mobile-menu-toggle">
             <span></span>
@@ -105,60 +125,74 @@
     <div class="container">
       <!-- Hero Section -->
       <div class="hero-section">
-        <h1 class="hero-title">BilMenu</h1>
-        <h2 class="hero-subtitle">Bilkent University Cafeteria Menu</h2>
-        <p class="hero-description">Discover today's mealplan</p>
+        <h1 class="hero-title" data-translate="hero.title">BilMenu</h1>
+        <h2 class="hero-subtitle" data-translate="hero.subtitle">
+          Bilkent University Cafeteria Menu
+        </h2>
+        <p class="hero-description" data-translate="hero.description">
+          Discover today's mealplan
+        </p>
       </div>
 
       <!-- Day Selection -->
       <div class="days-list" id="daysList">
         <div class="day-column">
-          <div class="today-label">Today</div>
+          <div class="today-label" data-translate="day.today">Today</div>
           <button onclick="showMenu(DaysOfWeek.Monday)" data-day="0">
-            <span class="day-full">Monday</span>
-            <span class="day-short">Mon</span>
+            <span class="day-full" data-translate="day.monday">Monday</span>
+            <span class="day-short" data-translate="day.monday.short">Mon</span>
           </button>
         </div>
         <div class="day-column">
-          <div class="today-label">Today</div>
+          <div class="today-label" data-translate="day.today">Today</div>
           <button onclick="showMenu(DaysOfWeek.Tuesday)" data-day="1">
-            <span class="day-full">Tuesday</span>
-            <span class="day-short">Tue</span>
+            <span class="day-full" data-translate="day.tuesday">Tuesday</span>
+            <span class="day-short" data-translate="day.tuesday.short"
+              >Tue</span
+            >
           </button>
         </div>
         <div class="day-column">
-          <div class="today-label">Today</div>
+          <div class="today-label" data-translate="day.today">Today</div>
           <button onclick="showMenu(DaysOfWeek.Wednesday)" data-day="2">
-            <span class="day-full">Wednesday</span>
-            <span class="day-short">Wed</span>
+            <span class="day-full" data-translate="day.wednesday"
+              >Wednesday</span
+            >
+            <span class="day-short" data-translate="day.wednesday.short"
+              >Wed</span
+            >
           </button>
         </div>
         <div class="day-column">
-          <div class="today-label">Today</div>
+          <div class="today-label" data-translate="day.today">Today</div>
           <button onclick="showMenu(DaysOfWeek.Thursday)" data-day="3">
-            <span class="day-full">Thursday</span>
-            <span class="day-short">Thu</span>
+            <span class="day-full" data-translate="day.thursday">Thursday</span>
+            <span class="day-short" data-translate="day.thursday.short"
+              >Thu</span
+            >
           </button>
         </div>
         <div class="day-column">
-          <div class="today-label">Today</div>
+          <div class="today-label" data-translate="day.today">Today</div>
           <button onclick="showMenu(DaysOfWeek.Friday)" data-day="4">
-            <span class="day-full">Friday</span>
-            <span class="day-short">Fri</span>
+            <span class="day-full" data-translate="day.friday">Friday</span>
+            <span class="day-short" data-translate="day.friday.short">Fri</span>
           </button>
         </div>
         <div class="day-column">
-          <div class="today-label">Today</div>
+          <div class="today-label" data-translate="day.today">Today</div>
           <button onclick="showMenu(DaysOfWeek.Saturday)" data-day="5">
-            <span class="day-full">Saturday</span>
-            <span class="day-short">Sat</span>
+            <span class="day-full" data-translate="day.saturday">Saturday</span>
+            <span class="day-short" data-translate="day.saturday.short"
+              >Sat</span
+            >
           </button>
         </div>
         <div class="day-column">
-          <div class="today-label">Today</div>
+          <div class="today-label" data-translate="day.today">Today</div>
           <button onclick="showMenu(DaysOfWeek.Sunday)" data-day="6">
-            <span class="day-full">Sunday</span>
-            <span class="day-short">Sun</span>
+            <span class="day-full" data-translate="day.sunday">Sunday</span>
+            <span class="day-short" data-translate="day.sunday.short">Sun</span>
           </button>
         </div>
       </div>
@@ -174,28 +208,28 @@
           onclick="showMealType('lunch')"
           data-type="lunch"
         >
-          🍽️ Lunch
+          🍽️ <span data-translate="meal.lunch">Lunch</span>
         </button>
         <button
           class="meal-type-btn"
           onclick="showMealType('dinner')"
           data-type="dinner"
         >
-          🌙 Dinner
+          🌙 <span data-translate="meal.dinner">Dinner</span>
         </button>
         <button
           class="meal-type-btn"
           onclick="showMealType('alternative')"
           data-type="alternative"
         >
-          💰 Alternative
+          💰 <span data-translate="meal.alternative">Alternative</span>
         </button>
       </div>
 
       <!-- Error Message -->
       <div class="error-message" id="errorMessage" style="display: none">
-        <h3>⚠️ Unable to Load Menu</h3>
-        <p>
+        <h3 data-translate="error.title">⚠️ Unable to Load Menu</h3>
+        <p data-translate="error.message">
           Failed to load meal data due to parsing issues. Please try refreshing
           the page or check back later.
         </p>
@@ -204,17 +238,17 @@
       <!-- Menu Content -->
       <div class="menu-view" id="menuView">
         <div class="menu-category">
-          <h2>Lunch Menu</h2>
+          <h2 data-translate="menu.lunch">Lunch Menu</h2>
           <div class="menu-grid" id="lunchMenu"></div>
         </div>
 
         <div class="menu-category">
-          <h2>Dinner Menu</h2>
+          <h2 data-translate="menu.dinner">Dinner Menu</h2>
           <div class="menu-grid" id="dinnerMenu"></div>
         </div>
 
         <div class="menu-category">
-          <h2>Alternative Menu</h2>
+          <h2 data-translate="menu.alternative">Alternative Menu</h2>
           <div class="menu-grid" id="alternativeMenu"></div>
         </div>
       </div>
@@ -234,7 +268,7 @@
     >
       <div style="text-align: center">
         <p style="margin: 0 0 8px 0">
-          The data was parsed with
+          <span data-translate="footer.parsed">The data was parsed with</span>
           <strong style="color: #ff9434">AI</strong> from
         </p>
         <a
@@ -250,6 +284,7 @@
           "
           onmouseover="this.style.color='#F83F35'"
           onmouseout="this.style.color='#FF9434'"
+          data-translate="footer.source"
         >
           Bilkent University Cafeteria Page
         </a>
