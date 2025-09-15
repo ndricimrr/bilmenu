@@ -86,7 +86,7 @@
         <nav class="main-nav">
           <ul class="nav-list">
             <li>
-              <a href="index.html"
+              <a href="#" onclick="refreshPage(); return false;"
                 ><b style="color: blue"> &#8635;</b>
                 <u data-translate="nav.refresh">Refresh</u></a
               >
@@ -246,7 +246,7 @@
         </p>
         <button
           class="error-refresh-btn"
-          onclick="location.reload()"
+          onclick="refreshPage()"
           data-translate="error.refresh"
         >
           🔄 Refresh Page
@@ -474,7 +474,7 @@
                   : "Failed to load meal data due to parsing issues. Please try refreshing the page or check back later."
               }
               <br><br>
-              <button class="error-refresh-btn" onclick="location.reload()">
+              <button class="error-refresh-btn" onclick="refreshPage()">
                 ${
                   window.languageSwitcher
                     ? window.languageSwitcher.translate("error.refresh")
@@ -621,6 +621,18 @@
 
       function goHome() {
         window.location.href = "index.html";
+      }
+
+      function refreshPage() {
+        // Check if we're in mobile app context
+        if (window.mobileApp && window.mobileApp.isMobileApp) {
+          // Use the mobile app URL with proper parameters
+          const mobileUrl = `https://www.bilmenu.com?mobile=true&lang=${window.mobileApp.language}&source=mobile-app`;
+          window.location.href = mobileUrl;
+        } else {
+          // Regular refresh for web browser
+          location.reload();
+        }
       }
 
       function goToContributions() {

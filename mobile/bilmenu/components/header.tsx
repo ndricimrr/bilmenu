@@ -4,14 +4,25 @@ import { LinearGradient } from "expo-linear-gradient";
 import { ThemedText } from "@/components/themed-text";
 import { useTranslations } from "@/hooks/use-translations";
 import { BilMenuTheme } from "@/constants/theme";
+import { useNetworkStatus } from "@/hooks/useNetworkStatus";
+import { MaterialIcons } from "@expo/vector-icons";
 
 interface HeaderProps {
   title?: string;
   showLanguageSwitcher?: boolean;
+  onRefresh?: () => void;
 }
 
-export function Header({ title, showLanguageSwitcher = true }: HeaderProps) {
+export function Header({
+  title,
+  showLanguageSwitcher = true,
+  onRefresh,
+}: HeaderProps) {
   const { t, language, changeLanguage } = useTranslations();
+  const { isOffline } = useNetworkStatus();
+
+  // Show offline label when offline (WebView will use cached content)
+  const showOfflineIndicator = isOffline;
 
   const handleLanguageChange = (newLanguage: "en" | "tr") => {
     changeLanguage(newLanguage);
@@ -29,51 +40,73 @@ export function Header({ title, showLanguageSwitcher = true }: HeaderProps) {
           />
         </View>
 
-        {/* Language Switcher - Two button design like webapp */}
-        {showLanguageSwitcher && (
-          <View style={styles.languageSwitcher}>
+        {/* Right side: Offline indicator + Language Switcher */}
+        <View style={styles.rightSection}>
+          {/* Offline Label */}
+          {showOfflineIndicator && (
+            <View style={styles.offlineContainer}>
+              <MaterialIcons name="wifi-off" size={16} color="#666666" />
+              <ThemedText style={styles.offlineText}>Offline</ThemedText>
+            </View>
+          )}
+
+          {/* Refresh Button */}
+          {onRefresh && (
             <TouchableOpacity
-              style={styles.langBtn}
-              onPress={() => handleLanguageChange("en")}
-              activeOpacity={0.8}
+              style={styles.refreshButton}
+              onPress={onRefresh}
+              activeOpacity={0.7}
             >
-              {language === "en" ? (
-                <LinearGradient
-                  colors={["#ff9434", "#ff6b35"]}
-                  start={{ x: 0, y: 0 }}
-                  end={{ x: 1, y: 1 }}
-                  style={styles.langBtnGradient}
-                >
-                  <ThemedText style={styles.langBtnTextActive}>EN</ThemedText>
-                </LinearGradient>
-              ) : (
-                <View style={styles.langBtnInactive}>
-                  <ThemedText style={styles.langBtnText}>EN</ThemedText>
-                </View>
-              )}
+              <MaterialIcons name="refresh" size={18} color="#666666" />
             </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.langBtn}
-              onPress={() => handleLanguageChange("tr")}
-              activeOpacity={0.8}
-            >
-              {language === "tr" ? (
-                <LinearGradient
-                  colors={["#ff9434", "#ff6b35"]}
-                  start={{ x: 0, y: 0 }}
-                  end={{ x: 1, y: 1 }}
-                  style={styles.langBtnGradient}
-                >
-                  <ThemedText style={styles.langBtnTextActive}>TR</ThemedText>
-                </LinearGradient>
-              ) : (
-                <View style={styles.langBtnInactive}>
-                  <ThemedText style={styles.langBtnText}>TR</ThemedText>
-                </View>
-              )}
-            </TouchableOpacity>
-          </View>
-        )}
+          )}
+
+          {/* Language Switcher - Two button design like webapp */}
+          {showLanguageSwitcher && (
+            <View style={styles.languageSwitcher}>
+              <TouchableOpacity
+                style={styles.langBtn}
+                onPress={() => handleLanguageChange("en")}
+                activeOpacity={0.8}
+              >
+                {language === "en" ? (
+                  <LinearGradient
+                    colors={["#ff9434", "#ff6b35"]}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 1 }}
+                    style={styles.langBtnGradient}
+                  >
+                    <ThemedText style={styles.langBtnTextActive}>EN</ThemedText>
+                  </LinearGradient>
+                ) : (
+                  <View style={styles.langBtnInactive}>
+                    <ThemedText style={styles.langBtnText}>EN</ThemedText>
+                  </View>
+                )}
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.langBtn}
+                onPress={() => handleLanguageChange("tr")}
+                activeOpacity={0.8}
+              >
+                {language === "tr" ? (
+                  <LinearGradient
+                    colors={["#ff9434", "#ff6b35"]}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 1 }}
+                    style={styles.langBtnGradient}
+                  >
+                    <ThemedText style={styles.langBtnTextActive}>TR</ThemedText>
+                  </LinearGradient>
+                ) : (
+                  <View style={styles.langBtnInactive}>
+                    <ThemedText style={styles.langBtnText}>TR</ThemedText>
+                  </View>
+                )}
+              </TouchableOpacity>
+            </View>
+          )}
+        </View>
       </View>
     </View>
   );
@@ -94,6 +127,26 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 3,
+  },
+  rightSection: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: BilMenuTheme.spacing.sm,
+  },
+  offlineContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+  },
+  offlineText: {
+    fontSize: 12,
+    color: "#666666",
+    fontWeight: "500",
+  },
+  refreshButton: {
+    padding: 4,
+    alignItems: "center",
+    justifyContent: "center",
   },
   headerContent: {
     flexDirection: "row",

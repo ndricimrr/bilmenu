@@ -1,14 +1,14 @@
 import React, { useRef, useState, useEffect } from "react";
 import { StyleSheet, Alert, TouchableOpacity, View, Text } from "react-native";
-import { WebView } from "react-native-webview";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Header } from "@/components/header";
 import { useTranslations } from "@/hooks/use-translations";
 import { BilMenuTheme } from "@/constants/theme";
+import { WebView } from "react-native-webview";
 
 export default function HomeScreen() {
   const { language } = useTranslations();
-  const webViewRef = useRef<WebView>(null);
+  const webViewRef = useRef<any>(null);
   const [canGoBack, setCanGoBack] = useState(false);
   const [currentUrl, setCurrentUrl] = useState("");
   const [isOnHomepage, setIsOnHomepage] = useState(true);
@@ -36,21 +36,12 @@ export default function HomeScreen() {
   const handleError = (syntheticEvent: any) => {
     const { nativeEvent } = syntheticEvent;
     console.warn("WebView error: ", nativeEvent);
-    Alert.alert(
-      "Connection Error",
-      "Unable to load BilMenu. Please check your internet connection.",
-      [{ text: "Retry" }]
-    );
   };
 
   const handleHttpError = (syntheticEvent: any) => {
     const { nativeEvent } = syntheticEvent;
     if (nativeEvent.statusCode >= 400) {
-      Alert.alert(
-        "Loading Error",
-        "Failed to load BilMenu. Please try again.",
-        [{ text: "OK" }]
-      );
+      console.warn("WebView HTTP error: ", nativeEvent);
     }
   };
 
@@ -68,9 +59,19 @@ export default function HomeScreen() {
     setIsOnHomepage(isHomepage);
   };
 
+  const handleLoadEnd = () => {
+    // Page loaded successfully
+  };
+
   const goBack = () => {
     if (webViewRef.current && canGoBack) {
       webViewRef.current.goBack();
+    }
+  };
+
+  const refreshWebView = () => {
+    if (webViewRef.current) {
+      webViewRef.current.reload();
     }
   };
 
@@ -78,7 +79,7 @@ export default function HomeScreen() {
 
   return (
     <SafeAreaView style={styles.container} edges={["top", "left", "right"]}>
-      <Header />
+      <Header onRefresh={refreshWebView} />
 
       {/* Navigation Bar - Only show when not on homepage */}
       {!isOnHomepage && canGoBack && (
@@ -100,6 +101,7 @@ export default function HomeScreen() {
         onError={handleError}
         onHttpError={handleHttpError}
         onNavigationStateChange={handleNavigationStateChange}
+        onLoadEnd={handleLoadEnd}
         startInLoadingState={true}
         scalesPageToFit={true}
         allowsInlineMediaPlayback={true}
@@ -108,7 +110,10 @@ export default function HomeScreen() {
         domStorageEnabled={true}
         mixedContentMode="compatibility"
         userAgent="BilMenu-Mobile-App/1.0"
-        key={language} // Force re-render when language changes
+        // Enable WebView caching for iOS 14+ Service Workers and Cache API
+        cacheEnabled={true}
+        cacheMode="LOAD_DEFAULT"
+        limitsNavigationsToAppBoundDomains={true}
         injectedJavaScript={`
           // Add mobile-specific styling and hide webapp header
           const style = document.createElement('style');
@@ -139,6 +144,7 @@ export default function HomeScreen() {
             source: 'mobile-app'
           };
           
+          
           // Notify React Native that page is ready
           window.ReactNativeWebView.postMessage(JSON.stringify({
             type: 'pageReady',
@@ -149,6 +155,7 @@ export default function HomeScreen() {
           true;
         `}
       />
+      {/* <CacheDebugger webViewRef={webViewRef} /> - TEMPORARILY DISABLED FOR TESTING */}
     </SafeAreaView>
   );
 }
