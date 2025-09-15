@@ -45,6 +45,11 @@ const translations = {
     "error.message":
       "Failed to load meal data due to parsing issues. Please try refreshing the page or check back later.",
     "error.refresh": "🔄 Refresh Page",
+    "error.monday.title": "Menu Unavailable",
+    "error.monday.message":
+      "The meal menu is currently unavailable until early Monday morning. New weekly meal plans are updated every Monday.",
+    "error.monday.action":
+      "Please check back later today or try refreshing the page.",
 
     // Modal
     "modal.contribute": "Contribute Now",
@@ -175,6 +180,11 @@ const translations = {
     "error.message":
       "Ayrıştırma sorunları nedeniyle yemek verileri yüklenemedi. Lütfen sayfayı yenilemeyi deneyin veya daha sonra tekrar kontrol edin.",
     "error.refresh": "🔄 Sayfayı Yenile",
+    "error.monday.title": "Menü Mevcut Değil",
+    "error.monday.message":
+      "Yemek menüsü şu anda pazartesi sabahına kadar mevcut değil. Haftalık yemek planları her pazartesi güncellenir.",
+    "error.monday.action":
+      "Lütfen daha sonra tekrar kontrol edin veya sayfayı yenilemeyi deneyin.",
 
     // Modal
     "modal.contribute": "Şimdi Katkıda Bulun",

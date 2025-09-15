@@ -429,6 +429,61 @@
         daysList.style.display = "flex";
         document.getElementById("mealControlPanel").style.display = "none";
         updateActiveDayButton(-1);
+        updateErrorMessage();
+      }
+
+      // Update error message (can be called when language changes)
+      function updateErrorMessage() {
+        // Check if it's Monday morning (00:00 - 10:00 AM) and show specific message
+        const now = new Date();
+        const isMonday = now.getDay() === 1; // Monday = 1
+        const isMorning = now.getHours() >= 0 && now.getHours() < 10;
+
+        const errorTitle = document.querySelector("#errorMessage h3");
+        const errorText = document.querySelector("#errorMessage p");
+
+        if (errorTitle && errorText) {
+          if (isMonday && isMorning) {
+            errorTitle.textContent =
+              "📅 " +
+              (window.languageSwitcher
+                ? window.languageSwitcher.translate("error.monday.title")
+                : "Menu Unavailable");
+            errorText.innerHTML = `
+              ${
+                window.languageSwitcher
+                  ? window.languageSwitcher.translate("error.monday.message")
+                  : "The meal menu is currently unavailable until early Monday morning. New weekly meal plans are updated every Monday."
+              }
+              <br><br>
+              ${
+                window.languageSwitcher
+                  ? window.languageSwitcher.translate("error.monday.action")
+                  : "Please check back later today or try refreshing the page."
+              }
+            `;
+          } else {
+            // Show regular error message
+            errorTitle.textContent = window.languageSwitcher
+              ? window.languageSwitcher.translate("error.title")
+              : "⚠️ Unable to Load Menu";
+            errorText.innerHTML = `
+              ${
+                window.languageSwitcher
+                  ? window.languageSwitcher.translate("error.message")
+                  : "Failed to load meal data due to parsing issues. Please try refreshing the page or check back later."
+              }
+              <br><br>
+              <button class="error-refresh-btn" onclick="location.reload()">
+                ${
+                  window.languageSwitcher
+                    ? window.languageSwitcher.translate("error.refresh")
+                    : "🔄 Refresh Page"
+                }
+              </button>
+            `;
+          }
+        }
       }
 
       // Update active day button
@@ -654,6 +709,13 @@
         updateTodayLabel();
         // Wait a bit for the meal data to load
         setTimeout(initializeApp, 100);
+      });
+
+      // Listen for language changes and update error message if needed
+      document.addEventListener("languageChanged", function () {
+        if (errorMessage.style.display === "block") {
+          updateErrorMessage();
+        }
       });
     </script>
   </body>

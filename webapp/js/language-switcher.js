@@ -46,6 +46,12 @@ class LanguageSwitcher {
 
     // Update week indicator if it exists
     this.updateWeekIndicator();
+
+    // Dispatch custom event for language change
+    const event = new CustomEvent("languageChanged", {
+      detail: { language: lang },
+    });
+    document.dispatchEvent(event);
   }
 
   translateElements() {
