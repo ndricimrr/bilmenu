@@ -27,7 +27,6 @@ export const cacheUtils = {
       };
 
       await AsyncStorage.setItem(CACHE_KEY, JSON.stringify(cacheData));
-      console.log("Missing meals data cached successfully");
     } catch (error) {
       console.error("Failed to cache missing meals data:", error);
     }
@@ -54,8 +53,6 @@ export const cacheUtils = {
         await this.clearCache();
         return null;
       }
-
-      console.log("Loaded missing meals data from cache");
       return parsedData;
     } catch (error) {
       console.error("Failed to load cached missing meals data:", error);
