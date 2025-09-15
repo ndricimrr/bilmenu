@@ -14,7 +14,7 @@ import { useTranslations } from "@/hooks/use-translations";
 import { BilMenuTheme } from "@/constants/theme";
 
 export default function PrivacyModal() {
-  const { t, language } = useTranslations();
+  const { language } = useTranslations();
   const router = useRouter();
 
   const handleEmailPress = () => {

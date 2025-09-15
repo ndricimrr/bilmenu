@@ -18,7 +18,7 @@ export function Header({
   showLanguageSwitcher = true,
   onRefresh,
 }: HeaderProps) {
-  const { t, language, changeLanguage } = useTranslations();
+  const { language, changeLanguage } = useTranslations();
   const { isOffline } = useNetworkStatus();
 
   // Show offline label when offline (WebView will use cached content)

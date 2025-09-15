@@ -1,7 +1,6 @@
 import React from "react";
-import { StyleSheet, View, Alert } from "react-native";
+import { StyleSheet, View, Switch } from "react-native";
 import { ThemedText } from "@/components/themed-text";
-import { Switch } from "react-native";
 import { BilMenuTheme } from "@/constants/theme";
 
 interface NotificationToggleProps {

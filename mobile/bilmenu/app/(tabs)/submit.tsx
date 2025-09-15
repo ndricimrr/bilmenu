@@ -30,7 +30,6 @@ export default function SubmitScreen() {
   const {
     currentWeekMeals,
     allMissingMeals,
-    currentWeekMealPlan,
     isLoading,
     lastUpdated,
     getMissingMealsForDayAndType,
@@ -134,17 +133,14 @@ export default function SubmitScreen() {
       const subject = `BilMenu Image Submission |${selectedMeal}.jpg`;
       const body = `${t("submit.email.greeting")}
 
-${t("submit.email.body")}
+      ${t("submit.email.body")}
 
-${t("submit.email.mealInfo", { meal: selectedMeal })}
+      ${t("submit.email.mealInfo", { meal: selectedMeal })}
 
-${t("submit.email.thanks")} 
+      ${t("submit.email.thanks")} 
 
-${t("submit.email.signature")}
-${userName || t("submit.email.defaultName")}`;
-
-      // Create filename with meal name
-      const filename = `${selectedMeal}.jpg`;
+      ${t("submit.email.signature")}
+      ${userName || t("submit.email.defaultName")}`;
 
       await MailComposer.composeAsync({
         recipients: ["bilmenudeveloper@gmail.com"], // Replace with your actual email

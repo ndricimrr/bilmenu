@@ -1,7 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import {
   StyleSheet,
-  Alert,
   TouchableOpacity,
   View,
   Text,
@@ -17,7 +16,6 @@ export default function HomeScreen() {
   const { language } = useTranslations();
   const webViewRef = useRef<any>(null);
   const [canGoBack, setCanGoBack] = useState(false);
-  const [currentUrl, setCurrentUrl] = useState("");
   const [isOnHomepage, setIsOnHomepage] = useState(true);
   const [webViewUrl, setWebViewUrl] = useState(
     `https://www.bilmenu.com?mobile=true&lang=${language}&source=mobile-app`
@@ -54,7 +52,6 @@ export default function HomeScreen() {
 
   const handleNavigationStateChange = (navState: any) => {
     setCanGoBack(navState.canGoBack);
-    setCurrentUrl(navState.url);
 
     // Check if we're on the homepage
     const isHomepage =

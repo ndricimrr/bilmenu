@@ -15,18 +15,15 @@ import { Header } from "@/components/header";
 import { NotificationToggle } from "@/components/notification-toggle";
 import { useTranslations } from "@/hooks/use-translations";
 import {
-  useNotifications,
   scheduleLunchNotification,
   scheduleDinnerNotification,
   cancelLunchNotification,
   cancelDinnerNotification,
 } from "@/hooks/use-notifications";
-import { Switch } from "react-native";
 import { BilMenuTheme } from "@/constants/theme";
 
 export default function SettingsScreen() {
   const { t, language } = useTranslations();
-  const { expoPushToken } = useNotifications();
   const router = useRouter();
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [lunchEnabled, setLunchEnabled] = useState(true);

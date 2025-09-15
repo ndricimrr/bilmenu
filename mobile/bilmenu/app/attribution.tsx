@@ -10,7 +10,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
-import { Header } from "@/components/header";
 import { useTranslations } from "@/hooks/use-translations";
 import { BilMenuTheme } from "@/constants/theme";
 import { IconSymbol } from "@/components/ui/icon-symbol";
@@ -33,7 +32,7 @@ interface ContributorsData {
 }
 
 export default function AttributionScreen() {
-  const { t, language } = useTranslations();
+  const { language } = useTranslations();
   const router = useRouter();
 
   const [contributors, setContributors] = useState<ContributorsData>({
