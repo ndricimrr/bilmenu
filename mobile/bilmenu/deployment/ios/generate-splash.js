@@ -14,8 +14,8 @@ const splashSizes = [
   { width: 2048, height: 2732, name: "splash-2048x2732.png" }, // iPad Pro
 ];
 
-const logoPath = "../../assets/images/logo/master_ios_bilmenu_1024_1024.png";
-const outputDir = "../../assets/images/splash";
+const logoPath = "./assets/images/logo/master_ios_bilmenu_1024_1024.png";
+const outputDir = "./assets/images/splash";
 
 // Create output directory if it doesn't exist
 if (!fs.existsSync(outputDir)) {

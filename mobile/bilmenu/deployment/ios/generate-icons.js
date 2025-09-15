@@ -19,8 +19,8 @@ const iconSizes = [
   { size: 1024, name: "icon-1024.png" },
 ];
 
-const inputPath = "../../assets/images/logo/master_ios_bilmenu_1024_1024.png";
-const outputDir = "../../assets/images/logo/ios";
+const inputPath = "./assets/images/logo/master_ios_bilmenu_1024_1024.png";
+const outputDir = "./assets/images/logo/ios";
 
 // Create output directory if it doesn't exist
 if (!fs.existsSync(outputDir)) {
