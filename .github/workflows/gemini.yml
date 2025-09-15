@@ -38,7 +38,7 @@ jobs:
       - name: Call Gemini API with cleaned HTML
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: node callGemini.js
+        run: node scripts/ai/callGemini.js
 
       - name: Delete cleaned HTML file
         run: rm cleaned.html
