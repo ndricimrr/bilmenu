@@ -19,6 +19,20 @@ export const useSubmitData = () => {
   const [totalCheckpoints, setTotalCheckpoints] = useState<number>(0);
   const [isUsingCache, setIsUsingCache] = useState(false);
 
+  // Validate cached data to ensure it's complete and not corrupted
+  const isValidCacheData = (cachedData: any) => {
+    return (
+      cachedData &&
+      Array.isArray(cachedData.currentWeekMeals) &&
+      Array.isArray(cachedData.allMissingMeals) &&
+      Array.isArray(cachedData.currentWeekMealPlan) &&
+      cachedData.lastUpdated &&
+      typeof cachedData.totalCheckpoints === "number" &&
+      cachedData.allMissingMeals.length > 0 && // Ensure we have some missing meals data
+      cachedData.currentWeekMealPlan.length > 0 // Ensure we have meal plan data (critical for day/meal view)
+    );
+  };
+
   const loadMissingMeals = async () => {
     try {
       setIsLoading(true);
@@ -26,8 +40,7 @@ export const useSubmitData = () => {
 
       // First, try to load cached data as fallback
       const cachedData = await cacheUtils.loadCache();
-      if (cachedData) {
-        console.log("Loading cached data while fetching fresh data...");
+      if (cachedData && isValidCacheData(cachedData)) {
         setCurrentWeekMeals(cachedData.currentWeekMeals);
         setAllMissingMeals(cachedData.allMissingMeals);
         setCurrentWeekMealPlan(cachedData.currentWeekMealPlan);
@@ -35,6 +48,8 @@ export const useSubmitData = () => {
         setTotalCheckpoints(cachedData.totalCheckpoints);
         setIsUsingCache(true);
         setIsLoading(false);
+      } else if (cachedData) {
+        await cacheUtils.clearCache();
       }
 
       // Get current week and year
@@ -63,7 +78,6 @@ export const useSubmitData = () => {
             latestCheckpointData.lastUpdated
           )
         ) {
-          console.log("Cached data is up to date, skipping network fetch");
           return;
         }
 
@@ -110,9 +124,7 @@ export const useSubmitData = () => {
               .map((meal) => ({ name: meal, isMissing: true }));
           }
         } catch (mealPlanError) {
-          console.log(
-            "Could not load current week meal plan, showing all missing meals"
-          );
+          // Don't cache incomplete data - this prevents the stuck state
         }
 
         // Store all missing meals
@@ -135,18 +147,19 @@ export const useSubmitData = () => {
           setCurrentWeekMeals(currentWeekMeals);
         }
 
-        // Cache the fresh data
-        await cacheUtils.saveCache({
-          currentWeekMeals:
-            currentWeekMeals.length === 0 ? allMissing : currentWeekMeals,
-          allMissingMeals: allMissing,
-          currentWeekMealPlan: mealPlanData,
-          lastUpdated: latestCheckpointData.lastUpdated,
-          totalCheckpoints: latestCheckpointData.totalCheckpoints,
-        });
+        // Only cache if we have complete data (both missing meals AND meal plan)
+        if (mealPlanData.length > 0) {
+          await cacheUtils.saveCache({
+            currentWeekMeals:
+              currentWeekMeals.length === 0 ? allMissing : currentWeekMeals,
+            allMissingMeals: allMissing,
+            currentWeekMealPlan: mealPlanData,
+            lastUpdated: latestCheckpointData.lastUpdated,
+            totalCheckpoints: latestCheckpointData.totalCheckpoints,
+          });
+        }
 
         setIsUsingCache(false);
-        console.log("Successfully loaded fresh data and updated cache");
       } catch (networkError) {
         console.error("Network error loading missing meals:", networkError);
 
@@ -156,8 +169,6 @@ export const useSubmitData = () => {
             "Connection Error",
             "Unable to load missing meals data. Please check your internet connection and try again."
           );
-        } else {
-          console.log("Using cached data due to network error");
         }
       }
     } catch (error) {
@@ -178,12 +189,20 @@ export const useSubmitData = () => {
     selectedDay: number,
     selectedMealType: "lunch" | "dinner" | "alternative"
   ) => {
-    if (currentWeekMealPlan.length === 0 || !allMissingMeals.length) {
+    // If we don't have meal plan data, return empty array
+    if (currentWeekMealPlan.length === 0) {
+      return [];
+    }
+
+    // If we don't have missing meals data, return empty array
+    if (!allMissingMeals.length) {
       return [];
     }
 
     const dayData = currentWeekMealPlan[selectedDay];
-    if (!dayData) return [];
+    if (!dayData) {
+      return [];
+    }
 
     const mealsForType = dayData[selectedMealType] || [];
     const missingMealsSet = new Set(allMissingMeals.map((meal) => meal.name));

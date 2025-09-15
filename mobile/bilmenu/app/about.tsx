@@ -150,8 +150,8 @@ export default function AboutModal() {
           </ThemedText>
           <ThemedText style={styles.paragraph}>
             {language === "en"
-              ? "Version 1.0.0\nBuilt with React Native and Expo\nLast updated: January 2025"
-              : "Sürüm 1.0.0\nReact Native ve Expo ile oluşturulmuştur\nSon güncelleme: Ocak 2025"}
+              ? "Version 1.0.0\nBuilt with React Native and Expo\nLast updated: September 2025"
+              : "Sürüm 1.0.0\nReact Native ve Expo ile oluşturulmuştur\nSon güncelleme: Eylül 2025"}
           </ThemedText>
 
           <ThemedText style={styles.footer}>

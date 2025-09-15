@@ -1,5 +1,12 @@
 import React, { useRef, useState, useEffect } from "react";
-import { StyleSheet, Alert, TouchableOpacity, View, Text } from "react-native";
+import {
+  StyleSheet,
+  Alert,
+  TouchableOpacity,
+  View,
+  Text,
+  Linking,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Header } from "@/components/header";
 import { useTranslations } from "@/hooks/use-translations";
@@ -59,6 +66,22 @@ export default function HomeScreen() {
     setIsOnHomepage(isHomepage);
   };
 
+  const handleShouldStartLoadWithRequest = (request: any) => {
+    const url = request.url;
+
+    // Check if it's an external link (not bilmenu.com domain)
+    if (!url.includes("bilmenu.com")) {
+      // Open external links in Safari with proper error handling
+      Linking.openURL(url).catch((error) => {
+        console.warn("Failed to open external URL:", error);
+        // Don't show error to user as the link might still work in Safari
+      });
+      return false; // Prevent WebView from loading
+    }
+
+    return true; // Allow WebView to load bilmenu.com links
+  };
+
   const handleLoadEnd = () => {
     // Page loaded successfully
   };
@@ -101,6 +124,7 @@ export default function HomeScreen() {
         onError={handleError}
         onHttpError={handleHttpError}
         onNavigationStateChange={handleNavigationStateChange}
+        onShouldStartLoadWithRequest={handleShouldStartLoadWithRequest}
         onLoadEnd={handleLoadEnd}
         startInLoadingState={true}
         scalesPageToFit={true}
