@@ -1,5 +1,5 @@
 const axios = require("axios");
-const URL = require("./constants").URL;
+const URL = require("../../webapp/js/constants").URL;
 
 // Only applicable for a html which contains the "icerik" css class in it. Check inspect element of the URL below or /kafemud_html_snapshots
 
