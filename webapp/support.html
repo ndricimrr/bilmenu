@@ -153,32 +153,65 @@
   </head>
   <body>
     <!-- Header -->
-    <header class="header">
-      <div class="header-container">
-        <div class="logo">
-          <a href="index.html">
-            <img src="images/logo.png" alt="BilMenu Logo" />
-          </a>
+    <header class="site-header">
+      <div class="nav-container">
+        <div class="page-title" onclick="goHome()" title="Go Home">
+          <img
+            class="home-logo"
+            src="assets/images/logos/logo_m.png"
+            alt="Logo"
+          />
+          <div class="title-text">
+            BilMenu
+            <span style="font-size: small">Bilkent University Cafeteria</span>
+          </div>
         </div>
-        <nav class="nav">
+
+        <nav class="main-nav">
           <ul class="nav-list">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about-us.html">About</a></li>
-            <li><a href="contributions.html">Contribute</a></li>
-            <li><a href="privacy-policy.html">Privacy</a></li>
-            <li><a href="support.html" class="active">Support</a></li>
+            <li>
+              <a href="index.html"
+                ><b style="color: blue"> &#8635;</b>
+                <u data-translate="nav.refresh">Refresh</u></a
+              >
+            </li>
+
+            <li>
+              <a
+                href="https://github.com/ndricimrr/bilmenu"
+                class="github-logo"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <span data-translate="nav.github">Github Project</span>
+                <img src="images/github-mark.png" alt="GitHub Logo" />
+              </a>
+            </li>
+            <li>
+              <a href="contributions.html" data-translate="nav.contributions"
+                >Contributions</a
+              >
+            </li>
+            <li>
+              <a href="privacy-policy.html" data-translate="nav.privacy"
+                >Privacy Policy</a
+              >
+            </li>
+            <li>
+              <a href="about-us.html" data-translate="nav.about">About</a>
+            </li>
+            <li>
+              <a href="support.html" style="color: #1e2f6b; font-weight: bold"
+                >Support</a
+              >
+            </li>
           </ul>
-        </nav>
-        <div class="language-switcher">
-          <button class="language-btn" onclick="toggleLanguage()">
-            <span id="current-lang">EN</span>
+          <button class="mobile-menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
           </button>
-        </div>
-        <div class="burger">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
+        </nav>
       </div>
     </header>
 
@@ -292,5 +325,12 @@
     <!-- Translation System -->
     <script src="js/translations.js"></script>
     <script src="js/language-switcher.js"></script>
+
+    <!-- Navigation Functions -->
+    <script>
+      function goHome() {
+        window.location.href = "index.html";
+      }
+    </script>
   </body>
 </html>
