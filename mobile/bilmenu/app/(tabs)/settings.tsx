@@ -19,12 +19,14 @@ import {
   scheduleDinnerNotification,
   cancelLunchNotification,
   cancelDinnerNotification,
+  useNotifications,
 } from "@/hooks/use-notifications";
 import { BilMenuTheme } from "@/constants/theme";
 
 export default function SettingsScreen() {
   const { t, language } = useTranslations();
   const router = useRouter();
+  useNotifications(); // Initialize notifications
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [lunchEnabled, setLunchEnabled] = useState(true);
   const [dinnerEnabled, setDinnerEnabled] = useState(true);

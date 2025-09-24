@@ -15,7 +15,6 @@ Notifications.setNotificationHandler({
 });
 
 export function useNotifications() {
-  const [expoPushToken, setExpoPushToken] = useState<string>("");
   const [notification, setNotification] = useState<
     Notifications.Notification | undefined
   >(undefined);
@@ -23,9 +22,8 @@ export function useNotifications() {
   const responseListener = useRef<Notifications.Subscription | null>(null);
 
   useEffect(() => {
-    registerForPushNotificationsAsync().then((token) =>
-      setExpoPushToken(token || "")
-    );
+    // Just request permissions, no push tokens needed
+    requestNotificationPermissions();
 
     notificationListener.current =
       Notifications.addNotificationReceivedListener((notification) => {
@@ -48,14 +46,11 @@ export function useNotifications() {
   }, []);
 
   return {
-    expoPushToken,
     notification,
   };
 }
 
-async function registerForPushNotificationsAsync() {
-  let token;
-
+async function requestNotificationPermissions() {
   if (Platform.OS === "android") {
     await Notifications.setNotificationChannelAsync("default", {
       name: "default",
@@ -74,23 +69,15 @@ async function registerForPushNotificationsAsync() {
       finalStatus = status;
     }
     if (finalStatus !== "granted") {
-      console.log("Failed to get push token for push notification!");
-      return;
+      console.log("Failed to get notification permissions!");
+      return false;
     }
-    try {
-      // For local development, we don't need push tokens
-      // The notifications will work with local scheduling
-      console.log("Local notifications enabled - no push token needed");
-      return;
-    } catch (error) {
-      console.log("Error getting push token:", error);
-      return;
-    }
+    console.log("Notification permissions granted");
+    return true;
   } else {
-    console.log("Must use physical device for Push Notifications");
+    console.log("Must use physical device for notifications");
+    return false;
   }
-
-  return token;
 }
 
 // Fun notification messages
@@ -210,4 +197,91 @@ export async function cancelDinnerNotification() {
 
 export async function cancelAllNotifications() {
   await Notifications.cancelAllScheduledNotificationsAsync();
+}
+
+// Initialize notifications and restore scheduled notifications on app start
+export async function initializeNotifications() {
+  try {
+    // Just request permissions for local notifications
+    const hasPermissions = await requestNotificationPermissions();
+    if (!hasPermissions) {
+      console.log("No notification permissions, skipping initialization");
+      return;
+    }
+
+    // Check if notifications are enabled in settings
+    const AsyncStorage =
+      require("@react-native-async-storage/async-storage").default;
+    const [lunchEnabled, dinnerEnabled, language] = await Promise.all([
+      AsyncStorage.getItem("bilmenu-lunch-notifications"),
+      AsyncStorage.getItem("bilmenu-dinner-notifications"),
+      AsyncStorage.getItem("bilmenu-language") || "en",
+    ]);
+
+    // Restore lunch notifications if enabled
+    if (lunchEnabled === "true") {
+      await scheduleLunchNotification(language as "en" | "tr");
+      console.log("Lunch notifications restored");
+    }
+
+    // Restore dinner notifications if enabled
+    if (dinnerEnabled === "true") {
+      await scheduleDinnerNotification(language as "en" | "tr");
+      console.log("Dinner notifications restored");
+    }
+
+    console.log("Local notifications initialized successfully");
+  } catch (error) {
+    console.log("Error initializing notifications:", error);
+  }
+}
+
+// Debug function to check notification status
+export async function debugNotificationStatus() {
+  try {
+    const permissions = await Notifications.getPermissionsAsync();
+    const scheduledNotifications =
+      await Notifications.getAllScheduledNotificationsAsync();
+
+    console.log("=== NOTIFICATION DEBUG INFO ===");
+    console.log("Permissions:", permissions);
+    console.log("Scheduled notifications:", scheduledNotifications.length);
+    scheduledNotifications.forEach((notification, index) => {
+      console.log(`Notification ${index + 1}:`, {
+        identifier: notification.identifier,
+        content: notification.content,
+        trigger: notification.trigger,
+      });
+    });
+    console.log("================================");
+
+    return {
+      permissions,
+      scheduledCount: scheduledNotifications.length,
+      scheduledNotifications,
+    };
+  } catch (error) {
+    console.log("Error getting notification status:", error);
+    return null;
+  }
+}
+
+// Test function to send an immediate notification
+export async function sendTestNotification() {
+  try {
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        title: "Test Notification 🧪",
+        body: "This is a test notification to verify the system is working!",
+        sound: "default",
+      },
+      trigger: {
+        type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL,
+        seconds: 2,
+      },
+    });
+    console.log("Test notification scheduled");
+  } catch (error) {
+    console.log("Error sending test notification:", error);
+  }
 }

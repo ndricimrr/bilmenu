@@ -11,6 +11,7 @@ import { Header } from "@/components/header";
 import { useTranslations } from "@/hooks/use-translations";
 import { BilMenuTheme } from "@/constants/theme";
 import { WebView } from "react-native-webview";
+import { sendTestNotification } from "@/hooks/use-notifications";
 
 export default function HomeScreen() {
   const { language } = useTranslations();
@@ -100,6 +101,16 @@ export default function HomeScreen() {
   return (
     <SafeAreaView style={styles.container} edges={["top", "left", "right"]}>
       <Header onRefresh={refreshWebView} />
+
+      {/* Test Notification Button */}
+      <View style={styles.testButtonContainer}>
+        <TouchableOpacity
+          style={styles.testButton}
+          onPress={sendTestNotification}
+        >
+          <Text style={styles.testButtonText}>🧪 Test Notification</Text>
+        </TouchableOpacity>
+      </View>
 
       {/* Navigation Bar - Only show when not on homepage */}
       {!isOnHomepage && canGoBack && (
@@ -223,5 +234,30 @@ const styles = StyleSheet.create({
   webview: {
     flex: 1,
     backgroundColor: BilMenuTheme.colors.background,
+  },
+  testButtonContainer: {
+    paddingHorizontal: BilMenuTheme.spacing.lg,
+    paddingVertical: BilMenuTheme.spacing.sm,
+    backgroundColor: BilMenuTheme.colors.background,
+  },
+  testButton: {
+    backgroundColor: BilMenuTheme.colors.secondary,
+    paddingVertical: BilMenuTheme.spacing.sm,
+    paddingHorizontal: BilMenuTheme.spacing.md,
+    borderRadius: BilMenuTheme.borderRadius.medium,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  testButtonText: {
+    color: BilMenuTheme.colors.textWhite,
+    fontSize: BilMenuTheme.typography.body.fontSize,
+    fontWeight: BilMenuTheme.typography.subtitle.fontWeight,
   },
 });

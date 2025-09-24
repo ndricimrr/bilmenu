@@ -5,9 +5,11 @@ import {
 } from "@react-navigation/native";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
+import { useEffect } from "react";
 
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import { LanguageProvider } from "@/contexts/LanguageContext";
+import { initializeNotifications } from "@/hooks/use-notifications";
 
 export const unstable_settings = {
   anchor: "(tabs)",
@@ -15,6 +17,11 @@ export const unstable_settings = {
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
+
+  // Initialize notifications when app starts
+  useEffect(() => {
+    initializeNotifications();
+  }, []);
 
   return (
     <LanguageProvider>

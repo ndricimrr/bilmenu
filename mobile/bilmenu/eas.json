@@ -15,6 +15,9 @@
       "ios": {
         "simulator": true
       },
+      "android": {
+        "buildType": "app-bundle"
+      },
       "env": {
         "NODE_VERSION": "20.19.4"
       }
