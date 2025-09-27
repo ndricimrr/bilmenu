@@ -27,7 +27,6 @@ export default function SettingsScreen() {
   const { t, language } = useTranslations();
   const router = useRouter();
   useNotifications(); // Initialize notifications
-  const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [lunchEnabled, setLunchEnabled] = useState(true);
   const [dinnerEnabled, setDinnerEnabled] = useState(true);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -39,16 +38,11 @@ export default function SettingsScreen() {
 
   const loadNotificationSettings = async () => {
     try {
-      const [generalSettings, lunchSettings, dinnerSettings] =
-        await Promise.all([
-          AsyncStorage.getItem("bilmenu-notifications-enabled"),
-          AsyncStorage.getItem("bilmenu-lunch-notifications"),
-          AsyncStorage.getItem("bilmenu-dinner-notifications"),
-        ]);
+      const [lunchSettings, dinnerSettings] = await Promise.all([
+        AsyncStorage.getItem("bilmenu-lunch-notifications"),
+        AsyncStorage.getItem("bilmenu-dinner-notifications"),
+      ]);
 
-      if (generalSettings !== null) {
-        setNotificationsEnabled(JSON.parse(generalSettings));
-      }
       if (lunchSettings !== null) {
         setLunchEnabled(JSON.parse(lunchSettings));
       }
@@ -59,28 +53,6 @@ export default function SettingsScreen() {
       console.log("Error loading notification settings:", error);
     } finally {
       setIsLoaded(true);
-    }
-  };
-
-  const handleNotificationsToggle = async (value: boolean) => {
-    try {
-      await AsyncStorage.setItem(
-        "bilmenu-notifications-enabled",
-        JSON.stringify(value)
-      );
-      setNotificationsEnabled(value);
-      Alert.alert(
-        t("notificationsEnabled"),
-        value
-          ? language === "en"
-            ? "Notifications enabled"
-            : "Bildirimler etkinleştirildi"
-          : language === "en"
-          ? "Notifications disabled"
-          : "Bildirimler devre dışı bırakıldı"
-      );
-    } catch (error) {
-      console.log("Error saving notification settings:", error);
     }
   };
 
@@ -166,17 +138,6 @@ export default function SettingsScreen() {
         </View>
 
         <ThemedView style={styles.section}>
-          <NotificationToggle
-            title={t("notificationsEnabled")}
-            description={
-              language === "en"
-                ? "Enable or disable all notifications"
-                : "Tüm bildirimleri etkinleştir veya devre dışı bırak"
-            }
-            enabled={notificationsEnabled}
-            onToggle={handleNotificationsToggle}
-          />
-
           <NotificationToggle
             title={t("lunchNotifications")}
             description={

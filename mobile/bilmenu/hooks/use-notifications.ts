@@ -148,8 +148,10 @@ export async function scheduleLunchNotification(language: "en" | "tr") {
   const title = language === "en" ? "Lunch Time! 🍽️" : "Öğle Yemeği Zamanı! 🍽️";
   const body = getRandomMessage(lunchMessages[language]);
 
+  console.log("Scheduling lunch notification:", { title, body, language });
+
   // Schedule lunch notification for 11:30 AM daily
-  await Notifications.scheduleNotificationAsync({
+  const notificationId = await Notifications.scheduleNotificationAsync({
     identifier: "lunch-notification",
     content: {
       title,
@@ -163,6 +165,9 @@ export async function scheduleLunchNotification(language: "en" | "tr") {
       repeats: true,
     },
   });
+
+  console.log("Lunch notification scheduled with ID:", notificationId);
+  return notificationId;
 }
 
 export async function scheduleDinnerNotification(language: "en" | "tr") {
@@ -170,8 +175,10 @@ export async function scheduleDinnerNotification(language: "en" | "tr") {
     language === "en" ? "Dinner Time! 🌙" : "Akşam Yemeği Zamanı! 🌙";
   const body = getRandomMessage(dinnerMessages[language]);
 
+  console.log("Scheduling dinner notification:", { title, body, language });
+
   // Schedule dinner notification for 5:30 PM daily
-  await Notifications.scheduleNotificationAsync({
+  const notificationId = await Notifications.scheduleNotificationAsync({
     identifier: "dinner-notification",
     content: {
       title,
@@ -185,6 +192,9 @@ export async function scheduleDinnerNotification(language: "en" | "tr") {
       repeats: true,
     },
   });
+
+  console.log("Dinner notification scheduled with ID:", notificationId);
+  return notificationId;
 }
 
 export async function cancelLunchNotification() {
@@ -200,7 +210,7 @@ export async function cancelAllNotifications() {
 }
 
 // Initialize notifications and restore scheduled notifications on app start
-export async function initializeNotifications() {
+export async function initializeNotifications(language: "en" | "tr" = "en") {
   try {
     // Just request permissions for local notifications
     const hasPermissions = await requestNotificationPermissions();
@@ -209,25 +219,63 @@ export async function initializeNotifications() {
       return;
     }
 
-    // Check if notifications are enabled in settings
     const AsyncStorage =
       require("@react-native-async-storage/async-storage").default;
-    const [lunchEnabled, dinnerEnabled, language] = await Promise.all([
+
+    // Check if this is first run (no notification settings stored)
+    const [lunchEnabledStr, dinnerEnabledStr] = await Promise.all([
       AsyncStorage.getItem("bilmenu-lunch-notifications"),
       AsyncStorage.getItem("bilmenu-dinner-notifications"),
-      AsyncStorage.getItem("bilmenu-language") || "en",
     ]);
 
-    // Restore lunch notifications if enabled
-    if (lunchEnabled === "true") {
-      await scheduleLunchNotification(language as "en" | "tr");
-      console.log("Lunch notifications restored");
-    }
+    const isFirstRun = lunchEnabledStr === null && dinnerEnabledStr === null;
 
-    // Restore dinner notifications if enabled
-    if (dinnerEnabled === "true") {
-      await scheduleDinnerNotification(language as "en" | "tr");
-      console.log("Dinner notifications restored");
+    if (isFirstRun) {
+      // First run: auto-schedule both notifications and save settings
+      console.log("First run detected - auto-scheduling notifications");
+
+      await Promise.all([
+        scheduleLunchNotification(language as "en" | "tr"),
+        scheduleDinnerNotification(language as "en" | "tr"),
+        AsyncStorage.setItem(
+          "bilmenu-lunch-notifications",
+          JSON.stringify(true)
+        ),
+        AsyncStorage.setItem(
+          "bilmenu-dinner-notifications",
+          JSON.stringify(true)
+        ),
+      ]);
+
+      console.log(
+        "First run: Both lunch and dinner notifications scheduled and enabled"
+      );
+    } else {
+      // Subsequent runs: restore based on saved settings
+      const lunchEnabled = lunchEnabledStr
+        ? JSON.parse(lunchEnabledStr)
+        : false;
+      const dinnerEnabled = dinnerEnabledStr
+        ? JSON.parse(dinnerEnabledStr)
+        : false;
+
+      console.log("Notification settings loaded:", {
+        lunchEnabled,
+        dinnerEnabled,
+        language,
+      });
+
+      // Restore lunch notifications if enabled
+      if (lunchEnabled === true) {
+        await scheduleLunchNotification(language as "en" | "tr");
+        console.log("Lunch notifications restored");
+      }
+
+      // Restore dinner notifications if enabled
+      if (dinnerEnabled === true) {
+        await scheduleDinnerNotification(language as "en" | "tr");
+        console.log("Dinner notifications restored");
+      }
     }
 
     console.log("Local notifications initialized successfully");
@@ -284,4 +332,10 @@ export async function sendTestNotification() {
   } catch (error) {
     console.log("Error sending test notification:", error);
   }
+}
+
+// Function to manually reinitialize notifications (useful for debugging)
+export async function reinitializeNotifications() {
+  console.log("Manually reinitializing notifications...");
+  await initializeNotifications();
 }
