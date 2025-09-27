@@ -10,6 +10,8 @@ import { useEffect } from "react";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import { LanguageProvider, useLanguage } from "@/contexts/LanguageContext";
 import { initializeNotifications } from "@/hooks/use-notifications";
+import { useAppUpdate } from "@/hooks/use-app-update";
+import { useAppRating } from "@/hooks/use-app-rating";
 
 export const unstable_settings = {
   anchor: "(tabs)",
@@ -23,6 +25,12 @@ function AppContent() {
   useEffect(() => {
     initializeNotifications(language);
   }, [language]);
+
+  // Check for app updates
+  useAppUpdate();
+
+  // Check for app rating
+  useAppRating();
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>

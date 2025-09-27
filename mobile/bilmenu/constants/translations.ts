@@ -156,6 +156,21 @@ export const translations = {
     "days.fri": "Fri",
     "days.sat": "Sat",
     "days.sun": "Sun",
+
+    // App Update
+    "update.title": "Update Available",
+    "update.message":
+      "A new version of BilMenu is available. Please update to get the latest features!",
+    "update.later": "Later",
+    "update.update": "Update",
+
+    // App Rating
+    "rating.title": "Enjoying BilMenu?",
+    "rating.message":
+      "If you're enjoying BilMenu, would you mind taking a moment to rate it? It really helps us out!",
+    "rating.notNow": "Not Now",
+    "rating.rateApp": "Rate App",
+    "rating.alreadyRated": "Already Rated",
   },
   tr: {
     // Tab names
@@ -314,6 +329,21 @@ export const translations = {
     "days.fri": "Cum",
     "days.sat": "Cmt",
     "days.sun": "Paz",
+
+    // App Update
+    "update.title": "Güncelleme Mevcut",
+    "update.message":
+      "BilMenu'nun yeni bir sürümü mevcut. En son özellikleri almak için lütfen güncelleyin!",
+    "update.later": "Daha Sonra",
+    "update.update": "Güncelle",
+
+    // App Rating
+    "rating.title": "BilMenu'yu Beğeniyor musunuz?",
+    "rating.message":
+      "BilMenu'yu beğeniyorsanız, onu değerlendirmek için bir dakikanızı ayırır mısınız? Bu bize gerçekten yardımcı olur!",
+    "rating.notNow": "Şimdi Değil",
+    "rating.rateApp": "Uygulamayı Değerlendir",
+    "rating.alreadyRated": "Zaten Değerlendirdim",
   },
 };
 
