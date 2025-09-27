@@ -69,13 +69,10 @@ async function requestNotificationPermissions() {
       finalStatus = status;
     }
     if (finalStatus !== "granted") {
-      console.log("Failed to get notification permissions!");
       return false;
     }
-    console.log("Notification permissions granted");
     return true;
   } else {
-    console.log("Must use physical device for notifications");
     return false;
   }
 }
@@ -148,8 +145,6 @@ export async function scheduleLunchNotification(language: "en" | "tr") {
   const title = language === "en" ? "Lunch Time! 🍽️" : "Öğle Yemeği Zamanı! 🍽️";
   const body = getRandomMessage(lunchMessages[language]);
 
-  console.log("Scheduling lunch notification:", { title, body, language });
-
   // Schedule lunch notification for 11:30 AM daily
   const notificationId = await Notifications.scheduleNotificationAsync({
     identifier: "lunch-notification",
@@ -166,7 +161,6 @@ export async function scheduleLunchNotification(language: "en" | "tr") {
     },
   });
 
-  console.log("Lunch notification scheduled with ID:", notificationId);
   return notificationId;
 }
 
@@ -174,8 +168,6 @@ export async function scheduleDinnerNotification(language: "en" | "tr") {
   const title =
     language === "en" ? "Dinner Time! 🌙" : "Akşam Yemeği Zamanı! 🌙";
   const body = getRandomMessage(dinnerMessages[language]);
-
-  console.log("Scheduling dinner notification:", { title, body, language });
 
   // Schedule dinner notification for 5:30 PM daily
   const notificationId = await Notifications.scheduleNotificationAsync({
@@ -193,7 +185,6 @@ export async function scheduleDinnerNotification(language: "en" | "tr") {
     },
   });
 
-  console.log("Dinner notification scheduled with ID:", notificationId);
   return notificationId;
 }
 
@@ -215,7 +206,6 @@ export async function initializeNotifications(language: "en" | "tr" = "en") {
     // Just request permissions for local notifications
     const hasPermissions = await requestNotificationPermissions();
     if (!hasPermissions) {
-      console.log("No notification permissions, skipping initialization");
       return;
     }
 
@@ -232,7 +222,6 @@ export async function initializeNotifications(language: "en" | "tr" = "en") {
 
     if (isFirstRun) {
       // First run: auto-schedule both notifications and save settings
-      console.log("First run detected - auto-scheduling notifications");
 
       await Promise.all([
         scheduleLunchNotification(language as "en" | "tr"),
@@ -246,10 +235,6 @@ export async function initializeNotifications(language: "en" | "tr" = "en") {
           JSON.stringify(true)
         ),
       ]);
-
-      console.log(
-        "First run: Both lunch and dinner notifications scheduled and enabled"
-      );
     } else {
       // Subsequent runs: restore based on saved settings
       const lunchEnabled = lunchEnabledStr
@@ -259,83 +244,15 @@ export async function initializeNotifications(language: "en" | "tr" = "en") {
         ? JSON.parse(dinnerEnabledStr)
         : false;
 
-      console.log("Notification settings loaded:", {
-        lunchEnabled,
-        dinnerEnabled,
-        language,
-      });
-
       // Restore lunch notifications if enabled
       if (lunchEnabled === true) {
         await scheduleLunchNotification(language as "en" | "tr");
-        console.log("Lunch notifications restored");
       }
 
       // Restore dinner notifications if enabled
       if (dinnerEnabled === true) {
         await scheduleDinnerNotification(language as "en" | "tr");
-        console.log("Dinner notifications restored");
       }
     }
-
-    console.log("Local notifications initialized successfully");
-  } catch (error) {
-    console.log("Error initializing notifications:", error);
-  }
-}
-
-// Debug function to check notification status
-export async function debugNotificationStatus() {
-  try {
-    const permissions = await Notifications.getPermissionsAsync();
-    const scheduledNotifications =
-      await Notifications.getAllScheduledNotificationsAsync();
-
-    console.log("=== NOTIFICATION DEBUG INFO ===");
-    console.log("Permissions:", permissions);
-    console.log("Scheduled notifications:", scheduledNotifications.length);
-    scheduledNotifications.forEach((notification, index) => {
-      console.log(`Notification ${index + 1}:`, {
-        identifier: notification.identifier,
-        content: notification.content,
-        trigger: notification.trigger,
-      });
-    });
-    console.log("================================");
-
-    return {
-      permissions,
-      scheduledCount: scheduledNotifications.length,
-      scheduledNotifications,
-    };
-  } catch (error) {
-    console.log("Error getting notification status:", error);
-    return null;
-  }
-}
-
-// Test function to send an immediate notification
-export async function sendTestNotification() {
-  try {
-    await Notifications.scheduleNotificationAsync({
-      content: {
-        title: "Test Notification 🧪",
-        body: "This is a test notification to verify the system is working!",
-        sound: "default",
-      },
-      trigger: {
-        type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL,
-        seconds: 2,
-      },
-    });
-    console.log("Test notification scheduled");
-  } catch (error) {
-    console.log("Error sending test notification:", error);
-  }
-}
-
-// Function to manually reinitialize notifications (useful for debugging)
-export async function reinitializeNotifications() {
-  console.log("Manually reinitializing notifications...");
-  await initializeNotifications();
+  } catch (error) {}
 }
