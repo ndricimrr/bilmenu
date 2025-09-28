@@ -231,7 +231,7 @@ export const translations = {
     "submit.dayMeal.today": "Bugün",
     "submit.dayMeal.lunch": "Öğle Yemeği",
     "submit.dayMeal.dinner": "Akşam Yemeği",
-    "submit.dayMeal.alternative": "Alternatif",
+    "submit.dayMeal.alternative": "Seçmeli",
     "submit.dayMeal.loading": "Eksik yemekler yükleniyor...",
     "submit.dayMeal.noResults": "{day} {mealType} için eksik yemek bulunamadı.",
     "submit.dayMeal.resultsCount":

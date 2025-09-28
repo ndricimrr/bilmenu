@@ -168,7 +168,7 @@ const translations = {
     // Meal Types
     "meal.lunch": "Öğle Yem.",
     "meal.dinner": "Akşam Yem.",
-    "meal.alternative": "Alternatif",
+    "meal.alternative": "Seçmeli",
 
     // Menu Categories
     "menu.lunch": "Öğle Yemeği Menüsü",
