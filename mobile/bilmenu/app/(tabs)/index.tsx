@@ -5,6 +5,7 @@ import {
   View,
   Text,
   Linking,
+  ActivityIndicator,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Header } from "@/components/header";
@@ -17,6 +18,9 @@ export default function HomeScreen() {
   const webViewRef = useRef<any>(null);
   const [canGoBack, setCanGoBack] = useState(false);
   const [isOnHomepage, setIsOnHomepage] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+  const [hasError, setHasError] = useState(false);
+  const [retryCount, setRetryCount] = useState(0);
   const [webViewUrl, setWebViewUrl] = useState(
     `https://www.bilmenu.com?mobile=true&lang=${language}&source=mobile-app`
   );
@@ -41,6 +45,18 @@ export default function HomeScreen() {
   const handleError = (syntheticEvent: any) => {
     const { nativeEvent } = syntheticEvent;
     console.warn("WebView error: ", nativeEvent);
+    setHasError(true);
+    setIsLoading(false);
+
+    // Auto-retry after 3 seconds if retry count < 3
+    if (retryCount < 3) {
+      setTimeout(() => {
+        setRetryCount((prev) => prev + 1);
+        setHasError(false);
+        setIsLoading(true);
+        refreshWebView();
+      }, 3000);
+    }
   };
 
   const handleHttpError = (syntheticEvent: any) => {
@@ -79,8 +95,15 @@ export default function HomeScreen() {
     return true; // Allow WebView to load bilmenu.com links
   };
 
+  const handleLoadStart = () => {
+    setIsLoading(true);
+    setHasError(false);
+  };
+
   const handleLoadEnd = () => {
-    // Page loaded successfully
+    setIsLoading(false);
+    setHasError(false);
+    setRetryCount(0); // Reset retry count on successful load
   };
 
   const goBack = () => {
@@ -91,6 +114,8 @@ export default function HomeScreen() {
 
   const refreshWebView = () => {
     if (webViewRef.current) {
+      setIsLoading(true);
+      setHasError(false);
       webViewRef.current.reload();
     }
   };
@@ -100,6 +125,24 @@ export default function HomeScreen() {
   return (
     <SafeAreaView style={styles.container} edges={["top", "left", "right"]}>
       <Header onRefresh={refreshWebView} />
+
+      {/* Loading Indicator */}
+      {isLoading && (
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color="#ff9434" />
+          <Text style={styles.loadingText}>Loading BilMenu...</Text>
+        </View>
+      )}
+
+      {/* Error State */}
+      {hasError && retryCount >= 3 && (
+        <View style={styles.errorContainer}>
+          <Text style={styles.errorText}>Failed to load content</Text>
+          <TouchableOpacity style={styles.retryButton} onPress={refreshWebView}>
+            <Text style={styles.retryButtonText}>Retry</Text>
+          </TouchableOpacity>
+        </View>
+      )}
 
       {/* Navigation Bar - Only show when not on homepage */}
       {!isOnHomepage && canGoBack && (
@@ -122,8 +165,20 @@ export default function HomeScreen() {
         onHttpError={handleHttpError}
         onNavigationStateChange={handleNavigationStateChange}
         onShouldStartLoadWithRequest={handleShouldStartLoadWithRequest}
+        onLoadStart={handleLoadStart}
         onLoadEnd={handleLoadEnd}
         startInLoadingState={true}
+        renderError={(errorDomain, errorCode, errorDesc) => (
+          <View style={styles.errorContainer}>
+            <Text style={styles.errorText}>Failed to load: {errorDesc}</Text>
+            <TouchableOpacity
+              style={styles.retryButton}
+              onPress={refreshWebView}
+            >
+              <Text style={styles.retryButtonText}>Retry</Text>
+            </TouchableOpacity>
+          </View>
+        )}
         scalesPageToFit={true}
         allowsInlineMediaPlayback={true}
         mediaPlaybackRequiresUserAction={false}
@@ -223,5 +278,50 @@ const styles = StyleSheet.create({
   webview: {
     flex: 1,
     backgroundColor: BilMenuTheme.colors.background,
+  },
+  loadingContainer: {
+    position: "absolute",
+    top: 100, // Start below the header with more clearance
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: BilMenuTheme.colors.background,
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 1000,
+  },
+  loadingText: {
+    marginTop: 10,
+    fontSize: 16,
+    color: BilMenuTheme.colors.textWhite,
+  },
+  errorContainer: {
+    position: "absolute",
+    top: 100, // Start below the header with more clearance
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: BilMenuTheme.colors.background,
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 1000,
+    padding: 20,
+  },
+  errorText: {
+    fontSize: 16,
+    color: BilMenuTheme.colors.textWhite,
+    textAlign: "center",
+    marginBottom: 20,
+  },
+  retryButton: {
+    backgroundColor: "#ff9434",
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 8,
+  },
+  retryButtonText: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });
