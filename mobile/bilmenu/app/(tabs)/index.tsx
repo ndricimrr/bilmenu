@@ -6,6 +6,7 @@ import {
   Text,
   Linking,
   ActivityIndicator,
+  AppState,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Header } from "@/components/header";
@@ -30,6 +31,31 @@ export default function HomeScreen() {
     const newUrl = `https://www.bilmenu.com?mobile=true&lang=${language}&source=mobile-app`;
     setWebViewUrl(newUrl);
   }, [language]);
+
+  // Handle app state changes - refresh WebView when app becomes active
+  useEffect(() => {
+    const handleAppStateChange = (nextAppState: string) => {
+      if (nextAppState === "active") {
+        // App became active, check if WebView needs refresh
+        // Only refresh if we're not currently loading and no error state
+        if (!isLoading && !hasError) {
+          // Small delay to ensure app is fully active
+          setTimeout(() => {
+            refreshWebView();
+          }, 500);
+        }
+      }
+    };
+
+    const subscription = AppState.addEventListener(
+      "change",
+      handleAppStateChange
+    );
+
+    return () => {
+      subscription?.remove();
+    };
+  }, [isLoading, hasError]);
 
   const handleMessage = (event: any) => {
     try {
