@@ -350,6 +350,23 @@
         return day === 0 ? 6 : day - 1; // Convert Sunday (0) to 6, others shift by 1
       }
 
+      // Get current meal type based on time
+      function getCurrentMealType() {
+        const now = new Date();
+        const currentHour = now.getHours();
+        const currentMinute = now.getMinutes();
+        const currentTime = currentHour * 60 + currentMinute; // Convert to minutes for easier comparison
+
+        // 00:00-14:00 (0 minutes to 840 minutes) -> Lunch
+        // 14:01-23:59 (841 minutes to 1439 minutes) -> Dinner
+        if (currentTime <= 840) {
+          // 14:00 = 14 * 60 = 840 minutes
+          return "lunch";
+        } else {
+          return "dinner";
+        }
+      }
+
       // Check if meal data is available
       function hasMealData(dayIndex) {
         if (
@@ -422,6 +439,9 @@
         updateWeekIndicator();
 
         if (hasMealData(todayIndex)) {
+          // Auto-select meal based on current time
+          currentMealType = getCurrentMealType();
+
           // Show current day if data is available
           showMenu(todayIndex);
         } else {
@@ -531,6 +551,9 @@
         displayMenu("lunchMenu", lunchMenu);
         displayMenu("dinnerMenu", dinnerMenu);
         displayMenu("alternativeMenu", alternativeMenu);
+
+        // Auto-select meal based on current time
+        currentMealType = getCurrentMealType();
 
         // Show only the current meal type
         showMealType(currentMealType);
