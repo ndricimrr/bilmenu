@@ -1,8 +1,8 @@
-const isNodeEnvironment =
+const isNodeEnvironmentDay =
   typeof module !== "undefined" && typeof module.exports !== "undefined";
 
 var Meal;
-if (isNodeEnvironment) {
+if (isNodeEnvironmentDay) {
   Meal = require("./meal");
 } else {
   Meal = window.Meal;
@@ -107,7 +107,7 @@ class Day {
 }
 
 // Check if exports and require are defined (Node.js environment)
-if (isNodeEnvironment) {
+if (isNodeEnvironmentDay) {
   module.exports = Day;
 } else {
   window.Day = Day;

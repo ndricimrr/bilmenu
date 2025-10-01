@@ -1,4 +1,4 @@
-const isNodeEnvironment =
+const isNodeEnvironmentMeal =
   typeof module !== "undefined" && typeof module.exports !== "undefined";
 
 class Meal {
@@ -38,7 +38,7 @@ class Meal {
 }
 
 // Check if exports and require are defined (Node.js environment)
-if (isNodeEnvironment) {
+if (isNodeEnvironmentMeal) {
   module.exports = Meal;
 } else {
   window.Meal = Meal;

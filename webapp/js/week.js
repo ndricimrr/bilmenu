@@ -1,8 +1,8 @@
-const isNodeEnvironment =
+const isNodeEnvironmentWeek =
   typeof module !== "undefined" && typeof module.exports !== "undefined";
 
 var Day;
-if (isNodeEnvironment) {
+if (isNodeEnvironmentWeek) {
   Day = require("./day");
 } else {
   Day = window.Day;
@@ -72,7 +72,7 @@ class Week {
 }
 
 // Check if exports and require are defined (Node.js environment)
-if (typeof module !== "undefined" && typeof module.exports !== "undefined") {
+if (isNodeEnvironmentWeek) {
   module.exports = Week;
 } else {
   window.Week = Week;
