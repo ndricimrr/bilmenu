@@ -180,7 +180,7 @@ export async function scheduleDinnerNotification(language: "en" | "tr") {
     trigger: {
       type: Notifications.SchedulableTriggerInputTypes.CALENDAR,
       hour: 17,
-      minute: 30,
+      minute: 0,
       repeats: true,
     },
   });

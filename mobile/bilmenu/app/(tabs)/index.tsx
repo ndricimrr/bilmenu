@@ -7,6 +7,7 @@ import {
   Linking,
   ActivityIndicator,
   AppState,
+  Platform,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Header } from "@/components/header";
@@ -22,13 +23,19 @@ export default function HomeScreen() {
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
   const [retryCount, setRetryCount] = useState(0);
+
+  // Get platform-specific source parameter
+  const getPlatformSource = () => {
+    return Platform.OS === "ios" ? "ios-app" : "android-app";
+  };
+
   const [webViewUrl, setWebViewUrl] = useState(
-    `https://www.bilmenu.com?mobile=true&lang=${language}&source=mobile-app`
+    `https://www.bilmenu.com?mobile=true&lang=${language}&source=${getPlatformSource()}`
   );
 
   // Update WebView URL when language changes
   useEffect(() => {
-    const newUrl = `https://www.bilmenu.com?mobile=true&lang=${language}&source=mobile-app`;
+    const newUrl = `https://www.bilmenu.com?mobile=true&lang=${language}&source=${getPlatformSource()}`;
     setWebViewUrl(newUrl);
   }, [language]);
 
@@ -243,7 +250,7 @@ export default function HomeScreen() {
           window.mobileApp = {
             isMobileApp: true,
             language: '${language}',
-            source: 'mobile-app'
+            source: '${getPlatformSource()}'
           };
           
           

@@ -14,6 +14,15 @@
       gtag("js", new Date());
 
       gtag("config", "UA-126905227-1");
+
+      // Track app source for different platforms
+      const urlParams = new URLSearchParams(window.location.search);
+      const source = urlParams.get("source") || "web-browser";
+
+      gtag("event", "app_source", {
+        event_category: "source",
+        event_label: source,
+      });
     </script>
     <meta
       charset="UTF-8"
@@ -29,13 +38,12 @@
     <link rel="stylesheet" href="css/language-switcher.css" />
     <link rel="stylesheet" href="css/mobile-app.css" />
     <script src="js/burger.js"></script>
-    <!-- <script src="meal-parser.js"></script> -->
     <script src="js/utilities.js"></script>
 
-    <script type="module" src="js/constants.js"></script>
-    <script type="module" src="js/meal.js"></script>
-    <script type="module" src="js/day.js"></script>
-    <script type="module" src="js/week.js"></script>
+    <script src="js/constants.js"></script>
+    <script src="js/meal.js"></script>
+    <script src="js/day.js"></script>
+    <script src="js/week.js"></script>
 
     <script src="js/fetchMealPlan.js"></script>
 
