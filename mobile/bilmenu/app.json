@@ -2,7 +2,7 @@
   "expo": {
     "name": "BilMenu",
     "slug": "bilmenu",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "orientation": "portrait",
     "icon": "./assets/images/logo/master_ios_bilmenu_1024_1024.png",
     "scheme": "bilmenu",
@@ -11,7 +11,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.bilmenu.app",
-      "buildNumber": "15",
+      "buildNumber": "17",
       "infoPlist": {
         "NSUserNotificationsUsageDescription": "BilMenu sends notifications to remind you about meal times at Bilkent University cafeteria.",
         "NSCameraUsageDescription": "BilMenu uses the camera to capture images of missing meals for submission.",

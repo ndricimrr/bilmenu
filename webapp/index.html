@@ -827,13 +827,19 @@
         }
       });
 
+      // Track if we've already scrolled (to prevent re-scrolling on app refresh)
+      let hasScrolledToDays = false;
+
       // Scroll to days list if opened from mobile app
       function scrollToTodayIfMobile() {
         const urlParams = new URLSearchParams(window.location.search);
         const source = urlParams.get("source");
 
-        // Check if opened from mobile app (ios-app or android-app)
-        if (source === "ios-app" || source === "android-app") {
+        // Check if opened from mobile app (ios-app or android-app) and haven't scrolled yet
+        if (
+          (source === "ios-app" || source === "android-app") &&
+          !hasScrolledToDays
+        ) {
           const daysList = document.getElementById("daysList");
           if (daysList) {
             const rect = daysList.getBoundingClientRect();
@@ -841,6 +847,7 @@
               top: rect.top - 10,
               behavior: "smooth",
             });
+            hasScrolledToDays = true; // Mark that we've scrolled
           }
         }
       }
