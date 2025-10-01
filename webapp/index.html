@@ -827,12 +827,33 @@
         }
       });
 
+      // Scroll to days list if opened from mobile app
+      function scrollToTodayIfMobile() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const source = urlParams.get("source");
+
+        // Check if opened from mobile app (ios-app or android-app)
+        if (source === "ios-app" || source === "android-app") {
+          const daysList = document.getElementById("daysList");
+          if (daysList) {
+            const rect = daysList.getBoundingClientRect();
+            window.scrollTo({
+              top: rect.top - 10,
+              behavior: "smooth",
+            });
+          }
+        }
+      }
+
       // Initialize the app when the page loads
       document.addEventListener("DOMContentLoaded", function () {
         // Set up today label first
         updateTodayLabel();
         // Wait a bit for the meal data to load
         setTimeout(initializeApp, 100);
+
+        // Scroll to today label if mobile app
+        setTimeout(scrollToTodayIfMobile, 500);
 
         // Update progress bars every minute
         setInterval(updateProgressBars, 60000);
