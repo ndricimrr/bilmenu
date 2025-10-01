@@ -1,11 +1,11 @@
 const isNodeEnvironmentWeek =
   typeof module !== "undefined" && typeof module.exports !== "undefined";
 
-var Day;
+var DayClass;
 if (isNodeEnvironmentWeek) {
-  Day = require("./day");
+  DayClass = require("./day");
 } else {
-  Day = window.Day;
+  DayClass = window.Day;
 }
 
 class Week {
@@ -22,7 +22,7 @@ class Week {
   }
 
   addDay(day) {
-    if (day instanceof Day) {
+    if (day instanceof DayClass) {
       this._days.push(day);
     } else {
       throw new Error("Argument must be an instance of Day");
@@ -66,7 +66,7 @@ class Week {
   // Create a Week instance from a JSON object
   static fromJSON(json) {
     const week = new Week();
-    week._days = json.map((dayJson) => Day.fromJSON(dayJson));
+    week._days = json.map((dayJson) => DayClass.fromJSON(dayJson));
     return week;
   }
 }

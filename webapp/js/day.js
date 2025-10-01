@@ -1,11 +1,11 @@
 const isNodeEnvironmentDay =
   typeof module !== "undefined" && typeof module.exports !== "undefined";
 
-var Meal;
+var MealClass;
 if (isNodeEnvironmentDay) {
-  Meal = require("./meal");
+  MealClass = require("./meal");
 } else {
-  Meal = window.Meal;
+  MealClass = window.Meal;
 }
 
 function getDayOfTheWeek(dateString) {
@@ -97,10 +97,10 @@ class Day {
 
   // Create a Day instance from a JSON object
   static fromJSON(json) {
-    const lunch = json.lunch.map((mealJson) => Meal.fromJSON(mealJson));
-    const dinner = json.dinner.map((mealJson) => Meal.fromJSON(mealJson));
+    const lunch = json.lunch.map((mealJson) => MealClass.fromJSON(mealJson));
+    const dinner = json.dinner.map((mealJson) => MealClass.fromJSON(mealJson));
     const alternative = json.alternative.map((mealJson) =>
-      Meal.fromJSON(mealJson)
+      MealClass.fromJSON(mealJson)
     );
     return new Day(json.date, lunch, dinner, alternative);
   }
