@@ -116,6 +116,11 @@ body {
   border-right: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+/* Only add margin when progress bar is active */
+.meal-type-btn.progress-active {
+  margin-bottom: 8px;
+}
+
 .meal-type-btn:last-child {
   border-right: none;
 }
@@ -133,6 +138,21 @@ body {
 
 .meal-type-btn.active:hover {
   background: linear-gradient(135deg, #ff6b35, #ff9434);
+}
+
+/* Progress bar for meal type buttons - positioned below button */
+.meal-type-btn.active.progress-active::after {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  height: 3px;
+  width: var(--progress-width, 0%);
+  background: linear-gradient(90deg, #ff6b6b, #ffa726, #66bb6a);
+  transition: width 0.3s ease;
+  border-radius: 2px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 1;
 }
 
 .day-column {
@@ -234,6 +254,15 @@ body {
   font-size: 1.5rem;
   font-weight: 700;
   letter-spacing: -0.01em;
+}
+
+.time-range {
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.7);
+  margin-left: 8px;
+  vertical-align: middle;
+  display: inline-block;
 }
 
 .menu-grid {

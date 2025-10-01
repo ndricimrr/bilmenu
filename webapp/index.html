@@ -264,12 +264,18 @@
       <!-- Menu Content -->
       <div class="menu-view" id="menuView">
         <div class="menu-category">
-          <h2 data-translate="menu.lunch">Lunch Menu</h2>
+          <h2>
+            <span data-translate="menu.lunch">Lunch Menu</span>
+            <span class="time-range">(11:30 - 14:00)</span>
+          </h2>
           <div class="menu-grid" id="lunchMenu"></div>
         </div>
 
         <div class="menu-category">
-          <h2 data-translate="menu.dinner">Dinner Menu</h2>
+          <h2>
+            <span data-translate="menu.dinner">Dinner Menu</span>
+            <span class="time-range">(17:00 - 20:00)</span>
+          </h2>
           <div class="menu-grid" id="dinnerMenu"></div>
         </div>
 
@@ -367,6 +373,80 @@
         }
       }
 
+      // Get meal progress percentage (0-100)
+      function getMealProgress(mealType) {
+        const now = new Date();
+        const currentHour = now.getHours();
+        const currentMinute = now.getMinutes();
+        const currentTime = currentHour * 60 + currentMinute;
+
+        if (mealType === "lunch") {
+          // Lunch: 11:30-14:00 (690-840 minutes)
+          const startTime = 11 * 60 + 30; // 11:30
+          const endTime = 14 * 60; // 14:00
+          const totalDuration = endTime - startTime; // 150 minutes
+
+          if (currentTime < startTime) return 0;
+          if (currentTime > endTime) return 100;
+          return Math.min(
+            100,
+            ((currentTime - startTime) / totalDuration) * 100
+          );
+        } else if (mealType === "dinner") {
+          // Dinner: 17:00-20:00 (1020-1200 minutes)
+          const startTime = 17 * 60; // 17:00
+          const endTime = 20 * 60; // 20:00
+          const totalDuration = endTime - startTime; // 180 minutes
+
+          if (currentTime < startTime) return 0;
+          if (currentTime > endTime) return 100;
+          return Math.min(
+            100,
+            ((currentTime - startTime) / totalDuration) * 100
+          );
+        }
+        return 0;
+      }
+
+      // Check if we're in meal time for progress bar
+      function isInMealTime(mealType) {
+        const now = new Date();
+        const currentHour = now.getHours();
+        const currentMinute = now.getMinutes();
+        const currentTime = currentHour * 60 + currentMinute;
+
+        if (mealType === "lunch") {
+          // Lunch: 11:30-14:00
+          const startTime = 11 * 60 + 30; // 11:30
+          const endTime = 14 * 60; // 14:00
+          return currentTime >= startTime && currentTime <= endTime;
+        } else if (mealType === "dinner") {
+          // Dinner: 17:00-20:00
+          const startTime = 17 * 60; // 17:00
+          const endTime = 20 * 60; // 20:00
+          return currentTime >= startTime && currentTime <= endTime;
+        }
+        return false;
+      }
+
+      // Update progress bars
+      function updateProgressBars() {
+        const activeBtn = document.querySelector(".meal-type-btn.active");
+        if (activeBtn) {
+          const mealType = activeBtn.dataset.type;
+          const progress = getMealProgress(mealType);
+          const inMealTime = isInMealTime(mealType);
+
+          // Add/remove progress-active class based on meal time
+          if (inMealTime) {
+            activeBtn.classList.add("progress-active");
+            activeBtn.style.setProperty("--progress-width", progress + "%");
+          } else {
+            activeBtn.classList.remove("progress-active");
+          }
+        }
+      }
+
       // Check if meal data is available
       function hasMealData(dayIndex) {
         if (
@@ -444,6 +524,9 @@
 
           // Show current day if data is available
           showMenu(todayIndex);
+
+          // Update progress bars
+          updateProgressBars();
         } else {
           // Show error message if no data
           showErrorMessage();
@@ -558,6 +641,9 @@
         // Show only the current meal type
         showMealType(currentMealType);
 
+        // Update progress bars
+        updateProgressBars();
+
         // Show the menu view and control panel
         menuView.style.display = "block";
         menuView.style.opacity = "1";
@@ -598,6 +684,9 @@
 
         // Update active button in control panel
         updateActiveMealTypeButton(mealType);
+
+        // Update progress bars
+        updateProgressBars();
       }
 
       // Update active meal type button
@@ -744,6 +833,9 @@
         updateTodayLabel();
         // Wait a bit for the meal data to load
         setTimeout(initializeApp, 100);
+
+        // Update progress bars every minute
+        setInterval(updateProgressBars, 60000);
       });
 
       // Listen for language changes and update error message if needed
