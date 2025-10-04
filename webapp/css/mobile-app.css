@@ -45,3 +45,146 @@ body.mobile-app .hero-section {
   margin-top: 0 !important;
   padding-top: 20px !important;
 }
+
+/* Mobile App Download Prompt Styles */
+.mobile-download-prompt {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 16px 20px;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  transform: translateY(100%);
+  transition: transform 0.3s ease-in-out;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.mobile-download-prompt.show {
+  transform: translateY(0);
+}
+
+.download-prompt-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 100%;
+}
+
+.download-prompt-icon {
+  flex-shrink: 0;
+}
+
+.download-prompt-icon img {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.download-prompt-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.download-prompt-text h3 {
+  margin: 0 0 4px 0;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.download-prompt-text p {
+  margin: 0;
+  font-size: 13px;
+  opacity: 0.9;
+  line-height: 1.3;
+}
+
+.download-prompt-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.app-store-btn {
+  display: inline-block;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+}
+
+.app-store-btn:hover {
+  transform: scale(1.05);
+}
+
+.app-store-badge-img {
+  height: 32px;
+  width: auto;
+  border-radius: 4px;
+  display: block;
+  max-width: 120px;
+  min-width: 100px;
+}
+
+.download-close-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.download-close-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Hide download prompt when in mobile app */
+body.mobile-app .mobile-download-prompt {
+  display: none !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .mobile-download-prompt {
+    padding: 12px 16px;
+  }
+
+  .download-prompt-content {
+    gap: 10px;
+  }
+
+  .download-prompt-icon img {
+    width: 36px;
+    height: 36px;
+  }
+
+  .download-prompt-text h3 {
+    font-size: 15px;
+  }
+
+  .download-prompt-text p {
+    font-size: 12px;
+  }
+
+  .app-store-badge-img {
+    height: 28px;
+  }
+
+  .download-close-btn {
+    width: 24px;
+    height: 24px;
+    font-size: 16px;
+  }
+}

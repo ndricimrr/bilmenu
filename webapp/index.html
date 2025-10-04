@@ -325,6 +325,41 @@
       </div>
     </footer>
 
+    <!-- Mobile App Download Prompt (iPhone only) -->
+    <div
+      class="mobile-download-prompt"
+      id="mobileDownloadPrompt"
+      style="display: none"
+    >
+      <div class="download-prompt-content">
+        <div class="download-prompt-icon">
+          <img src="assets/images/logos/logo_m.png" alt="BilMenu Logo" />
+        </div>
+        <div class="download-prompt-text">
+          <h3 data-translate="download.title">Get the BilMenu App</h3>
+          <p data-translate="download.description">
+            For a better experience, download our mobile app
+          </p>
+        </div>
+        <div class="download-prompt-actions">
+          <img
+            src="assets/images/misc/app_store_download_en.svg"
+            class="app-store-badge-img"
+            alt="Download on the App Store"
+            onclick="window.open('https://apps.apple.com/de/app/bilmenu/id6752549798', '_blank')"
+            style="cursor: pointer; width: 120px; height: 40px"
+          />
+          <button
+            class="download-close-btn"
+            onclick="closeDownloadPrompt()"
+            aria-label="Close"
+          >
+            ×
+          </button>
+        </div>
+      </div>
+    </div>
+
     <script>
       const daysList = document.getElementById("daysList");
       const menuView = document.getElementById("menuView");
@@ -873,6 +908,113 @@
         if (errorMessage.style.display === "block") {
           updateErrorMessage();
         }
+        // Update App Store badge when language changes
+        updateAppStoreBadge();
+      });
+
+      // Mobile App Download Prompt Functions
+      function isIPhone() {
+        return /iPhone|iPod/.test(navigator.userAgent);
+      }
+
+      function isMobileBrowser() {
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+          navigator.userAgent
+        );
+      }
+
+      function isFromMobileApp() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const source = urlParams.get("source");
+        return (
+          source === "ios-app" ||
+          source === "android-app" ||
+          urlParams.get("mobile") === "true" ||
+          window.mobileApp?.isMobileApp === true ||
+          navigator.userAgent.includes("BilMenu-Mobile-App")
+        );
+      }
+
+      function shouldShowDownloadPrompt() {
+        // Only show for iPhone users on mobile browser, not from mobile app
+        return isIPhone() && isMobileBrowser() && !isFromMobileApp();
+      }
+
+      function updateAppStoreBadge() {
+        const badge = document.querySelector(".app-store-badge-img");
+        if (badge) {
+          // Get current language
+          const currentLang = localStorage.getItem("bilmenu-language") || "en";
+          const badgeSrc =
+            currentLang === "tr"
+              ? "assets/images/misc/app_store_download_tr.svg"
+              : "assets/images/misc/app_store_download_en.svg";
+
+          // Only update if the source is different
+          if (badge.src !== window.location.origin + "/" + badgeSrc) {
+            badge.src = badgeSrc;
+          }
+        }
+      }
+
+      function showDownloadPrompt() {
+        const prompt = document.getElementById("mobileDownloadPrompt");
+        if (prompt && shouldShowDownloadPrompt()) {
+          // Check if user has previously dismissed the prompt
+          const dismissed = localStorage.getItem("bilmenu-download-dismissed");
+          if (!dismissed) {
+            // Update App Store badge based on current language
+            updateAppStoreBadge();
+
+            // Check if the page has been scrolled (user is engaged)
+            const hasScrolled = window.scrollY > 100;
+            if (hasScrolled) {
+              prompt.style.display = "block";
+              // Trigger animation after a short delay
+              setTimeout(() => {
+                prompt.classList.add("show");
+              }, 100);
+            } else {
+              // If user hasn't scrolled yet, wait a bit longer
+              setTimeout(showDownloadPrompt, 3000);
+            }
+          }
+        }
+      }
+
+      function closeDownloadPrompt() {
+        const prompt = document.getElementById("mobileDownloadPrompt");
+        if (prompt) {
+          prompt.classList.remove("show");
+          // Hide after animation completes
+          setTimeout(() => {
+            prompt.style.display = "none";
+          }, 300);
+          // Remember that user dismissed the prompt
+          localStorage.setItem("bilmenu-download-dismissed", "true");
+        }
+      }
+
+      // Show download prompt after page loads
+      document.addEventListener("DOMContentLoaded", function () {
+        // Delay showing the prompt to let the page load first
+        setTimeout(showDownloadPrompt, 2000);
+
+        // Also show prompt when user scrolls (if they haven't dismissed it)
+        let scrollPromptShown = false;
+        window.addEventListener("scroll", function () {
+          if (!scrollPromptShown && shouldShowDownloadPrompt()) {
+            const dismissed = localStorage.getItem(
+              "bilmenu-download-dismissed"
+            );
+            if (!dismissed && window.scrollY > 100) {
+              // Update App Store badge before showing
+              updateAppStoreBadge();
+              showDownloadPrompt();
+              scrollPromptShown = true;
+            }
+          }
+        });
       });
     </script>
   </body>

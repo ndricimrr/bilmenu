@@ -133,6 +133,11 @@ const translations = {
     "contrib.contact_title": "Contact",
     "contrib.contact_text":
       "If you have any questions or need assistance, please feel free to contact us at",
+
+    // Download Prompt
+    "download.title": "Get the BilMenu App",
+    "download.description": "For a better experience, download our mobile app",
+    "download.app_store": "Download on the App Store",
   },
 
   tr: {
@@ -269,6 +274,12 @@ const translations = {
     "contrib.contact_title": "İletişim",
     "contrib.contact_text":
       "Herhangi bir sorunuz varsa veya yardıma ihtiyacınız varsa, lütfen bizimle iletişime geçmekten çekinmeyin:",
+
+    // Download Prompt
+    "download.title": "BilMenu İndir",
+    "download.description":
+      "Daha iyi bir deneyim için mobil uygulamamızı indirin",
+    "download.app_store": "App Store'dan İndir",
   },
 };
 
