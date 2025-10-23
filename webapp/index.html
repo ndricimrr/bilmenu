@@ -893,11 +893,36 @@
       document.addEventListener("DOMContentLoaded", function () {
         // Set up today label first
         updateTodayLabel();
-        // Wait a bit for the meal data to load
-        setTimeout(initializeApp, 100);
 
-        // Scroll to today label if mobile app
-        setTimeout(scrollToTodayIfMobile, 500);
+        // Wait for meal plan to load with a timeout
+        let initTimeout;
+        const LOAD_TIMEOUT = 10000; // 10 seconds timeout
+
+        // Set timeout to show error if loading takes too long
+        initTimeout = setTimeout(() => {
+          console.error(
+            "Meal plan loading timed out after " + LOAD_TIMEOUT + "ms"
+          );
+          initializeApp();
+        }, LOAD_TIMEOUT);
+
+        // Wait for meal plan to actually load
+        onMealPlanLoad((success) => {
+          // Clear the timeout since we got a response
+          clearTimeout(initTimeout);
+
+          if (success) {
+            console.log("Meal plan loaded successfully, initializing app");
+          } else {
+            console.log("Meal plan failed to load, showing error");
+          }
+
+          // Initialize app now that we have the data (or confirmed failure)
+          initializeApp();
+
+          // Scroll to today label if mobile app
+          setTimeout(scrollToTodayIfMobile, 500);
+        });
 
         // Update progress bars every minute
         setInterval(updateProgressBars, 60000);
