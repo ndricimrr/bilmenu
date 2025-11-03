@@ -1,0 +1,589 @@
+[
+  {
+    "date": "03.11.2025",
+    "dayOfWeek": "Pazartesi",
+    "lunch": [
+      {
+        "tr": "Kereviz Ã‡orba",
+        "en": "Kereviz Ã‡orba"
+      },
+      {
+        "tr": "Et Tiridi",
+        "en": "Et Tiridi"
+      },
+      {
+        "tr": "Bezelye Vegan",
+        "en": "Bezelye Vegan"
+      },
+      {
+        "tr": "BahÃ§e Salata",
+        "en": "BahÃ§e Salata"
+      },
+      {
+        "tr": "SÃ¼nger TatlÄ±sÄ±",
+        "en": "SÃ¼nger TatlÄ±sÄ±"
+      }
+    ],
+    "dinner": [
+      {
+        "tr": "Ã‡erkez Ã‡orba",
+        "en": "Ã‡erkez Ã‡orba"
+      },
+      {
+        "tr": "Etli Kabak Dolma (YoÄŸurt)",
+        "en": "Etli Kabak Dolma (YoÄŸurt)"
+      },
+      {
+        "tr": "Kabak Dolma Vegan",
+        "en": "Kabak Dolma Vegan"
+      },
+      {
+        "tr": "Su BÃ¶reÄŸi",
+        "en": "Su BÃ¶reÄŸi"
+      },
+      {
+        "tr": "Elma",
+        "en": "Elma"
+      }
+    ],
+    "alternative": [
+      {
+        "tr": "Alaca Ã‡orba",
+        "en": "Alaca Ã‡orba"
+      },
+      {
+        "tr": "FÄ±rÄ±n KÃ¶fte",
+        "en": "FÄ±rÄ±n KÃ¶fte"
+      },
+      {
+        "tr": "Tavuk DÃ¶ner (PirinÃ§ PilavÄ±)",
+        "en": "Tavuk DÃ¶ner (PirinÃ§ PilavÄ±)"
+      },
+      {
+        "tr": "EriÅŸte",
+        "en": "EriÅŸte"
+      },
+      {
+        "tr": "PirinÃ§ PilavÄ±",
+        "en": "PirinÃ§ PilavÄ±"
+      },
+      {
+        "tr": "ZeytinyaÄŸlÄ± PÄ±rasa",
+        "en": "ZeytinyaÄŸlÄ± PÄ±rasa"
+      },
+      {
+        "tr": "Amasra Salata",
+        "en": "Amasra Salata"
+      },
+      {
+        "tr": "YoÄŸurt",
+        "en": "YoÄŸurt"
+      },
+      {
+        "tr": "Tiramisu",
+        "en": "Tiramisu"
+      },
+      {
+        "tr": "ElmalÄ± Muhallebi",
+        "en": "ElmalÄ± Muhallebi"
+      },
+      {
+        "tr": "KemalpaÅŸa TatlÄ±sÄ±",
+        "en": "KemalpaÅŸa TatlÄ±sÄ±"
+      },
+      {
+        "tr": "Muz",
+        "en": "Muz"
+      }
+    ]
+  },
+  {
+    "date": "04.11.2025",
+    "dayOfWeek": "SalÄ±",
+    "lunch": [
+      {
+        "tr": "MaÅŸ Fasulyesi Ã‡orba",
+        "en": "MaÅŸ Fasulyesi Ã‡orba"
+      },
+      {
+        "tr": "Tavuk Yahni",
+        "en": "Tavuk Yahni"
+      },
+      {
+        "tr": "Mantar Sote Vegan",
+        "en": "Mantar Sote Vegan"
+      },
+      {
+        "tr": "Domatesli PirinÃ§ PilavÄ±",
+        "en": "Domatesli PirinÃ§ PilavÄ±"
+      },
+      {
+        "tr": "Ayran",
+        "en": "Ayran"
+      }
+    ],
+    "dinner": [
+      {
+        "tr": "MÄ±sÄ±r Ã‡orba",
+        "en": "MÄ±sÄ±r Ã‡orba"
+      },
+      {
+        "tr": "Belen KÃ¶fte (Arpa Åehriye PilavÄ±)",
+        "en": "Belen KÃ¶fte (Arpa Åehriye PilavÄ±)"
+      },
+      {
+        "tr": "Ä°Ã§li KÃ¶fte (Domates - Biber) Vegan",
+        "en": "Ä°Ã§li KÃ¶fte (Domates - Biber) Vegan"
+      },
+      {
+        "tr": "KarÄ±ÅŸÄ±k Salata",
+        "en": "KarÄ±ÅŸÄ±k Salata"
+      },
+      {
+        "tr": "VanilyalÄ± Åarlot",
+        "en": "VanilyalÄ± Åarlot"
+      }
+    ],
+    "alternative": [
+      {
+        "tr": "Minestrone Ã‡orba",
+        "en": "Minestrone Ã‡orba"
+      },
+      {
+        "tr": "Macar GulaÅŸ",
+        "en": "Macar GulaÅŸ"
+      },
+      {
+        "tr": "KarÄ±ÅŸÄ±k Musakka",
+        "en": "KarÄ±ÅŸÄ±k Musakka"
+      },
+      {
+        "tr": "Pesto Soslu Makarna",
+        "en": "Pesto Soslu Makarna"
+      },
+      {
+        "tr": "IspanaklÄ± Rulo BÃ¶rek",
+        "en": "IspanaklÄ± Rulo BÃ¶rek"
+      },
+      {
+        "tr": "Karnabahar KÄ±zartma (YoÄŸurt)",
+        "en": "Karnabahar KÄ±zartma (YoÄŸurt)"
+      },
+      {
+        "tr": "Mevsim Salata",
+        "en": "Mevsim Salata"
+      },
+      {
+        "tr": "YoÄŸurt",
+        "en": "YoÄŸurt"
+      },
+      {
+        "tr": "Krem Åokola",
+        "en": "Krem Åokola"
+      },
+      {
+        "tr": "Ä°ncirli KeÅŸkÃ¼l",
+        "en": "Ä°ncirli KeÅŸkÃ¼l"
+      },
+      {
+        "tr": "ÅÃ¶biyet",
+        "en": "ÅÃ¶biyet"
+      },
+      {
+        "tr": "Portakal",
+        "en": "Portakal"
+      }
+    ]
+  },
+  {
+    "date": "05.11.2025",
+    "dayOfWeek": "Ã‡arÅŸamba",
+    "lunch": [
+      {
+        "tr": "Bulgur Ã‡orba",
+        "en": "Bulgur Ã‡orba"
+      },
+      {
+        "tr": "KÄ±ymalÄ± TÃ¼rlÃ¼",
+        "en": "KÄ±ymalÄ± TÃ¼rlÃ¼"
+      },
+      {
+        "tr": "TÃ¼rlÃ¼ Vegan",
+        "en": "TÃ¼rlÃ¼ Vegan"
+      },
+      {
+        "tr": "FÄ±rÄ±n Makarna",
+        "en": "FÄ±rÄ±n Makarna"
+      },
+      {
+        "tr": "Mandalina",
+        "en": "Mandalina"
+      }
+    ],
+    "dinner": [
+      {
+        "tr": "EkÅŸili Anadolu Ã‡orba",
+        "en": "EkÅŸili Anadolu Ã‡orba"
+      },
+      {
+        "tr": "Kibrit Kebap",
+        "en": "Kibrit Kebap"
+      },
+      {
+        "tr": "Barbunya Vegan",
+        "en": "Barbunya Vegan"
+      },
+      {
+        "tr": "PirinÃ§ PilavÄ±",
+        "en": "PirinÃ§ PilavÄ±"
+      },
+      {
+        "tr": "NiÅŸ Salata",
+        "en": "NiÅŸ Salata"
+      }
+    ],
+    "alternative": [
+      {
+        "tr": "KÃ¶ylÃ¼ Ã‡orba",
+        "en": "KÃ¶ylÃ¼ Ã‡orba"
+      },
+      {
+        "tr": "Sebzeli Tavuk",
+        "en": "Sebzeli Tavuk"
+      },
+      {
+        "tr": "KÄ±brÄ±s KÃ¶fte (Bulgur PilavÄ±)",
+        "en": "KÄ±brÄ±s KÃ¶fte (Bulgur PilavÄ±)"
+      },
+      {
+        "tr": "Bulgur PilavÄ±",
+        "en": "Bulgur PilavÄ±"
+      },
+      {
+        "tr": "KaÅŸarlÄ± EriÅŸte",
+        "en": "KaÅŸarlÄ± EriÅŸte"
+      },
+      {
+        "tr": "ZeytinyaÄŸlÄ± BrÃ¼ksel Lahana",
+        "en": "ZeytinyaÄŸlÄ± BrÃ¼ksel Lahana"
+      },
+      {
+        "tr": "Akdeniz Salata",
+        "en": "Akdeniz Salata"
+      },
+      {
+        "tr": "YoÄŸurt",
+        "en": "YoÄŸurt"
+      },
+      {
+        "tr": "Ekler Pasta",
+        "en": "Ekler Pasta"
+      },
+      {
+        "tr": "Sultan Muhallebi",
+        "en": "Sultan Muhallebi"
+      },
+      {
+        "tr": "YoÄŸurt TatlÄ±sÄ±",
+        "en": "YoÄŸurt TatlÄ±sÄ±"
+      },
+      {
+        "tr": "Elma",
+        "en": "Elma"
+      }
+    ]
+  },
+  {
+    "date": "06.11.2025",
+    "dayOfWeek": "PerÅŸembe",
+    "lunch": [
+      {
+        "tr": "Romen Ã‡orba",
+        "en": "Romen Ã‡orba"
+      },
+      {
+        "tr": "Meksika KÃ¶fte (Patates Kavurma)",
+        "en": "Meksika KÃ¶fte (Patates Kavurma)"
+      },
+      {
+        "tr": "FÄ±rÄ±n Patates Vegan",
+        "en": "FÄ±rÄ±n Patates Vegan"
+      },
+      {
+        "tr": "ZeytinyaÄŸlÄ± Brokoli",
+        "en": "ZeytinyaÄŸlÄ± Brokoli"
+      },
+      {
+        "tr": "Bal KabaklÄ± Cezerye",
+        "en": "Bal KabaklÄ± Cezerye"
+      }
+    ],
+    "dinner": [
+      {
+        "tr": "Sebze Ã‡orba",
+        "en": "Sebze Ã‡orba"
+      },
+      {
+        "tr": "Etli Nohut",
+        "en": "Etli Nohut"
+      },
+      {
+        "tr": "Nohut Vegan",
+        "en": "Nohut Vegan"
+      },
+      {
+        "tr": "Bulgur PilavÄ±",
+        "en": "Bulgur PilavÄ±"
+      },
+      {
+        "tr": "YoÄŸurt",
+        "en": "YoÄŸurt"
+      }
+    ],
+    "alternative": [
+      {
+        "tr": "Ezogelin Ã‡orba",
+        "en": "Ezogelin Ã‡orba"
+      },
+      {
+        "tr": "Et Sote (Arpa Åehriye PilavÄ±)",
+        "en": "Et Sote (Arpa Åehriye PilavÄ±)"
+      },
+      {
+        "tr": "PiliÃ§ TandÄ±r (PÃ¼re)",
+        "en": "PiliÃ§ TandÄ±r (PÃ¼re)"
+      },
+      {
+        "tr": "Arpa Åehriye PilavÄ±",
+        "en": "Arpa Åehriye PilavÄ±"
+      },
+      {
+        "tr": "Peynirli GÃ¼l BÃ¶reÄŸi",
+        "en": "Peynirli GÃ¼l BÃ¶reÄŸi"
+      },
+      {
+        "tr": "MÃ¼cver (YoÄŸurt)",
+        "en": "MÃ¼cver (YoÄŸurt)"
+      },
+      {
+        "tr": "PancarlÄ± BahÃ§e Salata",
+        "en": "PancarlÄ± BahÃ§e Salata"
+      },
+      {
+        "tr": "YoÄŸurt",
+        "en": "YoÄŸurt"
+      },
+      {
+        "tr": "Ã‡ikolatalÄ± Puding",
+        "en": "Ã‡ikolatalÄ± Puding"
+      },
+      {
+        "tr": "PortakallÄ± KeÅŸkÃ¼l",
+        "en": "PortakallÄ± KeÅŸkÃ¼l"
+      },
+      {
+        "tr": "HaÅŸhaÅŸlÄ± Åekerpare",
+        "en": "HaÅŸhaÅŸlÄ± Åekerpare"
+      },
+      {
+        "tr": "Armut",
+        "en": "Armut"
+      }
+    ]
+  },
+  {
+    "date": "07.11.2025",
+    "dayOfWeek": "Cuma",
+    "lunch": [
+      {
+        "tr": "AyranaÅŸÄ± Ã‡orba",
+        "en": "AyranaÅŸÄ± Ã‡orba"
+      },
+      {
+        "tr": "Ankara Tava",
+        "en": "Ankara Tava"
+      },
+      {
+        "tr": "Yufkada Sebzeli Dolma Vegan",
+        "en": "Yufkada Sebzeli Dolma Vegan"
+      },
+      {
+        "tr": "Amasra Salata",
+        "en": "Amasra Salata"
+      },
+      {
+        "tr": "Tulumba TatlÄ±sÄ±",
+        "en": "Tulumba TatlÄ±sÄ±"
+      }
+    ],
+    "dinner": [
+      {
+        "tr": "Domates Ã‡orba",
+        "en": "Domates Ã‡orba"
+      },
+      {
+        "tr": "Tavuklu BuÄŸu Kebap",
+        "en": "Tavuklu BuÄŸu Kebap"
+      },
+      {
+        "tr": "Karnabahar Vegan",
+        "en": "Karnabahar Vegan"
+      },
+      {
+        "tr": "Arpa Åehriye PilavÄ±",
+        "en": "Arpa Åehriye PilavÄ±"
+      },
+      {
+        "tr": "Portakal",
+        "en": "Portakal"
+      }
+    ]
+  },
+  {
+    "date": "08.11.2025",
+    "dayOfWeek": "Cumartesi",
+    "lunch": [
+      {
+        "tr": "Brokoli Ã‡orba",
+        "en": "Brokoli Ã‡orba"
+      },
+      {
+        "tr": "Etli Bezelye",
+        "en": "Etli Bezelye"
+      },
+      {
+        "tr": "Bezelye Vegan",
+        "en": "Bezelye Vegan"
+      },
+      {
+        "tr": "Bulgur PilavÄ±",
+        "en": "Bulgur PilavÄ±"
+      },
+      {
+        "tr": "YoÄŸurt",
+        "en": "YoÄŸurt"
+      }
+    ],
+    "dinner": [
+      {
+        "tr": "Mantar Ã‡orba",
+        "en": "Mantar Ã‡orba"
+      },
+      {
+        "tr": "KÃ¶ri Soslu KÃ¶fte",
+        "en": "KÃ¶ri Soslu KÃ¶fte"
+      },
+      {
+        "tr": "PatlÄ±can Kavurma Vegan",
+        "en": "PatlÄ±can Kavurma Vegan"
+      },
+      {
+        "tr": "BahÃ§Ä±van UsulÃ¼ Makarna",
+        "en": "BahÃ§Ä±van UsulÃ¼ Makarna"
+      },
+      {
+        "tr": "Mevsim Salata",
+        "en": "Mevsim Salata"
+      }
+    ],
+    "alternative": []
+  },
+  {
+    "date": "09.11.2025",
+    "dayOfWeek": "Pazar",
+    "lunch": [
+      {
+        "tr": "Lebeni Ã‡orba",
+        "en": "Lebeni Ã‡orba"
+      },
+      {
+        "tr": "KÃ¶ylÃ¼m Tavuk (Sebze HaÅŸlama)",
+        "en": "KÃ¶ylÃ¼m Tavuk (Sebze HaÅŸlama)"
+      },
+      {
+        "tr": "Kabak Musakka Vegan",
+        "en": "Kabak Musakka Vegan"
+      },
+      {
+        "tr": "PirinÃ§ PilavÄ±",
+        "en": "PirinÃ§ PilavÄ±"
+      },
+      {
+        "tr": "Elma",
+        "en": "Elma"
+      }
+    ],
+    "dinner": [
+      {
+        "tr": "Åafak Ã‡orba",
+        "en": "Åafak Ã‡orba"
+      },
+      {
+        "tr": "KÄ±ymalÄ± FÄ±rÄ±n Patates",
+        "en": "KÄ±ymalÄ± FÄ±rÄ±n Patates"
+      },
+      {
+        "tr": "FÄ±rÄ±n Patates Vegan",
+        "en": "FÄ±rÄ±n Patates Vegan"
+      },
+      {
+        "tr": "KaÅŸarlÄ± Cevizli EriÅŸte",
+        "en": "KaÅŸarlÄ± Cevizli EriÅŸte"
+      },
+      {
+        "tr": "YoÄŸurt",
+        "en": "YoÄŸurt"
+      }
+    ],
+    "alternative": []
+  },
+  {
+    "date": "10.11.2025",
+    "dayOfWeek": "Pazartesi",
+    "lunch": [
+      {
+        "tr": "Muradiye Ã‡orba",
+        "en": "Muradiye Ã‡orba"
+      },
+      {
+        "tr": "Rosto KÃ¶fte (PÃ¼re)",
+        "en": "Rosto KÃ¶fte (PÃ¼re)"
+      },
+      {
+        "tr": "Yufkada PÄ±rasalÄ± Dolma Vegan",
+        "en": "Yufkada PÄ±rasalÄ± Dolma Vegan"
+      },
+      {
+        "tr": "BahÃ§e Salata",
+        "en": "BahÃ§e Salata"
+      },
+      {
+        "tr": "Tahinli TatlÄ±",
+        "en": "Tahinli TatlÄ±"
+      }
+    ],
+    "dinner": [
+      {
+        "tr": "KÄ±rmÄ±zÄ± Mercimek Ã‡orba",
+        "en": "KÄ±rmÄ±zÄ± Mercimek Ã‡orba"
+      },
+      {
+        "tr": "Tas Kebap",
+        "en": "Tas Kebap"
+      },
+      {
+        "tr": "Brokoli Vegan",
+        "en": "Brokoli Vegan"
+      },
+      {
+        "tr": "Bulgur PilavÄ±",
+        "en": "Bulgur PilavÄ±"
+      },
+      {
+        "tr": "Ayran",
+        "en": "Ayran"
+      }
+    ],
+    "alternative": []
+  }
+]
