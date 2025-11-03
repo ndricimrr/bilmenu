@@ -1,3 +1,11 @@
+// ============================================================================
+// LEGACY SCRIPT - OLD SITE DESIGN
+// ============================================================================
+// This script is for the OLD site design.
+// The site has been redesigned. See callGemini_v2.js for the new design.
+// This is kept for reference in case the old design returns.
+// ============================================================================
+
 const fs = require("fs");
 const axios = require("axios");
 const {
@@ -5,7 +13,7 @@ const {
 } = require("../../webapp/js/utilities_node");
 const { GoogleGenAI } = require("@google/genai");
 
-// Load prompt and cleaned HTML
+// Load prompt and cleaned HTML (OLD DESIGN - uses prompt.txt)
 const prompt = fs.readFileSync("./scripts/ai/prompt.txt", "utf8");
 const cleanedHtml = fs.readFileSync("./cleaned.html", "utf8");
 

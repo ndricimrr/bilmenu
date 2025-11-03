@@ -1,3 +1,11 @@
+// ============================================================================
+// LEGACY SCRIPT - OLD SITE DESIGN
+// ============================================================================
+// This script is for the OLD site design (table-based with "icerik" CSS class).
+// The site has been redesigned. See cleanHtmlScript_v2.js for the new design.
+// This is kept for reference in case the old design returns.
+// ============================================================================
+
 const axios = require("axios");
 const URL = require("../../webapp/js/constants").URL;
 

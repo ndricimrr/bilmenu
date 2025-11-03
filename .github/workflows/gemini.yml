@@ -20,8 +20,12 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Generate Clean HTML
-        run: node scripts/html/cleanHtmlScript.js > cleaned.html
+      - name: Generate Clean HTML (New Site Design)
+        run: node scripts/html/cleanHtmlScript_v2.js > cleaned.html
+
+      # OLD SCRIPT (commented out - in case old design returns):
+      # - name: Generate Clean HTML
+      #   run: node scripts/html/cleanHtmlScript.js > cleaned.html
 
       - name: Check if cleaned HTML file exists and is not empty
         run: |
@@ -35,10 +39,16 @@ jobs:
           echo "Displaying cleaned HTML content:"
           cat cleaned.html
 
-      - name: Call Gemini API with cleaned HTML
+      - name: Call Gemini API with cleaned HTML (New Site Design)
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: node scripts/ai/callGemini.js
+        run: node scripts/ai/callGemini_v2.js
+
+      # OLD SCRIPT (commented out - in case old design returns):
+      # - name: Call Gemini API with cleaned HTML
+      #   env:
+      #     GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      #   run: node scripts/ai/callGemini.js
 
       - name: Delete cleaned HTML file
         run: rm cleaned.html

@@ -1,0 +1,51 @@
+You are an expert HTML parser, extracting weekly cafeteria meal data from a modern Bootstrap-based card layout.
+**Your Goal:** Extract all meal items (Lunch, Dinner, Alternative) for each day into a precise JSON format.
+
+**Output Format (Strict Adherence Required):**
+```json
+[
+  {
+    "date": "DD.MM.YYYY",
+    "dayOfWeek": "DayNameInEnglish",
+    "lunch": [{"tr": "TurkishMealName", "en": "EnglishTranslation"}],
+    "dinner": [{"tr": "TurkishMealName", "en": "EnglishTranslation"}],
+    "alternative": [{"tr": "TurkishMealName", "en": "EnglishTranslation"}]
+  }
+  // ... continue for all days found ...
+]
+```
+
+**Parsing Instructions for New Site Design:**
+
+1. **Day Identification**: Each day is in a `<div>` with `id="day-YYYY-MM-DD-tab-pane"`. Extract the date from the ID and convert to DD.MM.YYYY format. The day of week is typically shown in Turkish in the tab buttons above, but you'll need to determine the English day name from the date.
+
+2. **Section Identification**: Within each day, look for cards with headers containing:
+   - "Tabildot Fiks Menü - Öğlen" or similar → This is **Lunch** (Öğle Yemeği)
+   - "Tabildot Fiks Menü - Akşam" or similar → This is **Dinner** (Akşam Yemeği)
+   - "Tabildot Seçmeli Menü" or similar → This is **Alternative** (Seçmeli Menü)
+
+3. **Meal Item Extraction**: 
+   - Meal items are in `<div>` elements with class "meal-item" or "meal-item-vegan"
+   - The Turkish meal name is in a nested `<div>` with classes like "fw-bold text-dark fs-5"
+   - Extract the text content of the meal name (strip HTML tags)
+   - If the parent has class "meal-item-vegan", include "(Vegan)" in the name
+   - For English translation: Translate the Turkish meal name to English. Use common food terminology. If the Turkish name includes "(Vegan)", keep it in English as "(Vegan)"
+
+4. **Cleaning Rules**:
+   - Strip all HTML tags completely
+   - Remove leading/trailing whitespace
+   - Remove icons, badges, and decorative elements
+   - If a text block contains "X veya Y" (or "X or Y"), split into two separate meal objects
+
+5. **Consolidation**: Create one JSON object per day. Populate lunch, dinner, and alternative arrays with meal objects containing "tr" (Turkish) and "en" (English) properties.
+
+6. **Empty Arrays**: If any lunch, dinner, or alternative section has no items for a day, set its array to []. Do not omit the key.
+
+7. **Translation Guidelines**:
+   - Use standard English food terminology
+   - Keep dish names as close to the Turkish meaning as possible
+   - Preserve "(Vegan)" markers if present
+   - Example: "Kereviz Çorba" → "Celery soup", "Et Tiridi" → "Meat tiridi" (or descriptive translation)
+
+8. **Final Output**: Output only the complete JSON array. No conversational text, no markdown code blocks wrapper (the JSON itself).
+

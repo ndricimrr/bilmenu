@@ -1,3 +1,9 @@
+NOTE: This prompt is for the LEGACY OLD site design (table-based with "icerik" CSS class).
+The site has been redesigned. See prompt_v2.txt for the new design.
+This is kept for reference in case the old design returns.
+
+---
+
 You are an expert HTML parser, extracting weekly cafeteria meal data. The HTML structure is inconsistent; focus on content patterns.
 **Your Goal:** Extract all meal items (Lunch, Dinner, Alternative) for each day into a precise JSON format.
 **Output Format (Strict Adherence Required):**
