@@ -9,6 +9,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Constants from "expo-constants";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { Header } from "@/components/header";
@@ -205,7 +206,9 @@ export default function SettingsScreen() {
               ? "BilMenu - Bilkent University Cafeteria Menu App"
               : "BilMenu - Bilkent Üniversitesi Kafeterya Menü Uygulaması"}
           </ThemedText>
-          <ThemedText style={styles.versionText}>Version 1.0.0</ThemedText>
+          <ThemedText style={styles.versionText}>
+            Version {Constants.expoConfig?.version || "1.0.0"}
+          </ThemedText>
         </ThemedView>
       </ScrollView>
     </SafeAreaView>

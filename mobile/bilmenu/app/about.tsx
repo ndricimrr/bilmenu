@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
+import Constants from "expo-constants";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { useTranslations } from "@/hooks/use-translations";
@@ -150,8 +151,8 @@ export default function AboutModal() {
           </ThemedText>
           <ThemedText style={styles.paragraph}>
             {language === "en"
-              ? "Version 1.0.0\nBuilt with React Native and Expo\nLast updated: September 2025"
-              : "Sürüm 1.0.0\nReact Native ve Expo ile oluşturulmuştur\nSon güncelleme: Eylül 2025"}
+              ? `Version ${Constants.expoConfig?.version || "1.0.0"}\nBuilt with React Native and Expo\nLast updated: September 2025`
+              : `Sürüm ${Constants.expoConfig?.version || "1.0.0"}\nReact Native ve Expo ile oluşturulmuştur\nSon güncelleme: Eylül 2025`}
           </ThemedText>
 
           <ThemedText style={styles.footer}>
