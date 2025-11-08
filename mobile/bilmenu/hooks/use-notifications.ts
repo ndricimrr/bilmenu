@@ -145,7 +145,29 @@ export async function scheduleLunchNotification(language: "en" | "tr") {
   const title = language === "en" ? "Lunch Time! 🍽️" : "Öğle Yemeği Zamanı! 🍽️";
   const body = getRandomMessage(lunchMessages[language]);
 
-  // Schedule lunch notification for 11:30 AM daily
+  // TEMPORARY: Check for custom test time from Settings
+  // TODO: Remove this test time feature after testing
+  const AsyncStorage = require("@react-native-async-storage/async-storage").default;
+  let hour = 11;
+  let minute = 30;
+  let repeats = true;
+
+  try {
+    const testTime = await AsyncStorage.getItem("bilmenu-lunch-test-time");
+    if (testTime) {
+      // Parse time from "HH:MM" format
+      const [testHour, testMinute] = testTime.split(":").map(Number);
+      if (!isNaN(testHour) && !isNaN(testMinute)) {
+        hour = testHour;
+        minute = testMinute;
+        repeats = false; // Don't repeat test notifications
+      }
+    }
+  } catch (error) {
+    // Fall back to default if error
+  }
+
+  // Schedule lunch notification
   const notificationId = await Notifications.scheduleNotificationAsync({
     identifier: "lunch-notification",
     content: {
@@ -156,9 +178,9 @@ export async function scheduleLunchNotification(language: "en" | "tr") {
     },
     trigger: {
       type: Notifications.SchedulableTriggerInputTypes.CALENDAR,
-      hour: 11,
-      minute: 30,
-      repeats: true,
+      hour,
+      minute,
+      repeats: !testMode, // Don't repeat in test mode
     },
   });
 
@@ -170,7 +192,29 @@ export async function scheduleDinnerNotification(language: "en" | "tr") {
     language === "en" ? "Dinner Time! 🌙" : "Akşam Yemeği Zamanı! 🌙";
   const body = getRandomMessage(dinnerMessages[language]);
 
-  // Schedule dinner notification for 5:30 PM daily
+  // TEMPORARY: Check for custom test time from Settings
+  // TODO: Remove this test time feature after testing
+  const AsyncStorage = require("@react-native-async-storage/async-storage").default;
+  let hour = 17;
+  let minute = 0;
+  let repeats = true;
+
+  try {
+    const testTime = await AsyncStorage.getItem("bilmenu-dinner-test-time");
+    if (testTime) {
+      // Parse time from "HH:MM" format
+      const [testHour, testMinute] = testTime.split(":").map(Number);
+      if (!isNaN(testHour) && !isNaN(testMinute)) {
+        hour = testHour;
+        minute = testMinute;
+        repeats = false; // Don't repeat test notifications
+      }
+    }
+  } catch (error) {
+    // Fall back to default if error
+  }
+
+  // Schedule dinner notification
   const notificationId = await Notifications.scheduleNotificationAsync({
     identifier: "dinner-notification",
     content: {
@@ -181,9 +225,9 @@ export async function scheduleDinnerNotification(language: "en" | "tr") {
     },
     trigger: {
       type: Notifications.SchedulableTriggerInputTypes.CALENDAR,
-      hour: 17,
-      minute: 0,
-      repeats: true,
+      hour,
+      minute,
+      repeats,
     },
   });
 
