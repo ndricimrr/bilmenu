@@ -13,7 +13,10 @@
 </div>
 
 **🌐 Live Demo:** [www.bilmenu.com](https://www.bilmenu.com)  
-**📱 Mobile App:** [Download on App Store](https://apps.apple.com/de/app/bilmenu/id6752549798)
+**📱 Mobile App:** 
+- iOS: [Download on App Store](https://apps.apple.com/de/app/bilmenu/id6752549798)
+- Android: [Download on Play Store](https://play.google.com/store/apps/details?id=com.bilmenu.app)
+ 
 
 Welcome to the BilMenu project! This open-source project aims to provide a simple and interactive way for Bilkent University students to view cafeteria menus for different days of the week. The project focuses on displaying meal options with images, creating an easy-to-navigate interface for users.
 
