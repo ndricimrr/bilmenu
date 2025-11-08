@@ -2,7 +2,7 @@
   "expo": {
     "name": "BilMenu",
     "slug": "bilmenu",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "orientation": "portrait",
     "icon": "./assets/images/logo/master_ios_bilmenu_1024_1024.png",
     "scheme": "bilmenu",
@@ -29,14 +29,15 @@
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
       "package": "com.bilmenu.app",
-      "versionCode": 4,
+      "versionCode": 7,
       "permissions": [
         "INTERNET",
         "ACCESS_NETWORK_STATE",
         "CAMERA",
         "WRITE_EXTERNAL_STORAGE",
         "android.permission.CAMERA",
-        "android.permission.RECORD_AUDIO"
+        "android.permission.RECORD_AUDIO",
+        "android.permission.POST_NOTIFICATIONS"
       ]
     },
     "web": {

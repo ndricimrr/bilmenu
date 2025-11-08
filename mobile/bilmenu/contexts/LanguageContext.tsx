@@ -82,11 +82,8 @@ export function LanguageProvider({ children }: LanguageProviderProps) {
     }
   };
 
-  // Don't render until language is loaded
-  if (!isLoaded) {
-    return null;
-  }
-
+  // Always render - don't return null (new architecture requires this)
+  // The app will use default "en" language until saved language loads
   return (
     <LanguageContext.Provider value={{ language, changeLanguage }}>
       {children}
