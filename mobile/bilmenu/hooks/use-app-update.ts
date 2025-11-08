@@ -18,11 +18,15 @@ export function useAppUpdate() {
     try {
       // Get current version from app
       const currentVersion = Constants.expoConfig?.version || "1.0.0";
-      console.log(`[Update Check ${Platform.OS}] Current version: ${currentVersion}`);
-      
+      console.log(
+        `[Update Check ${Platform.OS}] Current version: ${currentVersion}`
+      );
+
       // Get latest version from GitHub
       const latestVersion = await getLatestVersionFromGitHub();
-      console.log(`[Update Check ${Platform.OS}] Latest version: ${latestVersion}`);
+      console.log(
+        `[Update Check ${Platform.OS}] Latest version: ${latestVersion}`
+      );
 
       const isNewer = isNewerVersion(latestVersion, currentVersion);
       console.log(`[Update Check ${Platform.OS}] Is newer: ${isNewer}`);
@@ -42,18 +46,22 @@ export function useAppUpdate() {
 
   const getLatestVersionFromGitHub = async () => {
     try {
-      console.log(`[Update Check ${Platform.OS}] Fetching version from GitHub...`);
+      console.log(
+        `[Update Check ${Platform.OS}] Fetching version from GitHub...`
+      );
       const response = await fetch(
         "https://raw.githubusercontent.com/ndricimrr/bilmenu/refs/heads/main/mobile/bilmenu/app.json"
       );
-      
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      
+
       const data = await response.json();
       const version = data.expo?.version || "1.0.0";
-      console.log(`[Update Check ${Platform.OS}] Successfully fetched version: ${version}`);
+      console.log(
+        `[Update Check ${Platform.OS}] Successfully fetched version: ${version}`
+      );
       return version;
     } catch (error) {
       console.error(`[Update Check ${Platform.OS}] Fetch error:`, error);
