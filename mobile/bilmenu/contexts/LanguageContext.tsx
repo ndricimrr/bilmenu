@@ -6,6 +6,7 @@ import React, {
   ReactNode,
 } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as SplashScreen from "expo-splash-screen";
 import { Language } from "@/constants/translations";
 
 interface LanguageContextType {
@@ -37,9 +38,16 @@ export function LanguageProvider({ children }: LanguageProviderProps) {
         setLanguage(savedLanguage as Language);
       }
     } catch (error) {
-      console.log("Error loading language:", error);
+      console.error("Error loading language:", error);
+      // Continue with default language even if there's an error
     } finally {
       setIsLoaded(true);
+      // Ensure splash screen is hidden after language loads
+      try {
+        await SplashScreen.hideAsync();
+      } catch (error) {
+        // Ignore splash screen errors
+      }
     }
   };
 

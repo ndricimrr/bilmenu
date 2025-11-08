@@ -6,12 +6,16 @@ import {
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
+import * as SplashScreen from "expo-splash-screen";
 
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import { LanguageProvider, useLanguage } from "@/contexts/LanguageContext";
 import { initializeNotifications } from "@/hooks/use-notifications";
 import { useAppUpdate } from "@/hooks/use-app-update";
 import { useAppRating } from "@/hooks/use-app-rating";
+
+// Prevent the splash screen from auto-hiding
+SplashScreen.preventAutoHideAsync();
 
 export const unstable_settings = {
   anchor: "(tabs)",
@@ -22,8 +26,11 @@ function AppContent() {
   const { language } = useLanguage();
 
   // Initialize notifications when app starts and language is available
+  // This runs in the background and doesn't block the UI
   useEffect(() => {
-    initializeNotifications(language);
+    initializeNotifications(language).catch((error) => {
+      console.error("Error initializing notifications:", error);
+    });
   }, [language]);
 
   // Check for app updates
