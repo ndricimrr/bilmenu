@@ -152,6 +152,7 @@ export async function scheduleLunchNotification(language: "en" | "tr") {
       title,
       body,
       sound: "default",
+      ...(Platform.OS === "android" && { channelId: "default" }),
     },
     trigger: {
       type: Notifications.SchedulableTriggerInputTypes.CALENDAR,
@@ -176,6 +177,7 @@ export async function scheduleDinnerNotification(language: "en" | "tr") {
       title,
       body,
       sound: "default",
+      ...(Platform.OS === "android" && { channelId: "default" }),
     },
     trigger: {
       type: Notifications.SchedulableTriggerInputTypes.CALENDAR,

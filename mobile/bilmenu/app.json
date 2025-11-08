@@ -11,13 +11,16 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.bilmenu.app",
-      "buildNumber": "18",
+      "buildNumber": "19",
       "infoPlist": {
         "NSUserNotificationsUsageDescription": "BilMenu sends notifications to remind you about meal times at Bilkent University cafeteria.",
         "NSCameraUsageDescription": "BilMenu uses the camera to capture images of missing meals for submission.",
         "NSLocationWhenInUseUsageDescription": "This app does not use location services.",
         "ITSAppUsesNonExemptEncryption": false,
-        "WKAppBoundDomains": ["bilmenu.com", "www.bilmenu.com"]
+        "WKAppBoundDomains": [
+          "bilmenu.com",
+          "www.bilmenu.com"
+        ]
       }
     },
     "android": {
