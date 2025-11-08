@@ -3,6 +3,7 @@ import React, {
   useContext,
   useState,
   useEffect,
+  useRef,
   ReactNode,
 } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -25,15 +26,35 @@ interface LanguageProviderProps {
 export function LanguageProvider({ children }: LanguageProviderProps) {
   const [language, setLanguage] = useState<Language>("en");
   const [isLoaded, setIsLoaded] = useState(false);
+  const hasLoadedRef = useRef(false);
 
   // Load saved language on app start
   useEffect(() => {
     loadLanguage();
+
+    // Safety timeout: force hide splash screen after 3 seconds
+    const timeout = setTimeout(() => {
+      if (!hasLoadedRef.current) {
+        console.warn("Language loading timeout - forcing app to load");
+        hasLoadedRef.current = true;
+        setIsLoaded(true);
+        SplashScreen.hideAsync().catch(() => {});
+      }
+    }, 3000);
+
+    return () => clearTimeout(timeout);
   }, []);
 
   const loadLanguage = async () => {
     try {
-      const savedLanguage = await AsyncStorage.getItem("bilmenu-language");
+      // Add timeout to AsyncStorage call
+      const savedLanguage = await Promise.race([
+        AsyncStorage.getItem("bilmenu-language"),
+        new Promise<string | null>((resolve) =>
+          setTimeout(() => resolve(null), 2000)
+        ),
+      ]);
+
       if (savedLanguage && (savedLanguage === "en" || savedLanguage === "tr")) {
         setLanguage(savedLanguage as Language);
       }
@@ -41,6 +62,7 @@ export function LanguageProvider({ children }: LanguageProviderProps) {
       console.error("Error loading language:", error);
       // Continue with default language even if there's an error
     } finally {
+      hasLoadedRef.current = true;
       setIsLoaded(true);
       // Ensure splash screen is hidden after language loads
       try {
