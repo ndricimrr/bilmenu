@@ -204,6 +204,41 @@ export async function scheduleLunchNotification(language: "en" | "tr") {
         .padStart(2, "0")}, repeats: ${repeats}`
     );
 
+    // Android doesn't support CALENDAR trigger, use DAILY instead
+    // For non-repeating notifications, use DATE trigger
+    let trigger: Notifications.NotificationTriggerInput;
+
+    if (Platform.OS === "android") {
+      if (repeats) {
+        trigger = {
+          type: Notifications.SchedulableTriggerInputTypes.DAILY,
+          hour,
+          minute,
+        };
+      } else {
+        // For one-time notifications, calculate the date
+        const now = new Date();
+        const targetDate = new Date();
+        targetDate.setHours(hour, minute, 0, 0);
+        // If the time has passed today, schedule for tomorrow
+        if (targetDate <= now) {
+          targetDate.setDate(targetDate.getDate() + 1);
+        }
+        trigger = {
+          type: Notifications.SchedulableTriggerInputTypes.DATE,
+          date: targetDate,
+        };
+      }
+    } else {
+      // iOS uses CALENDAR trigger
+      trigger = {
+        type: Notifications.SchedulableTriggerInputTypes.CALENDAR,
+        hour,
+        minute,
+        repeats,
+      };
+    }
+
     const notificationId = await Notifications.scheduleNotificationAsync({
       identifier: "lunch-notification",
       content: {
@@ -212,12 +247,7 @@ export async function scheduleLunchNotification(language: "en" | "tr") {
         sound: "default",
         ...(Platform.OS === "android" && { channelId: "default" }),
       },
-      trigger: {
-        type: Notifications.SchedulableTriggerInputTypes.CALENDAR,
-        hour,
-        minute,
-        repeats,
-      },
+      trigger,
     });
 
     console.log(
@@ -269,6 +299,41 @@ export async function scheduleDinnerNotification(language: "en" | "tr") {
         .padStart(2, "0")}, repeats: ${repeats}`
     );
 
+    // Android doesn't support CALENDAR trigger, use DAILY instead
+    // For non-repeating notifications, use DATE trigger
+    let trigger: Notifications.NotificationTriggerInput;
+
+    if (Platform.OS === "android") {
+      if (repeats) {
+        trigger = {
+          type: Notifications.SchedulableTriggerInputTypes.DAILY,
+          hour,
+          minute,
+        };
+      } else {
+        // For one-time notifications, calculate the date
+        const now = new Date();
+        const targetDate = new Date();
+        targetDate.setHours(hour, minute, 0, 0);
+        // If the time has passed today, schedule for tomorrow
+        if (targetDate <= now) {
+          targetDate.setDate(targetDate.getDate() + 1);
+        }
+        trigger = {
+          type: Notifications.SchedulableTriggerInputTypes.DATE,
+          date: targetDate,
+        };
+      }
+    } else {
+      // iOS uses CALENDAR trigger
+      trigger = {
+        type: Notifications.SchedulableTriggerInputTypes.CALENDAR,
+        hour,
+        minute,
+        repeats,
+      };
+    }
+
     const notificationId = await Notifications.scheduleNotificationAsync({
       identifier: "dinner-notification",
       content: {
@@ -277,12 +342,7 @@ export async function scheduleDinnerNotification(language: "en" | "tr") {
         sound: "default",
         ...(Platform.OS === "android" && { channelId: "default" }),
       },
-      trigger: {
-        type: Notifications.SchedulableTriggerInputTypes.CALENDAR,
-        hour,
-        minute,
-        repeats,
-      },
+      trigger,
     });
 
     console.log(
