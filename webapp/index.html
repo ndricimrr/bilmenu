@@ -1108,25 +1108,26 @@
           platform
         );
 
-        if (!version || !platform) {
-          console.log("[Version Update] Missing version or platform");
+        if (!platform) {
+          console.log("[Version Update] Missing platform");
           return false;
         }
 
-        // Only show for Android version 1.0.8
-        if (platform === "android" && version === "1.0.8") {
-          console.log("[Version Update] Should show modal for Android 1.0.8");
+        // Show modal for mobile app users (iOS or Android) who don't have version number
+        // (meaning they're on old app version that doesn't send version)
+        // If version IS defined, it means they're on latest version, so don't show
+        if ((platform === "android" || platform === "ios") && !version) {
+          console.log(
+            `[Version Update] Should show modal for ${platform} (no version = old app)`
+          );
 
           // Check if user dismissed it TODAY (resets daily)
           const today = new Date().toDateString(); // e.g., "Mon Jan 20 2025"
-          const dismissedKey = `bilmenu-version-dismissed-${version}-${today}`;
+          const dismissedKey = `bilmenu-version-dismissed-old-${platform}-${today}`;
           const dismissedToday = localStorage.getItem(dismissedKey);
 
           if (dismissedToday === "true") {
-            console.log(
-              "[Version Update] User dismissed version today:",
-              version
-            );
+            console.log("[Version Update] User dismissed update modal today");
             return false;
           }
 
@@ -1134,7 +1135,9 @@
           return true;
         }
 
-        console.log("[Version Update] Version/platform mismatch");
+        console.log(
+          "[Version Update] Version/platform mismatch or version defined (latest app)"
+        );
         return false;
       }
 
@@ -1188,16 +1191,15 @@
           }, 300);
 
           // Remember that user dismissed this version TODAY (will show again tomorrow)
-          const version = getAppVersion();
-          if (version) {
-            const today = new Date().toDateString(); // e.g., "Mon Jan 20 2025"
-            const dismissedKey = `bilmenu-version-dismissed-${version}-${today}`;
-            localStorage.setItem(dismissedKey, "true");
-            console.log(
-              "[Version Update] Dismissed for today, will show again tomorrow if still on version",
-              version
-            );
-          }
+          const platform = getAppPlatform();
+          const today = new Date().toDateString(); // e.g., "Mon Jan 20 2025"
+          const dismissedKey = `bilmenu-version-dismissed-old-${
+            platform || "mobile"
+          }-${today}`;
+          localStorage.setItem(dismissedKey, "true");
+          console.log(
+            "[Version Update] Dismissed for today, will show again tomorrow if still on old version"
+          );
         }
       }
 
@@ -1250,7 +1252,8 @@
           const source = urlParams.get("source");
           const version = urlParams.get("version");
 
-          if (source === "android-app" && version) {
+          // Check if mobile app (iOS or Android) and version is missing (old app version)
+          if ((source === "android-app" || source === "ios-app") && !version) {
             console.log("[Version Update] Using URL params, checking...");
             showVersionUpdateModal();
           } else {
@@ -1263,10 +1266,44 @@
         }
       }
 
+      // Track app version when available (for mobile app users)
+      // This will help identify which users are on which version
+      function trackAppVersion() {
+        // Wait a bit for window.mobileApp to be set by injected JavaScript
+        setTimeout(() => {
+          const version = getAppVersion();
+          const platform = getAppPlatform();
+
+          if (platform && isFromMobileApp()) {
+            // Track platform and version together
+            gtag("event", "app_version", {
+              event_category: "mobile_app",
+              event_label: platform,
+              custom_parameter_1: version || "unknown", // version number or "unknown" if not available
+            });
+
+            // Also track app source with version info for better analytics
+            const urlParams = new URLSearchParams(window.location.search);
+            const source = urlParams.get("source") || "web-browser";
+            if (version) {
+              gtag("event", "app_source_with_version", {
+                event_category: "source",
+                event_label: `${source}_v${version}`,
+                custom_parameter_1: platform,
+                custom_parameter_2: version,
+              });
+            }
+          }
+        }, 1500); // Wait 1.5 seconds for injected JS to set window.mobileApp
+      }
+
       // Show download prompt after page loads
       document.addEventListener("DOMContentLoaded", function () {
         // Delay showing the prompt to let the page load first
         setTimeout(showDownloadPrompt, 2000);
+
+        // Track app version for analytics
+        trackAppVersion();
 
         // Check for version update after a short delay (with retry mechanism)
         setTimeout(checkAndShowVersionUpdate, 1500);

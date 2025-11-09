@@ -169,6 +169,19 @@ export async function scheduleLunchNotification(language: "en" | "tr") {
 
   // Schedule lunch notification
   try {
+    // Ensure notification channel exists on Android before scheduling
+    if (Platform.OS === "android") {
+      await Notifications.setNotificationChannelAsync("default", {
+        name: "default",
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: "#FF231F7C",
+        sound: "default",
+        enableVibrate: true,
+        showBadge: true,
+      });
+    }
+
     // Android doesn't support CALENDAR trigger, use DAILY instead
     // For non-repeating notifications, use DATE trigger
     let trigger: Notifications.NotificationTriggerInput;
@@ -236,6 +249,19 @@ export async function scheduleDinnerNotification(language: "en" | "tr") {
 
   // Schedule dinner notification
   try {
+    // Ensure notification channel exists on Android before scheduling
+    if (Platform.OS === "android") {
+      await Notifications.setNotificationChannelAsync("default", {
+        name: "default",
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: "#FF231F7C",
+        sound: "default",
+        enableVibrate: true,
+        showBadge: true,
+      });
+    }
+
     // Android doesn't support CALENDAR trigger, use DAILY instead
     // For non-repeating notifications, use DATE trigger
     let trigger: Notifications.NotificationTriggerInput;

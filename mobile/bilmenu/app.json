@@ -32,7 +32,7 @@
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
       "package": "com.bilmenu.app",
-      "versionCode": 12,
+      "versionCode": 14,
       "permissions": [
         "INTERNET",
         "ACCESS_NETWORK_STATE",
