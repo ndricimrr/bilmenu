@@ -1094,13 +1094,22 @@
       function shouldShowVersionUpdate() {
         // Only show for mobile app users
         if (!isFromMobileApp()) {
+          console.log("[Version Update] Not from mobile app");
           return false;
         }
 
         const version = getAppVersion();
         const platform = getAppPlatform();
 
+        console.log(
+          "[Version Update] Version:",
+          version,
+          "Platform:",
+          platform
+        );
+
         if (!version || !platform) {
+          console.log("[Version Update] Missing version or platform");
           return false;
         }
 
@@ -1109,14 +1118,17 @@
           "bilmenu-version-dismissed"
         );
         if (dismissedVersion === version) {
+          console.log("[Version Update] User dismissed version:", version);
           return false;
         }
 
-        // Only show for Android version 1.0.6
+        // Only show for Android version 1.0.8
         if (platform === "android" && version === "1.0.8") {
+          console.log("[Version Update] Should show modal for Android 1.0.8");
           return true;
         }
 
+        console.log("[Version Update] Version/platform mismatch");
         return false;
       }
 
@@ -1212,13 +1224,40 @@
         return localStorage.getItem("bilmenu-language") || "en";
       }
 
+      // Function to check and show version update modal (with retry for mobileApp)
+      function checkAndShowVersionUpdate() {
+        // Check if window.mobileApp is set (from injected JavaScript)
+        if (window.mobileApp && window.mobileApp.isMobileApp) {
+          console.log(
+            "[Version Update] window.mobileApp detected, checking..."
+          );
+          showVersionUpdateModal();
+        } else {
+          // If not set yet, check URL params directly
+          const urlParams = new URLSearchParams(window.location.search);
+          const source = urlParams.get("source");
+          const version = urlParams.get("version");
+
+          if (source === "android-app" && version) {
+            console.log("[Version Update] Using URL params, checking...");
+            showVersionUpdateModal();
+          } else {
+            // Retry after a short delay if mobileApp not set yet
+            console.log(
+              "[Version Update] window.mobileApp not set yet, retrying..."
+            );
+            setTimeout(checkAndShowVersionUpdate, 500);
+          }
+        }
+      }
+
       // Show download prompt after page loads
       document.addEventListener("DOMContentLoaded", function () {
         // Delay showing the prompt to let the page load first
         setTimeout(showDownloadPrompt, 2000);
 
-        // Check for version update after a short delay
-        setTimeout(showVersionUpdateModal, 1500);
+        // Check for version update after a short delay (with retry mechanism)
+        setTimeout(checkAndShowVersionUpdate, 1500);
 
         // Also show prompt when user scrolls (if they haven't dismissed it)
         let scrollPromptShown = false;
