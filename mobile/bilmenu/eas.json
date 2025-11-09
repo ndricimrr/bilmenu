@@ -38,16 +38,16 @@
   "submit": {
     "production": {
       "ios": {
-        "appleId": "ndricim.rrapi@gmail.com",
-        "ascAppId": "6752549798",
-        "appleTeamId": "ZU8C7A3626"
+        "appleId": "${APPLE_ID}",
+        "ascAppId": "${ASC_APP_ID}",
+        "appleTeamId": "${APPLE_TEAM_ID}"
       }
     },
     "preview": {
       "ios": {
-        "appleId": "ndricim.rrapi@gmail.com",
-        "ascAppId": "6752549798",
-        "appleTeamId": "ZU8C7A3626"
+        "appleId": "${APPLE_ID}",
+        "ascAppId": "${ASC_APP_ID}",
+        "appleTeamId": "${APPLE_TEAM_ID}"
       }
     }
   }
