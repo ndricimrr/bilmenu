@@ -1113,18 +1113,24 @@
           return false;
         }
 
-        // Check if user has dismissed this specific version
-        const dismissedVersion = localStorage.getItem(
-          "bilmenu-version-dismissed"
-        );
-        if (dismissedVersion === version) {
-          console.log("[Version Update] User dismissed version:", version);
-          return false;
-        }
-
         // Only show for Android version 1.0.8
         if (platform === "android" && version === "1.0.8") {
           console.log("[Version Update] Should show modal for Android 1.0.8");
+
+          // Check if user dismissed it TODAY (resets daily)
+          const today = new Date().toDateString(); // e.g., "Mon Jan 20 2025"
+          const dismissedKey = `bilmenu-version-dismissed-${version}-${today}`;
+          const dismissedToday = localStorage.getItem(dismissedKey);
+
+          if (dismissedToday === "true") {
+            console.log(
+              "[Version Update] User dismissed version today:",
+              version
+            );
+            return false;
+          }
+
+          // Show modal - it will appear daily until they update
           return true;
         }
 
@@ -1181,10 +1187,16 @@
             modal.style.display = "none";
           }, 300);
 
-          // Remember that user dismissed this version
+          // Remember that user dismissed this version TODAY (will show again tomorrow)
           const version = getAppVersion();
           if (version) {
-            localStorage.setItem("bilmenu-version-dismissed", version);
+            const today = new Date().toDateString(); // e.g., "Mon Jan 20 2025"
+            const dismissedKey = `bilmenu-version-dismissed-${version}-${today}`;
+            localStorage.setItem(dismissedKey, "true");
+            console.log(
+              "[Version Update] Dismissed for today, will show again tomorrow if still on version",
+              version
+            );
           }
         }
       }

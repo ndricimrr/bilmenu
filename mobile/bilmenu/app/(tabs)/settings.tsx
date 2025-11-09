@@ -5,7 +5,6 @@ import {
   Alert,
   TouchableOpacity,
   ScrollView,
-  TextInput,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
@@ -32,10 +31,6 @@ export default function SettingsScreen() {
   const [lunchEnabled, setLunchEnabled] = useState(true);
   const [dinnerEnabled, setDinnerEnabled] = useState(true);
   const [isLoaded, setIsLoaded] = useState(false);
-  
-  // TEMPORARY: Test notification times
-  const [lunchTestTime, setLunchTestTime] = useState("16:44");
-  const [dinnerTestTime, setDinnerTestTime] = useState("16:45");
 
   // Load saved notification settings on app start
   useEffect(() => {
@@ -44,11 +39,9 @@ export default function SettingsScreen() {
 
   const loadNotificationSettings = async () => {
     try {
-      const [lunchSettings, dinnerSettings, lunchTime, dinnerTime] = await Promise.all([
+      const [lunchSettings, dinnerSettings] = await Promise.all([
         AsyncStorage.getItem("bilmenu-lunch-notifications"),
         AsyncStorage.getItem("bilmenu-dinner-notifications"),
-        AsyncStorage.getItem("bilmenu-lunch-test-time"),
-        AsyncStorage.getItem("bilmenu-dinner-test-time"),
       ]);
 
       if (lunchSettings !== null) {
@@ -57,59 +50,10 @@ export default function SettingsScreen() {
       if (dinnerSettings !== null) {
         setDinnerEnabled(JSON.parse(dinnerSettings));
       }
-      if (lunchTime) {
-        setLunchTestTime(lunchTime);
-      }
-      if (dinnerTime) {
-        setDinnerTestTime(dinnerTime);
-      }
     } catch (error) {
       console.log("Error loading notification settings:", error);
     } finally {
       setIsLoaded(true);
-    }
-  };
-
-  const handleTestTimeChange = async (type: "lunch" | "dinner", time: string) => {
-    try {
-      // Validate time format (HH:MM)
-      const timeRegex = /^([0-1]?[0-9]|2[0-3]):([0-5][0-9])$/;
-      if (!timeRegex.test(time)) {
-        Alert.alert(
-          language === "en" ? "Invalid Time" : "Geçersiz Zaman",
-          language === "en"
-            ? "Please enter time in HH:MM format (e.g., 16:44)"
-            : "Lütfen zamanı HH:MM formatında girin (örn: 16:44)"
-        );
-        return;
-      }
-
-      const key = type === "lunch" ? "bilmenu-lunch-test-time" : "bilmenu-dinner-test-time";
-      await AsyncStorage.setItem(key, time);
-      
-      if (type === "lunch") {
-        setLunchTestTime(time);
-      } else {
-        setDinnerTestTime(time);
-      }
-
-      // Reschedule notification if enabled
-      if (type === "lunch" && lunchEnabled) {
-        await cancelLunchNotification();
-        await scheduleLunchNotification(language);
-      } else if (type === "dinner" && dinnerEnabled) {
-        await cancelDinnerNotification();
-        await scheduleDinnerNotification(language);
-      }
-
-      Alert.alert(
-        language === "en" ? "Time Updated" : "Zaman Güncellendi",
-        language === "en"
-          ? `Notification rescheduled for ${time}`
-          : `Bildirim ${time} için yeniden planlandı`
-      );
-    } catch (error) {
-      console.log("Error saving test time:", error);
     }
   };
 
@@ -216,64 +160,6 @@ export default function SettingsScreen() {
             enabled={dinnerEnabled}
             onToggle={handleDinnerToggle}
           />
-        </ThemedView>
-
-        {/* TEMPORARY: Test notification times - Remove after testing */}
-        <ThemedView style={styles.section}>
-          <ThemedText style={styles.sectionTitle}>
-            {language === "en" ? "🧪 Test Notification Times" : "🧪 Test Bildirim Zamanları"}
-          </ThemedText>
-          <ThemedText style={styles.testDescription}>
-            {language === "en"
-              ? "Set custom times for testing (format: HH:MM)"
-              : "Test için özel zamanlar belirleyin (format: HH:MM)"}
-          </ThemedText>
-          
-          <View style={styles.testTimeRow}>
-            <ThemedText style={styles.testTimeLabel}>
-              {language === "en" ? "Lunch:" : "Öğle:"}
-            </ThemedText>
-            <TextInput
-              style={styles.testTimeInput}
-              value={lunchTestTime}
-              onChangeText={(text) => setLunchTestTime(text)}
-              onBlur={() => handleTestTimeChange("lunch", lunchTestTime)}
-              placeholder="16:44"
-              placeholderTextColor={BilMenuTheme.colors.textLight}
-              keyboardType="numeric"
-            />
-            <TouchableOpacity
-              style={styles.testTimeButton}
-              onPress={() => handleTestTimeChange("lunch", lunchTestTime)}
-            >
-              <ThemedText style={styles.testTimeButtonText}>
-                {language === "en" ? "Set" : "Ayarla"}
-              </ThemedText>
-            </TouchableOpacity>
-          </View>
-
-          <View style={styles.testTimeRow}>
-            <ThemedText style={styles.testTimeLabel}>
-              {language === "en" ? "Dinner:" : "Akşam:"}
-            </ThemedText>
-            <TextInput
-              style={styles.testTimeInput}
-              value={dinnerTestTime}
-              onChangeText={(text) => setDinnerTestTime(text)}
-              onBlur={() => handleTestTimeChange("dinner", dinnerTestTime)}
-              placeholder="16:45"
-              placeholderTextColor={BilMenuTheme.colors.textLight}
-              keyboardType="numeric"
-            />
-            <TouchableOpacity
-              style={styles.testTimeButton}
-              onPress={() => handleTestTimeChange("dinner", dinnerTestTime)}
-            >
-              <ThemedText style={styles.testTimeButtonText}>
-                {language === "en" ? "Set" : "Ayarla"}
-              </ThemedText>
-            </TouchableOpacity>
-          </View>
         </ThemedView>
 
         <ThemedView style={styles.section}>
@@ -441,43 +327,5 @@ const styles = StyleSheet.create({
   versionText: {
     fontSize: BilMenuTheme.typography.caption.fontSize,
     color: BilMenuTheme.colors.textMuted,
-  },
-  testDescription: {
-    fontSize: BilMenuTheme.typography.caption.fontSize,
-    color: BilMenuTheme.colors.textLight,
-    marginBottom: BilMenuTheme.spacing.md,
-    fontStyle: "italic",
-  },
-  testTimeRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: BilMenuTheme.spacing.md,
-    gap: BilMenuTheme.spacing.sm,
-  },
-  testTimeLabel: {
-    fontSize: BilMenuTheme.typography.body.fontSize,
-    color: BilMenuTheme.colors.text,
-    minWidth: 60,
-  },
-  testTimeInput: {
-    flex: 1,
-    backgroundColor: BilMenuTheme.colors.surfaceLight,
-    borderRadius: BilMenuTheme.borderRadius.medium,
-    padding: BilMenuTheme.spacing.md,
-    fontSize: BilMenuTheme.typography.body.fontSize,
-    color: BilMenuTheme.colors.text,
-    borderWidth: 1,
-    borderColor: BilMenuTheme.colors.border,
-  },
-  testTimeButton: {
-    backgroundColor: BilMenuTheme.colors.secondary,
-    borderRadius: BilMenuTheme.borderRadius.medium,
-    paddingHorizontal: BilMenuTheme.spacing.md,
-    paddingVertical: BilMenuTheme.spacing.sm,
-  },
-  testTimeButtonText: {
-    fontSize: BilMenuTheme.typography.body.fontSize,
-    color: BilMenuTheme.colors.textWhite,
-    fontWeight: "600",
   },
 });
