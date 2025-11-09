@@ -17,7 +17,10 @@
         "NSCameraUsageDescription": "BilMenu uses the camera to capture images of missing meals for submission.",
         "NSLocationWhenInUseUsageDescription": "This app does not use location services.",
         "ITSAppUsesNonExemptEncryption": false,
-        "WKAppBoundDomains": ["bilmenu.com", "www.bilmenu.com"]
+        "WKAppBoundDomains": [
+          "bilmenu.com",
+          "www.bilmenu.com"
+        ]
       }
     },
     "android": {
@@ -29,7 +32,7 @@
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
       "package": "com.bilmenu.app",
-      "versionCode": 9,
+      "versionCode": 12,
       "permissions": [
         "INTERNET",
         "ACCESS_NETWORK_STATE",
@@ -62,8 +65,8 @@
       [
         "expo-notifications",
         {
-          "icon": "./assets/images/logo/android_108_108.png",
-          "color": "#ffffff",
+          "icon": "./assets/images/logo/android_notifi_icon.png",
+          "color": "#E6F4FE",
           "defaultChannel": "default"
         }
       ],

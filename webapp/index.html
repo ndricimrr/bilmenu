@@ -360,6 +360,41 @@
       </div>
     </div>
 
+    <!-- App Version Update Modal -->
+    <div
+      class="version-update-modal"
+      id="versionUpdateModal"
+      style="display: none"
+    >
+      <div class="version-update-content">
+        <div class="version-update-icon">
+          <img src="assets/images/logos/logo_m.png" alt="BilMenu Logo" />
+        </div>
+        <div class="version-update-text">
+          <h3 id="versionUpdateTitle">New Version Available</h3>
+          <p id="versionUpdateMessage">
+            Please update to the latest version for a better experience.
+          </p>
+        </div>
+        <div class="version-update-actions">
+          <button
+            class="version-update-btn"
+            id="versionUpdateButton"
+            onclick="openAppStore()"
+          >
+            Update Now
+          </button>
+          <button
+            class="version-close-btn"
+            onclick="closeVersionUpdateModal()"
+            aria-label="Close"
+          >
+            ×
+          </button>
+        </div>
+      </div>
+    </div>
+
     <script>
       const daysList = document.getElementById("daysList");
       const menuView = document.getElementById("menuView");
@@ -1020,10 +1055,170 @@
         }
       }
 
+      // Get app version from URL params or window.mobileApp
+      function getAppVersion() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const versionFromUrl = urlParams.get("version");
+
+        if (versionFromUrl) {
+          return versionFromUrl;
+        }
+
+        if (window.mobileApp && window.mobileApp.version) {
+          return window.mobileApp.version;
+        }
+
+        return null;
+      }
+
+      // Get app platform from URL params or window.mobileApp
+      function getAppPlatform() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const source = urlParams.get("source");
+
+        if (source === "android-app") {
+          return "android";
+        }
+        if (source === "ios-app") {
+          return "ios";
+        }
+
+        if (window.mobileApp && window.mobileApp.platform) {
+          return window.mobileApp.platform;
+        }
+
+        return null;
+      }
+
+      // Check if version needs update
+      function shouldShowVersionUpdate() {
+        // Only show for mobile app users
+        if (!isFromMobileApp()) {
+          return false;
+        }
+
+        const version = getAppVersion();
+        const platform = getAppPlatform();
+
+        if (!version || !platform) {
+          return false;
+        }
+
+        // Check if user has dismissed this specific version
+        const dismissedVersion = localStorage.getItem(
+          "bilmenu-version-dismissed"
+        );
+        if (dismissedVersion === version) {
+          return false;
+        }
+
+        // Only show for Android version 1.0.6
+        if (platform === "android" && version === "1.0.7") {
+          return true;
+        }
+
+        return false;
+      }
+
+      // Show version update modal
+      function showVersionUpdateModal() {
+        if (!shouldShowVersionUpdate()) {
+          return;
+        }
+
+        const modal = document.getElementById("versionUpdateModal");
+        if (!modal) {
+          return;
+        }
+
+        const version = getAppVersion();
+        const platform = getAppPlatform();
+        const language = getLanguage() || "en";
+
+        // Set modal content based on language
+        const titleEl = document.getElementById("versionUpdateTitle");
+        const messageEl = document.getElementById("versionUpdateMessage");
+        const buttonEl = document.getElementById("versionUpdateButton");
+
+        if (titleEl && messageEl && buttonEl) {
+          if (language === "tr") {
+            titleEl.textContent = "Yeni Sürüm Mevcut";
+            messageEl.textContent =
+              "Daha iyi bir deneyim için lütfen uygulamayı en son sürüme güncelleyin.";
+            buttonEl.textContent = "Şimdi Güncelle";
+          } else {
+            titleEl.textContent = "New Version Available";
+            messageEl.textContent =
+              "Please update to the latest version for a better experience.";
+            buttonEl.textContent = "Update Now";
+          }
+        }
+
+        modal.style.display = "block";
+        setTimeout(() => {
+          modal.classList.add("show");
+        }, 100);
+      }
+
+      // Close version update modal
+      function closeVersionUpdateModal() {
+        const modal = document.getElementById("versionUpdateModal");
+        if (modal) {
+          modal.classList.remove("show");
+          setTimeout(() => {
+            modal.style.display = "none";
+          }, 300);
+
+          // Remember that user dismissed this version
+          const version = getAppVersion();
+          if (version) {
+            localStorage.setItem("bilmenu-version-dismissed", version);
+          }
+        }
+      }
+
+      // Open Play Store for Android, App Store for iOS
+      function openAppStore() {
+        const platform = getAppPlatform();
+        let url;
+
+        if (platform === "ios") {
+          url = "https://apps.apple.com/de/app/bilmenu/id6752549798";
+        } else if (platform === "android") {
+          url = "https://play.google.com/store/apps/details?id=com.bilmenu.app";
+        } else {
+          // Fallback to Play Store
+          url = "https://play.google.com/store/apps/details?id=com.bilmenu.app";
+        }
+
+        if (url) {
+          window.open(url, "_blank");
+        }
+      }
+
+      // Get language helper function
+      function getLanguage() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const langParam = urlParams.get("lang");
+
+        if (langParam) {
+          return langParam;
+        }
+
+        if (window.mobileApp && window.mobileApp.language) {
+          return window.mobileApp.language;
+        }
+
+        return localStorage.getItem("bilmenu-language") || "en";
+      }
+
       // Show download prompt after page loads
       document.addEventListener("DOMContentLoaded", function () {
         // Delay showing the prompt to let the page load first
         setTimeout(showDownloadPrompt, 2000);
+
+        // Check for version update after a short delay
+        setTimeout(showVersionUpdateModal, 1500);
 
         // Also show prompt when user scrolls (if they haven't dismissed it)
         let scrollPromptShown = false;

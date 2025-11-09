@@ -10,6 +10,7 @@ import {
   Platform,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import Constants from "expo-constants";
 import { Header } from "@/components/header";
 import { useTranslations } from "@/hooks/use-translations";
 import { BilMenuTheme } from "@/constants/theme";
@@ -29,13 +30,18 @@ export default function HomeScreen() {
     return Platform.OS === "ios" ? "ios-app" : "android-app";
   };
 
+  // Get app version
+  const getAppVersion = () => {
+    return Constants.expoConfig?.version || "1.0.0";
+  };
+
   const [webViewUrl, setWebViewUrl] = useState(
-    `https://www.bilmenu.com?mobile=true&lang=${language}&source=${getPlatformSource()}`
+    `https://www.bilmenu.com?mobile=true&lang=${language}&source=${getPlatformSource()}&version=${getAppVersion()}`
   );
 
   // Update WebView URL when language changes
   useEffect(() => {
-    const newUrl = `https://www.bilmenu.com?mobile=true&lang=${language}&source=${getPlatformSource()}`;
+    const newUrl = `https://www.bilmenu.com?mobile=true&lang=${language}&source=${getPlatformSource()}&version=${getAppVersion()}`;
     setWebViewUrl(newUrl);
   }, [language]);
 
@@ -250,7 +256,9 @@ export default function HomeScreen() {
           window.mobileApp = {
             isMobileApp: true,
             language: '${language}',
-            source: '${getPlatformSource()}'
+            source: '${getPlatformSource()}',
+            version: '${getAppVersion()}',
+            platform: '${Platform.OS}'
           };
           
           
