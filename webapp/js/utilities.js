@@ -11,8 +11,14 @@ function getWeekOfYear() {
 }
 
 function getYear() {
+  // Get ISO week year (the year that contains the Thursday of the current week)
+  // This ensures that weeks spanning year boundaries use the correct year
   const date = new Date();
-  return date.getFullYear();
+  // Set to nearest Thursday: current date + 4 - current day number
+  // Make Sunday's day number 7
+  const thursday = new Date(date);
+  thursday.setUTCDate(thursday.getUTCDate() + 4 - (thursday.getUTCDay() || 7));
+  return thursday.getUTCFullYear();
 }
 
 function getCurrentWeekFileName() {
