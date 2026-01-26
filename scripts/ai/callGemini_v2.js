@@ -154,7 +154,7 @@ async function fallbackParsing() {
     console.log("Calling Gemini API with fallback prompt (raw HTML)...");
 
     const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash-001",
+      model: "gemini-2.5-flash",
       contents: finalPrompt,
     });
 
@@ -198,7 +198,7 @@ async function callApi() {
     const finalPrompt = `${prompt}\n\n=== HTML CONTENT TO PARSE ===\n${cleanedHtml}`;
 
     const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash-001",
+      model: "gemini-2.5-flash",
       contents: finalPrompt,
     });
 

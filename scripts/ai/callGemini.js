@@ -35,7 +35,7 @@ const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
 async function callApi() {
   try {
     const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash-001",
+      model: "gemini-2.5-flash",
       contents: finalPrompt,
     });
     if (!response || !response.text) {
