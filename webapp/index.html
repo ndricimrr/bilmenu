@@ -775,7 +775,20 @@
         const menuGrid = document.getElementById(menuId);
         menuGrid.innerHTML = "";
 
-        menuItems.forEach((mealName, index) => {
+        // For lunch and dinner, sort meals to put vegan options last
+        let sortedMenuItems = menuItems;
+        if (menuId === "lunchMenu" || menuId === "dinnerMenu") {
+          sortedMenuItems = [...menuItems].sort((a, b) => {
+            const aIsVegan = a.tr.includes("Vegan");
+            const bIsVegan = b.tr.includes("Vegan");
+            // Non-vegan meals come first (return -1), vegan meals come last (return 1)
+            if (aIsVegan && !bIsVegan) return 1;
+            if (!aIsVegan && bIsVegan) return -1;
+            return 0; // Keep original order for same type
+          });
+        }
+
+        sortedMenuItems.forEach((mealName, index) => {
           const mealItemDOM = document.createElement("div");
           mealItemDOM.className = "meal-item";
 
