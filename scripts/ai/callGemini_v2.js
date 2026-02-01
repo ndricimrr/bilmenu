@@ -7,13 +7,13 @@ const { GoogleGenAI } = require("@google/genai");
 const URL = require("../../webapp/js/constants").URL;
 
 // Load prompt and cleaned HTML (V2 for new site design)
-const prompt = fs.readFileSync("./scripts/ai/prompt_v2.txt", "utf8");
+const prompt = fs.readFileSync("./scripts/ai/prompt_v3.txt", "utf8");
 const cleanedHtml = fs.readFileSync("./cleaned.html", "utf8");
 
 // Send the request to the Gemini API
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
-console.log("Calling Gemini API with payload (V2 - New Site Design)");
+console.log("Calling Gemini API with payload (V3 - 2026 - New Site Design)");
 
 if (!GEMINI_API_KEY) {
   throw new Error("GEMINI_API_KEY environment variable is not set");

@@ -21,7 +21,7 @@ jobs:
         run: npm install
 
       - name: Generate Clean HTML (New Site Design)
-        run: node scripts/html/cleanHtmlScript_v2.js > cleaned.html
+        run: node scripts/html/cleanHtmlScript_v3_2026.js > cleaned.html
 
       # OLD SCRIPT (commented out - in case old design returns):
       # - name: Generate Clean HTML

@@ -1,4 +1,4 @@
-const URL = "http://kafemud.bilkent.edu.tr/monu_eng.html";
+const URL = "http://kafemud.bilkent.edu.tr/monu_tr.html";
 
 // CommonJS export (for Node.js)
 if (typeof module !== "undefined" && module.exports) {
