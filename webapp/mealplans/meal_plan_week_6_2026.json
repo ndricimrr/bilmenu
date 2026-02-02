@@ -1,0 +1,786 @@
+[
+  {
+    "date": "02.02.2026",
+    "dayOfWeek": "Monday",
+    "lunch": [
+      {
+        "tr": "Tel Şehriye Çorba",
+        "en": "Vermicelli Soup"
+      },
+      {
+        "tr": "Orman Kebap",
+        "en": "Forest Kebab"
+      },
+      {
+        "tr": "Sebze Kavurma (Vegan)",
+        "en": "Sautéed Vegetables (Vegan)"
+      },
+      {
+        "tr": "Mısırlı Pirinç Pilavı",
+        "en": "Rice Pilaf with Corn"
+      },
+      {
+        "tr": "Pancarlı Bahçe Salata",
+        "en": "Garden Salad with Beetroot"
+      }
+    ],
+    "dinner": [
+      {
+        "tr": "Ezogelin Çorba",
+        "en": "Ezogelin Soup"
+      },
+      {
+        "tr": "Kıymalı Yeşil Mercimek",
+        "en": "Green Lentils with Minced Meat"
+      },
+      {
+        "tr": "Yeşil Mercimek (Vegan)",
+        "en": "Green Lentils (Vegan)"
+      },
+      {
+        "tr": "Patatesli Gül Böreği",
+        "en": "Rose Pastry with Potatoes"
+      },
+      {
+        "tr": "Yoğurt",
+        "en": "Yogurt"
+      }
+    ],
+    "alternative": [
+      {
+        "tr": "Tarhana Çorba",
+        "en": "Tarhana Soup"
+      },
+      {
+        "tr": "Hasanpaşa Köfte (Sebze Haşlama)",
+        "en": "Hasanpaşa Meatballs (with Boiled Vegetables)"
+      },
+      {
+        "tr": "Fıstıklı Tavuk (Patates Tava)",
+        "en": "Pistachio Chicken (with Pan-fried Potatoes)"
+      },
+      {
+        "tr": "Arpa Şehriye Pilavı",
+        "en": "Orzo Pilaf"
+      },
+      {
+        "tr": "Fırın Makarna",
+        "en": "Baked Macaroni"
+      },
+      {
+        "tr": "Zeytinyağlı Ispanak (Yoğurt)",
+        "en": "Olive Oil Spinach (with Yogurt)"
+      },
+      {
+        "tr": "Karışık Salata",
+        "en": "Mixed Salad"
+      },
+      {
+        "tr": "Yoğurt",
+        "en": "Yogurt"
+      },
+      {
+        "tr": "Ekler Pasta",
+        "en": "Eclair Cake"
+      },
+      {
+        "tr": "Sakızlı Muhallebi",
+        "en": "Mastic Pudding"
+      },
+      {
+        "tr": "Cevizli Tatlı",
+        "en": "Walnut Dessert"
+      },
+      {
+        "tr": "Muz",
+        "en": "Banana"
+      }
+    ]
+  },
+  {
+    "date": "03.02.2026",
+    "dayOfWeek": "Tuesday",
+    "lunch": [
+      {
+        "tr": "Mantar Çorba",
+        "en": "Mushroom Soup"
+      },
+      {
+        "tr": "Kaşarlı Köfte (Sebze Haşlama)",
+        "en": "Meatballs with Kashar Cheese (with Boiled Vegetables)"
+      },
+      {
+        "tr": "Pırasa (Vegan)",
+        "en": "Leek (Vegan)"
+      },
+      {
+        "tr": "Erişte",
+        "en": "Egg Noodles"
+      },
+      {
+        "tr": "Portakal",
+        "en": "Orange"
+      }
+    ],
+    "dinner": [
+      {
+        "tr": "Romen Çorba",
+        "en": "Roman Soup"
+      },
+      {
+        "tr": "Piliç Büryani",
+        "en": "Chicken Biryani"
+      },
+      {
+        "tr": "İçli Köfte (Domates - Biber) (Vegan)",
+        "en": "Stuffed Meatballs (with Tomato - Pepper) (Vegan)"
+      },
+      {
+        "tr": "Akdeniz Salata",
+        "en": "Mediterranean Salad"
+      },
+      {
+        "tr": "Pudingli Pasta",
+        "en": "Pudding Cake"
+      }
+    ],
+    "alternative": [
+      {
+        "tr": "Alaca Çorba",
+        "en": "Colorful Soup"
+      },
+      {
+        "tr": "Kağıt Kebabı",
+        "en": "Paper Kebab"
+      },
+      {
+        "tr": "Etli Lahana Kapama",
+        "en": "Cabbage Rolls with Meat"
+      },
+      {
+        "tr": "Bulgur Pilavı",
+        "en": "Bulgur Pilaf"
+      },
+      {
+        "tr": "Pesto Soslu Makarna",
+        "en": "Pasta with Pesto Sauce"
+      },
+      {
+        "tr": "Zeytinyağlı Brokoli",
+        "en": "Olive Oil Broccoli"
+      },
+      {
+        "tr": "Kış Salata",
+        "en": "Winter Salad"
+      },
+      {
+        "tr": "Yoğurt",
+        "en": "Yogurt"
+      },
+      {
+        "tr": "Çilekli Şarlot",
+        "en": "Strawberry Charlotte"
+      },
+      {
+        "tr": "Fındıklı Keşkül",
+        "en": "Hazelnut Keşkül"
+      },
+      {
+        "tr": "Çaykent Tatlısı",
+        "en": "Çaykent Dessert"
+      },
+      {
+        "tr": "Mandalina",
+        "en": "Mandarin"
+      }
+    ]
+  },
+  {
+    "date": "04.02.2026",
+    "dayOfWeek": "Wednesday",
+    "lunch": [
+      {
+        "tr": "Sebze Çorba",
+        "en": "Vegetable Soup"
+      },
+      {
+        "tr": "Etli Nohut",
+        "en": "Chickpeas with Meat"
+      },
+      {
+        "tr": "Nohut (Vegan)",
+        "en": "Chickpeas (Vegan)"
+      },
+      {
+        "tr": "Bulgur Pilavı",
+        "en": "Bulgur Pilaf"
+      },
+      {
+        "tr": "Yoğurt",
+        "en": "Yogurt"
+      }
+    ],
+    "dinner": [
+      {
+        "tr": "Börülce Çorba",
+        "en": "Black-eyed Pea Soup"
+      },
+      {
+        "tr": "Fırın Mezgit (Patates Kavurma,Tere-Roka)",
+        "en": "Baked Whiting (with Sautéed Potatoes, Watercress-Rocket)"
+      },
+      {
+        "tr": "Yufkada Sebzeli Dolma (Vegan)",
+        "en": "Vegetable Dolma in Phyllo Pastry (Vegan)"
+      },
+      {
+        "tr": "Zeytinyağlı Bamya",
+        "en": "Okra with Olive Oil"
+      },
+      {
+        "tr": "Tahin Helva",
+        "en": "Tahini Halva"
+      }
+    ],
+    "alternative": [
+      {
+        "tr": "Minestrone Çorba",
+        "en": "Minestrone Soup"
+      },
+      {
+        "tr": "Tavuklu Çökertme Kebap",
+        "en": "Chicken Çökertme Kebab"
+      },
+      {
+        "tr": "Köri Soslu Köfte",
+        "en": "Meatballs with Curry Sauce"
+      },
+      {
+        "tr": "Sebzeli Pirinç Pilavı",
+        "en": "Rice Pilaf with Vegetables"
+      },
+      {
+        "tr": "Su Böreği",
+        "en": "Water Börek"
+      },
+      {
+        "tr": "Zeytinyağlı Brüksel Lahana",
+        "en": "Brussels Sprouts with Olive Oil"
+      },
+      {
+        "tr": "Mevsim Salata",
+        "en": "Seasonal Salad"
+      },
+      {
+        "tr": "Yoğurt",
+        "en": "Yogurt"
+      },
+      {
+        "tr": "Mozaik Pasta",
+        "en": "Mosaic Cake"
+      },
+      {
+        "tr": "Sultan Muhallebi",
+        "en": "Sultan's Pudding"
+      },
+      {
+        "tr": "Tel Kadayıf",
+        "en": "Shredded Wheat Dessert"
+      },
+      {
+        "tr": "Elma",
+        "en": "Apple"
+      }
+    ]
+  },
+  {
+    "date": "05.02.2026",
+    "dayOfWeek": "Thursday",
+    "lunch": [
+      {
+        "tr": "Süleymaniye Çorba",
+        "en": "Süleymaniye Soup"
+      },
+      {
+        "tr": "Piliç Stroganof",
+        "en": "Chicken Stroganoff"
+      },
+      {
+        "tr": "Bezelye (Vegan)",
+        "en": "Peas (Vegan)"
+      },
+      {
+        "tr": "Bahçıvan Usulü Makarna",
+        "en": "Gardener's Style Pasta"
+      },
+      {
+        "tr": "Niş Salata",
+        "en": "Niş Salad"
+      }
+    ],
+    "dinner": [
+      {
+        "tr": "Köylü Çorba",
+        "en": "Village Soup"
+      },
+      {
+        "tr": "Fırın Köfte",
+        "en": "Baked Meatballs"
+      },
+      {
+        "tr": "Mantar Sote (Vegan)",
+        "en": "Sautéed Mushrooms (Vegan)"
+      },
+      {
+        "tr": "Arpa Şehriye Pilavı",
+        "en": "Orzo Pilaf"
+      },
+      {
+        "tr": "Mandalina",
+        "en": "Mandarin"
+      }
+    ],
+    "alternative": [
+      {
+        "tr": "Brokoli Çorba",
+        "en": "Broccoli Soup"
+      },
+      {
+        "tr": "Şişte Adana Kebap (Lavaş)",
+        "en": "Adana Kebab Skewers (with Lavash)"
+      },
+      {
+        "tr": "Mantı (Yoğurt)",
+        "en": "Manti (Turkish Dumplings with Yogurt)"
+      },
+      {
+        "tr": "Kaşarlı Cevizli Erişte",
+        "en": "Noodles with Kashar Cheese and Walnuts"
+      },
+      {
+        "tr": "Patatesli Rulo Börek",
+        "en": "Potato Roll Börek"
+      },
+      {
+        "tr": "Zeytinyağlı Kabak Kalye (Yoğurt)",
+        "en": "Zucchini Stew with Olive Oil (with Yogurt)"
+      },
+      {
+        "tr": "Bahçe Salata",
+        "en": "Garden Salad"
+      },
+      {
+        "tr": "Yoğurt",
+        "en": "Yogurt"
+      },
+      {
+        "tr": "Kadife Pasta",
+        "en": "Velvet Cake"
+      },
+      {
+        "tr": "Keşkül",
+        "en": "Keşkül"
+      },
+      {
+        "tr": "Balbadem Tatlısı",
+        "en": "Honey Almond Dessert"
+      },
+      {
+        "tr": "Portakal",
+        "en": "Orange"
+      }
+    ]
+  },
+  {
+    "date": "06.02.2026",
+    "dayOfWeek": "Friday",
+    "lunch": [
+      {
+        "tr": "Yoğurt Çorba",
+        "en": "Yogurt Soup"
+      },
+      {
+        "tr": "Kıymalı Türlü",
+        "en": "Vegetable Stew with Minced Meat"
+      },
+      {
+        "tr": "Türlü (Vegan)",
+        "en": "Vegetable Stew (Vegan)"
+      },
+      {
+        "tr": "Pirinç Pilavı",
+        "en": "Rice Pilaf"
+      },
+      {
+        "tr": "Muz",
+        "en": "Banana"
+      }
+    ],
+    "dinner": [
+      {
+        "tr": "Domates Çorba",
+        "en": "Tomato Soup"
+      },
+      {
+        "tr": "Sicilya Usulü Tavuk (Püre)",
+        "en": "Sicilian Style Chicken (with Puree)"
+      },
+      {
+        "tr": "Yufkada Ispanaklı Dolma (Vegan)",
+        "en": "Spinach Dolma in Phyllo Pastry (Vegan)"
+      },
+      {
+        "tr": "Karışık Salata",
+        "en": "Mixed Salad"
+      },
+      {
+        "tr": "Muhallebili Cezerye",
+        "en": "Cezerye with Pudding"
+      }
+    ],
+    "alternative": [
+      {
+        "tr": "Kırmızı Mercimek Çorba",
+        "en": "Red Lentil Soup"
+      },
+      {
+        "tr": "Izgara Köfte (Bulgur Pilavı)",
+        "en": "Grilled Meatballs (with Bulgur Pilaf)"
+      },
+      {
+        "tr": "Et Sote (Patates Tava)",
+        "en": "Sautéed Meat (with Pan-fried Potatoes)"
+      },
+      {
+        "tr": "İç Pilav",
+        "en": "Turkish Rice Pilaf"
+      },
+      {
+        "tr": "Peynirli Spagetti",
+        "en": "Spaghetti with Cheese"
+      },
+      {
+        "tr": "Zeytinyağlı Börülce",
+        "en": "Black-eyed Peas with Olive Oil"
+      },
+      {
+        "tr": "Akdeniz Salata",
+        "en": "Mediterranean Salad"
+      },
+      {
+        "tr": "Yoğurt",
+        "en": "Yogurt"
+      },
+      {
+        "tr": "Krem Şokola",
+        "en": "Chocolate Cream"
+      },
+      {
+        "tr": "Kardüşü",
+        "en": "Kardüşü Dessert"
+      },
+      {
+        "tr": "Baklava",
+        "en": "Baklava"
+      },
+      {
+        "tr": "Elma",
+        "en": "Apple"
+      }
+    ]
+  },
+  {
+    "date": "07.02.2026",
+    "dayOfWeek": "Saturday",
+    "lunch": [
+      {
+        "tr": "Tarhana Çorba",
+        "en": "Tarhana Soup"
+      },
+      {
+        "tr": "Macar Kebap",
+        "en": "Hungarian Kebab"
+      },
+      {
+        "tr": "Barbunya (Vegan)",
+        "en": "Pinto Beans (Vegan)"
+      },
+      {
+        "tr": "Erişte",
+        "en": "Egg Noodles"
+      },
+      {
+        "tr": "Ayran",
+        "en": "Ayran"
+      }
+    ],
+    "dinner": [
+      {
+        "tr": "Mısır Çorba",
+        "en": "Corn Soup"
+      },
+      {
+        "tr": "Etli Taze Fasulye",
+        "en": "Fresh Green Beans with Meat"
+      },
+      {
+        "tr": "Fasulye Kavurma (Vegan)",
+        "en": "Sautéed Beans (Vegan)"
+      },
+      {
+        "tr": "Bulgur Pilavı",
+        "en": "Bulgur Pilaf"
+      },
+      {
+        "tr": "Portakal",
+        "en": "Orange"
+      }
+    ],
+    "alternative": [
+      {
+        "tr": "Ezogelin Çorba",
+        "en": "Ezogelin Soup"
+      },
+      {
+        "tr": "Pideli Köfte",
+        "en": "Meatballs with Pita Bread"
+      },
+      {
+        "tr": "Köylüm Tavuk (Arpa Şehriye Pilavı)",
+        "en": "Villager's Chicken (with Orzo Pilaf)"
+      },
+      {
+        "tr": "Peynirli Gül Böreği",
+        "en": "Rose Pastry with Cheese"
+      },
+      {
+        "tr": "Arpa Şehriye Pilavı",
+        "en": "Orzo Pilaf"
+      },
+      {
+        "tr": "Karnabahar Kızartma (Yoğurt)",
+        "en": "Fried Cauliflower (with Yogurt)"
+      },
+      {
+        "tr": "Kış Salata",
+        "en": "Winter Salad"
+      },
+      {
+        "tr": "Yoğurt",
+        "en": "Yogurt"
+      },
+      {
+        "tr": "Köstebek Pasta",
+        "en": "Mole Hill Cake"
+      },
+      {
+        "tr": "İncirli Keşkül",
+        "en": "Fig Keşkül"
+      },
+      {
+        "tr": "Fındıkpare",
+        "en": "Hazelnut Pastry"
+      },
+      {
+        "tr": "Mandalina",
+        "en": "Mandarin"
+      }
+    ]
+  },
+  {
+    "date": "08.02.2026",
+    "dayOfWeek": "Sunday",
+    "lunch": [
+      {
+        "tr": "Valide Çorba",
+        "en": "Valide Soup"
+      },
+      {
+        "tr": "Olimpiyat Köfte (Püre)",
+        "en": "Olympic Meatballs (with Puree)"
+      },
+      {
+        "tr": "Brokoli (Vegan)",
+        "en": "Broccoli (Vegan)"
+      },
+      {
+        "tr": "Amasra Salata",
+        "en": "Amasra Salad"
+      },
+      {
+        "tr": "Hira Tatlısı",
+        "en": "Hira Dessert"
+      }
+    ],
+    "dinner": [
+      {
+        "tr": "Düğün Çorba",
+        "en": "Wedding Soup"
+      },
+      {
+        "tr": "Piliç Tandır (Sebze Haşlama)",
+        "en": "Chicken Tandoori (with Boiled Vegetables)"
+      },
+      {
+        "tr": "Karışık Musakka (Vegan)",
+        "en": "Mixed Musakka (Vegan)"
+      },
+      {
+        "tr": "Fettucini Arabiatta",
+        "en": "Fettuccine Arrabbiata"
+      },
+      {
+        "tr": "Bahçe Salata",
+        "en": "Garden Salad"
+      }
+    ],
+    "alternative": [
+      {
+        "tr": "Kilis Çorba",
+        "en": "Kilis Soup"
+      },
+      {
+        "tr": "Kıymalı Kibrit Kebap",
+        "en": "Matchstick Kebab with Minced Meat"
+      },
+      {
+        "tr": "Etli Kuru Fasulye",
+        "en": "Dried White Beans with Meat"
+      },
+      {
+        "tr": "Domatesli Pirinç Pilavı",
+        "en": "Rice Pilaf with Tomato"
+      },
+      {
+        "tr": "Ispanaklı Rulo Börek",
+        "en": "Spinach Roll Börek"
+      },
+      {
+        "tr": "Zeytinyağlı Patlıcan",
+        "en": "Eggplant with Olive Oil"
+      },
+      {
+        "tr": "Niş Salata",
+        "en": "Niş Salad"
+      },
+      {
+        "tr": "Yoğurt",
+        "en": "Yogurt"
+      },
+      {
+        "tr": "Ejder Tatlısı",
+        "en": "Dragon Dessert"
+      },
+      {
+        "tr": "Krokanlı Muhallebi",
+        "en": "Croquant Pudding"
+      },
+      {
+        "tr": "Çikolatalı Revani",
+        "en": "Chocolate Revani"
+      },
+      {
+        "tr": "Muz",
+        "en": "Banana"
+      }
+    ]
+  },
+  {
+    "date": "09.02.2026",
+    "dayOfWeek": "Monday",
+    "lunch": [
+      {
+        "tr": "Ezogelin Çorba",
+        "en": "Ezogelin Soup"
+      },
+      {
+        "tr": "Kıymalı Ispanak (Yoğurt)",
+        "en": "Spinach with Minced Meat (with Yogurt)"
+      },
+      {
+        "tr": "Ispanak (Vegan)",
+        "en": "Spinach (Vegan)"
+      },
+      {
+        "tr": "Su Böreği",
+        "en": "Water Börek"
+      },
+      {
+        "tr": "Elma",
+        "en": "Apple"
+      }
+    ],
+    "dinner": [
+      {
+        "tr": "Maş Fasulyesi Çorba",
+        "en": "Mung Bean Soup"
+      },
+      {
+        "tr": "Sumaklı Köfte",
+        "en": "Meatballs with Sumac"
+      },
+      {
+        "tr": "Fırın Patates (Vegan)",
+        "en": "Baked Potatoes (Vegan)"
+      },
+      {
+        "tr": "Arpa Şehriye Pilavı",
+        "en": "Orzo Pilaf"
+      },
+      {
+        "tr": "Vanilyalı Şarlot",
+        "en": "Vanilla Charlotte"
+      }
+    ],
+    "alternative": [
+      {
+        "tr": "Yayla Çorba",
+        "en": "Highland Soup"
+      },
+      {
+        "tr": "Kıtır Piliç (Domates - Biber)",
+        "en": "Crispy Chicken (with Tomato - Pepper)"
+      },
+      {
+        "tr": "Bahçıvan Kebap",
+        "en": "Gardener's Kebab"
+      },
+      {
+        "tr": "Fesleğen Soslu Makarna",
+        "en": "Pasta with Basil Sauce"
+      },
+      {
+        "tr": "Erişte",
+        "en": "Egg Noodles"
+      },
+      {
+        "tr": "Zeytinyağlı Kereviz",
+        "en": "Celery with Olive Oil"
+      },
+      {
+        "tr": "Mevsim Salata",
+        "en": "Seasonal Salad"
+      },
+      {
+        "tr": "Yoğurt",
+        "en": "Yogurt"
+      },
+      {
+        "tr": "Profiterol",
+        "en": "Profiteroles"
+      },
+      {
+        "tr": "Kahveli Keşkül",
+        "en": "Coffee Keşkül"
+      },
+      {
+        "tr": "Lokma Tatlısı",
+        "en": "Lokma Dessert"
+      },
+      {
+        "tr": "Portakal",
+        "en": "Orange"
+      }
+    ]
+  }
+]
