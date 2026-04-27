@@ -13,7 +13,7 @@
       },
       {
         "tr": "Yufkada Sebzeli Dolma (Vegan)",
-        "en": "Vegetable Stuffed Phyllo Rolls (Vegan)"
+        "en": "Vegetable Stuffed Phyllo Pastry (Vegan)"
       },
       {
         "tr": "Akdeniz Salata",
@@ -21,7 +21,7 @@
       },
       {
         "tr": "Sütlü Revani",
-        "en": "Milky Revani Dessert"
+        "en": "Semolina Cake with Milk"
       }
     ],
     "dinner": [
@@ -35,7 +35,7 @@
       },
       {
         "tr": "Barbunya (Vegan)",
-        "en": "Pinto Beans / Red Kidney Beans (Vegan)"
+        "en": "Kidney Beans (Vegan)"
       },
       {
         "tr": "Peynirli Spagetti",
@@ -53,7 +53,7 @@
       },
       {
         "tr": "Antep Tava",
-        "en": "Gaziantep Pan Kebab"
+        "en": "Antep Pan Dish"
       },
       {
         "tr": "Etli Bezelye",
@@ -65,11 +65,11 @@
       },
       {
         "tr": "Erişte",
-        "en": "Turkish Noodles"
+        "en": "Egg Noodles"
       },
       {
         "tr": "Zeytinyağlı Brokoli",
-        "en": "Olive Oil Broccoli"
+        "en": "Broccoli with Olive Oil"
       },
       {
         "tr": "Karışık Salata",
@@ -81,7 +81,7 @@
       },
       {
         "tr": "Yaş Pasta",
-        "en": "Layer Cake"
+        "en": "Fresh Cream Cake"
       },
       {
         "tr": "Aşure",
@@ -103,11 +103,11 @@
     "lunch": [
       {
         "tr": "Köylü Çorba",
-        "en": "Village Style Soup"
+        "en": "Peasant Soup"
       },
       {
         "tr": "Tas Kebap",
-        "en": "Bowl Kebab / Pot Kebab"
+        "en": "Bowl Kebab"
       },
       {
         "tr": "Mantar Sote (Vegan)",
@@ -129,11 +129,11 @@
       },
       {
         "tr": "Kıymalı Türlü",
-        "en": "Minced Meat Vegetable Stew"
+        "en": "Mixed Vegetable Stew with Minced Meat"
       },
       {
         "tr": "Türlü (Vegan)",
-        "en": "Vegetable Stew (Vegan)"
+        "en": "Mixed Vegetable Stew (Vegan)"
       },
       {
         "tr": "Peynirli Gül Böreği",
@@ -151,7 +151,7 @@
       },
       {
         "tr": "Piliç Roti (Püre)",
-        "en": "Roast Chicken (Mashed Potatoes)"
+        "en": "Roasted Chicken (Mashed Potatoes)"
       },
       {
         "tr": "Izgara Köfte (Arpa Şehriye Pilavı)",
@@ -167,7 +167,7 @@
       },
       {
         "tr": "Zeytinyağlı Ispanak (Yoğurt)",
-        "en": "Olive Oil Spinach (Yogurt)"
+        "en": "Spinach with Olive Oil (with Yogurt)"
       },
       {
         "tr": "Amasra Salata",
@@ -183,7 +183,7 @@
       },
       {
         "tr": "Kardüşü",
-        "en": "Kardüşü Dessert"
+        "en": "Kardüşü"
       },
       {
         "tr": "Cevizli Tatlı",
@@ -201,23 +201,23 @@
     "lunch": [
       {
         "tr": "Şafak Çorba",
-        "en": "Şafak Soup"
+        "en": "Dawn Soup"
       },
       {
         "tr": "Etli Kuru Fasulye",
-        "en": "Dried Bean Stew with Meat"
+        "en": "Dry Beans with Meat"
       },
       {
         "tr": "Kuru Fasulye (Vegan)",
-        "en": "Dried Bean Stew (Vegan)"
+        "en": "Dry Beans (Vegan)"
       },
       {
         "tr": "Domatesli Pirinç Pilavı",
-        "en": "Rice Pilaf with Tomato"
+        "en": "Tomato Rice Pilaf"
       },
       {
         "tr": "Ayran",
-        "en": "Ayran"
+        "en": "Ayran (Yogurt Drink)"
       }
     ],
     "dinner": [
@@ -227,7 +227,7 @@
       },
       {
         "tr": "Avcı Usulü Tavuk (Patates Tava)",
-        "en": "Hunter's Style Chicken (Pan-Fried Potatoes)"
+        "en": "Hunter Style Chicken (Pan-Fried Potatoes)"
       },
       {
         "tr": "Biber Dolma (Vegan)",
@@ -257,7 +257,7 @@
       },
       {
         "tr": "Kaşarlı Cevizli Erişte",
-        "en": "Turkish Noodles with Kashar Cheese and Walnuts"
+        "en": "Noodles with Kashar Cheese and Walnuts"
       },
       {
         "tr": "Su Böreği",
@@ -265,7 +265,7 @@
       },
       {
         "tr": "Zeytinyağlı Enginar",
-        "en": "Olive Oil Artichoke"
+        "en": "Artichoke with Olive Oil"
       },
       {
         "tr": "Kış Salata",
@@ -277,7 +277,7 @@
       },
       {
         "tr": "Muhallebili Cezerye",
-        "en": "Milk Pudding with Cezerye"
+        "en": "Cezerye with Pudding"
       },
       {
         "tr": "Kahveli Keşkül",
@@ -315,7 +315,7 @@
       },
       {
         "tr": "Şam Tatlısı",
-        "en": "Şam Dessert"
+        "en": "Damascus Dessert"
       }
     ],
     "dinner": [
@@ -347,11 +347,11 @@
       },
       {
         "tr": "Kıymalı Kibrit Kebap",
-        "en": "Minced Meat Matchstick Kebab"
+        "en": "Matchstick Kebab with Minced Meat"
       },
       {
         "tr": "Fıstıklı Tavuk",
-        "en": "Chicken with Pistachios"
+        "en": "Pistachio Chicken"
       },
       {
         "tr": "Bulgur Pilavı",
@@ -363,7 +363,7 @@
       },
       {
         "tr": "Havuç Kızartma (Yoğurt)",
-        "en": "Fried Carrots (Yogurt)"
+        "en": "Fried Carrots (with Yogurt)"
       },
       {
         "tr": "Akdeniz Salata",
@@ -375,11 +375,11 @@
       },
       {
         "tr": "Köstebek Pasta",
-        "en": "Mole Hill Cake"
+        "en": "Molehill Cake"
       },
       {
         "tr": "Tarçınlı Muhallebi",
-        "en": "Cinnamon Milk Pudding"
+        "en": "Cinnamon Pudding"
       },
       {
         "tr": "Hira Tatlısı",
@@ -427,11 +427,11 @@
       },
       {
         "tr": "Yufkada Pırasalı Dolma (Vegan)",
-        "en": "Leek Stuffed Phyllo Rolls (Vegan)"
+        "en": "Leek Stuffed Phyllo Pastry (Vegan)"
       },
       {
         "tr": "Zeytinyağlı Mantar",
-        "en": "Olive Oil Mushrooms"
+        "en": "Mushrooms with Olive Oil"
       },
       {
         "tr": "Pudingli Pasta",
@@ -445,15 +445,15 @@
       },
       {
         "tr": "Beğendili Köfte",
-        "en": "Meatballs with Eggplant Puree (Beğendi)"
+        "en": "Meatballs with Eggplant Puree"
       },
       {
         "tr": "Etli Biber Dolma (Yoğurt)",
-        "en": "Stuffed Bell Pepper with Meat (Yogurt)"
+        "en": "Stuffed Bell Pepper with Meat (with Yogurt)"
       },
       {
         "tr": "Erişte",
-        "en": "Turkish Noodles"
+        "en": "Egg Noodles"
       },
       {
         "tr": "Peynirli Spagetti",
@@ -461,7 +461,7 @@
       },
       {
         "tr": "Zeytinyağlı Börülce",
-        "en": "Olive Oil Black-eyed Peas"
+        "en": "Black-eyed Peas with Olive Oil"
       },
       {
         "tr": "Niş Salata",
@@ -473,7 +473,7 @@
       },
       {
         "tr": "Kazandibi",
-        "en": "Kazandibi Dessert"
+        "en": "Kazandibi"
       },
       {
         "tr": "Fındıklı Keşkül",
@@ -481,7 +481,7 @@
       },
       {
         "tr": "Şöbiyet",
-        "en": "Şöbiyet Pastry"
+        "en": "Şöbiyet"
       },
       {
         "tr": "Yenidünya",
@@ -521,7 +521,7 @@
       },
       {
         "tr": "Kadınbudu Köfte (Püre)",
-        "en": "Kadınbudu Meatballs (Mashed Potatoes)"
+        "en": "Woman's Thigh Meatballs (Mashed Potatoes)"
       },
       {
         "tr": "İçli Köfte (Domates - Biber) (Vegan)",
@@ -533,17 +533,17 @@
       },
       {
         "tr": "Çikolatalı Revani",
-        "en": "Chocolate Revani Dessert"
+        "en": "Chocolate Semolina Cake"
       }
     ],
     "alternative": [
       {
         "tr": "Köylü Çorba",
-        "en": "Village Style Soup"
+        "en": "Peasant Soup"
       },
       {
         "tr": "Tavuk Külbastı (Domates-Biber)",
-        "en": "Chicken Külbastı (Tomato-Pepper)"
+        "en": "Grilled Chicken Chops (Tomato-Pepper)"
       },
       {
         "tr": "Türkmen Kebap",
@@ -559,7 +559,7 @@
       },
       {
         "tr": "Karışık Kızartma (Yoğurt)",
-        "en": "Mixed Fried Vegetables (Yogurt)"
+        "en": "Mixed Fried Vegetables (with Yogurt)"
       },
       {
         "tr": "Bahçe Salata",
@@ -571,7 +571,7 @@
       },
       {
         "tr": "Sup",
-        "en": "Custard"
+        "en": "Sup"
       },
       {
         "tr": "Elmalı Şarlot",
@@ -579,7 +579,7 @@
       },
       {
         "tr": "Lor Tatlısı",
-        "en": "Ricotta Cheese Dessert"
+        "en": "Lor Cheese Dessert"
       },
       {
         "tr": "Muz",
@@ -597,7 +597,7 @@
       },
       {
         "tr": "Sebzeli Tavuk Rondo",
-        "en": "Vegetable Chicken Rondo"
+        "en": "Chicken Rondo with Vegetables"
       },
       {
         "tr": "Karnıyarık (Vegan)",
@@ -627,7 +627,7 @@
       },
       {
         "tr": "Erişte",
-        "en": "Turkish Noodles"
+        "en": "Egg Noodles"
       },
       {
         "tr": "Kış Salata",
@@ -641,7 +641,7 @@
       },
       {
         "tr": "Et Tiridi",
-        "en": "Meat Tirid"
+        "en": "Meat Tirit"
       },
       {
         "tr": "Lahanalı Köfte (Firik Pilavı)",
@@ -657,7 +657,7 @@
       },
       {
         "tr": "Zeytinyağlı Kereviz",
-        "en": "Olive Oil Celery"
+        "en": "Celery Root with Olive Oil"
       },
       {
         "tr": "Mevsim Salata",
@@ -691,7 +691,7 @@
     "lunch": [
       {
         "tr": "Şafak Çorba",
-        "en": "Şafak Soup"
+        "en": "Dawn Soup"
       },
       {
         "tr": "Meksika Köfte (Sebze Haşlama)",
@@ -699,7 +699,7 @@
       },
       {
         "tr": "Yufkada Mercimekli Dolma (Vegan)",
-        "en": "Lentil Stuffed Phyllo Rolls (Vegan)"
+        "en": "Lentil Stuffed Phyllo Pastry (Vegan)"
       },
       {
         "tr": "Bulgur Pilavı",
@@ -739,15 +739,15 @@
       },
       {
         "tr": "Köylüm Tavuk (Domatesli Pirinç Pilavı)",
-        "en": "Villager's Chicken (Rice Pilaf with Tomato)"
+        "en": "Country Style Chicken (Tomato Rice Pilaf)"
       },
       {
         "tr": "Etli Nohut",
-        "en": "Chickpea Stew with Meat"
+        "en": "Chickpeas with Meat"
       },
       {
         "tr": "Domatesli Pirinç Pilavı",
-        "en": "Rice Pilaf with Tomato"
+        "en": "Tomato Rice Pilaf"
       },
       {
         "tr": "Fettucini Arabiatta",
@@ -755,7 +755,7 @@
       },
       {
         "tr": "Zeytinyağlı Brüksel Lahana",
-        "en": "Olive Oil Brussels Sprouts"
+        "en": "Brussels Sprouts with Olive Oil"
       },
       {
         "tr": "Amasra Salata",
