@@ -5,6 +5,12 @@ on:
     # Run every Monday at 8:00 AM Turkish time (EET)
     - cron: "0 8 * * 1" # 5:00 UTC = 8:00 EET
   workflow_dispatch:
+    inputs:
+      force_openrouter_fallback:
+        description: "Skip Gemini (fail fast) to test OpenRouter fallback only"
+        type: boolean
+        default: false
+        required: false
 
 jobs:
   parse-html-and-save:
@@ -44,6 +50,7 @@ jobs:
         continue-on-error: true
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_SHORT_CIRCUIT_FAIL: ${{ inputs.force_openrouter_fallback }}
         run: node scripts/ai/callGemini_v2.js
 
       - name: Call OpenRouter API fallback (if Gemini failed)

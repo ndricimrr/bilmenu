@@ -10,6 +10,16 @@ const {
   parseJsonFromAiMarkdown,
 } = require("./mealPlanParseShared");
 
+const shortCircuit =
+  process.env.GEMINI_SHORT_CIRCUIT_FAIL === "true" ||
+  process.env.GEMINI_SHORT_CIRCUIT_FAIL === "1";
+if (shortCircuit) {
+  console.log(
+    "GEMINI_SHORT_CIRCUIT_FAIL: skipping Gemini API (intentional — exercises OpenRouter fallback in CI)."
+  );
+  process.exit(1);
+}
+
 // Load prompt and cleaned HTML (V2 for new site design)
 const prompt = fs.readFileSync("./scripts/ai/prompt_v3.txt", "utf8");
 const cleanedHtml = fs.readFileSync("./cleaned.html", "utf8");
