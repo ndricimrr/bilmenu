@@ -40,9 +40,29 @@ jobs:
           cat cleaned.html
 
       - name: Call Gemini API with cleaned HTML (New Site Design)
+        id: gemini
+        continue-on-error: true
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: node scripts/ai/callGemini_v2.js
+
+      - name: Call OpenRouter API fallback (if Gemini failed)
+        if: steps.gemini.outcome == 'failure'
+        env:
+          OPEN_ROUTER_KEY: ${{ secrets.OPEN_ROUTER_KEY }}
+        run: node scripts/ai/callOpenRouter.js
+
+      - name: Verify meal plan JSON exists
+        run: |
+          node -e "
+          const fs = require('fs');
+          const p = require('./webapp/js/utilities_node').getCurrentWeekJSONFileName();
+          if (!fs.existsSync(p) || fs.statSync(p).size < 2) {
+            console.error('Missing or empty:', p);
+            process.exit(1);
+          }
+          console.log('OK:', p);
+          "
 
       # OLD SCRIPT (commented out - in case old design returns):
       # - name: Call Gemini API with cleaned HTML

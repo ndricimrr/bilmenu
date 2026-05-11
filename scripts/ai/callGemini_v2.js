@@ -5,6 +5,10 @@ const {
 } = require("../../webapp/js/utilities_node");
 const { GoogleGenAI } = require("@google/genai");
 const URL = require("../../webapp/js/constants").URL;
+const {
+  validateJSONStructure,
+  parseJsonFromAiMarkdown,
+} = require("./mealPlanParseShared");
 
 // Load prompt and cleaned HTML (V2 for new site design)
 const prompt = fs.readFileSync("./scripts/ai/prompt_v3.txt", "utf8");
@@ -20,91 +24,6 @@ if (!GEMINI_API_KEY) {
 }
 
 const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
-
-/**
- * Validates the parsed JSON structure
- * @param {any} parsed - The parsed JSON object
- * @returns {Object} - { isValid: boolean, issues: string[] }
- */
-function validateJSONStructure(parsed) {
-  const issues = [];
-
-  // Check if it's an array
-  if (!Array.isArray(parsed)) {
-    issues.push("JSON is not an array");
-    return { isValid: false, issues };
-  }
-
-  // Check if array is empty
-  if (parsed.length === 0) {
-    issues.push("JSON array is empty - no days found");
-    return { isValid: false, issues };
-  }
-
-  // Validate each day object
-  let validDays = 0;
-  let totalMeals = 0;
-
-  for (const day of parsed) {
-    // Check required fields
-    if (!day.date || typeof day.date !== "string") {
-      issues.push(`Day missing or invalid date field`);
-      continue;
-    }
-
-    if (!day.dayOfWeek || typeof day.dayOfWeek !== "string") {
-      issues.push(`Day ${day.date} missing or invalid dayOfWeek field`);
-      continue;
-    }
-
-    // Check meal arrays
-    const requiredArrays = ["lunch", "dinner", "alternative"];
-    for (const mealType of requiredArrays) {
-      if (!Array.isArray(day[mealType])) {
-        issues.push(`Day ${day.date} missing ${mealType} array`);
-        continue;
-      }
-
-      // Check meal items structure
-      for (const meal of day[mealType]) {
-        if (!meal.tr || typeof meal.tr !== "string" || meal.tr.trim() === "") {
-          issues.push(
-            `Day ${day.date} ${mealType} has meal without valid 'tr' field`
-          );
-        }
-        if (!meal.en || typeof meal.en !== "string" || meal.en.trim() === "") {
-          issues.push(
-            `Day ${day.date} ${mealType} has meal without valid 'en' field`
-          );
-        } else {
-          totalMeals++;
-        }
-      }
-    }
-
-    validDays++;
-  }
-
-  // Determine if structure is valid
-  // Consider invalid if:
-  // - No valid days
-  // - Less than 3 days (likely incomplete)
-  // - No meals at all
-  // - Too many validation issues (more than 50% of days have issues)
-  const isValid =
-    validDays > 0 &&
-    validDays >= 3 &&
-    totalMeals > 0 &&
-    issues.length < validDays * 2; // Allow some issues but not too many
-
-  if (!isValid) {
-    issues.unshift(
-      `Validation failed: ${validDays} valid days, ${totalMeals} total meals, ${issues.length} issues`
-    );
-  }
-
-  return { isValid, issues };
-}
 
 /**
  * Fetches raw HTML from the URL for fallback parsing
@@ -165,13 +84,7 @@ async function fallbackParsing() {
     console.log("Received response from Gemini API (fallback mode)");
     const rawText = response.text;
 
-    // Remove code block wrapper
-    let jsonString = rawText.replace(/```json\n([\s\S]*?)```/, "$1");
-    jsonString = jsonString.replace(/```\n([\s\S]*?)```/, "$1");
-    jsonString = jsonString.trim();
-
-    // Parse it
-    const parsed = JSON.parse(jsonString);
+    const parsed = parseJsonFromAiMarkdown(rawText);
 
     // Validate fallback result
     const validation = validateJSONStructure(parsed);
@@ -214,17 +127,9 @@ async function callApi() {
       throw new Error("Invalid AI response structure: rawText is undefined");
     }
 
-    // Remove code block wrapper (```json\n ... ```)
-    let jsonString = rawText.replace(/```json\n([\s\S]*?)```/, "$1");
-    // Also handle case without json tag
-    jsonString = jsonString.replace(/```\n([\s\S]*?)```/, "$1");
-    // Remove any leading/trailing whitespace
-    jsonString = jsonString.trim();
-
-    // Parse it
     let parsed;
     try {
-      parsed = JSON.parse(jsonString);
+      parsed = parseJsonFromAiMarkdown(rawText);
     } catch (parseError) {
       console.error(
         "⚠️  Failed to parse JSON response. Activating fallback mode..."
