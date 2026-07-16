@@ -13,15 +13,16 @@ const path = require("path");
  * 4. Generates a JSON report of missing meals
  */
 
-const MEAL_PLANS_DIR = path.join(__dirname, "webapp", "mealplans");
+const REPO_ROOT = path.join(__dirname, "..", "..");
+const MEAL_PLANS_DIR = path.join(REPO_ROOT, "webapp", "mealplans");
 const MEALS_IMAGES_DIR = path.join(
-  __dirname,
+  REPO_ROOT,
   "webapp",
   "assets",
   "images",
   "meals"
 );
-const OUTPUT_DIR = path.join(__dirname, "webapp", "missing-meals");
+const OUTPUT_DIR = path.join(REPO_ROOT, "webapp", "missing-meals");
 
 // Ensure output directory exists
 if (!fs.existsSync(OUTPUT_DIR)) {
