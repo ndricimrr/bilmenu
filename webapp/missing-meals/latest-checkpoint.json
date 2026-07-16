@@ -1,7 +1,7 @@
 {
-  "latestCheckpoint": "missing-checkpoint-2025-09-14_16-49-32.json",
-  "latestCheckpointUrl": "https://raw.githubusercontent.com/ndricimrr/bilmenu/refs/heads/main/webapp/missing-meals/missing-checkpoint-2025-09-14_16-49-32.json",
-  "totalCheckpoints": 2,
-  "lastUpdated": "2026-07-16T18:31:05Z",
+  "latestCheckpoint": "missing-checkpoint-2026-07-16_18-39-28.json",
+  "latestCheckpointUrl": "https://raw.githubusercontent.com/ndricimrr/bilmenu/refs/heads/main/webapp/missing-meals/missing-checkpoint-2026-07-16_18-39-28.json",
+  "totalCheckpoints": 3,
+  "lastUpdated": "2026-07-16T18:39:28Z",
   "generatedBy": "GitHub Actions"
 }
