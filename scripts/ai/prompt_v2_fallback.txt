@@ -8,9 +8,9 @@ You are an expert HTML parser, extracting weekly cafeteria meal data from HTML. 
   {
     "date": "DD.MM.YYYY",
     "dayOfWeek": "DayNameInEnglish",
-    "lunch": [{"tr": "TurkishMealName", "en": "EnglishTranslation"}],
-    "dinner": [{"tr": "TurkishMealName", "en": "EnglishTranslation"}],
-    "alternative": [{"tr": "TurkishMealName", "en": "EnglishTranslation"}]
+    "lunch": [{"tr": "TurkishMealName", "en": "EnglishTranslation", "isVegan": false}],
+    "dinner": [{"tr": "TurkishMealName", "en": "EnglishTranslation", "isVegan": false}],
+    "alternative": [{"tr": "TurkishMealName", "en": "EnglishTranslation", "isVegan": false}]
   }
   // ... continue for all days found ...
 ]
@@ -55,15 +55,21 @@ This is a FALLBACK mode for when the site structure may have changed unexpectedl
 6. **Translation Guidelines**:
    - Use standard English food terminology
    - Translate Turkish meal names (e.g., "Çorba" = "Soup", "Köfte" = "Meatballs")
-   - Preserve "(Vegan)" markers if present
+   - Preserve "(Vegan)" markers if present in either language
    - Be descriptive if exact translation isn't clear
 
-7. **Consolidation**: 
+7. **Vegan Detection (required on every meal)**:
+   - Every meal MUST include `"isVegan": true` or `"isVegan": false`
+   - Set true if the source marks the dish as vegan in any way (word "Vegan", badge, label, class, nearby UI text, either language)
+   - Do not invent vegan status from ingredients alone
+   - If only English has "(Vegan)" and Turkish does not, still set `isVegan: true`
+
+8. **Consolidation**: 
    - Create one JSON object per day
    - Populate lunch, dinner, and alternative arrays
    - If a section has no items, set array to []
 
-8. **Important**: 
+9. **Important**: 
    - Be thorough and extract ALL meal data you can find
    - If the structure is completely different, adapt your parsing strategy
    - Output only valid JSON - no conversational text, no markdown wrappers
