@@ -303,6 +303,10 @@ body {
 
 .meal-label {
   position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: #1e2f6b;
   color: white;
   padding: 12px;
