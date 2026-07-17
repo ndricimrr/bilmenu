@@ -50,6 +50,14 @@ function validateJSONStructure(parsed) {
         } else {
           totalMeals++;
         }
+        if (
+          meal.isVegan !== undefined &&
+          typeof meal.isVegan !== "boolean"
+        ) {
+          issues.push(
+            `Day ${day.date} ${mealType} meal has non-boolean 'isVegan'`
+          );
+        }
       }
     }
 
@@ -72,6 +80,38 @@ function validateJSONStructure(parsed) {
 }
 
 /**
+ * True if either language name contains a vegan marker.
+ * @param {{ tr?: string, en?: string }} meal
+ * @returns {boolean}
+ */
+function mealNameLooksVegan(meal) {
+  return /vegan/i.test(`${meal?.tr || ""} ${meal?.en || ""}`);
+}
+
+/**
+ * Ensures every meal has a boolean isVegan.
+ * Uses AI value when true, and also catches vegan markers in tr/en
+ * (e.g. English-only "(Vegan)" when Turkish omitted it).
+ * @param {any} parsed
+ * @returns {any}
+ */
+function enrichMealPlanWithIsVegan(parsed) {
+  if (!Array.isArray(parsed)) return parsed;
+
+  for (const day of parsed) {
+    for (const mealType of ["lunch", "dinner", "alternative"]) {
+      if (!Array.isArray(day?.[mealType])) continue;
+      for (const meal of day[mealType]) {
+        const fromAi = meal.isVegan === true;
+        meal.isVegan = fromAi || mealNameLooksVegan(meal);
+      }
+    }
+  }
+
+  return parsed;
+}
+
+/**
  * Strips markdown code fences and parses JSON from an AI assistant message.
  * @param {string} rawText
  * @returns {any}
@@ -88,5 +128,7 @@ function parseJsonFromAiMarkdown(rawText) {
 
 module.exports = {
   validateJSONStructure,
+  enrichMealPlanWithIsVegan,
+  mealNameLooksVegan,
   parseJsonFromAiMarkdown,
 };

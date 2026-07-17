@@ -18,9 +18,9 @@ Return ONLY valid JSON (no markdown, no explanations):
   {
     "date": "DD.MM.YYYY",
     "dayOfWeek": "DayNameInEnglish",
-    "lunch": [{"tr": "...", "en": "..."}],
-    "dinner": [{"tr": "...", "en": "..."}],
-    "alternative": [{"tr": "...", "en": "..."}]
+    "lunch": [{"tr": "...", "en": "...", "isVegan": false}],
+    "dinner": [{"tr": "...", "en": "...", "isVegan": false}],
+    "alternative": [{"tr": "...", "en": "...", "isVegan": false}]
   }
 ]
 
@@ -57,16 +57,27 @@ SEMANTIC EXTRACTION RULES
   - Percentages
   - Explanatory footnotes
   - UI labels
-- If a dish is marked as vegan or vegetarian in any way, append "(Vegan)" to the Turkish name.
 
-4. TEXT CLEANING
+4. VEGAN DETECTION (REQUIRED — set isVegan on every meal)
+- Every meal object MUST include `"isVegan": true` or `"isVegan": false`.
+- Set `isVegan: true` if the source marks the dish as vegan in ANY way you can find, including but not limited to:
+  - The word "Vegan" / "vegan" near the dish (Turkish and/or English)
+  - Badges, labels, icons, tooltips, aria text, or nearby parent/sibling UI text
+  - Class names or attributes that clearly indicate vegan (e.g. meal-item-vegan)
+  - "(Vegan)" suffix on either language name
+- Do NOT invent vegan status from ingredients alone. Only mark vegan when the menu itself indicates it.
+- Prefer discovering the marker yourself from the messy HTML; do not assume a fixed DOM structure.
+- Optionally keep "(Vegan)" in the dish names when present in the source; still set `isVegan` correctly either way.
+- If only one language shows the vegan marker (e.g. English has "(Vegan)" but Turkish does not), still set `isVegan: true`.
+
+5. TEXT CLEANING
 - Strip all HTML tags and UI noise.
 - Remove icons, emojis, bullets, numbering, and decorative symbols.
 - Trim whitespace.
 - If a dish is written across multiple lines, merge it into one name.
 - If text contains alternatives like "X veya Y", split into multiple meal items.
 
-5. LANGUAGE HANDLING
+6. LANGUAGE HANDLING
 - If the dish name is in Turkish:
   - Use it as "tr"
   - Translate it naturally into English for "en"
@@ -74,10 +85,10 @@ SEMANTIC EXTRACTION RULES
   - Use it for both "tr" and "en"
 - Keep translations literal and cafeteria-appropriate.
 
-6. CONSISTENCY RULES
+7. CONSISTENCY RULES
 - Never invent meals.
 - Never merge meals across days.
-- Never drop required keys.
+- Never drop required keys (including isVegan on every meal).
 - Never output null — use empty arrays instead.
 
 ========================

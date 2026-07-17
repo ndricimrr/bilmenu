@@ -7,6 +7,7 @@ const { GoogleGenAI } = require("@google/genai");
 const URL = require("../../webapp/js/constants").URL;
 const {
   validateJSONStructure,
+  enrichMealPlanWithIsVegan,
   parseJsonFromAiMarkdown,
 } = require("./mealPlanParseShared");
 
@@ -167,6 +168,8 @@ async function callApi() {
         console.log("✓ JSON validation passed");
       }
     }
+
+    enrichMealPlanWithIsVegan(parsed);
 
     console.log("Saving parsed response to file...");
 

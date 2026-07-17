@@ -5,6 +5,7 @@ const {
 } = require("../../webapp/js/utilities_node");
 const {
   validateJSONStructure,
+  enrichMealPlanWithIsVegan,
   parseJsonFromAiMarkdown,
 } = require("./mealPlanParseShared");
 
@@ -68,6 +69,8 @@ async function callOpenRouter() {
     console.error(validation.issues.slice(0, 15).join("\n"));
     throw new Error("OpenRouter output failed meal plan JSON validation");
   }
+
+  enrichMealPlanWithIsVegan(parsed);
 
   const outPath = getCurrentWeekJSONFileName();
   fs.writeFileSync(outPath, JSON.stringify(parsed, null, 2));
