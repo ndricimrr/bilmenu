@@ -788,6 +788,11 @@
           });
         }
 
+        const lang =
+          window.languageSwitcher?.getCurrentLanguage?.() ||
+          localStorage.getItem("bilmenu-language") ||
+          "en";
+
         sortedMenuItems.forEach((mealName, index) => {
           const mealItemDOM = document.createElement("div");
           mealItemDOM.className = "meal-item";
@@ -798,12 +803,13 @@
           if (isVegan) {
             mealItemDOM.style.border = "1px solid green";
           }
+          const displayName = lang === "tr" ? mealName.tr : mealName.en;
           mealItemDOM.innerHTML = `
         <img src="assets/images/meals/${
           mealName.tr + ".jpg"
         }" onerror="this.onerror=null; this.src='assets/images/misc/missing-meal.jpg'" alt="Meal Image Here">
         <div class="meal-label" style="${isVegan ? veganStyle : ""}">${
-            mealName.tr
+            displayName
           }</div>
       `;
           mealItemDOM.addEventListener("click", () => openModal(mealName));
@@ -983,6 +989,14 @@
         }
         // Update App Store badge when language changes
         updateAppStoreBadge();
+        // Re-render meal labels in the selected language
+        if (currentDayIndex >= 0 && weeklyMealPlan) {
+          const preservedMealType = currentMealType;
+          showMenu(currentDayIndex);
+          if (preservedMealType) {
+            showMealType(preservedMealType);
+          }
+        }
       });
 
       // Mobile App Download Prompt Functions
