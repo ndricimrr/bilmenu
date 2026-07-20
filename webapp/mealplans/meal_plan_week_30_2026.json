@@ -15,12 +15,12 @@
       },
       {
         "tr": "Yufkada Sebzeli Dolma",
-        "en": "Vegetable Stuffed Phyllo",
+        "en": "Vegetable Stuffed in Phyllo Pastry",
         "isVegan": true
       },
       {
         "tr": "Niş Salata",
-        "en": "House Salad",
+        "en": "Niche Salad",
         "isVegan": false
       },
       {
@@ -32,7 +32,7 @@
     "dinner": [
       {
         "tr": "Köylü Çorba",
-        "en": "Country-style Soup",
+        "en": "Village Soup",
         "isVegan": false
       },
       {
@@ -64,7 +64,7 @@
       },
       {
         "tr": "Piliç Tandır (Püre)",
-        "en": "Chicken Tandoor (Puree)",
+        "en": "Chicken Tandoor (with Puree)",
         "isVegan": false
       },
       {
@@ -79,12 +79,12 @@
       },
       {
         "tr": "Patatesli Gül Böreği",
-        "en": "Potato Rose Borek",
+        "en": "Rose Pastry with Potato",
         "isVegan": false
       },
       {
         "tr": "Zeytinyağlı Brüksel Lahana",
-        "en": "Olive Oil Brussels Sprouts",
+        "en": "Brussels Sprouts with Olive Oil",
         "isVegan": false
       },
       {
@@ -130,17 +130,17 @@
       },
       {
         "tr": "Belen Köfte (Sebze Haşlama)",
-        "en": "Belen Meatballs (Boiled Vegetables)",
+        "en": "Belen Meatballs (with Boiled Vegetables)",
         "isVegan": false
       },
       {
         "tr": "Belen Köfte (Sebze Haşlama)",
-        "en": "Belen Meatballs (Boiled Vegetables)",
+        "en": "Belen Meatballs (with Boiled Vegetables)",
         "isVegan": true
       },
       {
         "tr": "Kaşarlı Cevizli Erişte",
-        "en": "Noodle with Kashar Cheese and Walnuts",
+        "en": "Noodles with Kashar Cheese and Walnuts",
         "isVegan": false
       },
       {
@@ -157,7 +157,7 @@
       },
       {
         "tr": "Avcı Usulü Tavuk (Dilim Patates)",
-        "en": "Hunter's Style Chicken (Sliced Potatoes)",
+        "en": "Hunter's Style Chicken (with Sliced Potatoes)",
         "isVegan": false
       },
       {
@@ -189,7 +189,7 @@
       },
       {
         "tr": "Kıymalı Ispanak (Yoğurt)",
-        "en": "Minced Meat Spinach (Yogurt)",
+        "en": "Minced Meat Spinach (with Yogurt)",
         "isVegan": false
       },
       {
@@ -204,7 +204,7 @@
       },
       {
         "tr": "Mücver (Yoğurt)",
-        "en": "Zucchini Fritters (Yogurt)",
+        "en": "Zucchini Fritters (with Yogurt)",
         "isVegan": false
       },
       {
@@ -219,7 +219,7 @@
       },
       {
         "tr": "Ejder Tatlısı",
-        "en": "Ejder Dessert",
+        "en": "Dragon Dessert",
         "isVegan": false
       },
       {
@@ -260,7 +260,7 @@
       },
       {
         "tr": "Su Böreği",
-        "en": "Water Borek",
+        "en": "Water Pastry",
         "isVegan": false
       },
       {
@@ -282,7 +282,7 @@
       },
       {
         "tr": "Fasulye Kavurma",
-        "en": "Sautéed Beans",
+        "en": "Sautéed Green Beans",
         "isVegan": true
       },
       {
@@ -293,6 +293,11 @@
       {
         "tr": "Çoban Salata",
         "en": "Shepherd's Salad",
+        "isVegan": false
+      },
+      {
+        "tr": "Elmalı Şarlot",
+        "en": "Apple Charlotte",
         "isVegan": false
       }
     ],
@@ -319,12 +324,12 @@
       },
       {
         "tr": "Fettucini Arabiatta",
-        "en": "Fettuccine Arrabiata",
+        "en": "Fettuccine Arrabbiata",
         "isVegan": false
       },
       {
         "tr": "Zeytinyağlı Enginar",
-        "en": "Olive Oil Artichoke",
+        "en": "Artichokes with Olive Oil",
         "isVegan": false
       },
       {
@@ -349,7 +354,7 @@
       },
       {
         "tr": "Revani",
-        "en": "Revani (Semolina Cake)",
+        "en": "Semolina Cake",
         "isVegan": false
       },
       {
@@ -370,7 +375,7 @@
       },
       {
         "tr": "Soya Soslu Tavuk (Sebze Haşlama)",
-        "en": "Soy Sauce Chicken (Boiled Vegetables)",
+        "en": "Soy Sauce Chicken (with Boiled Vegetables)",
         "isVegan": false
       },
       {
@@ -380,12 +385,12 @@
       },
       {
         "tr": "Erişte",
-        "en": "Noodles",
+        "en": "Egg Noodles",
         "isVegan": false
       },
       {
         "tr": "Ayran",
-        "en": "Ayran (Yogurt Drink)",
+        "en": "Ayran",
         "isVegan": false
       }
     ],
@@ -397,7 +402,7 @@
       },
       {
         "tr": "İslim Köfte (Bulgur Pilavı)",
-        "en": "Islim Meatballs (Bulgur Pilaf)",
+        "en": "İslim Meatballs (with Bulgur Pilaf)",
         "isVegan": false
       },
       {
@@ -429,7 +434,7 @@
       },
       {
         "tr": "Etli Kuru Fasulye",
-        "en": "Dried Beans with Meat",
+        "en": "Dry Beans with Meat",
         "isVegan": false
       },
       {
@@ -439,17 +444,17 @@
       },
       {
         "tr": "Peynirli Rulo Börek",
-        "en": "Cheesy Rolled Borek",
+        "en": "Cheese Roll Pastry",
         "isVegan": false
       },
       {
         "tr": "Zeytinyağlı Brokoli",
-        "en": "Olive Oil Broccoli",
+        "en": "Broccoli with Olive Oil",
         "isVegan": false
       },
       {
         "tr": "Niş Salata",
-        "en": "House Salad",
+        "en": "Niche Salad",
         "isVegan": false
       },
       {
@@ -490,12 +495,12 @@
       },
       {
         "tr": "Püreli Kebap",
-        "en": "Kebab with Puree",
+        "en": "Kebab with Mashed Potatoes",
         "isVegan": false
       },
       {
         "tr": "Yufkada Ispanaklı Dolma",
-        "en": "Spinach Stuffed Phyllo",
+        "en": "Spinach Stuffed in Phyllo Pastry",
         "isVegan": true
       },
       {
@@ -505,7 +510,7 @@
       },
       {
         "tr": "Aşure",
-        "en": "Aşure (Noah's Pudding)",
+        "en": "Ashura",
         "isVegan": false
       }
     ],
@@ -517,7 +522,7 @@
       },
       {
         "tr": "Etli Biber Dolma (Yoğurt)",
-        "en": "Stuffed Bell Peppers with Meat (Yogurt)",
+        "en": "Stuffed Bell Peppers with Meat (with Yogurt)",
         "isVegan": false
       },
       {
@@ -527,7 +532,7 @@
       },
       {
         "tr": "Ispanaklı Gül Böreği",
-        "en": "Spinach Rose Borek",
+        "en": "Rose Pastry with Spinach",
         "isVegan": false
       },
       {
@@ -544,7 +549,7 @@
       },
       {
         "tr": "Tavuklu Buğu Kebap",
-        "en": "Chicken Steam Kebab",
+        "en": "Steamed Chicken Kebab",
         "isVegan": false
       },
       {
@@ -564,7 +569,7 @@
       },
       {
         "tr": "Zeytinyağlı İmambayıldı",
-        "en": "Olive Oil Imam Bayildi",
+        "en": "Imam Bayildi with Olive Oil",
         "isVegan": false
       },
       {
@@ -610,7 +615,7 @@
       },
       {
         "tr": "İzmir Köfte",
-        "en": "Izmir Meatballs",
+        "en": "İzmir Meatballs",
         "isVegan": false
       },
       {
@@ -620,7 +625,7 @@
       },
       {
         "tr": "Pesto Soslu Spagetti",
-        "en": "Pesto Spaghetti",
+        "en": "Spaghetti with Pesto Sauce",
         "isVegan": false
       },
       {
@@ -637,12 +642,12 @@
       },
       {
         "tr": "Piliç Baget (Domatesli Pirinç Pilavı)",
-        "en": "Chicken Drumstick (Tomato Rice Pilaf)",
+        "en": "Chicken Drumstick (with Tomato Rice Pilaf)",
         "isVegan": false
       },
       {
         "tr": "Barbunya",
-        "en": "Barbunya (Roman Beans)",
+        "en": "Haricot Beans",
         "isVegan": true
       },
       {
@@ -652,7 +657,7 @@
       },
       {
         "tr": "Sütlü Revani",
-        "en": "Milky Revani",
+        "en": "Milky Semolina Cake",
         "isVegan": false
       }
     ],
@@ -664,17 +669,17 @@
       },
       {
         "tr": "Şişte Adana Kebap (Lavaş)",
-        "en": "Adana Kebab on Skewer (Lavash)",
+        "en": "Adana Kebab on Skewer (with Lavash)",
         "isVegan": false
       },
       {
         "tr": "Kıymalı Türlü",
-        "en": "Mixed Vegetable Stew with Minced Meat",
+        "en": "Minced Meat Vegetable Stew",
         "isVegan": false
       },
       {
         "tr": "Kaşarlı Erişte",
-        "en": "Kashar Cheese Noodles",
+        "en": "Noodles with Kashar Cheese",
         "isVegan": false
       },
       {
@@ -684,7 +689,7 @@
       },
       {
         "tr": "Zeytinyağlı Bamya",
-        "en": "Olive Oil Okra",
+        "en": "Okra with Olive Oil",
         "isVegan": false
       },
       {
@@ -730,17 +735,17 @@
       },
       {
         "tr": "Kıymalı Semizotu (Yoğurt)",
-        "en": "Minced Meat Purslane (Yogurt)",
+        "en": "Minced Meat Spinach (with Yogurt)",
         "isVegan": false
       },
       {
         "tr": "Semizotu",
-        "en": "Purslane",
+        "en": "Semizotu",
         "isVegan": true
       },
       {
-        "tr": "Patatesli Rulo Börek",
-        "en": "Potato Rolled Borek",
+        "tr": "Patatesli Rulo Böreği",
+        "en": "Rose Pastry with Potato",
         "isVegan": false
       },
       {
@@ -762,7 +767,7 @@
       },
       {
         "tr": "Meksika Köfte (Püre)",
-        "en": "Mexican Meatballs (Puree)",
+        "en": "Mexican Meatballs (with Puree)",
         "isVegan": true
       },
       {
@@ -779,12 +784,12 @@
     "alternative": [
       {
         "tr": "Alaca Çorba",
-        "en": "Mixed Soup",
+        "en": "Colorful Soup",
         "isVegan": false
       },
       {
         "tr": "Tavuk Külbastı (Ali Paşa Pilavı)",
-        "en": "Grilled Chicken Cutlet (Ali Pasha Pilaf)",
+        "en": "Chicken Cutlets (with Ali Pasha Pilaf)",
         "isVegan": false
       },
       {
@@ -804,7 +809,7 @@
       },
       {
         "tr": "Zeytinyağlı Brüksel Lahana",
-        "en": "Olive Oil Brussels Sprouts",
+        "en": "Brussels Sprouts with Olive Oil",
         "isVegan": false
       },
       {
@@ -819,7 +824,7 @@
       },
       {
         "tr": "Krem Şokola",
-        "en": "Creme Chocolat",
+        "en": "Cream au Chocolat",
         "isVegan": false
       },
       {
@@ -829,7 +834,7 @@
       },
       {
         "tr": "Fındıkpare",
-        "en": "Hazelnut Dessert",
+        "en": "Hazelnut Cookie Dessert",
         "isVegan": false
       },
       {
@@ -850,7 +855,7 @@
       },
       {
         "tr": "Sicilya Usulü Tavuk (Kajun Baharatlı Patates Pari)",
-        "en": "Sicilian Style Chicken (Cajun Spiced Potato Wedges)",
+        "en": "Sicilian Style Chicken (with Cajun Spiced Potato Wedges)",
         "isVegan": false
       },
       {
@@ -860,7 +865,7 @@
       },
       {
         "tr": "Niş Salata",
-        "en": "House Salad",
+        "en": "Niche Salad",
         "isVegan": false
       },
       {
@@ -877,12 +882,12 @@
       },
       {
         "tr": "Etli Taze Fasulye",
-        "en": "Fresh Green Beans with Meat",
+        "en": "Green Beans with Meat",
         "isVegan": false
       },
       {
         "tr": "Taze Fasulye",
-        "en": "Fresh Green Beans",
+        "en": "Green Beans",
         "isVegan": true
       },
       {
@@ -904,7 +909,7 @@
       },
       {
         "tr": "Kadınbudu Köfte (Patates Tava)",
-        "en": "Woman's Thigh Meatballs (Fried Potatoes)",
+        "en": "Lady's Thigh Meatballs (with Pan-fried Potatoes)",
         "isVegan": false
       },
       {
@@ -914,17 +919,17 @@
       },
       {
         "tr": "Erişte",
-        "en": "Noodles",
+        "en": "Egg Noodles",
         "isVegan": false
       },
       {
         "tr": "Peynirli Gül Böreği",
-        "en": "Cheesy Rose Borek",
+        "en": "Rose Pastry with Cheese",
         "isVegan": false
       },
       {
         "tr": "Zeytinyağlı Biber Dolma",
-        "en": "Olive Oil Stuffed Peppers",
+        "en": "Stuffed Bell Peppers with Olive Oil",
         "isVegan": false
       },
       {
